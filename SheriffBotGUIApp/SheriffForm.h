@@ -1,0 +1,141 @@
+#pragma once
+
+namespace SheriffBotGUIApp {
+
+	using namespace System;
+	using namespace System::ComponentModel;
+	using namespace System::Collections;
+	using namespace System::Windows::Forms;
+	using namespace System::Data;
+	using namespace System::Drawing;
+
+	/// <summary>
+	/// Resumen de SheriffForm
+	/// </summary>
+	public ref class SheriffForm : public System::Windows::Forms::Form
+	{
+	public:
+		SheriffForm(void)
+		{
+			InitializeComponent();
+			//
+			//TODO: agregar código de constructor aquí
+			//
+		}
+
+	protected:
+		/// <summary>
+		/// Limpiar los recursos que se estén usando.
+		/// </summary>
+		~SheriffForm()
+		{
+			if (components)
+			{
+				delete components;
+			}
+		}
+	private: System::Windows::Forms::PictureBox^ btnAccount;
+	protected:
+	private: System::Windows::Forms::Button^ btnInfo;
+	private: System::Windows::Forms::PictureBox^ pictureBox2;
+	private: System::Windows::Forms::Button^ btnRobots;
+	private: System::Windows::Forms::PictureBox^ pictureBox1;
+
+	private:
+		/// <summary>
+		/// Variable del diseñador necesaria.
+		/// </summary>
+		System::ComponentModel::Container ^components;
+
+#pragma region Windows Form Designer generated code
+		/// <summary>
+		/// Método necesario para admitir el Diseñador. No se puede modificar
+		/// el contenido de este método con el editor de código.
+		/// </summary>
+		void InitializeComponent(void)
+		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(SheriffForm::typeid));
+			this->btnAccount = (gcnew System::Windows::Forms::PictureBox());
+			this->btnInfo = (gcnew System::Windows::Forms::Button());
+			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
+			this->btnRobots = (gcnew System::Windows::Forms::Button());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			this->SuspendLayout();
+			// 
+			// btnAccount
+			// 
+			this->btnAccount->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnAccount.Image")));
+			this->btnAccount->Location = System::Drawing::Point(12, 11);
+			this->btnAccount->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->btnAccount->Name = L"btnAccount";
+			this->btnAccount->Size = System::Drawing::Size(59, 59);
+			this->btnAccount->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->btnAccount->TabIndex = 16;
+			this->btnAccount->TabStop = false;
+			// 
+			// btnInfo
+			// 
+			this->btnInfo->Location = System::Drawing::Point(114, 487);
+			this->btnInfo->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->btnInfo->Name = L"btnInfo";
+			this->btnInfo->Size = System::Drawing::Size(157, 37);
+			this->btnInfo->TabIndex = 15;
+			this->btnInfo->Text = L"Menú de Solicitudes\r\n";
+			this->btnInfo->UseVisualStyleBackColor = true;
+			// 
+			// pictureBox2
+			// 
+			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
+			this->pictureBox2->Location = System::Drawing::Point(110, 328);
+			this->pictureBox2->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->pictureBox2->Name = L"pictureBox2";
+			this->pictureBox2->Size = System::Drawing::Size(161, 148);
+			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox2->TabIndex = 14;
+			this->pictureBox2->TabStop = false;
+			// 
+			// btnRobots
+			// 
+			this->btnRobots->Location = System::Drawing::Point(112, 244);
+			this->btnRobots->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->btnRobots->Name = L"btnRobots";
+			this->btnRobots->Size = System::Drawing::Size(157, 37);
+			this->btnRobots->TabIndex = 13;
+			this->btnRobots->Text = L"Gestión de robots";
+			this->btnRobots->UseVisualStyleBackColor = true;
+			// 
+			// pictureBox1
+			// 
+			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
+			this->pictureBox1->Location = System::Drawing::Point(110, 85);
+			this->pictureBox1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(161, 148);
+			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox1->TabIndex = 12;
+			this->pictureBox1->TabStop = false;
+			// 
+			// SheriffForm
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->ClientSize = System::Drawing::Size(353, 556);
+			this->Controls->Add(this->btnAccount);
+			this->Controls->Add(this->btnInfo);
+			this->Controls->Add(this->pictureBox2);
+			this->Controls->Add(this->btnRobots);
+			this->Controls->Add(this->pictureBox1);
+			this->Name = L"SheriffForm";
+			this->Text = L"SheriffForm";
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			this->ResumeLayout(false);
+
+		}
+#pragma endregion
+	};
+}
