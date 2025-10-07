@@ -1,10 +1,35 @@
 #pragma once
 
 using namespace System;
+using namespace BotModel;
+using namespace System::Collections::Generic;
 
-namespace PERSISTANCE {
-	public ref class Class1
-	{
-		// TODO: Agregue aquí los métodos de esta clase.
+namespace BotPersistance {
+	public ref class Persistance{
+	private:
+		static List<DatosUsuario^>^ listaUsuarios = gcnew List<DatosUsuario^>();
+		static List<Robot^>^ listaRobots = gcnew List<Robot^>();
+	public:
+
+		//CRUD Usuarios
+		static void registrarUsuario(int id, String^ nombre, String^ contra, String^ cargo);
+		static void registrarUsuarioAutoID(String^ nombre, String^ contra, String^ cargo);
+		static DatosUsuario^ buscarUsuarioID(int id);
+		static DatosUsuario^ buscarUsuarioNombre(String^ nombre);
+		static DatosUsuario^ buscarUsuarioCredenciales(String^ nombre, String^ contra);
+		static bool borrarUsuarioID(int id);
+		static bool borrarUsuarioNombre(String^ nombre);
+		static DatosUsuario^ restablecerUsuario(String^ nombre, String^ contranueva, String^ confirmacion);
+		static DatosUsuario^ modificarUsuarioID(int id, String^ nombre, String^ contra, String^ cargo);
+		static List <DatosUsuario^>^ GetUsuarios();
+
+		//CRUD Robots
+		static void registrarRobot(int id, String^ nombre, String^ zona);
+		static Robot^ buscarRobotID(int id);
+		static Robot^ buscarRobotNombre(String^ nombre);
+		static bool borrarRobotID(int id);
+		static bool borrarRobotNombre(String^ nombre);
+		static Robot^ modificarRobotID(int id, String^ nombre, String^ zona);
+		static List <Robot^>^ GetRobots();
 	};
 }
