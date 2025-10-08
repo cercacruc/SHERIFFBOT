@@ -61,6 +61,7 @@ List <Robot^>^ BotPersistance::Persistance::GetRobots() {
 void BotPersistance::Persistance::registrarUsuario(int id, String^ nombre, String^ contra, String^ cargo) {
     DatosUsuario^ usuario = gcnew DatosUsuario(id, nombre, contra, cargo);
     listaUsuarios->Add(usuario);
+    PersistTextFile(fileName, listaUsuarios);
 }
 void BotPersistance::Persistance::registrarUsuarioAutoID(String^ nombre, String^ contra, String^ cargo) {
     String^ prefijo = nullptr;
@@ -136,6 +137,7 @@ bool BotPersistance::Persistance::borrarUsuarioID(int id) {
     for (int i = 0; i < listaUsuarios->Count; i++) {
         if (listaUsuarios[i]->getID() == id) {
             listaUsuarios->RemoveAt(i);
+            PersistTextFile(fileName, listaUsuarios);
             return true;
         }
     }
@@ -145,6 +147,7 @@ bool BotPersistance::Persistance::borrarUsuarioNombre(String^ nombre) {
     for (int i = 0; i < listaUsuarios->Count; i++) {
         if (listaUsuarios[i]->getNombre()->Equals(nombre)) {
             listaUsuarios->RemoveAt(i);
+            PersistTextFile(fileName, listaUsuarios);
             return true;
         }
     }
@@ -177,12 +180,71 @@ DatosUsuario^ BotPersistance::Persistance::modificarUsuarioID(int id, String^ no
             u->setNombre(nombre);
             u->setContrasena(contra);
             u->setCargo(cargo);
+            PersistTextFile(fileName, listaUsuarios);
             return u;
         }
     }
     return nullptr;
 }
 List <DatosUsuario^>^ BotPersistance::Persistance::GetUsuarios() {
+    listaUsuarios = (List<DatosUsuario^>^) LoadUsuariosFromTextFile(fileName);
     return listaUsuarios;
+}
+
+
+//Funciones de guardado
+using namespace System::IO;
+
+void BotPersistance::Persistance::PersistTextFile(String^ fileName, List<DatosUsuario^>^ lista) {
+    FileStream^ file = nullptr;
+    StreamWriter^ writer = nullptr;
+    try {
+        file = gcnew FileStream(fileName, FileMode::Create, FileAccess::Write);
+        writer = gcnew StreamWriter(file);
+        for each (DatosUsuario ^ usuario in listaUsuarios) {
+            writer->WriteLine("{0}|{1}|{2}|{3}",
+                usuario->getID(),
+                usuario->getNombre(),
+                usuario->getContrasena(),
+                usuario->getCargo());
+        }
+    }
+    catch (Exception^ ex) {
+        throw ex;
+    }
+    finally {
+        if (writer != nullptr) writer->Close();
+        if (file != nullptr) file->Close();
+    }
+}
+
+Object^ BotPersistance::Persistance::LoadUsuariosFromTextFile(String^ fileName) {
+    FileStream^ file;
+    StreamReader^ reader;
+    Object^ result = gcnew List<DatosUsuario^>();
+    try {
+        file = gcnew FileStream(fileName, FileMode::Open, FileAccess::Read);
+        reader = gcnew StreamReader(file);
+        while (!reader->EndOfStream) {
+            String^ line = reader->ReadLine();
+            array<String^>^ record = line->Split('|');
+            DatosUsuario^ usuario = gcnew DatosUsuario();
+            int ID = Convert::ToInt32(record[0]);
+            String^ nombre = record[1];
+            String^ contra = record[2];
+            String^ rol = record[3];
+            
+            ((List<DatosUsuario^>^)result)->Add(gcnew DatosUsuario(ID, nombre, contra, rol));//chequear esta linea
+            //registrarUsuario(ID, nombre, contra, rol);
+        }
+    }
+    catch (Exception^ ex) {
+        throw ex;
+    }
+    finally {
+        if (reader != nullptr) reader->Close();
+        if (file != nullptr) file->Close();
+    }
+    return result;
 }
 

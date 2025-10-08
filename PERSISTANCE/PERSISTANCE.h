@@ -9,7 +9,14 @@ namespace BotPersistance {
 	private:
 		static List<DatosUsuario^>^ listaUsuarios = gcnew List<DatosUsuario^>();
 		static List<Robot^>^ listaRobots = gcnew List<Robot^>();
+
+		static void PersistTextFile(String^ fileName, List<DatosUsuario^>^ lista);
+		static Object^ LoadUsuariosFromTextFile(String^ fileName);
+
 	public:
+		//Datos de guardado
+		static String^ fileName = "usuarios.txt";
+
 
 		//CRUD Usuarios
 		static void registrarUsuario(int id, String^ nombre, String^ contra, String^ cargo);

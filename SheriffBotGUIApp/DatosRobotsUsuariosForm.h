@@ -705,7 +705,7 @@ namespace SheriffBotGUIApp {
 				NombreRobot->Text = selectedRow->Cells["ResourceRobotName"]->Value->ToString();
 				ZonaRobot->Text = selectedRow->Cells["ResourceWorkArea"]->Value->ToString();
 			}
-		}
+		}//ver si modificar como la del profe
 		private:
 			void ShowRobots() {
 				dgvRobot->Rows->Clear();
