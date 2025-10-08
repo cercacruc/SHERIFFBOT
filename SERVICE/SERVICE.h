@@ -21,7 +21,7 @@ namespace BotService {
 		static List <DatosUsuario^>^ GetUsuarios();
 
 		//CRUD Robots
-		static void registrarRobot(int id, String^ nombre, String^ zona);
+		static void registrarRobot(int id, String^ nombre, String^ zona,Point^ ubicacion);
 		static Robot^ buscarRobotID(int id);
 		static Robot^ buscarRobotNombre(String^ nombre);
 		static bool borrarRobotID(int id);

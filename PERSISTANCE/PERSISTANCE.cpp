@@ -2,8 +2,8 @@
 #include "PERSISTANCE.h"
 
 //funciones del robot en persistance
-void BotPersistance::Persistance::registrarRobot(int id, String^ nombre, String^ zona) {
-    Robot^ robot = gcnew Robot(id, nombre, zona);
+void BotPersistance::Persistance::registrarRobot(int id, String^ nombre, String^ zona,Point^ ubicacion) {
+    Robot^ robot = gcnew Robot(id, nombre, zona,ubicacion);
     listaRobots->Add(robot);
 }
 Robot^ BotPersistance::Persistance::buscarRobotID(int id) {

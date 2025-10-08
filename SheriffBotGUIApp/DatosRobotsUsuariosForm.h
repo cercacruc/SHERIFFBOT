@@ -609,13 +609,17 @@ namespace SheriffBotGUIApp {
 				int RobotID = Convert::ToInt32(IDRobot->Text);
 				String^ RobotName = NombreRobot->Text;
 				String^ RobotZona = ZonaRobot->Text;
+				double x = Convert::ToDouble(XRobot->Text);
+				double y = Convert::ToDouble(YRobot->Text);
 
 				Robot^ robotExistente = Service::buscarRobotID(RobotID);
 				if (robotExistente != nullptr) {
 					MessageBox::Show("El robot ya existe.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 					return;
 				}
-				Service::registrarRobot(RobotID, RobotName, RobotZona);
+				BotModel::Point^ ubicacion = gcnew BotModel::Point(x,y,RobotZona);
+                
+				Service::registrarRobot(RobotID, RobotName, RobotZona, ubicacion);
 
 				ShowRobots();
 				ClearFieldsR();
@@ -704,6 +708,8 @@ namespace SheriffBotGUIApp {
 				IDRobot->Text = selectedRow->Cells["ResourceRobotID"]->Value->ToString();
 				NombreRobot->Text = selectedRow->Cells["ResourceRobotName"]->Value->ToString();
 				ZonaRobot->Text = selectedRow->Cells["ResourceWorkArea"]->Value->ToString();
+				XRobot->Text = selectedRow->Cells["ResourceRobotX"]->Value->ToString();
+				YRobot->Text = selectedRow->Cells["ResourceRobotY"]->Value->ToString();
 			}
 		}//ver si modificar como la del profe
 		private:
@@ -714,7 +720,9 @@ namespace SheriffBotGUIApp {
 					dgvRobot->Rows->Add(
 						robot->getID(),
 						robot->getNombre(),
-						robot->getZona()
+						robot->getZona(),
+						robot->getPosicion()->getX(),
+						robot->getPosicion()->getY()
 					);
 				}
 			}
@@ -723,11 +731,15 @@ namespace SheriffBotGUIApp {
 				IDRobot->Text = "";
 				NombreRobot->Text = "";
 				ZonaRobot->Text = "";
+				XRobot->Text = "";
+				YRobot->Text = "";
 			}
 		private:
 			void MostrarDatosRobot(Robot^ robotEncontrado) {
 				IDRobot->Text = Convert::ToString(robotEncontrado->getID());
 				ZonaRobot->Text = robotEncontrado->getZona();
+				XRobot->Text = Convert::ToString(robotEncontrado->getPosicion()->getX());
+				YRobot->Text = Convert::ToString(robotEncontrado->getPosicion()->getY());
 			}
 		private: System::Void btnAddUser_Click(System::Object^ sender, System::EventArgs^ e) {
 			try {

@@ -96,6 +96,8 @@ DatosUsuario^ CONTROLLER::modificarUsuarioID(int id, String^ nombre, String^ con
 List <DatosUsuario^>^ CONTROLLER::GetUsuarios() {
     return this->listaUsuarios;
 }
+
+
 void CONTROLLER::registrarUsuarioAutoID(String^ nombre, String^ contra, String^ cargo) {
     String^ prefijo = nullptr;
     if (cargo->ToLower()->Equals("sheriff")) {
@@ -142,9 +144,9 @@ void CONTROLLER::registrarUsuarioAutoID(String^ nombre, String^ contra, String^ 
 }
 
 //Funciones Robot
-void CONTROLLER::registrarRobot(int id, String^ nombre, String^ zona) {
+void CONTROLLER::registrarRobot(int id, String^ nombre, String^ zona,Point^ ubicacion) {
     int newID = this->listaRobots->Count + 1;
-    Robot^ robot = gcnew Robot(id, nombre, zona);
+    Robot^ robot = gcnew Robot(id, nombre, zona,ubicacion);
     this->listaRobots->Add(robot);
 }
 Robot^ CONTROLLER::buscarRobotID(int id) {

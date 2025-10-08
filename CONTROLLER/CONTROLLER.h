@@ -21,8 +21,8 @@ namespace BotController {
 		DatosUsuario^ restablecerUsuario(String^ nombre, String^ contranueva, String^ confirmacion);
 		DatosUsuario^ modificarUsuarioID(int id, String^ nombre, String^ contra, String^ cargo);
 		List <DatosUsuario^>^ GetUsuarios();
-
-		void registrarRobot(int id, String^ nombre, String^ zona);
+		
+		void registrarRobot(int id, String^ nombre, String^ zona,Point^ ubicacion);
 		Robot^ buscarRobotID(int id);
 		Robot^ buscarRobotNombre(String^ nombre);
 		bool borrarRobotID(int id);
