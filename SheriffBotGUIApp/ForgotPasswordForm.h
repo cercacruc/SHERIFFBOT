@@ -9,6 +9,9 @@ namespace SheriffBotGUIApp {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	using namespace BotModel;
+	using namespace BotService;
+
 	/// <summary>
 	/// Resumen de ForgotPasswordForm
 	/// </summary>
@@ -78,6 +81,7 @@ namespace SheriffBotGUIApp {
 			this->btnSendPassword->TabIndex = 33;
 			this->btnSendPassword->Text = L"Enviar";
 			this->btnSendPassword->UseVisualStyleBackColor = true;
+			this->btnSendPassword->Click += gcnew System::EventHandler(this, &ForgotPasswordForm::btnSendPassword_Click);
 			// 
 			// btnReturnPassword
 			// 
@@ -88,6 +92,7 @@ namespace SheriffBotGUIApp {
 			this->btnReturnPassword->TabIndex = 32;
 			this->btnReturnPassword->Text = L"Volver";
 			this->btnReturnPassword->UseVisualStyleBackColor = true;
+			this->btnReturnPassword->Click += gcnew System::EventHandler(this, &ForgotPasswordForm::btnReturnPassword_Click);
 			// 
 			// NewPassword2
 			// 
@@ -179,6 +184,40 @@ namespace SheriffBotGUIApp {
 			this->PerformLayout();
 
 		}
-#pragma endregion
+		#pragma endregion
+		private: System::Void btnSendPassword_Click(System::Object^ sender, System::EventArgs^ e) {
+			try {
+				if (String::IsNullOrEmpty(UserName->Text) || String::IsNullOrEmpty(NewPassword1->Text) || String::IsNullOrEmpty(NewPassword2->Text)) {
+					MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				String^ usuario = UserName->Text;
+				String^ password1 = NewPassword1->Text;
+				String^ password2 = NewPassword2->Text;
+				if (NewPassword1->Text != NewPassword2->Text) {
+					MessageBox::Show("Las contraseñas no coinciden", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					NewPassword1->Text = "";
+					NewPassword2->Text = "";
+					NewPassword1->Focus();
+					return;
+				}
+
+				DatosUsuario^ restablecer = Service::restablecerUsuario(usuario, password1, password2);
+
+				if (restablecer != nullptr) {
+					MessageBox::Show("Contraseña restablecida exitosamente", "Éxito", MessageBoxButtons::OK, MessageBoxIcon::Information);
+					this->Close();
+				}
+				else {
+					MessageBox::Show("Usuario no encontrado o error al cambiar la contraseña", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al restablecer contraseña: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		private: System::Void btnReturnPassword_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->Close();
+		}
 	};
 }

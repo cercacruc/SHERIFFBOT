@@ -1,4 +1,6 @@
 #pragma once
+#include "RegisteForm.h"
+#include "LoginForm.h"
 
 namespace SheriffBotGUIApp {
 
@@ -34,9 +36,12 @@ namespace SheriffBotGUIApp {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Button^ btnLogin1;
+	private: System::Windows::Forms::Button^ btnLogin;
 	protected:
-	private: System::Windows::Forms::Button^ btnRegister1;
+
+	private: System::Windows::Forms::Button^ btnRegister;
+	protected:
+
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 
@@ -54,30 +59,32 @@ namespace SheriffBotGUIApp {
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
-			this->btnLogin1 = (gcnew System::Windows::Forms::Button());
-			this->btnRegister1 = (gcnew System::Windows::Forms::Button());
+			this->btnLogin = (gcnew System::Windows::Forms::Button());
+			this->btnRegister = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
-			// btnLogin1
+			// btnLogin
 			// 
-			this->btnLogin1->Location = System::Drawing::Point(73, 395);
-			this->btnLogin1->Name = L"btnLogin1";
-			this->btnLogin1->Size = System::Drawing::Size(218, 53);
-			this->btnLogin1->TabIndex = 7;
-			this->btnLogin1->Text = L"Iniciar sesión";
-			this->btnLogin1->UseVisualStyleBackColor = true;
+			this->btnLogin->Location = System::Drawing::Point(73, 395);
+			this->btnLogin->Name = L"btnLogin";
+			this->btnLogin->Size = System::Drawing::Size(218, 53);
+			this->btnLogin->TabIndex = 7;
+			this->btnLogin->Text = L"Iniciar sesión";
+			this->btnLogin->UseVisualStyleBackColor = true;
+			this->btnLogin->Click += gcnew System::EventHandler(this, &MainForm::btnLogin_Click);
 			// 
-			// btnRegister1
+			// btnRegister
 			// 
-			this->btnRegister1->Location = System::Drawing::Point(72, 322);
-			this->btnRegister1->Name = L"btnRegister1";
-			this->btnRegister1->Size = System::Drawing::Size(220, 49);
-			this->btnRegister1->TabIndex = 6;
-			this->btnRegister1->Text = L"Registrarse";
-			this->btnRegister1->UseVisualStyleBackColor = true;
+			this->btnRegister->Location = System::Drawing::Point(72, 322);
+			this->btnRegister->Name = L"btnRegister";
+			this->btnRegister->Size = System::Drawing::Size(220, 49);
+			this->btnRegister->TabIndex = 6;
+			this->btnRegister->Text = L"Registrarse";
+			this->btnRegister->UseVisualStyleBackColor = true;
+			this->btnRegister->Click += gcnew System::EventHandler(this, &MainForm::btnRegister_Click);
 			// 
 			// label1
 			// 
@@ -104,8 +111,8 @@ namespace SheriffBotGUIApp {
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(370, 494);
-			this->Controls->Add(this->btnLogin1);
-			this->Controls->Add(this->btnRegister1);
+			this->Controls->Add(this->btnLogin);
+			this->Controls->Add(this->btnRegister);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"MainForm";
@@ -115,6 +122,21 @@ namespace SheriffBotGUIApp {
 			this->PerformLayout();
 
 		}
-#pragma endregion
+		#pragma endregion
+		
+		private: System::Void btnRegister_Click(System::Object^ sender, System::EventArgs^ e) {
+			RegisteForm^ registerform = gcnew RegisteForm();
+			registerform->Owner = this;
+			this->Hide();
+			registerform->ShowDialog();
+			this->Show();
+		}
+		private: System::Void btnLogin_Click(System::Object^ sender, System::EventArgs^ e) {
+			LoginForm^ loginForm = gcnew LoginForm();
+			loginForm->Owner = this;
+			this->Hide();
+			loginForm->ShowDialog();
+			this->Show();
+		}
 	};
 }

@@ -9,6 +9,10 @@ namespace SheriffBotGUIApp {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	using namespace System::Collections::Generic;
+	using namespace BotModel;
+	using namespace BotService;
+
 	/// <summary>
 	/// Resumen de RegisteForm
 	/// </summary>
@@ -35,12 +39,15 @@ namespace SheriffBotGUIApp {
 			}
 		}
 	private: System::Windows::Forms::Button^ btnRegister2;
+	private: System::Windows::Forms::ComboBox^ textRole;
 	protected:
-	private: System::Windows::Forms::ComboBox^ cbmRole;
+
 	private: System::Windows::Forms::Label^ label4;
-	private: System::Windows::Forms::TextBox^ btnPassword;
+	private: System::Windows::Forms::TextBox^ textPassword;
+
 	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::TextBox^ btnUsername;
+	private: System::Windows::Forms::TextBox^ textUsername;
+
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label1;
 
@@ -58,32 +65,33 @@ namespace SheriffBotGUIApp {
 		void InitializeComponent(void)
 		{
 			this->btnRegister2 = (gcnew System::Windows::Forms::Button());
-			this->cbmRole = (gcnew System::Windows::Forms::ComboBox());
+			this->textRole = (gcnew System::Windows::Forms::ComboBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->btnPassword = (gcnew System::Windows::Forms::TextBox());
+			this->textPassword = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->btnUsername = (gcnew System::Windows::Forms::TextBox());
+			this->textUsername = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// btnRegister2
 			// 
-			this->btnRegister2->Location = System::Drawing::Point(141, 294);
+			this->btnRegister2->Location = System::Drawing::Point(115, 284);
 			this->btnRegister2->Name = L"btnRegister2";
 			this->btnRegister2->Size = System::Drawing::Size(260, 55);
 			this->btnRegister2->TabIndex = 22;
 			this->btnRegister2->Text = L"Registrarse";
 			this->btnRegister2->UseVisualStyleBackColor = true;
+			this->btnRegister2->Click += gcnew System::EventHandler(this, &RegisteForm::btnRegister2_Click);
 			// 
-			// cbmRole
+			// textRole
 			// 
-			this->cbmRole->FormattingEnabled = true;
-			this->cbmRole->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"Sheriff", L"Estudiante", L"Profesor", L"Visitante externo" });
-			this->cbmRole->Location = System::Drawing::Point(278, 218);
-			this->cbmRole->Name = L"cbmRole";
-			this->cbmRole->Size = System::Drawing::Size(179, 24);
-			this->cbmRole->TabIndex = 21;
+			this->textRole->FormattingEnabled = true;
+			this->textRole->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"Sheriff", L"Estudiante", L"Profesor", L"Visitante externo" });
+			this->textRole->Location = System::Drawing::Point(278, 218);
+			this->textRole->Name = L"textRole";
+			this->textRole->Size = System::Drawing::Size(179, 24);
+			this->textRole->TabIndex = 21;
 			// 
 			// label4
 			// 
@@ -97,13 +105,13 @@ namespace SheriffBotGUIApp {
 			this->label4->Text = L"Escoja su cargo:";
 			this->label4->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
-			// btnPassword
+			// textPassword
 			// 
-			this->btnPassword->Location = System::Drawing::Point(278, 154);
-			this->btnPassword->Margin = System::Windows::Forms::Padding(4);
-			this->btnPassword->Name = L"btnPassword";
-			this->btnPassword->Size = System::Drawing::Size(179, 22);
-			this->btnPassword->TabIndex = 19;
+			this->textPassword->Location = System::Drawing::Point(278, 154);
+			this->textPassword->Margin = System::Windows::Forms::Padding(4);
+			this->textPassword->Name = L"textPassword";
+			this->textPassword->Size = System::Drawing::Size(179, 22);
+			this->textPassword->TabIndex = 19;
 			// 
 			// label3
 			// 
@@ -117,13 +125,13 @@ namespace SheriffBotGUIApp {
 			this->label3->Text = L"Cree su contraseña:";
 			this->label3->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
-			// btnUsername
+			// textUsername
 			// 
-			this->btnUsername->Location = System::Drawing::Point(278, 92);
-			this->btnUsername->Margin = System::Windows::Forms::Padding(4);
-			this->btnUsername->Name = L"btnUsername";
-			this->btnUsername->Size = System::Drawing::Size(179, 22);
-			this->btnUsername->TabIndex = 17;
+			this->textUsername->Location = System::Drawing::Point(278, 92);
+			this->textUsername->Margin = System::Windows::Forms::Padding(4);
+			this->textUsername->Name = L"textUsername";
+			this->textUsername->Size = System::Drawing::Size(179, 22);
+			this->textUsername->TabIndex = 17;
 			// 
 			// label2
 			// 
@@ -155,11 +163,11 @@ namespace SheriffBotGUIApp {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(499, 368);
 			this->Controls->Add(this->btnRegister2);
-			this->Controls->Add(this->cbmRole);
+			this->Controls->Add(this->textRole);
 			this->Controls->Add(this->label4);
-			this->Controls->Add(this->btnPassword);
+			this->Controls->Add(this->textPassword);
 			this->Controls->Add(this->label3);
-			this->Controls->Add(this->btnUsername);
+			this->Controls->Add(this->textUsername);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Name = L"RegisteForm";
@@ -168,6 +176,28 @@ namespace SheriffBotGUIApp {
 			this->PerformLayout();
 
 		}
-#pragma endregion
+		#pragma endregion
+		private: System::Void btnRegister2_Click(System::Object^ sender, System::EventArgs^ e) {
+			try {
+				if (String::IsNullOrEmpty(textUsername->Text) || String::IsNullOrEmpty(textPassword->Text) || String::IsNullOrEmpty(textRole->Text)) {
+					MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				String^ UsuarioName = textUsername->Text;
+				String^ UsuarioRol = textRole->Text;
+				String^ UsuarioContra = textPassword->Text;
+
+				Service::registrarUsuarioAutoID(UsuarioName, UsuarioContra, UsuarioRol);
+				MessageBox::Show("¡Registro exitoso!", "Exito", MessageBoxButtons::OK);
+
+				this->Close();
+			}
+			catch (FormatException^) {
+				MessageBox::Show("Por favor, ingrese valores válidos en los campos numéricos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al agregar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
 	};
 }

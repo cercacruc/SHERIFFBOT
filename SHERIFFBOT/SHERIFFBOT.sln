@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PERSISTANCE", "..\PERSISTAN
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SheriffBotGUIApp", "..\SheriffBotGUIApp\SheriffBotGUIApp.vcxproj", "{D94E814C-701B-FEB5-560C-7248D3DF1F47}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SERVICE", "..\SERVICE\SERVICE.vcxproj", "{54D58E6A-4876-7413-16E5-C280F69B6AD5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{D94E814C-701B-FEB5-560C-7248D3DF1F47}.Release|x64.Build.0 = Release|x64
 		{D94E814C-701B-FEB5-560C-7248D3DF1F47}.Release|x86.ActiveCfg = Release|Win32
 		{D94E814C-701B-FEB5-560C-7248D3DF1F47}.Release|x86.Build.0 = Release|Win32
+		{54D58E6A-4876-7413-16E5-C280F69B6AD5}.Debug|x64.ActiveCfg = Debug|x64
+		{54D58E6A-4876-7413-16E5-C280F69B6AD5}.Debug|x64.Build.0 = Debug|x64
+		{54D58E6A-4876-7413-16E5-C280F69B6AD5}.Debug|x86.ActiveCfg = Debug|Win32
+		{54D58E6A-4876-7413-16E5-C280F69B6AD5}.Debug|x86.Build.0 = Debug|Win32
+		{54D58E6A-4876-7413-16E5-C280F69B6AD5}.Release|x64.ActiveCfg = Release|x64
+		{54D58E6A-4876-7413-16E5-C280F69B6AD5}.Release|x64.Build.0 = Release|x64
+		{54D58E6A-4876-7413-16E5-C280F69B6AD5}.Release|x86.ActiveCfg = Release|Win32
+		{54D58E6A-4876-7413-16E5-C280F69B6AD5}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

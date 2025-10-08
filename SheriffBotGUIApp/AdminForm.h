@@ -1,4 +1,6 @@
 #pragma once
+#include "DatosRobotsUsuariosForm.h"
+//faltan añadir demas ventanas
 
 namespace SheriffBotGUIApp {
 
@@ -97,6 +99,7 @@ namespace SheriffBotGUIApp {
 			this->btnRobots->TabIndex = 18;
 			this->btnRobots->Text = L"Gestión de Usuarios/Robots";
 			this->btnRobots->UseVisualStyleBackColor = true;
+			this->btnRobots->Click += gcnew System::EventHandler(this, &AdminForm::btnRobots_Click);
 			// 
 			// pictureBox1
 			// 
@@ -138,6 +141,12 @@ namespace SheriffBotGUIApp {
 			this->ResumeLayout(false);
 
 		}
-#pragma endregion
+		#pragma endregion
+		private: System::Void btnRobots_Click(System::Object^ sender, System::EventArgs^ e) {
+			DatosRobotsUsuariosForm^ form = gcnew DatosRobotsUsuariosForm();
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
 	};
 }

@@ -9,6 +9,10 @@ namespace SheriffBotGUIApp {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	using namespace BotModel;
+	using namespace BotService;
+	using namespace System::Collections::Generic;
+
 	/// <summary>
 	/// Resumen de DatosRobotsUsuariosForm
 	/// </summary>
@@ -18,6 +22,10 @@ namespace SheriffBotGUIApp {
 		DatosRobotsUsuariosForm(void)
 		{
 			InitializeComponent();
+			ShowUsuarios();
+			ShowRobots();
+			ClearFieldsR();
+			ClearFieldsU();
 			//
 			//TODO: agregar código de constructor aquí
 			//
@@ -292,6 +300,7 @@ namespace SheriffBotGUIApp {
 			this->btnControlRobot->TabIndex = 23;
 			this->btnControlRobot->Text = L"Controlar";
 			this->btnControlRobot->UseVisualStyleBackColor = true;
+			this->btnControlRobot->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::btnControlRobot_Click);
 			// 
 			// btnDeleteRobot
 			// 
@@ -302,6 +311,7 @@ namespace SheriffBotGUIApp {
 			this->btnDeleteRobot->TabIndex = 22;
 			this->btnDeleteRobot->Text = L"Eliminar";
 			this->btnDeleteRobot->UseVisualStyleBackColor = true;
+			this->btnDeleteRobot->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::btnDeleteRobot_Click);
 			// 
 			// btnModifyRobot
 			// 
@@ -312,6 +322,7 @@ namespace SheriffBotGUIApp {
 			this->btnModifyRobot->TabIndex = 21;
 			this->btnModifyRobot->Text = L"Modificar";
 			this->btnModifyRobot->UseVisualStyleBackColor = true;
+			this->btnModifyRobot->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::btnModifyRobot_Click);
 			// 
 			// btnSearchRobot
 			// 
@@ -322,6 +333,7 @@ namespace SheriffBotGUIApp {
 			this->btnSearchRobot->TabIndex = 20;
 			this->btnSearchRobot->Text = L"Buscar";
 			this->btnSearchRobot->UseVisualStyleBackColor = true;
+			this->btnSearchRobot->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::btnSearchRobot_Click);
 			// 
 			// btnAddRobot
 			// 
@@ -332,6 +344,7 @@ namespace SheriffBotGUIApp {
 			this->btnAddRobot->TabIndex = 19;
 			this->btnAddRobot->Text = L"Agregar";
 			this->btnAddRobot->UseVisualStyleBackColor = true;
+			this->btnAddRobot->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::btnAddRobot_Click);
 			// 
 			// dgvRobot
 			// 
@@ -346,6 +359,7 @@ namespace SheriffBotGUIApp {
 			this->dgvRobot->RowTemplate->Height = 24;
 			this->dgvRobot->Size = System::Drawing::Size(706, 222);
 			this->dgvRobot->TabIndex = 18;
+			this->dgvRobot->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &DatosRobotsUsuariosForm::dgvRobot_CellContentClick);
 			// 
 			// ResourceRobotD
 			// 
@@ -488,6 +502,7 @@ namespace SheriffBotGUIApp {
 			this->btnDeleteUser->TabIndex = 4;
 			this->btnDeleteUser->Text = L"Eliminar";
 			this->btnDeleteUser->UseVisualStyleBackColor = true;
+			this->btnDeleteUser->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::btnDeleteUser_Click);
 			// 
 			// btnModifyUser
 			// 
@@ -498,6 +513,7 @@ namespace SheriffBotGUIApp {
 			this->btnModifyUser->TabIndex = 3;
 			this->btnModifyUser->Text = L"Modificar";
 			this->btnModifyUser->UseVisualStyleBackColor = true;
+			this->btnModifyUser->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::btnModifyUser_Click);
 			// 
 			// btnSearchUser
 			// 
@@ -508,6 +524,7 @@ namespace SheriffBotGUIApp {
 			this->btnSearchUser->TabIndex = 2;
 			this->btnSearchUser->Text = L"Buscar";
 			this->btnSearchUser->UseVisualStyleBackColor = true;
+			this->btnSearchUser->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::btnSearchUser_Click);
 			// 
 			// btnAddUser
 			// 
@@ -518,6 +535,7 @@ namespace SheriffBotGUIApp {
 			this->btnAddUser->TabIndex = 1;
 			this->btnAddUser->Text = L"Agregar";
 			this->btnAddUser->UseVisualStyleBackColor = true;
+			this->btnAddUser->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::btnAddUser_Click);
 			// 
 			// dgvUser
 			// 
@@ -532,6 +550,7 @@ namespace SheriffBotGUIApp {
 			this->dgvUser->RowTemplate->Height = 24;
 			this->dgvUser->Size = System::Drawing::Size(556, 301);
 			this->dgvUser->TabIndex = 0;
+			this->dgvUser->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &DatosRobotsUsuariosForm::dgvUser_CellContentClick);
 			// 
 			// ResourceUserID
 			// 
@@ -579,6 +598,285 @@ namespace SheriffBotGUIApp {
 			this->ResumeLayout(false);
 
 		}
-#pragma endregion
+		#pragma endregion
+		private: System::Void btnAddRobot_Click(System::Object^ sender, System::EventArgs^ e) {
+			try {
+				if (String::IsNullOrEmpty(IDRobot->Text) || String::IsNullOrEmpty(NombreRobot->Text) || String::IsNullOrEmpty(ZonaRobot->Text)) {
+					MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+
+				int RobotID = Convert::ToInt32(IDRobot->Text);
+				String^ RobotName = NombreRobot->Text;
+				String^ RobotZona = ZonaRobot->Text;
+
+				Robot^ robotExistente = Service::buscarRobotID(RobotID);
+				if (robotExistente != nullptr) {
+					MessageBox::Show("El robot ya existe.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				Service::registrarRobot(RobotID, RobotName, RobotZona);
+
+				ShowRobots();
+				ClearFieldsR();
+
+				MessageBox::Show("Robot agregado exitosamente", "Exito", MessageBoxButtons::OK);
+			}
+			catch (FormatException^) {
+				MessageBox::Show("Por favor, ingrese valores válidos en los campos numéricos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al agregar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		private: System::Void btnSearchRobot_Click(System::Object^ sender, System::EventArgs^ e) {
+			try {
+				if (String::IsNullOrEmpty(NombreRobot->Text)) {
+					MessageBox::Show("Ingrese un nombre de robot a buscar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				String^ RobotName = NombreRobot->Text;
+				Robot^ robotEncontrado = Service::buscarRobotNombre(RobotName);
+				if (robotEncontrado != nullptr) {
+					MostrarDatosRobot(robotEncontrado);
+					MessageBox::Show("Robot encontrado exitosamente", "Exito", MessageBoxButtons::OK);
+				}
+				else {
+					ClearFieldsR();
+					MessageBox::Show("No se encontró el robot", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				}
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al encontrar el robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		private: System::Void btnModifyRobot_Click(System::Object^ sender, System::EventArgs^ e) {
+			try {
+				if (String::IsNullOrEmpty(NombreRobot->Text)) {
+					MessageBox::Show("Ingrese un nombre de robot a modificar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				int RobotID = Convert::ToInt32(IDRobot->Text);
+				String^ RobotName = NombreRobot->Text;
+				String^ RobotZona = ZonaRobot->Text;
+
+				Robot^ robotModificar = Service::modificarRobotID(RobotID, RobotName, RobotZona);
+				if (robotModificar != nullptr) {
+					ShowRobots();
+					ClearFieldsR();
+					MessageBox::Show("Robot modificado exitosamente", "Exito", MessageBoxButtons::OK);
+				}
+				else {
+					MessageBox::Show("No se encontró el robot", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+			}
+			catch (FormatException^) {
+				MessageBox::Show("Por favor, ingrese valores válidos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al modificar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		private: System::Void btnDeleteRobot_Click(System::Object^ sender, System::EventArgs^ e) {
+			try {
+				if (String::IsNullOrEmpty(NombreRobot->Text)) {
+					MessageBox::Show("Ingrese un nombre de robot a eliminar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				String^ RobotName = NombreRobot->Text;
+				bool eliminado = Service::borrarRobotNombre(RobotName);
+				if (eliminado) {
+					ShowRobots();
+					ClearFieldsR();
+					MessageBox::Show("Robot eliminado exitosamente", "Exito", MessageBoxButtons::OK);
+				}
+				else {
+					MessageBox::Show("No se encontró el robot", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al eliminar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		private: System::Void dgvRobot_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+			if (dgvRobot->SelectedRows->Count > 0) {
+				DataGridViewRow^ selectedRow = dgvUser->SelectedRows[0];
+				IDRobot->Text = selectedRow->Cells["ResourceRobotID"]->Value->ToString();
+				NombreRobot->Text = selectedRow->Cells["ResourceRobotName"]->Value->ToString();
+				ZonaRobot->Text = selectedRow->Cells["ResourceWorkArea"]->Value->ToString();
+			}
+		}
+		private:
+			void ShowRobots() {
+				dgvRobot->Rows->Clear();
+				List<Robot^>^ robots = Service::GetRobots();
+				for each (Robot ^ robot in robots) {
+					dgvRobot->Rows->Add(
+						robot->getID(),
+						robot->getNombre(),
+						robot->getZona()
+					);
+				}
+			}
+		private:
+			void ClearFieldsR() {
+				IDRobot->Text = "";
+				NombreRobot->Text = "";
+				ZonaRobot->Text = "";
+			}
+		private:
+			void MostrarDatosRobot(Robot^ robotEncontrado) {
+				IDRobot->Text = Convert::ToString(robotEncontrado->getID());
+				ZonaRobot->Text = robotEncontrado->getZona();
+			}
+		private: System::Void btnAddUser_Click(System::Object^ sender, System::EventArgs^ e) {
+			try {
+				if (String::IsNullOrEmpty(IDUser->Text) || String::IsNullOrEmpty(NombreUser->Text) ||
+					String::IsNullOrEmpty(CargoUser->Text) || String::IsNullOrEmpty(PasswordUser->Text)) {
+					MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+
+				int UsuarioID = Convert::ToInt32(IDUser->Text);
+				String^ UsuarioName = NombreUser->Text;
+				String^ UsuarioRol = CargoUser->Text;
+				String^ UsuarioContra = PasswordUser->Text;
+
+				DatosUsuario^ usuarioExistente = Service::buscarUsuarioID(UsuarioID);
+				if (usuarioExistente != nullptr) {
+					MessageBox::Show("El usuario ya existe.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				Service::registrarUsuario(UsuarioID, UsuarioName, UsuarioContra, UsuarioRol);
+
+				ShowUsuarios();
+				ClearFieldsU();
+
+				MessageBox::Show("Usuario agregado exitosamente", "Exito", MessageBoxButtons::OK);
+			}
+			catch (FormatException^) {
+				MessageBox::Show("Por favor, ingrese valores válidos en los campos numéricos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al agregar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		private: System::Void btnSearchUser_Click(System::Object^ sender, System::EventArgs^ e) {//posible modificación
+			try {
+				if (String::IsNullOrEmpty(IDUser->Text)) {
+					MessageBox::Show("Ingrese el nombre de usuario a buscar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				String^ UsuarioID = NombreUser->Text;
+
+				DatosUsuario^ usuarioEncontrado = Service::buscarUsuarioNombre(UsuarioID);
+
+				if (usuarioEncontrado != nullptr) {
+					MostrarDatosUsuario(usuarioEncontrado);
+					MessageBox::Show("Usuario encontrado exitosamente", "Exito", MessageBoxButtons::OK);
+				}
+				else {
+					ClearFieldsU();
+					MessageBox::Show("No se encontró el nombre de usuario", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				}
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al encontrar el usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		private: System::Void btnModifyUser_Click(System::Object^ sender, System::EventArgs^ e) {
+			try {
+				if (String::IsNullOrEmpty(IDUser->Text)) {
+					MessageBox::Show("Ingrese el nombre de usuario para modificar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				int UsuarioID = Convert::ToInt32(IDUser->Text);
+				String^ UsuarioName = NombreUser->Text;
+				String^ UsuarioRol = CargoUser->Text;
+				String^ UsuarioContra = PasswordUser->Text;
+
+				DatosUsuario^ usuarioModificado = Service::modificarUsuarioID(UsuarioID, UsuarioName, UsuarioContra, UsuarioRol);
+
+				if (usuarioModificado != nullptr) {
+					ShowUsuarios();
+					ClearFieldsU();
+					MessageBox::Show("Usuario modificado exitosamente", "Exito", MessageBoxButtons::OK);
+				}
+				else {
+					MessageBox::Show("No se encontró el usuario", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+			}
+			catch (FormatException^) {
+				MessageBox::Show("Por favor, ingrese valores válidos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al modificar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		private: System::Void btnDeleteUser_Click(System::Object^ sender, System::EventArgs^ e) {
+			try {
+				if (String::IsNullOrEmpty(IDUser->Text)) {
+					MessageBox::Show("Ingrese el nombre de usuario para eliminar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+
+				String^ UsuarioName = NombreUser->Text;
+
+				bool eliminado = Service::borrarUsuarioNombre(UsuarioName);
+
+				if (eliminado) {
+					ShowUsuarios();
+					ClearFieldsU();
+					MessageBox::Show("Usuario eliminado exitosamente", "Exito", MessageBoxButtons::OK);
+				}
+				else {
+					MessageBox::Show("No se encontró el usuario", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al eliminar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		private: System::Void dgvUser_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+			if (dgvUser->SelectedRows->Count > 0) {
+				DataGridViewRow^ selectedRow = dgvUser->SelectedRows[0];
+				IDUser->Text = selectedRow->Cells["ResourceUserID"]->Value->ToString();
+				NombreUser->Text = selectedRow->Cells["ResourceUserName"]->Value->ToString();
+				CargoUser->Text = selectedRow->Cells["ResourceRole"]->Value->ToString();
+				PasswordUser->Text = selectedRow->Cells["ResourcePassword"]->Value->ToString();
+			}
+		}
+		private:
+			void ShowUsuarios() {
+				dgvUser->Rows->Clear();
+
+				List<DatosUsuario^>^ usuarios = Service::GetUsuarios();
+
+				for each (DatosUsuario ^ u in usuarios) {
+					dgvUser->Rows->Add(
+						u->getID(),
+						u->getNombre(),
+						u->getContrasena(),
+						u->getCargo()
+					);
+				}
+			}
+		private:
+			void ClearFieldsU() {
+				IDUser->Text = "";
+				NombreUser->Text = "";
+				CargoUser->Text = "";
+				PasswordUser->Text = "";
+			}
+		private:
+			void MostrarDatosUsuario(DatosUsuario^ u) {
+				IDUser->Text = Convert::ToString(u->getID());
+				NombreUser->Text = u->getNombre();
+				CargoUser->Text = u->getCargo();
+				PasswordUser->Text = u->getContrasena();
+			}
+		private: System::Void btnControlRobot_Click(System::Object^ sender, System::EventArgs^ e) {
+			/*Dirige al robot elegido*/
+		}
 	};
 }

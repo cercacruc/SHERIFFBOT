@@ -1,4 +1,8 @@
 #pragma once
+#include "AdminForm.h"
+#include "SheriffForm.h"
+#include "UsuarioPromedioForm.h"
+#include "ForgotPasswordForm.h"
 
 namespace SheriffBotGUIApp {
 
@@ -9,6 +13,9 @@ namespace SheriffBotGUIApp {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	using namespace BotModel;
+	using namespace BotService;
+
 	/// <summary>
 	/// Resumen de LoginForm
 	/// </summary>
@@ -18,6 +25,7 @@ namespace SheriffBotGUIApp {
 		LoginForm(void)
 		{
 			InitializeComponent();
+			ClearFields();
 			//
 			//TODO: agregar código de constructor aquí
 			//
@@ -73,6 +81,7 @@ namespace SheriffBotGUIApp {
 			this->btnForgotPassword->TabIndex = 27;
 			this->btnForgotPassword->Text = L"Olvidé mi contraseña";
 			this->btnForgotPassword->UseVisualStyleBackColor = true;
+			this->btnForgotPassword->Click += gcnew System::EventHandler(this, &LoginForm::btnForgotPassword_Click);
 			// 
 			// btnLogin2
 			// 
@@ -82,6 +91,7 @@ namespace SheriffBotGUIApp {
 			this->btnLogin2->TabIndex = 26;
 			this->btnLogin2->Text = L"Iniciar sesión";
 			this->btnLogin2->UseVisualStyleBackColor = true;
+			this->btnLogin2->Click += gcnew System::EventHandler(this, &LoginForm::btnLogin2_Click);
 			// 
 			// Password
 			// 
@@ -153,6 +163,64 @@ namespace SheriffBotGUIApp {
 			this->PerformLayout();
 
 		}
-#pragma endregion
-	};
+		#pragma endregion
+		private: System::Void btnLogin2_Click(System::Object^ sender, System::EventArgs^ e) {
+			try {
+				if (String::IsNullOrEmpty(Username->Text) || String::IsNullOrEmpty(Password->Text)) {
+					MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+
+				String^ username = Username->Text;
+				String^ password = Password->Text;
+
+				DatosUsuario^ usuarioEncontrado = Service::buscarUsuarioCredenciales(username, password);
+				if (usuarioEncontrado != nullptr) {
+					int userID = usuarioEncontrado->getID();
+					String^ strID = userID.ToString();
+
+					if (strID->Length >= 2) {
+						String^ primerosDigitos = strID->Substring(0, 2);
+
+						if (primerosDigitos == "99") {//Admin
+							AdminForm^ adminForm = gcnew AdminForm();
+							this->Hide();
+							adminForm->ShowDialog();
+							this->Show();
+						}
+						else if (primerosDigitos == "11") {//Sherif
+							SheriffForm^ sherifForm = gcnew SheriffForm();
+							this->Hide();
+							sherifForm->ShowDialog();
+							this->Show();
+						}
+						else if (primerosDigitos == "22" || primerosDigitos == "33" || primerosDigitos == "44") {//public general
+							UsuarioPromedioForm^ usuarioForm = gcnew UsuarioPromedioForm();
+							this->Hide();
+							usuarioForm->ShowDialog();
+							this->Show();
+						}
+					}
+				}
+				else {
+					MessageBox::Show("Nombre de usuario o contraseña erroneos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				}
+				ClearFields();
+
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al iniciar sesión: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		private: void LoginForm::ClearFields() {
+			Username->Text = "";
+			Password->Text = "";
+		}
+		private: System::Void btnForgotPassword_Click(System::Object^ sender, System::EventArgs^ e) {
+			ForgotPasswordForm^ form = gcnew ForgotPasswordForm();
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
+};
 }
