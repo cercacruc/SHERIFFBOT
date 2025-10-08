@@ -9,15 +9,22 @@ namespace SheriffBotGUIApp {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	using namespace BotModel;
+	using namespace BotService;
+
 	/// <summary>
 	/// Resumen de AccountForm
 	/// </summary>
 	public ref class AccountForm : public System::Windows::Forms::Form
 	{
+	private:
+		String^ username;
 	public:
-		AccountForm(void)
+		AccountForm(String^ nombre)
 		{
+			this->username = nombre;
 			InitializeComponent();
+			CargarDatosUsuario(nombre);
 			//
 			//TODO: agregar código de constructor aquí
 			//
@@ -36,11 +43,17 @@ namespace SheriffBotGUIApp {
 		}
 	private: System::Windows::Forms::Button^ btnReturnPassword;
 	protected:
-	private: System::Windows::Forms::Label^ label4;
-	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::Label^ label2;
+
+
+
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
+	private: System::Windows::Forms::TextBox^ textUsuario;
+	private: System::Windows::Forms::TextBox^ textID;
+	private: System::Windows::Forms::TextBox^ textCargo;
+
+
+
 
 	private:
 		/// <summary>
@@ -57,59 +70,30 @@ namespace SheriffBotGUIApp {
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(AccountForm::typeid));
 			this->btnReturnPassword = (gcnew System::Windows::Forms::Button());
-			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->textUsuario = (gcnew System::Windows::Forms::TextBox());
+			this->textID = (gcnew System::Windows::Forms::TextBox());
+			this->textCargo = (gcnew System::Windows::Forms::TextBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btnReturnPassword
 			// 
 			this->btnReturnPassword->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnReturnPassword->Location = System::Drawing::Point(194, 456);
+			this->btnReturnPassword->Location = System::Drawing::Point(37, 437);
 			this->btnReturnPassword->Name = L"btnReturnPassword";
 			this->btnReturnPassword->Size = System::Drawing::Size(193, 47);
 			this->btnReturnPassword->TabIndex = 30;
 			this->btnReturnPassword->Text = L"Volver";
 			this->btnReturnPassword->UseVisualStyleBackColor = true;
-			// 
-			// label4
-			// 
-			this->label4->AutoSize = true;
-			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label4->Location = System::Drawing::Point(240, 377);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(80, 25);
-			this->label4->TabIndex = 29;
-			this->label4->Text = L"(Cargo)";
-			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label3->Location = System::Drawing::Point(221, 306);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(139, 25);
-			this->label3->TabIndex = 28;
-			this->label3->Text = L"(Identificación)";
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label2->Location = System::Drawing::Point(196, 229);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(191, 25);
-			this->label2->TabIndex = 27;
-			this->label2->Text = L"(Nombre de usuario)";
+			this->btnReturnPassword->Click += gcnew System::EventHandler(this, &AccountForm::btnReturnPassword_Click);
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16));
-			this->label1->Location = System::Drawing::Point(239, 141);
+			this->label1->Location = System::Drawing::Point(82, 168);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(108, 31);
 			this->label1->TabIndex = 26;
@@ -118,31 +102,65 @@ namespace SheriffBotGUIApp {
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(236, 15);
+			this->pictureBox1->Location = System::Drawing::Point(79, 42);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(111, 114);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox1->TabIndex = 25;
 			this->pictureBox1->TabStop = false;
 			// 
+			// textUsuario
+			// 
+			this->textUsuario->Location = System::Drawing::Point(53, 238);
+			this->textUsuario->Name = L"textUsuario";
+			this->textUsuario->Size = System::Drawing::Size(167, 22);
+			this->textUsuario->TabIndex = 32;
+			// 
+			// textID
+			// 
+			this->textID->Location = System::Drawing::Point(53, 303);
+			this->textID->Name = L"textID";
+			this->textID->Size = System::Drawing::Size(167, 22);
+			this->textID->TabIndex = 33;
+			// 
+			// textCargo
+			// 
+			this->textCargo->Location = System::Drawing::Point(53, 368);
+			this->textCargo->Name = L"textCargo";
+			this->textCargo->Size = System::Drawing::Size(167, 22);
+			this->textCargo->TabIndex = 34;
+			// 
 			// AccountForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(580, 518);
+			this->ClientSize = System::Drawing::Size(275, 518);
+			this->Controls->Add(this->textCargo);
+			this->Controls->Add(this->textID);
+			this->Controls->Add(this->textUsuario);
 			this->Controls->Add(this->btnReturnPassword);
-			this->Controls->Add(this->label4);
-			this->Controls->Add(this->label3);
-			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"AccountForm";
 			this->Text = L"AccountForm";
+			this->Load += gcnew System::EventHandler(this, &AccountForm::AccountForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
-#pragma endregion
+		#pragma endregion
+		private: System::Void AccountForm_Load(System::Object^ sender, System::EventArgs^ e) {
+			CargarDatosUsuario(username);
+		}
+		private: void CargarDatosUsuario(String^ username) {
+			DatosUsuario^ encontrado = Service::buscarUsuarioNombre(username);
+			textUsuario->Text = username;
+			textID->Text = Convert::ToString(encontrado->getID());
+			textCargo->Text = encontrado->getCargo();
+		}
+		private: System::Void btnReturnPassword_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->Close();
+		}
 	};
 }

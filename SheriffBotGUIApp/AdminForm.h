@@ -1,5 +1,6 @@
 #pragma once
 #include "DatosRobotsUsuariosForm.h"
+#include "AccountForm.h"
 //faltan añadir demas ventanas
 
 namespace SheriffBotGUIApp {
@@ -122,6 +123,7 @@ namespace SheriffBotGUIApp {
 			this->btnAccount->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->btnAccount->TabIndex = 16;
 			this->btnAccount->TabStop = false;
+			this->btnAccount->Click += gcnew System::EventHandler(this, &AdminForm::btnAccount_Click);
 			// 
 			// AdminForm
 			// 
@@ -147,6 +149,10 @@ namespace SheriffBotGUIApp {
 			this->Hide();
 			form->ShowDialog();
 			this->Show();
+		}
+		private: System::Void btnAccount_Click(System::Object^ sender, System::EventArgs^ e) {
+			//AccountForm^ form = gcnew AccountForm(nombre);
+			//ver como pasar hasta aca el dato del nombre de usuario
 		}
 	};
 }
