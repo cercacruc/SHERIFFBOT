@@ -58,4 +58,5 @@ List <Robot^>^ BotService::Service::GetRobots() {
 //static void delimitarZonaTrabajo(Point^ x, Point^ y, String^ zonaTrabajo) {
 	//return Persistance::delimitarZonaTrabajo(x, y, zonaTrabajo);
 //}
+//ejemplo
 
