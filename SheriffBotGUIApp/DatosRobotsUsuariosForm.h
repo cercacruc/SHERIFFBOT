@@ -608,6 +608,7 @@ namespace SheriffBotGUIApp {
 
 				int RobotID = Convert::ToInt32(IDRobot->Text);
 				String^ RobotName = NombreRobot->Text;
+				int RobotBateria = Convert::ToInt32(BateriaRobot->Text);//ver luego su función que de eso
 				String^ RobotZona = ZonaRobot->Text;
 				double x = Convert::ToDouble(XRobot->Text);
 				double y = Convert::ToDouble(YRobot->Text);
@@ -706,6 +707,7 @@ namespace SheriffBotGUIApp {
 			if (dgvRobot->SelectedRows->Count > 0) {
 				DataGridViewRow^ selectedRow = dgvUser->SelectedRows[0];
 				IDRobot->Text = selectedRow->Cells["ResourceRobotID"]->Value->ToString();
+
 				NombreRobot->Text = selectedRow->Cells["ResourceRobotName"]->Value->ToString();
 				ZonaRobot->Text = selectedRow->Cells["ResourceWorkArea"]->Value->ToString();
 				XRobot->Text = selectedRow->Cells["ResourceRobotX"]->Value->ToString();
