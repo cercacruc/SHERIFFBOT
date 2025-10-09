@@ -66,6 +66,9 @@
     <ClCompile Include="AlertManagementForm.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="AdminAlertManagementForm.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AccountForm.h">
@@ -117,6 +120,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="AlertManagementForm.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="AdminAlertManagementForm.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

@@ -151,7 +151,7 @@ namespace SheriffBotGUIApp {
 			// 
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
-			this->label1->Location = System::Drawing::Point(131, 9);
+			this->label1->Location = System::Drawing::Point(154, 18);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(175, 29);
 			this->label1->TabIndex = 19;

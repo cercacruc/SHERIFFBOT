@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AccountForm.cpp" />
+    <ClCompile Include="AdminAlertManagementForm.cpp" />
     <ClCompile Include="AdminForm.cpp" />
     <ClCompile Include="AlertForm.cpp" />
     <ClCompile Include="AlertManagementForm.cpp" />
@@ -140,6 +141,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AccountForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="AdminAlertManagementForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="AdminForm.h">
@@ -195,11 +199,17 @@
     <EmbeddedResource Include="AccountForm.resx">
       <DependentUpon>AccountForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AdminAlertManagementForm.resx">
+      <DependentUpon>AdminAlertManagementForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AdminForm.resx">
       <DependentUpon>AdminForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AlertForm.resx">
       <DependentUpon>AlertForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlertManagementForm.resx">
+      <DependentUpon>AlertManagementForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AltercationReportForm.resx">
       <DependentUpon>AltercationReportForm.h</DependentUpon>
