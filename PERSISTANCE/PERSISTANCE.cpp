@@ -56,9 +56,9 @@ Robot^ BotPersistance::Persistance::modificarRobotID(int id, String^ nombre, Str
 List <Robot^>^ BotPersistance::Persistance::GetRobots() {
     return listaRobots;
 }
-void BotPersistance::Persistance::delimitarZonaTrabajo(Point^ x, Point^ y, String^ zonaTrabajo) {
+//void BotPersistance::Persistance::delimitarZonaTrabajo(Point^ x, Point^ y, String^ zonaTrabajo) {
 
-}
+//}
 
 
 //funciones de usuario en persistance
