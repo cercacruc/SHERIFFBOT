@@ -123,6 +123,7 @@
     <ClCompile Include="AccountForm.cpp" />
     <ClCompile Include="AdminForm.cpp" />
     <ClCompile Include="AlertForm.cpp" />
+    <ClCompile Include="AlertManagementForm.cpp" />
     <ClCompile Include="AltercationReportForm.cpp" />
     <ClCompile Include="AvaibleRobotsForm.cpp" />
     <ClCompile Include="ControlRobotForm.cpp" />
@@ -145,6 +146,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="AlertForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="AlertManagementForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="AltercationReportForm.h">
