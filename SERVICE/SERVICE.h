@@ -21,12 +21,13 @@ namespace BotService {
 		static List <DatosUsuario^>^ GetUsuarios();
 
 		//CRUD Robots
-		static void registrarRobot(int id, String^ nombre, String^ zona,Point^ ubicacion);
+		static void registrarRobot(int id, String^ nombre, String^ zona, Point^ ubicacion);
 		static Robot^ buscarRobotID(int id);
 		static Robot^ buscarRobotNombre(String^ nombre);
 		static bool borrarRobotID(int id);
 		static bool borrarRobotNombre(String^ nombre);
 		static Robot^ modificarRobotID(int id, String^ nombre, String^ zona);
 		static List <Robot^>^ GetRobots();
+		static void delimitarZonaTrabajo(Point^ x, Point^ y, String^ zonaTrabajo);
 	};
 }

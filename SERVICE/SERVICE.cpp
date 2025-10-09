@@ -34,7 +34,7 @@ List <DatosUsuario^>^ BotService::Service::GetUsuarios() {
 }
 
 //CRUD Robots
-void BotService::Service::registrarRobot(int id, String^ nombre, String^ zona,Point^ ubicacion) {
+void BotService::Service::registrarRobot(int id, String^ nombre, String^ zona, Point^ ubicacion) {
 	return Persistance::registrarRobot(id, nombre, zona,ubicacion);
 }
 Robot^ BotService::Service::buscarRobotID(int id) {
@@ -54,5 +54,8 @@ Robot^ BotService::Service::modificarRobotID(int id, String^ nombre, String^ zon
 }
 List <Robot^>^ BotService::Service::GetRobots() {
 	return Persistance::GetRobots();
+}
+static void delimitarZonaTrabajo(Point^ x, Point^ y, String^ zonaTrabajo) {
+	return Persistance::delimitarZonaTrabajo(x, y, zonaTrabajo);
 }
 

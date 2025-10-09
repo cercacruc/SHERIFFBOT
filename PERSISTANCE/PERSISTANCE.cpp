@@ -2,7 +2,7 @@
 #include "PERSISTANCE.h"
 
 //funciones del robot en persistance
-void BotPersistance::Persistance::registrarRobot(int id, String^ nombre, String^ zona,Point^ ubicacion) {
+void BotPersistance::Persistance::registrarRobot(int id, String^ nombre, String^ zona, Point^ ubicacion) {
     Robot^ robot = gcnew Robot(id, nombre, zona,ubicacion);
     listaRobots->Add(robot);
 }
@@ -56,6 +56,10 @@ Robot^ BotPersistance::Persistance::modificarRobotID(int id, String^ nombre, Str
 List <Robot^>^ BotPersistance::Persistance::GetRobots() {
     return listaRobots;
 }
+void BotPersistance::Persistance::delimitarZonaTrabajo(Point^ x, Point^ y, String^ zonaTrabajo) {
+
+}
+
 
 //funciones de usuario en persistance
 void BotPersistance::Persistance::registrarUsuario(int id, String^ nombre, String^ contra, String^ cargo) {
