@@ -706,7 +706,7 @@ namespace SheriffBotGUIApp {
 			if (dgvRobot->SelectedRows->Count > 0) {
 				DataGridViewRow^ selectedRow = dgvUser->SelectedRows[0];
 				IDRobot->Text = selectedRow->Cells["ResourceRobotID"]->Value->ToString();
-
+				BateriaRobot->Text = selectedRow->Cells["ResourceBattery"]->Value->ToString();
 				NombreRobot->Text = selectedRow->Cells["ResourceRobotName"]->Value->ToString();
 				ZonaRobot->Text = selectedRow->Cells["ResourceWorkArea"]->Value->ToString();
 				XRobot->Text = selectedRow->Cells["ResourceRobotX"]->Value->ToString();
@@ -714,7 +714,7 @@ namespace SheriffBotGUIApp {
 			}
 		}//ver si modificar como la del profe
 		private:
-			void ShowRobots() {
+			void ShowRobots() {//crear un atributo de bateria al robot
 				dgvRobot->Rows->Clear();
 				List<Robot^>^ robots = Service::GetRobots();
 				for each (Robot ^ robot in robots) {
@@ -734,6 +734,7 @@ namespace SheriffBotGUIApp {
 				ZonaRobot->Text = "";
 				XRobot->Text = "";
 				YRobot->Text = "";
+				BateriaRobot->Text = "";
 			}
 		private:
 			void MostrarDatosRobot(Robot^ robotEncontrado) {

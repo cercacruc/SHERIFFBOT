@@ -5,17 +5,45 @@ using namespace BotModel;
 using namespace System::Collections::Generic;
 
 namespace BotPersistance {
+	/*public ref class RobotWrapper {
+	private:
+		BotModel::Robot^ robot;
+	public:
+		[XmlElement("Data")]
+		property Robot^ TheRobot {
+			Robot^ get() { return robot; }
+			void set(Robot^ value) { robot = value; }
+		}
+	};
+	[XmlRoot("Robots")]
+	public ref class RobotsCollection {
+	private:
+		List<RobotWrapper^>^ list = gcnew List<RobotWrapper^>();
+	public:
+		[XmlElement("Robot")]
+		property List<RobotWrapper^>^ TheList {
+			List<RobotWrapper^>^ get() { return list; }
+			void set(List<RobotWrapper^>^ value) { list = value; }
+		}
+	};*/
+
 	public ref class Persistance{
 	private:
 		static List<DatosUsuario^>^ listaUsuarios = gcnew List<DatosUsuario^>();
 		static List<Robot^>^ listaRobots = gcnew List<Robot^>();
 
-		static void PersistTextFile(String^ fileName, List<DatosUsuario^>^ lista);
+		static void PersistTextFileUsers(String^ fileName, List<DatosUsuario^>^ lista);
 		static Object^ LoadUsuariosFromTextFile(String^ fileName);
+		/*static void PersistXMLFileRobots(String^ fileName, Object^ persistObject);
+		static Object^ LoadRobotsFromXMLFile(String^ fileName);*/
+		static void PersistTextFileRobots(String^ fileName, List<Robot^>^ lista);
+		static Object^ LoadRobotsFromTextFile(String^ fileName);
 
 	public:
 		//Datos de guardado
-		static String^ fileName = "usuarios.txt";
+		static String^ fileUsersName = "usuarios.txt";
+		static String^ fileRobotName = "robots.txt";
+		
 
 
 		//CRUD Usuarios

@@ -46,7 +46,7 @@ namespace BotModel {
 		Point^ PosicionRobot;
 	public:
 		Robot();
-		Robot(int ID, String^ nombre, String^ zona,Point^ ubicacion);
+		Robot(int ID, String^ nombre, String^ zona, Point^ ubicacion);
 		int getID();
 		void setID(int nuevoID);
 		String^ getNombre();
