@@ -130,6 +130,7 @@ DatosUsuario^ BotPersistance::Persistance::buscarUsuarioNombre(String^ nombre) {
     return nullptr;
 }
 DatosUsuario^ BotPersistance::Persistance::buscarUsuarioCredenciales(String^ nombre, String^ contra) {
+    GetUsuarios();
     for each (DatosUsuario ^ usuario in listaUsuarios) {
         if (usuario->getNombre()->Equals(nombre) && usuario->getContrasena()->Equals(contra)) {
             return usuario;
@@ -171,6 +172,7 @@ DatosUsuario^ BotPersistance::Persistance::restablecerUsuario(String^ nombre, St
     for each (DatosUsuario ^ u in listaUsuarios) {
         if (u->getNombre()->Equals(nombre)) {
             u->setContrasena(nuevaContra);
+            PersistTextFile(fileName, listaUsuarios);
             return u;
         }
     }
@@ -191,7 +193,9 @@ DatosUsuario^ BotPersistance::Persistance::modificarUsuarioID(int id, String^ no
     return nullptr;
 }
 List <DatosUsuario^>^ BotPersistance::Persistance::GetUsuarios() {
-    listaUsuarios = (List<DatosUsuario^>^) LoadUsuariosFromTextFile(fileName);
+    if (listaUsuarios->Count == 0) {
+        listaUsuarios = (List<DatosUsuario^>^) LoadUsuariosFromTextFile(fileName);
+    }
     return listaUsuarios;
 }
 
@@ -221,25 +225,25 @@ void BotPersistance::Persistance::PersistTextFile(String^ fileName, List<DatosUs
         if (file != nullptr) file->Close();
     }
 }
-
 Object^ BotPersistance::Persistance::LoadUsuariosFromTextFile(String^ fileName) {
     FileStream^ file;
     StreamReader^ reader;
-    Object^ result = gcnew List<DatosUsuario^>();
+    listaUsuarios->Clear();
     try {
+        
         file = gcnew FileStream(fileName, FileMode::Open, FileAccess::Read);
         reader = gcnew StreamReader(file);
         while (!reader->EndOfStream) {
             String^ line = reader->ReadLine();
             array<String^>^ record = line->Split('|');
-            DatosUsuario^ usuario = gcnew DatosUsuario();
+
             int ID = Convert::ToInt32(record[0]);
             String^ nombre = record[1];
             String^ contra = record[2];
             String^ rol = record[3];
             
-            ((List<DatosUsuario^>^)result)->Add(gcnew DatosUsuario(ID, nombre, contra, rol));//chequear esta linea
-            //registrarUsuario(ID, nombre, contra, rol);
+            DatosUsuario^ usuario = gcnew DatosUsuario(ID, nombre, contra, rol);
+            listaUsuarios->Add(usuario);
         }
     }
     catch (Exception^ ex) {
@@ -249,7 +253,7 @@ Object^ BotPersistance::Persistance::LoadUsuariosFromTextFile(String^ fileName) 
         if (reader != nullptr) reader->Close();
         if (file != nullptr) file->Close();
     }
-    return result;
+    return listaUsuarios;
 }
 
 Point^ BotPersistance::Persistance::delimitarZonaTrabajo(double x, double y) {
