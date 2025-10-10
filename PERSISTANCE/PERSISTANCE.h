@@ -38,6 +38,6 @@ namespace BotPersistance {
 		static bool borrarRobotNombre(String^ nombre);
 		static Robot^ modificarRobotID(int id, String^ nombre, String^ zona);
 		static List <Robot^>^ GetRobots();
-		//static void delimitarZonaTrabajo(Point^ x, Point^ y, String^ zonaTrabajo);
+		static Point^ delimitarZonaTrabajo(double x, double y);
 	};
 }

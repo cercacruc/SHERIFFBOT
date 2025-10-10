@@ -252,3 +252,99 @@ Object^ BotPersistance::Persistance::LoadUsuariosFromTextFile(String^ fileName) 
     return result;
 }
 
+Point^ BotPersistance::Persistance::delimitarZonaTrabajo(double x, double y) {
+    String^ Ubicacion = "nullptr";
+    if (x >= 0 && x < 62) {
+        if (y >= 0 && y < 223) {
+            Ubicacion = "Criadero";
+        }
+        else if (y >= 223 && y < 285) {
+            Ubicacion = "Digimundo";
+        }
+        else if (y >= 285 && y < 379) {
+            Ubicacion = "Pabellón V";
+        }
+        else if (y >= 379 && y <= 465) {
+            if (x >= 0 && x < 37) {
+                Ubicacion = "Ingeniería Mecatrónica";
+            }
+            if (x >= 37 && x < 62) {
+                Ubicacion = "Ingeniería Industrial";
+            }
+        }
+    }
+    else if (x >= 62 && x < 99 && y >= 0 && y <= 465) {
+        Ubicacion = "Huaca";
+    }
+    else if (y >= 0 && y < 58) {
+        if (x >= 99 && x < 165) {
+            Ubicacion = "CEPRE PUCP";
+        }
+        else if (x >= 165 && x < 287) {
+            Ubicacion = "Estacionamiento CEPRE PUCP";
+        }
+        else if (y >= 287 && y < 330) {
+            Ubicacion = "Entrada Ciencias";
+        }
+        else if (x >= 330 && x < 528) {
+            Ubicacion = "Estacionamiento Ciencias";
+        }
+        else if (y >= 528 && y < 598) {
+            Ubicacion = "Puerta Principal";
+        }
+        else if (y >= 779 && y < 935) {
+            Ubicacion = "Artes escénicas";
+        }
+    }
+    else if (x >= 99 && x < 189 && y >= 58 && y < 149) {
+        Ubicacion = "FACI";
+    }
+    else if (x >= 189 && x < 254 && y >= 58 && y < 149) {
+        Ubicacion = "Química";
+    }
+    else if (x >= 254 && x < 287) {
+        if (y >= 58 && y < 90) {
+            Ubicacion = "FAD";
+        }
+        else if (y >= 90 && y < 149) {
+            Ubicacion = "El puesto";
+        }
+    }
+    else if (x >= 287 && x < 367 && y >= 58 && y < 185) {
+        Ubicacion = "EEGGCC";
+    }
+    else if (x >= 367 && x < 459) {
+        if (y >= 58 && y < 143) {
+            Ubicacion = "ARTES VIEJAS";
+        }
+        else if (y >= 143 && y < 185) {
+            Ubicacion = "Comedor de arte viejas";
+        }
+    }
+    else if (x >= 459 && x < 528 && y >= 58 && y < 185) {
+        Ubicacion = "Tópico";
+    }
+    else if (x >= 528 && x < 598 && y >= 58 && y < 185) {
+        Ubicacion = "Jardin central";
+    }
+    else if (x >= 598 && x < 670) {
+        if (y >= 0 && y < 135) {
+            Ubicacion = "Mac Gregor";
+        }
+        else if (y >= 135 && y < 185) {
+            Ubicacion = "Tinkuy";
+        }
+    }
+    else if (x >= 670 && x < 779 && y >= 0 && y < 185) {
+        Ubicacion = "Educa/Fares";
+    }
+    else if (x >= 779 && x < 935 && y >= 58 && y < 342) {
+        Ubicacion = "Canchas";
+    }
+    else if (x >= 779 && x < 935 && y >= 342 && y < 465) {
+        Ubicacion = "INRAS";
+    }
+    Point^ ubicacionRobot = gcnew Point(x, y, Ubicacion);
+    return ubicacionRobot;
+}
+

@@ -612,15 +612,14 @@ namespace SheriffBotGUIApp {
 				String^ RobotZona = ZonaRobot->Text;
 				double x = Convert::ToDouble(XRobot->Text);
 				double y = Convert::ToDouble(YRobot->Text);
-
+				Service::delimitarZonaTrabajo(x, y);
 				Robot^ robotExistente = Service::buscarRobotID(RobotID);
 				if (robotExistente != nullptr) {
 					MessageBox::Show("El robot ya existe.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 					return;
 				}
-				BotModel::Point^ ubicacion = gcnew BotModel::Point(x,y,RobotZona);
                 
-				Service::registrarRobot(RobotID, RobotName, RobotZona, ubicacion);
+				Service::registrarRobot(RobotID, RobotName, RobotZona, Service::delimitarZonaTrabajo(x, y));
 
 				ShowRobots();
 				ClearFieldsR();
