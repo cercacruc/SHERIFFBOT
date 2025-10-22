@@ -1,60 +1,43 @@
 #pragma once
 
+using namespace System;
 namespace BotModel {
-	using namespace System;
+	[Serializable]
 	public ref class DatosUsuario {
-	private:
-		String^ Nombre;
-		String^ Contra;//Contraseña
-		String^ Cargo;
-		int ID;
 	public:
+		property String^ Nombre;
+		property String^ Contra;//Contraseña
+		property String^ Cargo;
+		property int ID;
+		
+
 		DatosUsuario();
 		DatosUsuario(int ID, String^ nombre, String^ contra, String^ cargo);
-		int getID();
-		void setID(int nuevoID);
-		String^ getNombre();
-		void setNombre(String^ nuevoNombre);
-		String^ getContrasena();
-		void setContrasena(String^ nuevaContraseña);
-		String^ getCargo();
-		void setCargo(String^ nuevoCargo);
 	};
 
+	[Serializable]
 	public ref class Point {
-	private:
-		//Medidas en metros
-		double x;
-		double y;
-		String^ Ubicacion;
 	public:
+		//Medidas en metros
+		property double x;
+		property double y;
+		property String^ Ubicacion;
+
 		Point();
 		Point(double x, double y, String^ ubicacion);
-		double getX();
-		void setX(double nuevoX);
-		double getY();
-		void setY(double nuevoY);
-		String^ getUbicacion();
-		void setUbicacion(String^ ubicacion);
 	};
 
+	[Serializable]
 	public ref class Robot {
-	private:
-		int ID;
-		String^ Nombre;
-		String^ Zona;
-		Point^ PosicionRobot;
 	public:
+		property int ID;
+		property String^ Nombre;
+		property String^ Zona;
+		property Point^ PosicionRobot;
+		property int Bateria;
+		property array<Byte>^ Photo;
+
 		Robot();
 		Robot(int ID, String^ nombre, String^ zona, Point^ ubicacion);
-		int getID();
-		void setID(int nuevoID);
-		String^ getNombre();
-		void setNombre(String^ nuevoNombre);
-		String^ getZona();
-		void setZona(String^ nuevaZona);
-		Point^ getPosicion();
-		void setPosicion(Point^ nuevaPosicion);
 	};
-
 }

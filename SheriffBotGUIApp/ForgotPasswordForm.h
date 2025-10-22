@@ -191,9 +191,6 @@ namespace SheriffBotGUIApp {
 					MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 					return;
 				}
-				String^ usuario = UserName->Text;
-				String^ password1 = NewPassword1->Text;
-				String^ password2 = NewPassword2->Text;
 				if (NewPassword1->Text != NewPassword2->Text) {
 					MessageBox::Show("Las contraseñas no coinciden", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 					NewPassword1->Text = "";
@@ -202,14 +199,14 @@ namespace SheriffBotGUIApp {
 					return;
 				}
 
-				DatosUsuario^ restablecer = Service::restablecerUsuario(usuario, password1, password2);
-
-				if (restablecer != nullptr) {
+				int restablecer = Service::restablecerUsuarioPorNombre(UserName->Text, NewPassword1->Text, NewPassword2->Text);
+								
+				if (restablecer != 0) {
 					MessageBox::Show("Contraseña restablecida exitosamente", "Éxito", MessageBoxButtons::OK, MessageBoxIcon::Information);
 					this->Close();
 				}
 				else {
-					MessageBox::Show("Usuario no encontrado o error al cambiar la contraseña", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					MessageBox::Show("Error al cambiar la contraseña", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 				}
 			}
 			catch (Exception^ ex) {

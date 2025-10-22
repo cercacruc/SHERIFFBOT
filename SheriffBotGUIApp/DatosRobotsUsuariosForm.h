@@ -60,7 +60,7 @@ namespace SheriffBotGUIApp {
 	private: System::Windows::Forms::Button^ btnControlRobot;
 	private: System::Windows::Forms::Button^ btnDeleteRobot;
 	private: System::Windows::Forms::Button^ btnModifyRobot;
-	private: System::Windows::Forms::Button^ btnSearchRobot;
+
 	private: System::Windows::Forms::Button^ btnAddRobot;
 	private: System::Windows::Forms::DataGridView^ dgvRobot;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotD;
@@ -80,7 +80,7 @@ namespace SheriffBotGUIApp {
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Button^ btnDeleteUser;
 	private: System::Windows::Forms::Button^ btnModifyUser;
-	private: System::Windows::Forms::Button^ btnSearchUser;
+
 	private: System::Windows::Forms::Button^ btnAddUser;
 	private: System::Windows::Forms::DataGridView^ dgvUser;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUserID;
@@ -118,7 +118,6 @@ namespace SheriffBotGUIApp {
 			this->btnControlRobot = (gcnew System::Windows::Forms::Button());
 			this->btnDeleteRobot = (gcnew System::Windows::Forms::Button());
 			this->btnModifyRobot = (gcnew System::Windows::Forms::Button());
-			this->btnSearchRobot = (gcnew System::Windows::Forms::Button());
 			this->btnAddRobot = (gcnew System::Windows::Forms::Button());
 			this->dgvRobot = (gcnew System::Windows::Forms::DataGridView());
 			this->ResourceRobotD = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
@@ -138,7 +137,6 @@ namespace SheriffBotGUIApp {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->btnDeleteUser = (gcnew System::Windows::Forms::Button());
 			this->btnModifyUser = (gcnew System::Windows::Forms::Button());
-			this->btnSearchUser = (gcnew System::Windows::Forms::Button());
 			this->btnAddUser = (gcnew System::Windows::Forms::Button());
 			this->dgvUser = (gcnew System::Windows::Forms::DataGridView());
 			this->ResourceUserID = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
@@ -159,7 +157,7 @@ namespace SheriffBotGUIApp {
 			this->tabControl1->Location = System::Drawing::Point(12, 12);
 			this->tabControl1->Name = L"tabControl1";
 			this->tabControl1->SelectedIndex = 0;
-			this->tabControl1->Size = System::Drawing::Size(717, 658);
+			this->tabControl1->Size = System::Drawing::Size(679, 658);
 			this->tabControl1->TabIndex = 1;
 			// 
 			// tabPage2
@@ -179,12 +177,11 @@ namespace SheriffBotGUIApp {
 			this->tabPage2->Controls->Add(this->btnControlRobot);
 			this->tabPage2->Controls->Add(this->btnDeleteRobot);
 			this->tabPage2->Controls->Add(this->btnModifyRobot);
-			this->tabPage2->Controls->Add(this->btnSearchRobot);
 			this->tabPage2->Controls->Add(this->btnAddRobot);
 			this->tabPage2->Controls->Add(this->dgvRobot);
 			this->tabPage2->Location = System::Drawing::Point(4, 25);
 			this->tabPage2->Name = L"tabPage2";
-			this->tabPage2->Size = System::Drawing::Size(709, 629);
+			this->tabPage2->Size = System::Drawing::Size(671, 629);
 			this->tabPage2->TabIndex = 0;
 			this->tabPage2->Text = L"Administrar Robots";
 			this->tabPage2->UseVisualStyleBackColor = true;
@@ -294,7 +291,7 @@ namespace SheriffBotGUIApp {
 			// btnControlRobot
 			// 
 			this->btnControlRobot->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnControlRobot->Location = System::Drawing::Point(454, 321);
+			this->btnControlRobot->Location = System::Drawing::Point(454, 258);
 			this->btnControlRobot->Name = L"btnControlRobot";
 			this->btnControlRobot->Size = System::Drawing::Size(177, 49);
 			this->btnControlRobot->TabIndex = 23;
@@ -305,7 +302,7 @@ namespace SheriffBotGUIApp {
 			// btnDeleteRobot
 			// 
 			this->btnDeleteRobot->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnDeleteRobot->Location = System::Drawing::Point(454, 252);
+			this->btnDeleteRobot->Location = System::Drawing::Point(454, 189);
 			this->btnDeleteRobot->Name = L"btnDeleteRobot";
 			this->btnDeleteRobot->Size = System::Drawing::Size(177, 49);
 			this->btnDeleteRobot->TabIndex = 22;
@@ -316,24 +313,13 @@ namespace SheriffBotGUIApp {
 			// btnModifyRobot
 			// 
 			this->btnModifyRobot->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnModifyRobot->Location = System::Drawing::Point(454, 185);
+			this->btnModifyRobot->Location = System::Drawing::Point(454, 122);
 			this->btnModifyRobot->Name = L"btnModifyRobot";
 			this->btnModifyRobot->Size = System::Drawing::Size(177, 49);
 			this->btnModifyRobot->TabIndex = 21;
 			this->btnModifyRobot->Text = L"Modificar";
 			this->btnModifyRobot->UseVisualStyleBackColor = true;
 			this->btnModifyRobot->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::btnModifyRobot_Click);
-			// 
-			// btnSearchRobot
-			// 
-			this->btnSearchRobot->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnSearchRobot->Location = System::Drawing::Point(454, 116);
-			this->btnSearchRobot->Name = L"btnSearchRobot";
-			this->btnSearchRobot->Size = System::Drawing::Size(177, 49);
-			this->btnSearchRobot->TabIndex = 20;
-			this->btnSearchRobot->Text = L"Buscar";
-			this->btnSearchRobot->UseVisualStyleBackColor = true;
-			this->btnSearchRobot->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::btnSearchRobot_Click);
 			// 
 			// btnAddRobot
 			// 
@@ -359,7 +345,7 @@ namespace SheriffBotGUIApp {
 			this->dgvRobot->RowTemplate->Height = 24;
 			this->dgvRobot->Size = System::Drawing::Size(706, 222);
 			this->dgvRobot->TabIndex = 18;
-			this->dgvRobot->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &DatosRobotsUsuariosForm::dgvRobot_CellContentClick);
+			this->dgvRobot->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &DatosRobotsUsuariosForm::dgvRobot_CellClick);
 			// 
 			// ResourceRobotD
 			// 
@@ -415,19 +401,18 @@ namespace SheriffBotGUIApp {
 			this->tabPage1->Controls->Add(this->label1);
 			this->tabPage1->Controls->Add(this->btnDeleteUser);
 			this->tabPage1->Controls->Add(this->btnModifyUser);
-			this->tabPage1->Controls->Add(this->btnSearchUser);
 			this->tabPage1->Controls->Add(this->btnAddUser);
 			this->tabPage1->Controls->Add(this->dgvUser);
 			this->tabPage1->Location = System::Drawing::Point(4, 25);
 			this->tabPage1->Name = L"tabPage1";
-			this->tabPage1->Size = System::Drawing::Size(709, 629);
+			this->tabPage1->Size = System::Drawing::Size(671, 629);
 			this->tabPage1->TabIndex = 0;
 			this->tabPage1->Text = L"Administrar Usuarios";
 			this->tabPage1->UseVisualStyleBackColor = true;
 			// 
 			// CargoUser
 			// 
-			this->CargoUser->Location = System::Drawing::Point(196, 225);
+			this->CargoUser->Location = System::Drawing::Point(216, 225);
 			this->CargoUser->Name = L"CargoUser";
 			this->CargoUser->Size = System::Drawing::Size(213, 22);
 			this->CargoUser->TabIndex = 13;
@@ -444,7 +429,7 @@ namespace SheriffBotGUIApp {
 			// 
 			// PasswordUser
 			// 
-			this->PasswordUser->Location = System::Drawing::Point(196, 165);
+			this->PasswordUser->Location = System::Drawing::Point(216, 165);
 			this->PasswordUser->Name = L"PasswordUser";
 			this->PasswordUser->Size = System::Drawing::Size(213, 22);
 			this->PasswordUser->TabIndex = 11;
@@ -461,7 +446,7 @@ namespace SheriffBotGUIApp {
 			// 
 			// NombreUser
 			// 
-			this->NombreUser->Location = System::Drawing::Point(196, 108);
+			this->NombreUser->Location = System::Drawing::Point(216, 108);
 			this->NombreUser->Name = L"NombreUser";
 			this->NombreUser->Size = System::Drawing::Size(213, 22);
 			this->NombreUser->TabIndex = 9;
@@ -478,7 +463,7 @@ namespace SheriffBotGUIApp {
 			// 
 			// IDUser
 			// 
-			this->IDUser->Location = System::Drawing::Point(196, 51);
+			this->IDUser->Location = System::Drawing::Point(216, 51);
 			this->IDUser->Name = L"IDUser";
 			this->IDUser->Size = System::Drawing::Size(213, 22);
 			this->IDUser->TabIndex = 7;
@@ -496,7 +481,7 @@ namespace SheriffBotGUIApp {
 			// btnDeleteUser
 			// 
 			this->btnDeleteUser->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnDeleteUser->Location = System::Drawing::Point(477, 235);
+			this->btnDeleteUser->Location = System::Drawing::Point(477, 175);
 			this->btnDeleteUser->Name = L"btnDeleteUser";
 			this->btnDeleteUser->Size = System::Drawing::Size(177, 49);
 			this->btnDeleteUser->TabIndex = 4;
@@ -507,24 +492,13 @@ namespace SheriffBotGUIApp {
 			// btnModifyUser
 			// 
 			this->btnModifyUser->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnModifyUser->Location = System::Drawing::Point(477, 168);
+			this->btnModifyUser->Location = System::Drawing::Point(477, 108);
 			this->btnModifyUser->Name = L"btnModifyUser";
 			this->btnModifyUser->Size = System::Drawing::Size(177, 49);
 			this->btnModifyUser->TabIndex = 3;
 			this->btnModifyUser->Text = L"Modificar";
 			this->btnModifyUser->UseVisualStyleBackColor = true;
 			this->btnModifyUser->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::btnModifyUser_Click);
-			// 
-			// btnSearchUser
-			// 
-			this->btnSearchUser->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnSearchUser->Location = System::Drawing::Point(477, 99);
-			this->btnSearchUser->Name = L"btnSearchUser";
-			this->btnSearchUser->Size = System::Drawing::Size(177, 49);
-			this->btnSearchUser->TabIndex = 2;
-			this->btnSearchUser->Text = L"Buscar";
-			this->btnSearchUser->UseVisualStyleBackColor = true;
-			this->btnSearchUser->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::btnSearchUser_Click);
 			// 
 			// btnAddUser
 			// 
@@ -546,11 +520,12 @@ namespace SheriffBotGUIApp {
 			});
 			this->dgvUser->Location = System::Drawing::Point(8, 321);
 			this->dgvUser->Name = L"dgvUser";
+			this->dgvUser->RowHeadersVisible = false;
 			this->dgvUser->RowHeadersWidth = 51;
 			this->dgvUser->RowTemplate->Height = 24;
-			this->dgvUser->Size = System::Drawing::Size(556, 301);
+			this->dgvUser->Size = System::Drawing::Size(646, 301);
 			this->dgvUser->TabIndex = 0;
-			this->dgvUser->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &DatosRobotsUsuariosForm::dgvUser_CellContentClick);
+			this->dgvUser->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &DatosRobotsUsuariosForm::dgvUser_CellClick);
 			// 
 			// ResourceUserID
 			// 
@@ -584,7 +559,7 @@ namespace SheriffBotGUIApp {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(738, 675);
+			this->ClientSize = System::Drawing::Size(693, 675);
 			this->Controls->Add(this->tabControl1);
 			this->Name = L"DatosRobotsUsuariosForm";
 			this->Text = L"DatosRobotsUsuariosForm";
@@ -605,26 +580,27 @@ namespace SheriffBotGUIApp {
 					MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 					return;
 				}
+				Robot^ robot = gcnew Robot();
 
-				int RobotID = Convert::ToInt32(IDRobot->Text);
-				String^ RobotName = NombreRobot->Text;
-				int RobotBateria = Convert::ToInt32(BateriaRobot->Text);//ver luego su función que de eso
-				String^ RobotZona = ZonaRobot->Text;
+				robot->ID = Convert::ToInt32(IDRobot->Text);
+				robot->Nombre = NombreRobot->Text;
+				robot->Bateria = Convert::ToInt32(BateriaRobot->Text);//ver luego su función que de eso
+				robot->Zona = ZonaRobot->Text;
 				double x = Convert::ToDouble(XRobot->Text);
 				double y = Convert::ToDouble(YRobot->Text);
-				Service::delimitarZonaTrabajo(x, y);
-				Robot^ robotExistente = Service::buscarRobotID(RobotID);
+				robot->PosicionRobot = Service::delimitarZonaTrabajo(x, y);
+
+				int id = Convert::ToInt32(IDRobot->Text);
+				Robot^ robotExistente = Service::buscarRobotID(id);
 				if (robotExistente != nullptr) {
 					MessageBox::Show("El robot ya existe.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 					return;
 				}
-                
-				Service::registrarRobot(RobotID, RobotName, RobotZona, Service::delimitarZonaTrabajo(x, y));
+				Service::registrarRobot(robot);
+				MessageBox::Show("Robot agregado exitosamente", "Exito", MessageBoxButtons::OK);
 
 				ShowRobots();
 				ClearFieldsR();
-
-				MessageBox::Show("Robot agregado exitosamente", "Exito", MessageBoxButtons::OK);
 			}
 			catch (FormatException^) {
 				MessageBox::Show("Por favor, ingrese valores válidos en los campos numéricos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -633,39 +609,20 @@ namespace SheriffBotGUIApp {
 				MessageBox::Show("Error al agregar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 		}
-		private: System::Void btnSearchRobot_Click(System::Object^ sender, System::EventArgs^ e) {
-			try {
-				if (String::IsNullOrEmpty(NombreRobot->Text)) {
-					MessageBox::Show("Ingrese un nombre de robot a buscar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-					return;
-				}
-				String^ RobotName = NombreRobot->Text;
-				Robot^ robotEncontrado = Service::buscarRobotNombre(RobotName);
-				if (robotEncontrado != nullptr) {
-					MostrarDatosRobot(robotEncontrado);
-					MessageBox::Show("Robot encontrado exitosamente", "Exito", MessageBoxButtons::OK);
-				}
-				else {
-					ClearFieldsR();
-					MessageBox::Show("No se encontró el robot", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-				}
-			}
-			catch (Exception^ ex) {
-				MessageBox::Show("Error al encontrar el robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}
-		}
 		private: System::Void btnModifyRobot_Click(System::Object^ sender, System::EventArgs^ e) {
 			try {
 				if (String::IsNullOrEmpty(NombreRobot->Text)) {
 					MessageBox::Show("Ingrese un nombre de robot a modificar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 					return;
 				}
-				int RobotID = Convert::ToInt32(IDRobot->Text);
-				String^ RobotName = NombreRobot->Text;
-				String^ RobotZona = ZonaRobot->Text;
+				Robot^ robot = gcnew Robot();
 
-				Robot^ robotModificar = Service::modificarRobotID(RobotID, RobotName, RobotZona);
-				if (robotModificar != nullptr) {
+				robot->ID = Convert::ToInt32(IDRobot->Text);
+				robot->Nombre = NombreRobot->Text;
+				robot->Zona = ZonaRobot->Text;
+
+				int robotModificar = Service::modificarRobotID(robot);
+				if (robotModificar != 0) {
 					ShowRobots();
 					ClearFieldsR();
 					MessageBox::Show("Robot modificado exitosamente", "Exito", MessageBoxButtons::OK);
@@ -682,49 +639,55 @@ namespace SheriffBotGUIApp {
 			}
 		}
 		private: System::Void btnDeleteRobot_Click(System::Object^ sender, System::EventArgs^ e) {
+			String^ robotID = IDRobot->Text->Trim();
+			if (robotID->Equals("")) {
+				MessageBox::Show("Debe seleccionar un robot");
+				return;
+			}
 			try {
-				if (String::IsNullOrEmpty(NombreRobot->Text)) {
-					MessageBox::Show("Ingrese un nombre de robot a eliminar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-					return;
-				}
-				String^ RobotName = NombreRobot->Text;
-				bool eliminado = Service::borrarRobotNombre(RobotName);
-				if (eliminado) {
-					ShowRobots();
-					ClearFieldsR();
-					MessageBox::Show("Robot eliminado exitosamente", "Exito", MessageBoxButtons::OK);
-				}
-				else {
-					MessageBox::Show("No se encontró el robot", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar el robot?",
+					"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
+
+				if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
+					bool eliminado = Service::borrarRobotID(Convert::ToInt32(robotID));
+					if (eliminado) {
+						ShowRobots();
+						ClearFieldsR();
+						MessageBox::Show("Robot eliminado exitosamente", "Exito", MessageBoxButtons::OK);
+					}
 				}
 			}
 			catch (Exception^ ex) {
 				MessageBox::Show("Error al eliminar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 		}
-		private: System::Void dgvRobot_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-			if (dgvRobot->SelectedRows->Count > 0) {
-				DataGridViewRow^ selectedRow = dgvUser->SelectedRows[0];
-				IDRobot->Text = selectedRow->Cells["ResourceRobotID"]->Value->ToString();
-				BateriaRobot->Text = selectedRow->Cells["ResourceBattery"]->Value->ToString();
-				NombreRobot->Text = selectedRow->Cells["ResourceRobotName"]->Value->ToString();
-				ZonaRobot->Text = selectedRow->Cells["ResourceWorkArea"]->Value->ToString();
-				XRobot->Text = selectedRow->Cells["ResourceRobotX"]->Value->ToString();
-				YRobot->Text = selectedRow->Cells["ResourceRobotY"]->Value->ToString();
+		private: System::Void dgvRobot_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+			int robotID = Int32::Parse(dgvRobot->Rows[dgvRobot->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
+			Robot^ robot = (Robot^)Service::buscarRobotID(robotID);
+			if (robot != nullptr) {
+				IDRobot->Text = Convert::ToString(robot->ID);
+				NombreRobot->Text = robot->Nombre;
+				ZonaRobot->Text = robot->Zona;
+				BateriaRobot->Text = Convert::ToString(robot->Bateria);
+				XRobot->Text = Convert::ToString(robot->PosicionRobot->x);
+				YRobot->Text = Convert::ToString(robot->PosicionRobot->y);
+
+				//se pondria lo de la foto
 			}
-		}//ver si modificar como la del profe
+		}
 		private:
 			void ShowRobots() {//crear un atributo de bateria al robot
-				dgvRobot->Rows->Clear();
 				List<Robot^>^ robots = Service::GetRobots();
-				for each (Robot ^ robot in robots) {
-					dgvRobot->Rows->Add(
-						robot->getID(),
-						robot->getNombre(),
-						robot->getZona(),
-						robot->getPosicion()->getX(),
-						robot->getPosicion()->getY()
-					);
+				if (robots != nullptr) {
+					dgvRobot->Rows->Clear();
+					for (int i = 0; i < robots->Count; i++) {
+						if (robots[i]->GetType() == Robot::typeid) {
+							dgvRobot->Rows->Add(gcnew array<String^>{
+								"" + robots[i]->ID, "" + robots[i]->Bateria, robots[i]->Nombre,
+									robots[i]->Zona, "" + robots[i]->PosicionRobot->x, "" + robots[i]->PosicionRobot->y
+							});
+						}
+					}
 				}
 			}
 		private:
@@ -738,10 +701,10 @@ namespace SheriffBotGUIApp {
 			}
 		private:
 			void MostrarDatosRobot(Robot^ robotEncontrado) {
-				IDRobot->Text = Convert::ToString(robotEncontrado->getID());
-				ZonaRobot->Text = robotEncontrado->getZona();
-				XRobot->Text = Convert::ToString(robotEncontrado->getPosicion()->getX());
-				YRobot->Text = Convert::ToString(robotEncontrado->getPosicion()->getY());
+				IDRobot->Text = Convert::ToString(robotEncontrado->ID);
+				ZonaRobot->Text = robotEncontrado->Zona;
+				XRobot->Text = Convert::ToString(robotEncontrado->PosicionRobot->x);
+				YRobot->Text = Convert::ToString(robotEncontrado->PosicionRobot->y);
 			}
 		private: System::Void btnAddUser_Click(System::Object^ sender, System::EventArgs^ e) {
 			try {
@@ -750,23 +713,27 @@ namespace SheriffBotGUIApp {
 					MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 					return;
 				}
+				DatosUsuario^ usuario = gcnew DatosUsuario();
 
-				int UsuarioID = Convert::ToInt32(IDUser->Text);
-				String^ UsuarioName = NombreUser->Text;
-				String^ UsuarioRol = CargoUser->Text;
-				String^ UsuarioContra = PasswordUser->Text;
 
-				DatosUsuario^ usuarioExistente = Service::buscarUsuarioID(UsuarioID);
+				usuario->ID = Convert::ToInt32(IDUser->Text);
+				usuario->Nombre = NombreUser->Text;
+				usuario->Cargo = CargoUser->Text;
+				usuario->Contra = PasswordUser->Text;
+
+				int id = Convert::ToInt32(IDUser->Text);
+				DatosUsuario^ usuarioExistente = Service::buscarUsuarioID(id);
 				if (usuarioExistente != nullptr) {
 					MessageBox::Show("El usuario ya existe.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 					return;
 				}
-				Service::registrarUsuario(UsuarioID, UsuarioName, UsuarioContra, UsuarioRol);
+
+				Service::registrarUsuario(usuario);
+				MessageBox::Show("Usuario agregado exitosamente", "Exito", MessageBoxButtons::OK);
 
 				ShowUsuarios();
 				ClearFieldsU();
 
-				MessageBox::Show("Usuario agregado exitosamente", "Exito", MessageBoxButtons::OK);
 			}
 			catch (FormatException^) {
 				MessageBox::Show("Por favor, ingrese valores válidos en los campos numéricos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -775,50 +742,23 @@ namespace SheriffBotGUIApp {
 				MessageBox::Show("Error al agregar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 		}
-		private: System::Void btnSearchUser_Click(System::Object^ sender, System::EventArgs^ e) {//posible modificación
-			try {
-				if (String::IsNullOrEmpty(IDUser->Text)) {
-					MessageBox::Show("Ingrese el nombre de usuario a buscar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-					return;
-				}
-				String^ UsuarioID = NombreUser->Text;
-
-				DatosUsuario^ usuarioEncontrado = Service::buscarUsuarioNombre(UsuarioID);
-
-				if (usuarioEncontrado != nullptr) {
-					MostrarDatosUsuario(usuarioEncontrado);
-					MessageBox::Show("Usuario encontrado exitosamente", "Exito", MessageBoxButtons::OK);
-				}
-				else {
-					ClearFieldsU();
-					MessageBox::Show("No se encontró el nombre de usuario", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-				}
-			}
-			catch (Exception^ ex) {
-				MessageBox::Show("Error al encontrar el usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}
-		}
 		private: System::Void btnModifyUser_Click(System::Object^ sender, System::EventArgs^ e) {
 			try {
 				if (String::IsNullOrEmpty(IDUser->Text)) {
 					MessageBox::Show("Ingrese el nombre de usuario para modificar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 					return;
 				}
-				int UsuarioID = Convert::ToInt32(IDUser->Text);
-				String^ UsuarioName = NombreUser->Text;
-				String^ UsuarioRol = CargoUser->Text;
-				String^ UsuarioContra = PasswordUser->Text;
+				DatosUsuario^ usuario = gcnew DatosUsuario();
+				usuario->ID = Convert::ToInt32(IDUser->Text);
+				usuario->Nombre = NombreUser->Text;
+				usuario->Cargo = CargoUser->Text;
+				usuario->Contra = PasswordUser->Text;
 
-				DatosUsuario^ usuarioModificado = Service::modificarUsuarioID(UsuarioID, UsuarioName, UsuarioContra, UsuarioRol);
-
-				if (usuarioModificado != nullptr) {
-					ShowUsuarios();
-					ClearFieldsU();
-					MessageBox::Show("Usuario modificado exitosamente", "Exito", MessageBoxButtons::OK);
-				}
-				else {
-					MessageBox::Show("No se encontró el usuario", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				}
+				Service::modificarUsuarioID(usuario);
+				ShowUsuarios();
+				ClearFieldsU();
+				MessageBox::Show("Usuario modificado exitosamente", "Exito", MessageBoxButtons::OK);
+				
 			}
 			catch (FormatException^) {
 				MessageBox::Show("Por favor, ingrese valores válidos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -828,51 +768,55 @@ namespace SheriffBotGUIApp {
 			}
 		}
 		private: System::Void btnDeleteUser_Click(System::Object^ sender, System::EventArgs^ e) {
+			String^ UsuarioName = NombreUser->Text->Trim();
+			if (UsuarioName == "") {
+				MessageBox::Show("Debe seleccionar un usuario");
+				return;
+			}
+			
 			try {
-				if (String::IsNullOrEmpty(IDUser->Text)) {
-					MessageBox::Show("Ingrese el nombre de usuario para eliminar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-					return;
-				}
+				System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar el usuario?",
+					"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
 
-				String^ UsuarioName = NombreUser->Text;
-
-				bool eliminado = Service::borrarUsuarioNombre(UsuarioName);
-
-				if (eliminado) {
-					ShowUsuarios();
-					ClearFieldsU();
-					MessageBox::Show("Usuario eliminado exitosamente", "Exito", MessageBoxButtons::OK);
-				}
-				else {
-					MessageBox::Show("No se encontró el usuario", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				}
+				if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
+					bool eliminado = Service::borrarUsuarioNombre(UsuarioName);
+					if (eliminado) {
+						ShowUsuarios();
+						ClearFieldsU();
+						MessageBox::Show("Usuario eliminado exitosamente", "Exito", MessageBoxButtons::OK);
+					}
+					else {
+						MessageBox::Show("No se encontró el usuario", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					}
+				}				
 			}
 			catch (Exception^ ex) {
 				MessageBox::Show("Error al eliminar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 		}
-		private: System::Void dgvUser_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-			if (dgvUser->SelectedRows->Count > 0) {
-				DataGridViewRow^ selectedRow = dgvUser->SelectedRows[0];
-				IDUser->Text = selectedRow->Cells["ResourceUserID"]->Value->ToString();
-				NombreUser->Text = selectedRow->Cells["ResourceUserName"]->Value->ToString();
-				CargoUser->Text = selectedRow->Cells["ResourceRole"]->Value->ToString();
-				PasswordUser->Text = selectedRow->Cells["ResourcePassword"]->Value->ToString();
+		private: System::Void dgvUser_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+			int usuarioID = Int32::Parse(dgvUser->Rows[dgvUser->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
+			DatosUsuario^ usuario = (DatosUsuario^)Service::buscarUsuarioID(usuarioID);
+			if (usuario != nullptr) {
+				IDUser->Text = Convert::ToString(usuario->ID);
+				NombreUser->Text = usuario->Nombre;
+				CargoUser->Text = usuario->Cargo;
+				PasswordUser->Text = usuario->Contra;
 			}
 		}
 		private:
 			void ShowUsuarios() {
-				dgvUser->Rows->Clear();
-
-				List<DatosUsuario^>^ usuarios = Service::GetUsuarios();
-
-				for each (DatosUsuario ^ u in usuarios) {
-					dgvUser->Rows->Add(
-						u->getID(),
-						u->getNombre(),
-						u->getContrasena(),
-						u->getCargo()
-					);
+				List<DatosUsuario^>^ usuarioList = Service::GetUsuarios();
+				if (usuarioList != nullptr) {
+					dgvUser->Rows->Clear();
+					for (int i = 0; i < usuarioList->Count; i++) {
+						if (usuarioList[i]->GetType() == DatosUsuario::typeid) {
+							dgvUser->Rows->Add(gcnew array<String^>{
+								"" + usuarioList[i]->ID, usuarioList[i]->Nombre,
+									usuarioList[i]->Contra, usuarioList[i]->Cargo
+							});
+						}
+					}
 				}
 			}
 		private:
@@ -884,10 +828,10 @@ namespace SheriffBotGUIApp {
 			}
 		private:
 			void MostrarDatosUsuario(DatosUsuario^ u) {
-				IDUser->Text = Convert::ToString(u->getID());
-				NombreUser->Text = u->getNombre();
-				CargoUser->Text = u->getCargo();
-				PasswordUser->Text = u->getContrasena();
+				IDUser->Text = Convert::ToString(u->ID);
+				NombreUser->Text = u->Nombre;
+				CargoUser->Text = u->Cargo;
+				PasswordUser->Text = u->Contra;
 			}
 		private: System::Void btnControlRobot_Click(System::Object^ sender, System::EventArgs^ e) {
 			/*Dirige al robot elegido*/

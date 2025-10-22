@@ -156,8 +156,8 @@ namespace SheriffBotGUIApp {
 		private: void CargarDatosUsuario(String^ username) {
 			DatosUsuario^ encontrado = Service::buscarUsuarioNombre(username);
 			textUsuario->Text = username;
-			textID->Text = Convert::ToString(encontrado->getID());
-			textCargo->Text = encontrado->getCargo();
+			textID->Text = Convert::ToString(encontrado->ID);
+			textCargo->Text = encontrado->Cargo;
 		}
 		private: System::Void btnReturnPassword_Click(System::Object^ sender, System::EventArgs^ e) {
 			this->Close();

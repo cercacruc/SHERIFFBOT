@@ -39,32 +39,37 @@ namespace BotPersistance {
 		static void PersistTextFileRobots(String^ fileName, List<Robot^>^ lista);
 		static Object^ LoadRobotsFromTextFile(String^ fileName);
 
+		static void PersistBinaryFile(String^ fileName, Object^ persistObject);
+		static Object^ LoadBinaryFile(String^ fileName);
+
 	public:
 		//Datos de guardado
 		static String^ fileUsersName = "usuarios.txt";
 		static String^ fileRobotName = "robots.txt";
+		static String^ fileBinUsers = "usuarios.bin";
 		
 
 
 		//CRUD Usuarios
-		static void registrarUsuario(int id, String^ nombre, String^ contra, String^ cargo);
-		static void registrarUsuarioAutoID(String^ nombre, String^ contra, String^ cargo);
+		static void registrarUsuario(DatosUsuario^ usuario);//modificado
+		static int generarAutoID(String^ cargo); //nueva función
 		static DatosUsuario^ buscarUsuarioID(int id);
 		static DatosUsuario^ buscarUsuarioNombre(String^ nombre);
 		static DatosUsuario^ buscarUsuarioCredenciales(String^ nombre, String^ contra);
 		static bool borrarUsuarioID(int id);
-		static bool borrarUsuarioNombre(String^ nombre);
-		static DatosUsuario^ restablecerUsuario(String^ nombre, String^ contranueva, String^ confirmacion);
-		static DatosUsuario^ modificarUsuarioID(int id, String^ nombre, String^ contra, String^ cargo);
+		static bool borrarUsuarioNombre(String^ nombre);//modificado en proceso
+		static int restablecerUsuario(DatosUsuario^ usuario, String^ contranueva, String^ confirmacion);
+		static int restablecerUsuarioPorNombre(String^ nombreUsuario, String^ nuevaContra, String^ confirmarContra);
+		static int modificarUsuarioID(DatosUsuario^ usuario);
 		static List <DatosUsuario^>^ GetUsuarios();
 
 		//CRUD Robots
-		static void registrarRobot(int id, String^ nombre, String^ zona, Point^ ubicacion);
+		static void registrarRobot(Robot^ robot);
 		static Robot^ buscarRobotID(int id);
 		static Robot^ buscarRobotNombre(String^ nombre);
 		static bool borrarRobotID(int id);
 		static bool borrarRobotNombre(String^ nombre);
-		static Robot^ modificarRobotID(int id, String^ nombre, String^ zona);
+		static int modificarRobotID(Robot^ robot);
 		static List <Robot^>^ GetRobots();
 		static Point^ delimitarZonaTrabajo(double x, double y);
 	};

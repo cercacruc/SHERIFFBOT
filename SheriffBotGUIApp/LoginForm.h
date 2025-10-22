@@ -176,7 +176,7 @@ namespace SheriffBotGUIApp {
 
 				DatosUsuario^ usuarioEncontrado = Service::buscarUsuarioCredenciales(username, password);
 				if (usuarioEncontrado != nullptr) {
-					int userID = usuarioEncontrado->getID();
+					int userID = usuarioEncontrado->ID;
 					String^ strID = userID.ToString();
 
 					if (strID->Length >= 2) {

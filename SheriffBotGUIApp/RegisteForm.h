@@ -183,11 +183,16 @@ namespace SheriffBotGUIApp {
 					MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 					return;
 				}
-				String^ UsuarioName = textUsername->Text;
-				String^ UsuarioRol = textRole->Text;
-				String^ UsuarioContra = textPassword->Text;
+				DatosUsuario^ usuario = gcnew DatosUsuario();
 
-				Service::registrarUsuarioAutoID(UsuarioName, UsuarioContra, UsuarioRol);
+				usuario->Nombre = textUsername->Text;
+				usuario->Cargo = textRole->Text;
+				usuario->Contra = textPassword->Text;
+
+				String^ cargo = textRole->Text;
+				usuario->ID = Service::generarAutoID(cargo);
+
+				Service::registrarUsuario(usuario);
 				MessageBox::Show("¡Registro exitoso!", "Exito", MessageBoxButtons::OK);
 
 				this->Close();

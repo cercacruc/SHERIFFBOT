@@ -2,11 +2,11 @@
 
 #include "SERVICE.h"
 
-void BotService::Service::registrarUsuario(int id, String^ nombre, String^ contra, String^ cargo) {
-	return Persistance::registrarUsuario(id, nombre, contra, cargo);
+void BotService::Service::registrarUsuario(DatosUsuario^ usuario) {
+	return Persistance::registrarUsuario(usuario);
 }
-void BotService::Service::registrarUsuarioAutoID(String^ nombre, String^ contra, String^ cargo) {
-	return Persistance::registrarUsuarioAutoID(nombre, contra, cargo);
+int BotService::Service::generarAutoID(String^ cargo) {
+	return Persistance::generarAutoID(cargo);
 }
 DatosUsuario^ BotService::Service::buscarUsuarioID(int id) {
 	return Persistance::buscarUsuarioID(id);
@@ -23,19 +23,22 @@ bool BotService::Service::borrarUsuarioID(int id) {
 bool BotService::Service::borrarUsuarioNombre(String^ nombre) {
 	return Persistance::borrarUsuarioNombre(nombre);
 }
-DatosUsuario^ BotService::Service::restablecerUsuario(String^ nombre, String^ contranueva, String^ confirmacion) {
-	return Persistance::restablecerUsuario(nombre, contranueva, confirmacion);
+int BotService::Service::restablecerUsuario(DatosUsuario^ usuario, String^ contranueva, String^ confirmacion) {
+	return Persistance::restablecerUsuario(usuario, contranueva, confirmacion);
 }
-DatosUsuario^ BotService::Service::modificarUsuarioID(int id, String^ nombre, String^ contra, String^ cargo) {
-	return Persistance::modificarUsuarioID(id, nombre, contra, cargo);
+int BotService::Service::restablecerUsuarioPorNombre(String^ nombreUsuario, String^ nuevaContra, String^ confirmarContra) {
+	return Persistance::restablecerUsuarioPorNombre(nombreUsuario, nuevaContra, confirmarContra);
+}
+int BotService::Service::modificarUsuarioID(DatosUsuario^ usuario) {
+	return Persistance::modificarUsuarioID(usuario);
 }
 List <DatosUsuario^>^ BotService::Service::GetUsuarios() {
 	return Persistance::GetUsuarios();
 }
 
 //CRUD Robots
-void BotService::Service::registrarRobot(int id, String^ nombre, String^ zona, Point^ ubicacion) {
-	return Persistance::registrarRobot(id, nombre, zona,ubicacion);
+void BotService::Service::registrarRobot(Robot^ robot) {
+	return Persistance::registrarRobot(robot);
 }
 Robot^ BotService::Service::buscarRobotID(int id) {
 	return Persistance::buscarRobotID(id);
@@ -49,8 +52,8 @@ bool BotService::Service::borrarRobotID(int id) {
 bool BotService::Service::borrarRobotNombre(String^ nombre) {
 	return Persistance::borrarRobotNombre(nombre);
 }
-Robot^ BotService::Service::modificarRobotID(int id, String^ nombre, String^ zona) {
-	return Persistance::modificarRobotID(id, nombre, zona);
+int BotService::Service::modificarRobotID(Robot^ robot) {
+	return Persistance::modificarRobotID(robot);
 }
 List <Robot^>^ BotService::Service::GetRobots() {
 	return Persistance::GetRobots();
