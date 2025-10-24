@@ -11,6 +11,7 @@ namespace SheriffBotGUIApp {
 
 	using namespace BotModel;
 	using namespace BotService;
+	using namespace System::Collections::Generic;
 
 	/// <summary>
 	/// Resumen de ForgotPasswordForm
@@ -180,6 +181,7 @@ namespace SheriffBotGUIApp {
 			this->Controls->Add(this->label1);
 			this->Name = L"ForgotPasswordForm";
 			this->Text = L"ForgotPasswordForm";
+			this->Load += gcnew System::EventHandler(this, &ForgotPasswordForm::ForgotPasswordForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -199,7 +201,7 @@ namespace SheriffBotGUIApp {
 					return;
 				}
 
-				int restablecer = Service::restablecerUsuarioPorNombre(UserName->Text, NewPassword1->Text, NewPassword2->Text);
+				int restablecer = Service::restablecerUsuario(UserName->Text, NewPassword1->Text, NewPassword2->Text);
 								
 				if (restablecer != 0) {
 					MessageBox::Show("Contraseña restablecida exitosamente", "Éxito", MessageBoxButtons::OK, MessageBoxIcon::Information);
@@ -215,6 +217,12 @@ namespace SheriffBotGUIApp {
 		}
 		private: System::Void btnReturnPassword_Click(System::Object^ sender, System::EventArgs^ e) {
 			this->Close();
+		}
+		private: void CargarDatos() {
+			List<DatosUsuario^>^ usuarioList = Service::GetUsuarios();
+		}
+		private: System::Void ForgotPasswordForm_Load(System::Object^ sender, System::EventArgs^ e) {
+			CargarDatos();
 		}
 	};
 }

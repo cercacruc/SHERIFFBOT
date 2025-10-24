@@ -23,11 +23,8 @@ bool BotService::Service::borrarUsuarioID(int id) {
 bool BotService::Service::borrarUsuarioNombre(String^ nombre) {
 	return Persistance::borrarUsuarioNombre(nombre);
 }
-int BotService::Service::restablecerUsuario(DatosUsuario^ usuario, String^ contranueva, String^ confirmacion) {
+int BotService::Service::restablecerUsuario(String^ usuario, String^ contranueva, String^ confirmacion) {
 	return Persistance::restablecerUsuario(usuario, contranueva, confirmacion);
-}
-int BotService::Service::restablecerUsuarioPorNombre(String^ nombreUsuario, String^ nuevaContra, String^ confirmarContra) {
-	return Persistance::restablecerUsuarioPorNombre(nombreUsuario, nuevaContra, confirmarContra);
 }
 int BotService::Service::modificarUsuarioID(DatosUsuario^ usuario) {
 	return Persistance::modificarUsuarioID(usuario);

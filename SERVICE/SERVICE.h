@@ -16,8 +16,7 @@ namespace BotService {
 		static DatosUsuario^ buscarUsuarioCredenciales(String^ nombre, String^ contra);
 		static bool borrarUsuarioID(int id);
 		static bool borrarUsuarioNombre(String^ nombre);
-		static int restablecerUsuario(DatosUsuario^ usuario, String^ contranueva, String^ confirmacion);
-		static int restablecerUsuarioPorNombre(String^ nombreUsuario, String^ nuevaContra, String^ confirmarContra);
+		static int restablecerUsuario(String^ usuario, String^ contranueva, String^ confirmacion);
 		static int modificarUsuarioID(DatosUsuario^ usuario);
 		static List <DatosUsuario^>^ GetUsuarios();
 

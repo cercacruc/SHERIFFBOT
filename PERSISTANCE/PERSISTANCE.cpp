@@ -167,7 +167,7 @@ bool BotPersistance::Persistance::borrarUsuarioNombre(String^ nombre) {
     }
     return false;
 }
-int BotPersistance::Persistance::restablecerUsuario(DatosUsuario^ usuario, String^ nuevaContra, String^ confirmarContra) {
+int BotPersistance::Persistance::restablecerUsuario(String^ usuario, String^ nuevaContra, String^ confirmarContra) {
     // Validar que sean la misma contraseña
     if (!nuevaContra->Equals(confirmarContra)) {
         throw gcnew Exception("Las contraseñas no coinciden");
@@ -178,29 +178,16 @@ int BotPersistance::Persistance::restablecerUsuario(DatosUsuario^ usuario, Strin
         throw gcnew Exception("La contraseña no puede estar vacía");
     }
 
-    // Buscar usuario y actualizar contraseña
-    for (int i = 0; i < listaUsuarios->Count; i++) {
-        if (listaUsuarios[i]->ID == usuario->ID) {
-            listaUsuarios[i]->Contra = nuevaContra;
-            PersistTextFileUsers(fileUsersName, listaUsuarios);
-            //PersistBinaryFile(fileBinUsers, listaUsuarios);
-            return 1;
-        }
+    DatosUsuario^ usuarioEncontrado = buscarUsuarioNombre(usuario);
+    if (usuarioEncontrado != nullptr) {
+        usuarioEncontrado->Contra = nuevaContra;
+        PersistTextFileUsers(fileUsersName, listaUsuarios);
+        return 1;
     }
-    throw gcnew Exception("Usuario no encontrado");
-    return 0;
-}
-int BotPersistance::Persistance::restablecerUsuarioPorNombre(String^ nombreUsuario, String^ nuevaContra, String^ confirmarContra)
-{
-    // Buscar el usuario por nombre primero
-    DatosUsuario^ usuarioExistente = buscarUsuarioNombre(nombreUsuario);
-
-    if (usuarioExistente == nullptr) {
+    else {
         throw gcnew Exception("Usuario no encontrado");
-    }
-
-    // Llamar a la función existente con el usuario encontrado
-    return restablecerUsuario(usuarioExistente, nuevaContra, confirmarContra);
+    }    
+    return 0;
 }
 int BotPersistance::Persistance::modificarUsuarioID(DatosUsuario^ usuario) {
     for (int i = 0; i < listaUsuarios->Count; i++) {

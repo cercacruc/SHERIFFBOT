@@ -22,10 +22,7 @@ namespace SheriffBotGUIApp {
 		DatosRobotsUsuariosForm(void)
 		{
 			InitializeComponent();
-			ShowUsuarios();
-			ShowRobots();
-			ClearFieldsR();
-			ClearFieldsU();
+			
 			//
 			//TODO: agregar código de constructor aquí
 			//
@@ -563,6 +560,7 @@ namespace SheriffBotGUIApp {
 			this->Controls->Add(this->tabControl1);
 			this->Name = L"DatosRobotsUsuariosForm";
 			this->Text = L"DatosRobotsUsuariosForm";
+			this->Load += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::DatosRobotsUsuariosForm_Load);
 			this->tabControl1->ResumeLayout(false);
 			this->tabPage2->ResumeLayout(false);
 			this->tabPage2->PerformLayout();
@@ -835,6 +833,13 @@ namespace SheriffBotGUIApp {
 			}
 		private: System::Void btnControlRobot_Click(System::Object^ sender, System::EventArgs^ e) {
 			/*Dirige al robot elegido*/
+		}
+		private: System::Void DatosRobotsUsuariosForm_Load(System::Object^ sender, System::EventArgs^ e) {
+			ShowUsuarios();
+			ShowRobots();
+			ClearFieldsR();
+			ClearFieldsU();
+
 		}
 	};
 }
