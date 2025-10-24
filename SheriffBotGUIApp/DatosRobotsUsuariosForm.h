@@ -574,7 +574,7 @@ namespace SheriffBotGUIApp {
 		#pragma endregion
 		private: System::Void btnAddRobot_Click(System::Object^ sender, System::EventArgs^ e) {
 			try {
-				if (String::IsNullOrEmpty(IDRobot->Text) || String::IsNullOrEmpty(NombreRobot->Text) || String::IsNullOrEmpty(ZonaRobot->Text)) {
+				if (String::IsNullOrEmpty(IDRobot->Text) || String::IsNullOrEmpty(NombreRobot->Text)) {
 					MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 					return;
 				}
@@ -583,10 +583,18 @@ namespace SheriffBotGUIApp {
 				robot->ID = Convert::ToInt32(IDRobot->Text);
 				robot->Nombre = NombreRobot->Text;
 				robot->Bateria = Convert::ToInt32(BateriaRobot->Text);//ver luego su función que de eso
-				robot->Zona = ZonaRobot->Text;
+
 				double x = Convert::ToDouble(XRobot->Text);
 				double y = Convert::ToDouble(YRobot->Text);
-				robot->PosicionRobot = Service::delimitarZonaTrabajo(x, y);
+				robot->Zona = Service::delimitarZonaTrabajo(x, y);
+				//robot->Zona = ZonaRobot->Text;
+
+				robot->PosicionRobot->x = Convert::ToDouble(XRobot->Text);
+				robot->PosicionRobot->y = Convert::ToDouble(YRobot->Text);
+				/*
+				double x = Convert::ToDouble(XRobot->Text);
+				double y = Convert::ToDouble(YRobot->Text);
+				robot->PosicionRobot = Service::delimitarZonaTrabajo(x, y);*/
 
 				int id = Convert::ToInt32(IDRobot->Text);
 				Robot^ robotExistente = Service::buscarRobotID(id);
@@ -600,9 +608,9 @@ namespace SheriffBotGUIApp {
 				ShowRobots();
 				ClearFieldsR();
 			}
-			catch (FormatException^) {
+			/*catch (FormatException^) {
 				MessageBox::Show("Por favor, ingrese valores válidos en los campos numéricos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}
+			}*/
 			catch (Exception^ ex) {
 				MessageBox::Show("Error al agregar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}

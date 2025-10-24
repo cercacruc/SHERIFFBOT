@@ -1,1 +1,1 @@
-1|Robot 1|EEGGCC|BotModel.Point
+1|100|R1|Ingeniería Mecatrónica|36|379

@@ -23,7 +23,6 @@ Robot^ BotPersistance::Persistance::buscarRobotID(int id) {
     return robot;
 }
 Robot^ BotPersistance::Persistance::buscarRobotNombre(String^ nombre) {
-    //GetRobots();
     for each (Robot ^ r in listaRobots) {
         if (r->Nombre->Equals(nombre)) {
             return r;
@@ -32,11 +31,10 @@ Robot^ BotPersistance::Persistance::buscarRobotNombre(String^ nombre) {
     return nullptr;
 }
 bool BotPersistance::Persistance::borrarRobotID(int id) {
-    //GetRobots();
     for (int i = 0; i < listaRobots->Count; i++) {
         if (listaRobots[i]->ID == id) {
             listaRobots->RemoveAt(i);
-            //PersistTextFileRobots(fileRobotName, listaRobots);
+            PersistTextFileRobots(fileRobotName, listaRobots);
             return true;
         }
     }
@@ -46,7 +44,7 @@ bool BotPersistance::Persistance::borrarRobotNombre(String^ nombre) {
     for (int i = 0; i < listaRobots->Count; i++) {
         if (listaRobots[i]->Nombre->Equals(nombre)) {
             listaRobots->RemoveAt(i);
-            //PersistTextFileRobots(fileRobotName, listaRobots);
+            PersistTextFileRobots(fileRobotName, listaRobots);
             return true;
         }
     }
@@ -56,16 +54,16 @@ int BotPersistance::Persistance::modificarRobotID(Robot^ robot) {
     for (int i = 0; i < listaRobots->Count; i++) {
         if (listaRobots[i]->ID == robot->ID) {
             listaRobots[i] = robot;
-            //PersistTextFileRobots(fileRobotName, listaRobots);
+            PersistTextFileRobots(fileRobotName, listaRobots);
             return 1;
         }
     }
     return 0;
 }
 List <Robot^>^ BotPersistance::Persistance::GetRobots() {
-    /*if (listaRobots->Count == 0) {
+    if (listaRobots->Count == 0) {
         listaRobots = (List<Robot^>^) LoadRobotsFromTextFile(fileRobotName);
-    }*/
+    }
     return listaRobots;
 }
 
@@ -276,11 +274,13 @@ void BotPersistance::Persistance::PersistTextFileRobots(String^ fileName, List<R
         file = gcnew FileStream(fileName, FileMode::Create, FileAccess::Write);
         writer = gcnew StreamWriter(file);
         for each (Robot ^ robot in listaRobots) {
-            writer->WriteLine("{0}|{1}|{2}|{3}",
+            writer->WriteLine("{0}|{1}|{2}|{3}|{4}|{5}",
                 robot->ID,
+                robot->Bateria,
                 robot->Nombre,
                 robot->Zona,
-                robot->PosicionRobot
+                robot->PosicionRobot->x,
+                robot->PosicionRobot->y
             );
         }
     }
@@ -384,13 +384,8 @@ Object^ BotPersistance::Persistance::LoadBinaryFile(String^ fileName)
     return result;
 }
 
-
-
-
-
-
 //Funcion de zonas
-Point^ BotPersistance::Persistance::delimitarZonaTrabajo(double x, double y) {
+String^ BotPersistance::Persistance::delimitarZonaTrabajo(double x, double y) {
     String^ Ubicacion = "nullptr";
     if (x >= 0 && x < 62) {
         if (y >= 0 && y < 223) {
@@ -482,6 +477,6 @@ Point^ BotPersistance::Persistance::delimitarZonaTrabajo(double x, double y) {
     else if (x >= 779 && x < 935 && y >= 342 && y < 465) {
         Ubicacion = "INRAS";
     }
-    Point^ ubicacionRobot = gcnew Point(x, y, Ubicacion);
-    return ubicacionRobot;
+    //Point^ ubicacionRobot = gcnew Point(x, y, Ubicacion);
+    return Ubicacion;
 }

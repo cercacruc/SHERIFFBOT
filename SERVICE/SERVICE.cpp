@@ -55,8 +55,8 @@ int BotService::Service::modificarRobotID(Robot^ robot) {
 List <Robot^>^ BotService::Service::GetRobots() {
 	return Persistance::GetRobots();
 }
-Point^ BotService::Service::delimitarZonaTrabajo(double x, double y) {
+String^ BotService::Service::delimitarZonaTrabajo(double x, double y) {
 	return Persistance::delimitarZonaTrabajo(x, y);
 }
-//ejemplo
+
 
