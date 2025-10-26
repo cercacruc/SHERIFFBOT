@@ -91,13 +91,18 @@ namespace SheriffBotGUIApp {
 	private: System::Windows::Forms::GroupBox^ groupBox1;
 	private: System::Windows::Forms::RadioButton^ rbtnDisponibilidadNo;
 	private: System::Windows::Forms::RadioButton^ rbtnDisponibilidadYes;
+	private: System::Windows::Forms::Button^ btnUpdatePhotoRobot;
 
 
 
-	private: System::Windows::Forms::Button^ btnUpdatePhoto;
-	private: System::Windows::Forms::PictureBox^ pbPhoto;
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::PictureBox^ pictureBox1;
+
+	private: System::Windows::Forms::PictureBox^ pbPhotoRobot;
+
+
+
+
+
+
 	private: System::Windows::Forms::Label^ label6;
 	private: System::Windows::Forms::TextBox^ txtCaracteristicas;
 
@@ -116,6 +121,14 @@ namespace SheriffBotGUIApp {
 		{
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->txtCaracteristicas = (gcnew System::Windows::Forms::TextBox());
+			this->btnUpdatePhotoRobot = (gcnew System::Windows::Forms::Button());
+			this->pbPhotoRobot = (gcnew System::Windows::Forms::PictureBox());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->rbtnDisponibilidadNo = (gcnew System::Windows::Forms::RadioButton());
+			this->rbtnDisponibilidadYes = (gcnew System::Windows::Forms::RadioButton());
 			this->YRobot = (gcnew System::Windows::Forms::TextBox());
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->XRobot = (gcnew System::Windows::Forms::TextBox());
@@ -156,24 +169,13 @@ namespace SheriffBotGUIApp {
 			this->ResourceUserName = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourcePassword = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourceRole = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
-			this->rbtnDisponibilidadNo = (gcnew System::Windows::Forms::RadioButton());
-			this->rbtnDisponibilidadYes = (gcnew System::Windows::Forms::RadioButton());
-			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->btnUpdatePhoto = (gcnew System::Windows::Forms::Button());
-			this->pbPhoto = (gcnew System::Windows::Forms::PictureBox());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
-			this->txtCaracteristicas = (gcnew System::Windows::Forms::TextBox());
-			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->tabControl1->SuspendLayout();
 			this->tabPage2->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPhotoRobot))->BeginInit();
+			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvRobot))->BeginInit();
 			this->tabPage1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvUser))->BeginInit();
-			this->groupBox1->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPhoto))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// tabControl1
@@ -190,8 +192,8 @@ namespace SheriffBotGUIApp {
 			// 
 			this->tabPage2->Controls->Add(this->label6);
 			this->tabPage2->Controls->Add(this->txtCaracteristicas);
-			this->tabPage2->Controls->Add(this->btnUpdatePhoto);
-			this->tabPage2->Controls->Add(this->pbPhoto);
+			this->tabPage2->Controls->Add(this->btnUpdatePhotoRobot);
+			this->tabPage2->Controls->Add(this->pbPhotoRobot);
 			this->tabPage2->Controls->Add(this->label5);
 			this->tabPage2->Controls->Add(this->groupBox1);
 			this->tabPage2->Controls->Add(this->YRobot);
@@ -217,6 +219,93 @@ namespace SheriffBotGUIApp {
 			this->tabPage2->TabIndex = 0;
 			this->tabPage2->Text = L"Administrar Robots";
 			this->tabPage2->UseVisualStyleBackColor = true;
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->label6->Location = System::Drawing::Point(403, 68);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(141, 25);
+			this->label6->TabIndex = 43;
+			this->label6->Text = L"Características";
+			// 
+			// txtCaracteristicas
+			// 
+			this->txtCaracteristicas->Location = System::Drawing::Point(396, 108);
+			this->txtCaracteristicas->Multiline = true;
+			this->txtCaracteristicas->Name = L"txtCaracteristicas";
+			this->txtCaracteristicas->Size = System::Drawing::Size(301, 108);
+			this->txtCaracteristicas->TabIndex = 42;
+			// 
+			// btnUpdatePhotoRobot
+			// 
+			this->btnUpdatePhotoRobot->Location = System::Drawing::Point(718, 189);
+			this->btnUpdatePhotoRobot->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->btnUpdatePhotoRobot->Name = L"btnUpdatePhotoRobot";
+			this->btnUpdatePhotoRobot->Size = System::Drawing::Size(221, 27);
+			this->btnUpdatePhotoRobot->TabIndex = 41;
+			this->btnUpdatePhotoRobot->Text = L"Actualizar foto";
+			this->btnUpdatePhotoRobot->UseVisualStyleBackColor = true;
+			this->btnUpdatePhotoRobot->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::btnUpdatePhotoRobot_Click);
+			// 
+			// pbPhotoRobot
+			// 
+			this->pbPhotoRobot->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
+			this->pbPhotoRobot->Location = System::Drawing::Point(718, 22);
+			this->pbPhotoRobot->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->pbPhotoRobot->Name = L"pbPhotoRobot";
+			this->pbPhotoRobot->Size = System::Drawing::Size(223, 165);
+			this->pbPhotoRobot->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pbPhotoRobot->TabIndex = 40;
+			this->pbPhotoRobot->TabStop = false;
+			this->pbPhotoRobot->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::pbPhoto_Click);
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->label5->Location = System::Drawing::Point(391, 242);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(133, 25);
+			this->label5->TabIndex = 39;
+			this->label5->Text = L"Disponibilidad";
+			// 
+			// groupBox1
+			// 
+			this->groupBox1->Controls->Add(this->rbtnDisponibilidadNo);
+			this->groupBox1->Controls->Add(this->rbtnDisponibilidadYes);
+			this->groupBox1->Location = System::Drawing::Point(396, 277);
+			this->groupBox1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->groupBox1->Name = L"groupBox1";
+			this->groupBox1->Padding = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->groupBox1->Size = System::Drawing::Size(133, 46);
+			this->groupBox1->TabIndex = 36;
+			this->groupBox1->TabStop = false;
+			// 
+			// rbtnDisponibilidadNo
+			// 
+			this->rbtnDisponibilidadNo->AutoSize = true;
+			this->rbtnDisponibilidadNo->Location = System::Drawing::Point(68, 20);
+			this->rbtnDisponibilidadNo->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->rbtnDisponibilidadNo->Name = L"rbtnDisponibilidadNo";
+			this->rbtnDisponibilidadNo->Size = System::Drawing::Size(46, 20);
+			this->rbtnDisponibilidadNo->TabIndex = 1;
+			this->rbtnDisponibilidadNo->Text = L"No";
+			this->rbtnDisponibilidadNo->UseVisualStyleBackColor = true;
+			// 
+			// rbtnDisponibilidadYes
+			// 
+			this->rbtnDisponibilidadYes->AutoSize = true;
+			this->rbtnDisponibilidadYes->Checked = true;
+			this->rbtnDisponibilidadYes->Location = System::Drawing::Point(12, 20);
+			this->rbtnDisponibilidadYes->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->rbtnDisponibilidadYes->Name = L"rbtnDisponibilidadYes";
+			this->rbtnDisponibilidadYes->Size = System::Drawing::Size(40, 20);
+			this->rbtnDisponibilidadYes->TabIndex = 0;
+			this->rbtnDisponibilidadYes->TabStop = true;
+			this->rbtnDisponibilidadYes->Text = L"Sí";
+			this->rbtnDisponibilidadYes->UseVisualStyleBackColor = true;
 			// 
 			// YRobot
 			// 
@@ -325,7 +414,7 @@ namespace SheriffBotGUIApp {
 			this->btnControlRobot->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
 			this->btnControlRobot->Location = System::Drawing::Point(755, 297);
 			this->btnControlRobot->Name = L"btnControlRobot";
-			this->btnControlRobot->Size = System::Drawing::Size(145, 49);
+			this->btnControlRobot->Size = System::Drawing::Size(184, 49);
 			this->btnControlRobot->TabIndex = 23;
 			this->btnControlRobot->Text = L"Controlar";
 			this->btnControlRobot->UseVisualStyleBackColor = true;
@@ -334,9 +423,9 @@ namespace SheriffBotGUIApp {
 			// btnDeleteRobot
 			// 
 			this->btnDeleteRobot->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnDeleteRobot->Location = System::Drawing::Point(604, 297);
+			this->btnDeleteRobot->Location = System::Drawing::Point(565, 297);
 			this->btnDeleteRobot->Name = L"btnDeleteRobot";
-			this->btnDeleteRobot->Size = System::Drawing::Size(145, 49);
+			this->btnDeleteRobot->Size = System::Drawing::Size(184, 49);
 			this->btnDeleteRobot->TabIndex = 22;
 			this->btnDeleteRobot->Text = L"Eliminar";
 			this->btnDeleteRobot->UseVisualStyleBackColor = true;
@@ -347,7 +436,7 @@ namespace SheriffBotGUIApp {
 			this->btnModifyRobot->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
 			this->btnModifyRobot->Location = System::Drawing::Point(755, 242);
 			this->btnModifyRobot->Name = L"btnModifyRobot";
-			this->btnModifyRobot->Size = System::Drawing::Size(145, 49);
+			this->btnModifyRobot->Size = System::Drawing::Size(184, 49);
 			this->btnModifyRobot->TabIndex = 21;
 			this->btnModifyRobot->Text = L"Modificar";
 			this->btnModifyRobot->UseVisualStyleBackColor = true;
@@ -356,9 +445,9 @@ namespace SheriffBotGUIApp {
 			// btnAddRobot
 			// 
 			this->btnAddRobot->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnAddRobot->Location = System::Drawing::Point(604, 242);
+			this->btnAddRobot->Location = System::Drawing::Point(565, 242);
 			this->btnAddRobot->Name = L"btnAddRobot";
-			this->btnAddRobot->Size = System::Drawing::Size(145, 49);
+			this->btnAddRobot->Size = System::Drawing::Size(184, 49);
 			this->btnAddRobot->TabIndex = 19;
 			this->btnAddRobot->Text = L"Agregar";
 			this->btnAddRobot->UseVisualStyleBackColor = true;
@@ -425,8 +514,6 @@ namespace SheriffBotGUIApp {
 			// 
 			// tabPage1
 			// 
-			this->tabPage1->Controls->Add(this->button1);
-			this->tabPage1->Controls->Add(this->pictureBox1);
 			this->tabPage1->Controls->Add(this->CargoUser);
 			this->tabPage1->Controls->Add(this->label4);
 			this->tabPage1->Controls->Add(this->PasswordUser);
@@ -591,112 +678,6 @@ namespace SheriffBotGUIApp {
 			this->ResourceRole->Name = L"ResourceRole";
 			this->ResourceRole->Width = 125;
 			// 
-			// groupBox1
-			// 
-			this->groupBox1->Controls->Add(this->rbtnDisponibilidadNo);
-			this->groupBox1->Controls->Add(this->rbtnDisponibilidadYes);
-			this->groupBox1->Location = System::Drawing::Point(396, 277);
-			this->groupBox1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Padding = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->groupBox1->Size = System::Drawing::Size(133, 46);
-			this->groupBox1->TabIndex = 36;
-			this->groupBox1->TabStop = false;
-			// 
-			// rbtnDisponibilidadNo
-			// 
-			this->rbtnDisponibilidadNo->AutoSize = true;
-			this->rbtnDisponibilidadNo->Location = System::Drawing::Point(68, 20);
-			this->rbtnDisponibilidadNo->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->rbtnDisponibilidadNo->Name = L"rbtnDisponibilidadNo";
-			this->rbtnDisponibilidadNo->Size = System::Drawing::Size(46, 20);
-			this->rbtnDisponibilidadNo->TabIndex = 1;
-			this->rbtnDisponibilidadNo->Text = L"No";
-			this->rbtnDisponibilidadNo->UseVisualStyleBackColor = true;
-			// 
-			// rbtnDisponibilidadYes
-			// 
-			this->rbtnDisponibilidadYes->AutoSize = true;
-			this->rbtnDisponibilidadYes->Checked = true;
-			this->rbtnDisponibilidadYes->Location = System::Drawing::Point(12, 20);
-			this->rbtnDisponibilidadYes->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->rbtnDisponibilidadYes->Name = L"rbtnDisponibilidadYes";
-			this->rbtnDisponibilidadYes->Size = System::Drawing::Size(40, 20);
-			this->rbtnDisponibilidadYes->TabIndex = 0;
-			this->rbtnDisponibilidadYes->TabStop = true;
-			this->rbtnDisponibilidadYes->Text = L"Sí";
-			this->rbtnDisponibilidadYes->UseVisualStyleBackColor = true;
-			// 
-			// label5
-			// 
-			this->label5->AutoSize = true;
-			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label5->Location = System::Drawing::Point(391, 242);
-			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(133, 25);
-			this->label5->TabIndex = 39;
-			this->label5->Text = L"Disponibilidad";
-			// 
-			// btnUpdatePhoto
-			// 
-			this->btnUpdatePhoto->Location = System::Drawing::Point(718, 189);
-			this->btnUpdatePhoto->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->btnUpdatePhoto->Name = L"btnUpdatePhoto";
-			this->btnUpdatePhoto->Size = System::Drawing::Size(221, 27);
-			this->btnUpdatePhoto->TabIndex = 41;
-			this->btnUpdatePhoto->Text = L"Actualizar foto";
-			this->btnUpdatePhoto->UseVisualStyleBackColor = true;
-			// 
-			// pbPhoto
-			// 
-			this->pbPhoto->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->pbPhoto->Location = System::Drawing::Point(718, 22);
-			this->pbPhoto->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->pbPhoto->Name = L"pbPhoto";
-			this->pbPhoto->Size = System::Drawing::Size(223, 165);
-			this->pbPhoto->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-			this->pbPhoto->TabIndex = 40;
-			this->pbPhoto->TabStop = false;
-			// 
-			// button1
-			// 
-			this->button1->Location = System::Drawing::Point(703, 202);
-			this->button1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(221, 27);
-			this->button1->TabIndex = 27;
-			this->button1->Text = L"Actualizar foto";
-			this->button1->UseVisualStyleBackColor = true;
-			// 
-			// pictureBox1
-			// 
-			this->pictureBox1->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->pictureBox1->Location = System::Drawing::Point(703, 35);
-			this->pictureBox1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(223, 165);
-			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-			this->pictureBox1->TabIndex = 26;
-			this->pictureBox1->TabStop = false;
-			// 
-			// txtCaracteristicas
-			// 
-			this->txtCaracteristicas->Location = System::Drawing::Point(396, 108);
-			this->txtCaracteristicas->Multiline = true;
-			this->txtCaracteristicas->Name = L"txtCaracteristicas";
-			this->txtCaracteristicas->Size = System::Drawing::Size(301, 108);
-			this->txtCaracteristicas->TabIndex = 42;
-			// 
-			// label6
-			// 
-			this->label6->AutoSize = true;
-			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label6->Location = System::Drawing::Point(403, 68);
-			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(141, 25);
-			this->label6->TabIndex = 43;
-			this->label6->Text = L"Características";
-			// 
 			// DatosRobotsUsuariosForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -709,14 +690,13 @@ namespace SheriffBotGUIApp {
 			this->tabControl1->ResumeLayout(false);
 			this->tabPage2->ResumeLayout(false);
 			this->tabPage2->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPhotoRobot))->EndInit();
+			this->groupBox1->ResumeLayout(false);
+			this->groupBox1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvRobot))->EndInit();
 			this->tabPage1->ResumeLayout(false);
 			this->tabPage1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvUser))->EndInit();
-			this->groupBox1->ResumeLayout(false);
-			this->groupBox1->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPhoto))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 
 		}
@@ -735,10 +715,25 @@ namespace SheriffBotGUIApp {
 
 				double x = Convert::ToDouble(XRobot->Text);
 				double y = Convert::ToDouble(YRobot->Text);
-				robot->Zona = Service::delimitarZonaTrabajo(x, y);
+				robot->Zona = Service::delimitarZonaTrabajo(x, y); //revisar esa función
+
+				if (Service::delimitarZonaTrabajo(x, y) == "BASE") {
+					robot->Disponibilidad = true;
+				}
+				else {
+					robot->Disponibilidad = rbtnDisponibilidadNo->Checked;
+				}
 
 				robot->PosicionRobot->x = Convert::ToDouble(XRobot->Text);
 				robot->PosicionRobot->y = Convert::ToDouble(YRobot->Text);
+
+				robot->Caracteristicas = txtCaracteristicas->Text;
+
+				if (pbPhotoRobot != nullptr && pbPhotoRobot->Image != nullptr) {
+					System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream();
+					pbPhotoRobot->Image->Save(ms, System::Drawing::Imaging::ImageFormat::Jpeg);
+					robot->Photo = ms->ToArray();
+				}
 
 				int id = Convert::ToInt32(IDRobot->Text);
 				Robot^ robotExistente = Service::buscarRobotID(id);
@@ -766,7 +761,26 @@ namespace SheriffBotGUIApp {
 
 				robot->ID = Convert::ToInt32(IDRobot->Text);
 				robot->Nombre = NombreRobot->Text;
-				robot->Zona = ZonaRobot->Text;
+				robot->Bateria = Convert::ToInt32(BateriaRobot->Text);//ver luego su función que de eso
+				
+				double x = Convert::ToDouble(XRobot->Text);
+				double y = Convert::ToDouble(YRobot->Text);
+				robot->Zona = Service::delimitarZonaTrabajo(x, y);
+
+				if (Service::delimitarZonaTrabajo(x, y) == "BASE") {
+					robot->Disponibilidad = true;
+				}
+				else {
+					robot->Disponibilidad = !rbtnDisponibilidadYes->Checked;
+				}
+
+				if (pbPhotoRobot != nullptr && pbPhotoRobot->Image != nullptr) {
+					System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream();
+					pbPhotoRobot->Image->Save(ms, System::Drawing::Imaging::ImageFormat::Jpeg);
+					robot->Photo = ms->ToArray();
+				}
+
+				robot->Caracteristicas = txtCaracteristicas->Text;
 
 				int robotModificar = Service::modificarRobotID(robot);
 				if (robotModificar != 0) {
@@ -798,6 +812,8 @@ namespace SheriffBotGUIApp {
 				if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
 					bool eliminado = Service::borrarRobotID(Convert::ToInt32(robotID));
 					if (eliminado) {
+						pbPhotoRobot->Image = nullptr;
+						pbPhotoRobot->Invalidate();
 						ShowRobots();
 						ClearFieldsR();
 						MessageBox::Show("Robot eliminado exitosamente", "Exito", MessageBoxButtons::OK);
@@ -807,6 +823,10 @@ namespace SheriffBotGUIApp {
 			catch (Exception^ ex) {
 				MessageBox::Show("Error al eliminar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
+		}
+		private: System::Void pbPhoto_Click(System::Object^ sender, System::EventArgs^ e) {
+			SearchAndPutImagenOn(pbPhotoRobot);
+			//MessageBox::Show("Imagen agregada exitosamente", "Exito", MessageBoxButtons::OK);
 		}
 		private: System::Void dgvRobot_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
 			int robotID = Int32::Parse(dgvRobot->Rows[dgvRobot->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
@@ -819,24 +839,42 @@ namespace SheriffBotGUIApp {
 				XRobot->Text = Convert::ToString(robot->PosicionRobot->x);
 				YRobot->Text = Convert::ToString(robot->PosicionRobot->y);
 
-				//se pondria lo de la foto
+				rbtnDisponibilidadYes->Checked = robot->Disponibilidad;
+				rbtnDisponibilidadNo->Checked = !robot->Disponibilidad;
+
+				txtCaracteristicas->Text = robot->Caracteristicas;
+
+
+				if (robot->Photo != nullptr) {
+					System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(robot->Photo);
+					pbPhotoRobot->Image = Image::FromStream(ms);
+				}
+				else {
+					pbPhotoRobot->Image = nullptr;
+					pbPhotoRobot->Invalidate();
+				}
+
+
 			}
 		}
-		private:
-			void ShowRobots() {//crear un atributo de bateria al robot
-				List<Robot^>^ robots = Service::GetRobots();
-				if (robots != nullptr) {
-					dgvRobot->Rows->Clear();
-					for (int i = 0; i < robots->Count; i++) {
-						if (robots[i]->GetType() == Robot::typeid) {
-							dgvRobot->Rows->Add(gcnew array<String^>{
-								"" + robots[i]->ID, "" + robots[i]->Bateria, robots[i]->Nombre,
-									robots[i]->Zona, "" + robots[i]->PosicionRobot->x, "" + robots[i]->PosicionRobot->y
-							});
-						}
+		private: System::Void btnUpdatePhotoRobot_Click(System::Object^ sender, System::EventArgs^ e) {
+			SearchAndPutImagenOn(pbPhotoRobot);
+			MessageBox::Show("Imagen agregada exitosamente", "Exito", MessageBoxButtons::OK);
+		}
+		private: void ShowRobots() {//crear un atributo de bateria al robot
+			List<Robot^>^ robots = Service::GetRobots();
+			if (robots != nullptr) {
+				dgvRobot->Rows->Clear();
+				for (int i = 0; i < robots->Count; i++) {
+					if (robots[i]->GetType() == Robot::typeid) {
+						dgvRobot->Rows->Add(gcnew array<String^>{
+							"" + robots[i]->ID, "" + robots[i]->Bateria, robots[i]->Nombre,
+							robots[i]->Zona, "" + robots[i]->PosicionRobot->x, "" + robots[i]->PosicionRobot->y
+						});
 					}
 				}
 			}
+		}
 		private:
 			void ClearFieldsR() {
 				IDRobot->Text = "";
@@ -845,6 +883,15 @@ namespace SheriffBotGUIApp {
 				XRobot->Text = "";
 				YRobot->Text = "";
 				BateriaRobot->Text = "";
+				txtCaracteristicas->Text = "";
+
+				rbtnDisponibilidadYes->Checked = true;
+				rbtnDisponibilidadNo->Checked = false;
+
+				if (pbPhotoRobot != nullptr) {
+					pbPhotoRobot->Image = nullptr;
+					pbPhotoRobot->Invalidate();
+				}
 			}
 		private:
 			void MostrarDatosRobot(Robot^ robotEncontrado) {
@@ -852,6 +899,10 @@ namespace SheriffBotGUIApp {
 				ZonaRobot->Text = robotEncontrado->Zona;
 				XRobot->Text = Convert::ToString(robotEncontrado->PosicionRobot->x);
 				YRobot->Text = Convert::ToString(robotEncontrado->PosicionRobot->y);
+
+				rbtnDisponibilidadYes->Checked = true;
+				rbtnDisponibilidadNo->Checked = false;
+
 			}
 		private: System::Void btnAddUser_Click(System::Object^ sender, System::EventArgs^ e) {
 			try {
@@ -900,6 +951,7 @@ namespace SheriffBotGUIApp {
 				usuario->Nombre = NombreUser->Text;
 				usuario->Cargo = CargoUser->Text;
 				usuario->Contra = PasswordUser->Text;
+
 
 				Service::modificarUsuarioID(usuario);
 				ShowUsuarios();
@@ -1009,6 +1061,13 @@ namespace SheriffBotGUIApp {
 			ClearFieldsR();
 			ClearFieldsU();
 			tabControl1->SelectedTab = tabPage2;
+		}
+		private: void SearchAndPutImagenOn(PictureBox^ pb) {//se encarga de poder añadir la foto
+			OpenFileDialog^ opfd = gcnew OpenFileDialog();
+			opfd->Filter = "Image Files (*.jpg;*.jpeg;)|*.jpg;*.jpeg;";
+			if (opfd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				pb->Image = gcnew Bitmap(opfd->FileName);
+			}
 		}
 	};
 }

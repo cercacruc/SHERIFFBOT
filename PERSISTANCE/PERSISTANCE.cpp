@@ -10,17 +10,16 @@ using namespace System::Collections::Generic;
 //funciones del robot en persistance
 void BotPersistance::Persistance::registrarRobot(Robot^ robot) {  
     listaRobots->Add(robot);
-    PersistTextFileRobots(fileRobotName, listaRobots);
+    //PersistTextFileRobots(fileRobotName, listaRobots);
+    PersistBinaryFile(fileBinRobots, listaRobots);
 }
 Robot^ BotPersistance::Persistance::buscarRobotID(int id) {
-    Robot^ robot = nullptr;
-    for (int i = 0; i < listaRobots->Count; i++) {
-        if (listaRobots[i]->ID == id) {
-            robot = listaRobots[i];
-            break;
+    for each (Robot ^ robot in listaRobots) {
+        if (robot->ID == id) {
+            return robot;
         }
     }
-    return robot;
+    return nullptr;
 }
 Robot^ BotPersistance::Persistance::buscarRobotNombre(String^ nombre) {
     for each (Robot ^ r in listaRobots) {
@@ -34,7 +33,8 @@ bool BotPersistance::Persistance::borrarRobotID(int id) {
     for (int i = 0; i < listaRobots->Count; i++) {
         if (listaRobots[i]->ID == id) {
             listaRobots->RemoveAt(i);
-            PersistTextFileRobots(fileRobotName, listaRobots);
+            //PersistTextFileRobots(fileRobotName, listaRobots);
+            PersistBinaryFile(fileBinRobots, listaRobots);
             return true;
         }
     }
@@ -44,7 +44,8 @@ bool BotPersistance::Persistance::borrarRobotNombre(String^ nombre) {
     for (int i = 0; i < listaRobots->Count; i++) {
         if (listaRobots[i]->Nombre->Equals(nombre)) {
             listaRobots->RemoveAt(i);
-            PersistTextFileRobots(fileRobotName, listaRobots);
+            //PersistTextFileRobots(fileRobotName, listaRobots);
+            PersistBinaryFile(fileBinRobots, listaRobots);
             return true;
         }
     }
@@ -54,15 +55,18 @@ int BotPersistance::Persistance::modificarRobotID(Robot^ robot) {
     for (int i = 0; i < listaRobots->Count; i++) {
         if (listaRobots[i]->ID == robot->ID) {
             listaRobots[i] = robot;
-            PersistTextFileRobots(fileRobotName, listaRobots);
+            //PersistTextFileRobots(fileRobotName, listaRobots);
+            PersistBinaryFile(fileBinRobots, listaRobots);
             return 1;
         }
     }
     return 0;
 }
 List <Robot^>^ BotPersistance::Persistance::GetRobots() {
-    if (listaRobots->Count == 0) {
-        listaRobots = (List<Robot^>^) LoadRobotsFromTextFile(fileRobotName);
+    Object^ res = LoadBinaryFile(fileBinRobots);
+    if (res != nullptr) {
+        //listaRobots = (List<Robot^>^) LoadRobotsFromTextFile(fileRobotName);
+        listaRobots = (List<Robot^>^)res;
     }
     return listaRobots;
 }
@@ -470,7 +474,9 @@ String^ BotPersistance::Persistance::delimitarZonaTrabajo(double x, double y) {
     else if (x >= 779 && x < 935 && y >= 342 && y < 465) {
         Ubicacion = "INRAS";
     }
-    //Point^ ubicacionRobot = gcnew Point(x, y, Ubicacion);
+    /*else if (x == -1 && y == -1) {//base de operaciones
+        Ubicacion = "BASE";
+    }*/
     return Ubicacion;
 }
 

@@ -53,6 +53,7 @@ namespace BotPersistance {
 		static String^ fileUsersName = "usuarios.txt";
 		static String^ fileRobotName = "robots.txt";
 		static String^ fileBinUsers = "usuarios.bin";
+		static String^ fileBinRobots = "robos.bin";
 
 
 		static String^ fileAlertReport = "alertReport.txt";

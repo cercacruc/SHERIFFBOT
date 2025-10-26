@@ -9,7 +9,7 @@ namespace BotModel {
 		property String^ Contra;//Contraseña
 		property String^ Cargo;
 		property int ID;
-		
+		//property array<Byte>^ Photo;
 
 		DatosUsuario();
 		DatosUsuario(int ID, String^ nombre, String^ contra, String^ cargo);
