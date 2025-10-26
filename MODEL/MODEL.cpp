@@ -29,10 +29,19 @@ Robot::Robot() {
 	PosicionRobot = gcnew Point();
 	Bateria = 100; // Valor por defecto
 }
-Robot::Robot(int ID, String^ nombre, String^ zona,Point^ ubicacion) {
+Robot::Robot(int ID, String^ nombre, String^ zona, Point^ ubicacion, String^ caracteristica) {
 	this->ID = ID;
 	this->Nombre = nombre;
 	this->Zona = zona;
 	this->PosicionRobot = ubicacion != nullptr ? ubicacion : gcnew Point();
 	this->Bateria = 100;
+	this->Caracteristicas = caracteristica;
+}
+
+Alert::Alert() {
+
+}
+Alert::Alert(String^ description, String^ lugar) {
+	this->Description = description;
+	this->Lugar = lugar;
 }

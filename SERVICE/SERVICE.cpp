@@ -59,4 +59,9 @@ String^ BotService::Service::delimitarZonaTrabajo(double x, double y) {
 	return Persistance::delimitarZonaTrabajo(x, y);
 }
 
+//CRUD Alert Report
+void BotService::Service::registrarAlerta(Alert^ alerta) {
+	return Persistance::registrarAlerta(alerta);
+}
+
 

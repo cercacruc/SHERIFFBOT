@@ -34,9 +34,12 @@ namespace SheriffBotGUIApp {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::PictureBox^ pictureBox7;
+	private: System::Windows::Forms::PictureBox^ giroIzquierda;
 	protected:
-	private: System::Windows::Forms::PictureBox^ pictureBox6;
+
+	private: System::Windows::Forms::PictureBox^ giroDerecha;
+	protected:
+
 	private: System::Windows::Forms::PictureBox^ pictureBox5;
 	private: System::Windows::Forms::PictureBox^ pictureBox4;
 	private: System::Windows::Forms::PictureBox^ pictureBox3;
@@ -46,6 +49,8 @@ namespace SheriffBotGUIApp {
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::TextBox^ txtRobot;
+
 
 	private:
 		/// <summary>
@@ -61,8 +66,8 @@ namespace SheriffBotGUIApp {
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(ControlRobotForm::typeid));
-			this->pictureBox7 = (gcnew System::Windows::Forms::PictureBox());
-			this->pictureBox6 = (gcnew System::Windows::Forms::PictureBox());
+			this->giroIzquierda = (gcnew System::Windows::Forms::PictureBox());
+			this->giroDerecha = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox5 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox4 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
@@ -72,8 +77,9 @@ namespace SheriffBotGUIApp {
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox7))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox6))->BeginInit();
+			this->txtRobot = (gcnew System::Windows::Forms::TextBox());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroIzquierda))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroDerecha))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox5))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
@@ -82,25 +88,27 @@ namespace SheriffBotGUIApp {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
-			// pictureBox7
+			// giroIzquierda
 			// 
-			this->pictureBox7->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox7.Image")));
-			this->pictureBox7->Location = System::Drawing::Point(12, 411);
-			this->pictureBox7->Name = L"pictureBox7";
-			this->pictureBox7->Size = System::Drawing::Size(182, 155);
-			this->pictureBox7->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-			this->pictureBox7->TabIndex = 21;
-			this->pictureBox7->TabStop = false;
+			this->giroIzquierda->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"giroIzquierda.Image")));
+			this->giroIzquierda->Location = System::Drawing::Point(12, 411);
+			this->giroIzquierda->Name = L"giroIzquierda";
+			this->giroIzquierda->Size = System::Drawing::Size(182, 155);
+			this->giroIzquierda->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->giroIzquierda->TabIndex = 21;
+			this->giroIzquierda->TabStop = false;
+			this->giroIzquierda->Click += gcnew System::EventHandler(this, &ControlRobotForm::giroIzquierda_Click);
 			// 
-			// pictureBox6
+			// giroDerecha
 			// 
-			this->pictureBox6->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox6.Image")));
-			this->pictureBox6->Location = System::Drawing::Point(543, 411);
-			this->pictureBox6->Name = L"pictureBox6";
-			this->pictureBox6->Size = System::Drawing::Size(182, 155);
-			this->pictureBox6->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-			this->pictureBox6->TabIndex = 20;
-			this->pictureBox6->TabStop = false;
+			this->giroDerecha->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"giroDerecha.Image")));
+			this->giroDerecha->Location = System::Drawing::Point(543, 411);
+			this->giroDerecha->Name = L"giroDerecha";
+			this->giroDerecha->Size = System::Drawing::Size(182, 155);
+			this->giroDerecha->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->giroDerecha->TabIndex = 20;
+			this->giroDerecha->TabStop = false;
+			this->giroDerecha->Click += gcnew System::EventHandler(this, &ControlRobotForm::giroDerecha_Click);
 			// 
 			// pictureBox5
 			// 
@@ -111,6 +119,7 @@ namespace SheriffBotGUIApp {
 			this->pictureBox5->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox5->TabIndex = 19;
 			this->pictureBox5->TabStop = false;
+			this->pictureBox5->Click += gcnew System::EventHandler(this, &ControlRobotForm::pictureBox5_Click);
 			// 
 			// pictureBox4
 			// 
@@ -121,6 +130,7 @@ namespace SheriffBotGUIApp {
 			this->pictureBox4->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox4->TabIndex = 18;
 			this->pictureBox4->TabStop = false;
+			this->pictureBox4->Click += gcnew System::EventHandler(this, &ControlRobotForm::pictureBox4_Click);
 			// 
 			// pictureBox3
 			// 
@@ -131,6 +141,7 @@ namespace SheriffBotGUIApp {
 			this->pictureBox3->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox3->TabIndex = 17;
 			this->pictureBox3->TabStop = false;
+			this->pictureBox3->Click += gcnew System::EventHandler(this, &ControlRobotForm::pictureBox3_Click);
 			// 
 			// btnLeft
 			// 
@@ -141,6 +152,7 @@ namespace SheriffBotGUIApp {
 			this->btnLeft->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->btnLeft->TabIndex = 16;
 			this->btnLeft->TabStop = false;
+			this->btnLeft->Click += gcnew System::EventHandler(this, &ControlRobotForm::btnLeft_Click);
 			// 
 			// label3
 			// 
@@ -186,19 +198,28 @@ namespace SheriffBotGUIApp {
 			// 
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
-			this->label1->Location = System::Drawing::Point(258, 9);
+			this->label1->Location = System::Drawing::Point(171, 29);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(183, 29);
 			this->label1->TabIndex = 11;
 			this->label1->Text = L"Controlar Robot";
+			// 
+			// txtRobot
+			// 
+			this->txtRobot->Location = System::Drawing::Point(360, 29);
+			this->txtRobot->Multiline = true;
+			this->txtRobot->Name = L"txtRobot";
+			this->txtRobot->Size = System::Drawing::Size(138, 29);
+			this->txtRobot->TabIndex = 22;
 			// 
 			// ControlRobotForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(741, 639);
-			this->Controls->Add(this->pictureBox7);
-			this->Controls->Add(this->pictureBox6);
+			this->Controls->Add(this->txtRobot);
+			this->Controls->Add(this->giroIzquierda);
+			this->Controls->Add(this->giroDerecha);
 			this->Controls->Add(this->pictureBox5);
 			this->Controls->Add(this->pictureBox4);
 			this->Controls->Add(this->pictureBox3);
@@ -210,8 +231,8 @@ namespace SheriffBotGUIApp {
 			this->Controls->Add(this->label1);
 			this->Name = L"ControlRobotForm";
 			this->Text = L"ControlRobotForm";
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox7))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox6))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroIzquierda))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroDerecha))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox5))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
@@ -222,6 +243,24 @@ namespace SheriffBotGUIApp {
 			this->PerformLayout();
 
 		}
-#pragma endregion
+		#pragma endregion
+		private: System::Void pictureBox4_Click(System::Object^ sender, System::EventArgs^ e) {
+			MessageBox::Show("Avanzo", "Exito", MessageBoxButtons::OK);
+		}
+		private: System::Void pictureBox5_Click(System::Object^ sender, System::EventArgs^ e) {
+			MessageBox::Show("Retrocedo", "Exito", MessageBoxButtons::OK);
+		}
+		private: System::Void btnLeft_Click(System::Object^ sender, System::EventArgs^ e) {
+			MessageBox::Show("Avanzo hacia la izquierda", "Exito", MessageBoxButtons::OK);
+		}
+		private: System::Void pictureBox3_Click(System::Object^ sender, System::EventArgs^ e) {
+			MessageBox::Show("Avanzo hacia la derecha", "Exito", MessageBoxButtons::OK);
+		}
+		private: System::Void giroDerecha_Click(System::Object^ sender, System::EventArgs^ e) {
+			MessageBox::Show("Giro hacia la derecha", "Exito", MessageBoxButtons::OK);
+		}
+		private: System::Void giroIzquierda_Click(System::Object^ sender, System::EventArgs^ e) {
+			MessageBox::Show("Giro hacia la izquierda", "Exito", MessageBoxButtons::OK);
+		}
 	};
 }

@@ -327,26 +327,6 @@ Object^ BotPersistance::Persistance::LoadRobotsFromTextFile(String^ fileName) {
     return result;
 }
 
-/*void BotPersistance::Persistance::PersistXMLFileRobots(String^ fileName, Object^ persistObject) {
-    StreamWriter^ writer;
-    try {
-        writer = gcnew StreamWriter(fileName);
-        if (persistObject->GetType() = List<Robot^>::typeid) {
-            List<Robot^>^ robotList = (List<Robot^>^)persistObject;
-            RobotsCollection^ robots = gcnew RobotsCollection();
-            for (int i = 0; i < robotList->Count; i++) {
-                robots->TheList->Add(gcnew RobotWrapper());
-                robots->TheList[i]->TheRobot = robotList[i];
-            }
-
-        }
-    }
-}
-
-Object^ BotPersistance::Persistance::LoadRobotsFromXMLFile(String^ fileName) {
-    
-}*/
-
 void BotPersistance::Persistance::PersistBinaryFile(String^ fileName, Object^ persistObject)
 {
     FileStream^ file;
@@ -355,7 +335,9 @@ void BotPersistance::Persistance::PersistBinaryFile(String^ fileName, Object^ pe
         file = gcnew FileStream(fileName, FileMode::Create, FileAccess::Write);
         formatter->Serialize(file, persistObject);
     }
-    catch (Exception^ ex) { throw ex; }
+    catch (Exception^ ex) { 
+        throw ex; 
+    }
     finally {
         if (file != nullptr) file->Close();
         delete file;
@@ -382,6 +364,17 @@ Object^ BotPersistance::Persistance::LoadBinaryFile(String^ fileName)
         delete file;
     }
     return result;
+}
+
+void BotPersistance::Persistance::PersistTxtFileAlert(String^ fileName, List<Alert^>^ lista)//completar
+{
+    throw gcnew System::NotImplementedException();
+}
+
+Object^ BotPersistance::Persistance::LoadAlertFormTxtFile(String^ fileName)//completar
+{
+    throw gcnew System::NotImplementedException();
+    // TODO: Insertar una instrucción "return" aquí
 }
 
 //Funcion de zonas
@@ -479,4 +472,21 @@ String^ BotPersistance::Persistance::delimitarZonaTrabajo(double x, double y) {
     }
     //Point^ ubicacionRobot = gcnew Point(x, y, Ubicacion);
     return Ubicacion;
+}
+
+
+//Registro de alertas
+void BotPersistance::Persistance::registrarAlerta(Alert^ alerta) {
+    listaReportesAlertas->Add(alerta);
+    //PersistTxtFileAlert(fileAlertReport, listaReportesAlertas);//falta implementar
+    PersistBinaryFile(fileBinAlertReport, listaReportesAlertas);
+}
+void BotPersistance::Persistance::registrarObjPerdido(ObjPerdido^ objeto) {
+    registrarAlerta(objeto);
+}
+void BotPersistance::Persistance::registrarDTIReport(DTIReport^ reporte) {
+    registrarAlerta(reporte);
+}
+void BotPersistance::Persistance::registrarAlercado(Altercado^ altercado) {
+    registrarAlerta(altercado);
 }

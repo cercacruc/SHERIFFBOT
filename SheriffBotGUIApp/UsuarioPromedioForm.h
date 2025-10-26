@@ -1,4 +1,6 @@
 #pragma once
+#include "InformationRequestForm.h"
+#include "AlertForm.h"
 
 namespace SheriffBotGUIApp {
 
@@ -40,6 +42,8 @@ namespace SheriffBotGUIApp {
 	private: System::Windows::Forms::PictureBox^ pictureBox3;
 	private: System::Windows::Forms::Button^ btnInfo;
 	private: System::Windows::Forms::PictureBox^ pictureBox2;
+	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::PictureBox^ pictureBox1;
 
 	private:
 		/// <summary>
@@ -60,9 +64,12 @@ namespace SheriffBotGUIApp {
 			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
 			this->btnInfo = (gcnew System::Windows::Forms::Button());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
+			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btnAccount
@@ -78,18 +85,19 @@ namespace SheriffBotGUIApp {
 			// 
 			// btnAlert
 			// 
-			this->btnAlert->Location = System::Drawing::Point(103, 507);
+			this->btnAlert->Location = System::Drawing::Point(132, 475);
 			this->btnAlert->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->btnAlert->Name = L"btnAlert";
 			this->btnAlert->Size = System::Drawing::Size(157, 37);
 			this->btnAlert->TabIndex = 13;
 			this->btnAlert->Text = L"Alertar";
 			this->btnAlert->UseVisualStyleBackColor = true;
+			this->btnAlert->Click += gcnew System::EventHandler(this, &UsuarioPromedioForm::btnAlert_Click);
 			// 
 			// pictureBox3
 			// 
 			this->pictureBox3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox3.Image")));
-			this->pictureBox3->Location = System::Drawing::Point(101, 342);
+			this->pictureBox3->Location = System::Drawing::Point(130, 310);
 			this->pictureBox3->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->pictureBox3->Name = L"pictureBox3";
 			this->pictureBox3->Size = System::Drawing::Size(161, 148);
@@ -99,18 +107,19 @@ namespace SheriffBotGUIApp {
 			// 
 			// btnInfo
 			// 
-			this->btnInfo->Location = System::Drawing::Point(105, 235);
+			this->btnInfo->Location = System::Drawing::Point(16, 248);
 			this->btnInfo->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->btnInfo->Name = L"btnInfo";
 			this->btnInfo->Size = System::Drawing::Size(157, 37);
 			this->btnInfo->TabIndex = 11;
 			this->btnInfo->Text = L"Solicitar información";
 			this->btnInfo->UseVisualStyleBackColor = true;
+			this->btnInfo->Click += gcnew System::EventHandler(this, &UsuarioPromedioForm::btnInfo_Click);
 			// 
 			// pictureBox2
 			// 
 			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
-			this->pictureBox2->Location = System::Drawing::Point(101, 76);
+			this->pictureBox2->Location = System::Drawing::Point(12, 89);
 			this->pictureBox2->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->pictureBox2->Name = L"pictureBox2";
 			this->pictureBox2->Size = System::Drawing::Size(161, 148);
@@ -118,11 +127,34 @@ namespace SheriffBotGUIApp {
 			this->pictureBox2->TabIndex = 10;
 			this->pictureBox2->TabStop = false;
 			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(256, 248);
+			this->button1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(157, 37);
+			this->button1->TabIndex = 15;
+			this->button1->Text = L"Estadisticas";
+			this->button1->UseVisualStyleBackColor = true;
+			// 
+			// pictureBox1
+			// 
+			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
+			this->pictureBox1->Location = System::Drawing::Point(252, 89);
+			this->pictureBox1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(161, 148);
+			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox1->TabIndex = 20;
+			this->pictureBox1->TabStop = false;
+			// 
 			// UsuarioPromedioForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(357, 587);
+			this->ClientSize = System::Drawing::Size(430, 536);
+			this->Controls->Add(this->pictureBox1);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->btnAccount);
 			this->Controls->Add(this->btnAlert);
 			this->Controls->Add(this->pictureBox3);
@@ -133,9 +165,22 @@ namespace SheriffBotGUIApp {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
+		private: System::Void btnInfo_Click(System::Object^ sender, System::EventArgs^ e) {
+			InformationRequestForm^ Informationform = gcnew InformationRequestForm();
+			this->Hide();
+			Informationform->ShowDialog();
+			this->Show();
+		}
+		private: System::Void btnAlert_Click(System::Object^ sender, System::EventArgs^ e) {
+			AlertForm^ form = gcnew AlertForm();
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
 	};
 }

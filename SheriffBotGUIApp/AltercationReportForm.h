@@ -9,6 +9,10 @@ namespace SheriffBotGUIApp {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	using namespace BotModel;
+	using namespace BotService;
+	using namespace System::Collections::Generic;
+
 	/// <summary>
 	/// Resumen de AltercationReportForm
 	/// </summary>
@@ -34,16 +38,28 @@ namespace SheriffBotGUIApp {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Button^ button2;
+	private: System::Windows::Forms::Button^ btnEnviar;
+	private: System::Windows::Forms::Button^ btnVolver;
 	protected:
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::TextBox^ textBox3;
+
+	protected:
+
+
 	private: System::Windows::Forms::Label^ label4;
-	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::TextBox^ textBox1;
+	private: System::Windows::Forms::TextBox^ txtDescription;
+
+
+
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::Button^ btnCargarImagen;
+	private: System::Windows::Forms::PictureBox^ pbPhoto;
+
+	private: System::Windows::Forms::TextBox^ txtLugar;
+	private: System::Windows::Forms::DateTimePicker^ dtpFecha;
+
+
+
 
 	private:
 		/// <summary>
@@ -58,86 +74,64 @@ namespace SheriffBotGUIApp {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->btnEnviar = (gcnew System::Windows::Forms::Button());
+			this->btnVolver = (gcnew System::Windows::Forms::Button());
 			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->txtDescription = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->btnCargarImagen = (gcnew System::Windows::Forms::Button());
+			this->pbPhoto = (gcnew System::Windows::Forms::PictureBox());
+			this->txtLugar = (gcnew System::Windows::Forms::TextBox());
+			this->dtpFecha = (gcnew System::Windows::Forms::DateTimePicker());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPhoto))->BeginInit();
 			this->SuspendLayout();
 			// 
-			// button2
+			// btnEnviar
 			// 
-			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->button2->Location = System::Drawing::Point(161, 444);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(193, 47);
-			this->button2->TabIndex = 17;
-			this->button2->Text = L"Enviar";
-			this->button2->UseVisualStyleBackColor = true;
+			this->btnEnviar->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->btnEnviar->Location = System::Drawing::Point(51, 322);
+			this->btnEnviar->Name = L"btnEnviar";
+			this->btnEnviar->Size = System::Drawing::Size(193, 47);
+			this->btnEnviar->TabIndex = 17;
+			this->btnEnviar->Text = L"Enviar";
+			this->btnEnviar->UseVisualStyleBackColor = true;
+			this->btnEnviar->Click += gcnew System::EventHandler(this, &AltercationReportForm::btnEnviar_Click);
 			// 
-			// button1
+			// btnVolver
 			// 
-			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->button1->Location = System::Drawing::Point(161, 513);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(193, 47);
-			this->button1->TabIndex = 16;
-			this->button1->Text = L"Volver";
-			this->button1->UseVisualStyleBackColor = true;
-			// 
-			// textBox3
-			// 
-			this->textBox3->Location = System::Drawing::Point(18, 341);
-			this->textBox3->Multiline = true;
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(445, 83);
-			this->textBox3->TabIndex = 15;
+			this->btnVolver->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->btnVolver->Location = System::Drawing::Point(250, 322);
+			this->btnVolver->Name = L"btnVolver";
+			this->btnVolver->Size = System::Drawing::Size(193, 47);
+			this->btnVolver->TabIndex = 16;
+			this->btnVolver->Text = L"Volver";
+			this->btnVolver->UseVisualStyleBackColor = true;
+			this->btnVolver->Click += gcnew System::EventHandler(this, &AltercationReportForm::btnVolver_Click);
 			// 
 			// label4
 			// 
 			this->label4->AutoSize = true;
 			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-			this->label4->Location = System::Drawing::Point(23, 318);
+			this->label4->Location = System::Drawing::Point(23, 259);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(115, 20);
 			this->label4->TabIndex = 14;
 			this->label4->Text = L"Fecha y lugar:";
 			// 
-			// textBox2
+			// txtDescription
 			// 
-			this->textBox2->Location = System::Drawing::Point(18, 218);
-			this->textBox2->Multiline = true;
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(445, 83);
-			this->textBox2->TabIndex = 13;
-			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-			this->label3->Location = System::Drawing::Point(23, 195);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(86, 20);
-			this->label3->TabIndex = 12;
-			this->label3->Text = L"Evidencia:";
-			// 
-			// textBox1
-			// 
-			this->textBox1->Location = System::Drawing::Point(18, 99);
-			this->textBox1->Multiline = true;
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(445, 83);
-			this->textBox1->TabIndex = 11;
+			this->txtDescription->Location = System::Drawing::Point(18, 90);
+			this->txtDescription->Multiline = true;
+			this->txtDescription->Name = L"txtDescription";
+			this->txtDescription->Size = System::Drawing::Size(227, 166);
+			this->txtDescription->TabIndex = 11;
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
 			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-			this->label2->Location = System::Drawing::Point(23, 76);
+			this->label2->Location = System::Drawing::Point(23, 67);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(104, 20);
 			this->label2->TabIndex = 10;
@@ -146,33 +140,117 @@ namespace SheriffBotGUIApp {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
-			this->label1->Location = System::Drawing::Point(114, 9);
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 22.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label1->Location = System::Drawing::Point(48, 9);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(240, 29);
+			this->label1->Size = System::Drawing::Size(395, 48);
 			this->label1->TabIndex = 9;
 			this->label1->Text = L"Reporte de altercado";
+			// 
+			// btnCargarImagen
+			// 
+			this->btnCargarImagen->Location = System::Drawing::Point(255, 232);
+			this->btnCargarImagen->Margin = System::Windows::Forms::Padding(2);
+			this->btnCargarImagen->Name = L"btnCargarImagen";
+			this->btnCargarImagen->Size = System::Drawing::Size(207, 24);
+			this->btnCargarImagen->TabIndex = 43;
+			this->btnCargarImagen->Text = L"Cargar imagen";
+			this->btnCargarImagen->UseVisualStyleBackColor = true;
+			this->btnCargarImagen->Click += gcnew System::EventHandler(this, &AltercationReportForm::btnCargarImagen_Click);
+			// 
+			// pbPhoto
+			// 
+			this->pbPhoto->Location = System::Drawing::Point(256, 90);
+			this->pbPhoto->Name = L"pbPhoto";
+			this->pbPhoto->Size = System::Drawing::Size(207, 137);
+			this->pbPhoto->TabIndex = 42;
+			this->pbPhoto->TabStop = false;
+			this->pbPhoto->Click += gcnew System::EventHandler(this, &AltercationReportForm::pbPhoto_Click);
+			// 
+			// txtLugar
+			// 
+			this->txtLugar->Location = System::Drawing::Point(255, 282);
+			this->txtLugar->Name = L"txtLugar";
+			this->txtLugar->Size = System::Drawing::Size(163, 22);
+			this->txtLugar->TabIndex = 45;
+			// 
+			// dtpFecha
+			// 
+			this->dtpFecha->Location = System::Drawing::Point(27, 282);
+			this->dtpFecha->Name = L"dtpFecha";
+			this->dtpFecha->Size = System::Drawing::Size(200, 22);
+			this->dtpFecha->TabIndex = 44;
 			// 
 			// AltercationReportForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(484, 573);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
-			this->Controls->Add(this->textBox3);
+			this->ClientSize = System::Drawing::Size(484, 385);
+			this->Controls->Add(this->txtLugar);
+			this->Controls->Add(this->dtpFecha);
+			this->Controls->Add(this->btnCargarImagen);
+			this->Controls->Add(this->pbPhoto);
+			this->Controls->Add(this->btnEnviar);
+			this->Controls->Add(this->btnVolver);
 			this->Controls->Add(this->label4);
-			this->Controls->Add(this->textBox2);
-			this->Controls->Add(this->label3);
-			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->txtDescription);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Name = L"AltercationReportForm";
 			this->Text = L"AltercationReportForm";
+			this->Load += gcnew System::EventHandler(this, &AltercationReportForm::AltercationReportForm_Load);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPhoto))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
+		private: System::Void btnVolver_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->Close();
+		}
+		private: System::Void btnEnviar_Click(System::Object^ sender, System::EventArgs^ e) {
+			Alert^ alerta = gcnew Alert();
+			alerta->Description = txtDescription->Text;
+			alerta->Lugar = txtLugar->Text;
+
+			if (pbPhoto != nullptr && pbPhoto->Image != nullptr) {
+				System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream();
+				pbPhoto->Image->Save(ms, System::Drawing::Imaging::ImageFormat::Jpeg);
+				alerta->Photo = ms->ToArray();
+			}
+
+			alerta->Fecha = dtpFecha->Value;
+
+			Service::registrarAlerta(alerta);
+			MessageBox::Show("Alerta enviada exitosamente", "Exito", MessageBoxButtons::OK);
+			ClearFields();
+		}
+		private: System::Void pbPhoto_Click(System::Object^ sender, System::EventArgs^ e) {
+			SearchAndPutImagenOn(pbPhoto);
+			MessageBox::Show("Imagen agregada exitosamente", "Exito", MessageBoxButtons::OK);
+		}
+		private: System::Void btnCargarImagen_Click(System::Object^ sender, System::EventArgs^ e) {
+			SearchAndPutImagenOn(pbPhoto);
+			MessageBox::Show("Imagen agregada exitosamente", "Exito", MessageBoxButtons::OK);
+		}
+		private: void SearchAndPutImagenOn(PictureBox^ pb) {//se encarga de poder añadir la foto
+			OpenFileDialog^ opfd = gcnew OpenFileDialog();
+			opfd->Filter = "Image Files (*.jpg;*.jpeg;)|*.jpg;*.jpeg;";
+			if (opfd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				pb->Image = gcnew Bitmap(opfd->FileName);
+			}
+		}
+		private: void ClearFields() {
+			if (pbPhoto != nullptr) {
+				pbPhoto->Image = nullptr;
+				pbPhoto->Invalidate();
+			}
+			txtDescription->Text = "";
+			txtLugar->Text = "";
+		}
+		private: System::Void AltercationReportForm_Load(System::Object^ sender, System::EventArgs^ e) {
+			ClearFields();
+		}
 	};
 }

@@ -1,4 +1,7 @@
 #pragma once
+#include "MissingObjectForm.h"
+#include "AltercationReportForm.h"
+#include "DTIReportForm.h"
 
 namespace SheriffBotGUIApp {
 
@@ -71,6 +74,7 @@ namespace SheriffBotGUIApp {
 			this->btnReturn->TabIndex = 9;
 			this->btnReturn->Text = L"Volver";
 			this->btnReturn->UseVisualStyleBackColor = true;
+			this->btnReturn->Click += gcnew System::EventHandler(this, &AlertForm::btnReturn_Click);
 			// 
 			// btnDTIReport
 			// 
@@ -82,6 +86,7 @@ namespace SheriffBotGUIApp {
 			this->btnDTIReport->TabIndex = 8;
 			this->btnDTIReport->Text = L"Llamada al DTI";
 			this->btnDTIReport->UseVisualStyleBackColor = true;
+			this->btnDTIReport->Click += gcnew System::EventHandler(this, &AlertForm::btnDTIReport_Click);
 			// 
 			// btnAltercation
 			// 
@@ -93,6 +98,7 @@ namespace SheriffBotGUIApp {
 			this->btnAltercation->TabIndex = 7;
 			this->btnAltercation->Text = L"Reporte de altercado";
 			this->btnAltercation->UseVisualStyleBackColor = true;
+			this->btnAltercation->Click += gcnew System::EventHandler(this, &AlertForm::btnAltercation_Click);
 			// 
 			// btnMissingObject
 			// 
@@ -104,6 +110,7 @@ namespace SheriffBotGUIApp {
 			this->btnMissingObject->TabIndex = 6;
 			this->btnMissingObject->Text = L"Objeto perdido";
 			this->btnMissingObject->UseVisualStyleBackColor = true;
+			this->btnMissingObject->Click += gcnew System::EventHandler(this, &AlertForm::btnMissingObject_Click);
 			// 
 			// label1
 			// 
@@ -132,5 +139,26 @@ namespace SheriffBotGUIApp {
 
 		}
 #pragma endregion
+		private: System::Void btnMissingObject_Click(System::Object^ sender, System::EventArgs^ e) {
+			MissingObjectForm^ form = gcnew MissingObjectForm();
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
+		private: System::Void btnAltercation_Click(System::Object^ sender, System::EventArgs^ e) {
+			AltercationReportForm^ form = gcnew AltercationReportForm();
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
+		private: System::Void btnDTIReport_Click(System::Object^ sender, System::EventArgs^ e) {
+			DTIReportForm^ form = gcnew DTIReportForm();
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
+		private: System::Void btnReturn_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->Close();
+		}
 	};
 }

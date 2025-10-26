@@ -91,6 +91,7 @@ namespace SheriffBotGUIApp {
 			this->btnReturnInfoRequest->TabIndex = 27;
 			this->btnReturnInfoRequest->Text = L"Volver";
 			this->btnReturnInfoRequest->UseVisualStyleBackColor = true;
+			this->btnReturnInfoRequest->Click += gcnew System::EventHandler(this, &InformationRequestForm::btnReturnInfoRequest_Click);
 			// 
 			// tabControl1
 			// 
@@ -243,5 +244,8 @@ namespace SheriffBotGUIApp {
 
 		}
 #pragma endregion
+		private: System::Void btnReturnInfoRequest_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->Close();
+		}
 	};
 }

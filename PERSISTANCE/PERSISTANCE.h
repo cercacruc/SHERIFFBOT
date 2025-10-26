@@ -42,12 +42,21 @@ namespace BotPersistance {
 		static void PersistBinaryFile(String^ fileName, Object^ persistObject);
 		static Object^ LoadBinaryFile(String^ fileName);
 
+
+		//vista de reportes
+		static void PersistTxtFileAlert(String^ fileName, List<Alert^>^ lista);
+		static Object^ LoadAlertFormTxtFile(String^ fileName);
+		static List<Alert^>^ listaReportesAlertas = gcnew List<Alert^>();
+
 	public:
 		//Datos de guardado
 		static String^ fileUsersName = "usuarios.txt";
 		static String^ fileRobotName = "robots.txt";
 		static String^ fileBinUsers = "usuarios.bin";
-		
+
+
+		static String^ fileAlertReport = "alertReport.txt";
+		static String^ fileBinAlertReport = "alertReport.bin";
 
 
 		//CRUD Usuarios
@@ -71,5 +80,13 @@ namespace BotPersistance {
 		static int modificarRobotID(Robot^ robot);
 		static List <Robot^>^ GetRobots();
 		static String^ delimitarZonaTrabajo(double x, double y);
+
+
+		//CRUD Alert Report
+		static void registrarAlerta(Alert^ alerta);
+		static void registrarObjPerdido(ObjPerdido^ objeto);
+		static void registrarDTIReport(DTIReport^ reporte);
+		static void registrarAlercado(Altercado^ altercado);
+
 	};
 }

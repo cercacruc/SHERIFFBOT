@@ -9,6 +9,10 @@ namespace SheriffBotGUIApp {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	using namespace BotModel;
+	using namespace BotService;
+	using namespace System::Collections::Generic;
+
 	/// <summary>
 	/// Resumen de DTIReportForm
 	/// </summary>
@@ -34,16 +38,25 @@ namespace SheriffBotGUIApp {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::ComboBox^ comboBox1;
+	private: System::Windows::Forms::ComboBox^ cbTipoAlerta;
+	protected:
+
 	protected:
 	private: System::Windows::Forms::Label^ label4;
-	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::TextBox^ textBox1;
+	private: System::Windows::Forms::Button^ btnLlamar;
+	private: System::Windows::Forms::Button^ btnVolver;
+
+
+
+
+	private: System::Windows::Forms::TextBox^ txtDescription;
+
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::TextBox^ txtLugar;
+	private: System::Windows::Forms::DateTimePicker^ dtpFecha;
+
+	private: System::Windows::Forms::Label^ label3;
 
 	private:
 		/// <summary>
@@ -58,28 +71,29 @@ namespace SheriffBotGUIApp {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->cbTipoAlerta = (gcnew System::Windows::Forms::ComboBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->btnLlamar = (gcnew System::Windows::Forms::Button());
+			this->btnVolver = (gcnew System::Windows::Forms::Button());
+			this->txtDescription = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->txtLugar = (gcnew System::Windows::Forms::TextBox());
+			this->dtpFecha = (gcnew System::Windows::Forms::DateTimePicker());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
-			// comboBox1
+			// cbTipoAlerta
 			// 
-			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
+			this->cbTipoAlerta->FormattingEnabled = true;
+			this->cbTipoAlerta->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
 				L"Necesidades tecnologicas", L"Prestamo de dispositivo",
 					L"Proteccion contra ciberdelincuencia", L"Autenticación y acceso a aplicaciones y datos PUCP"
 			});
-			this->comboBox1->Location = System::Drawing::Point(141, 76);
-			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(293, 24);
-			this->comboBox1->TabIndex = 27;
+			this->cbTipoAlerta->Location = System::Drawing::Point(141, 76);
+			this->cbTipoAlerta->Name = L"cbTipoAlerta";
+			this->cbTipoAlerta->Size = System::Drawing::Size(293, 24);
+			this->cbTipoAlerta->TabIndex = 27;
 			// 
 			// label4
 			// 
@@ -91,51 +105,35 @@ namespace SheriffBotGUIApp {
 			this->label4->TabIndex = 26;
 			this->label4->Text = L"Tipo de alerta:";
 			// 
-			// button2
+			// btnLlamar
 			// 
-			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->button2->Location = System::Drawing::Point(136, 376);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(193, 47);
-			this->button2->TabIndex = 25;
-			this->button2->Text = L"Llamar";
-			this->button2->UseVisualStyleBackColor = true;
+			this->btnLlamar->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->btnLlamar->Location = System::Drawing::Point(30, 310);
+			this->btnLlamar->Name = L"btnLlamar";
+			this->btnLlamar->Size = System::Drawing::Size(193, 47);
+			this->btnLlamar->TabIndex = 25;
+			this->btnLlamar->Text = L"Llamar";
+			this->btnLlamar->UseVisualStyleBackColor = true;
+			this->btnLlamar->Click += gcnew System::EventHandler(this, &DTIReportForm::btnLlamar_Click);
 			// 
-			// button1
+			// btnVolver
 			// 
-			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->button1->Location = System::Drawing::Point(136, 450);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(193, 47);
-			this->button1->TabIndex = 24;
-			this->button1->Text = L"Volver";
-			this->button1->UseVisualStyleBackColor = true;
+			this->btnVolver->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->btnVolver->Location = System::Drawing::Point(253, 310);
+			this->btnVolver->Name = L"btnVolver";
+			this->btnVolver->Size = System::Drawing::Size(193, 47);
+			this->btnVolver->TabIndex = 24;
+			this->btnVolver->Text = L"Volver";
+			this->btnVolver->UseVisualStyleBackColor = true;
+			this->btnVolver->Click += gcnew System::EventHandler(this, &DTIReportForm::btnVolver_Click);
 			// 
-			// textBox2
+			// txtDescription
 			// 
-			this->textBox2->Location = System::Drawing::Point(14, 262);
-			this->textBox2->Multiline = true;
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(445, 83);
-			this->textBox2->TabIndex = 23;
-			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-			this->label3->Location = System::Drawing::Point(19, 239);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(146, 20);
-			this->label3->TabIndex = 22;
-			this->label3->Text = L"Datos personales:";
-			// 
-			// textBox1
-			// 
-			this->textBox1->Location = System::Drawing::Point(14, 143);
-			this->textBox1->Multiline = true;
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(445, 83);
-			this->textBox1->TabIndex = 21;
+			this->txtDescription->Location = System::Drawing::Point(14, 143);
+			this->txtDescription->Multiline = true;
+			this->txtDescription->Name = L"txtDescription";
+			this->txtDescription->Size = System::Drawing::Size(445, 83);
+			this->txtDescription->TabIndex = 21;
 			// 
 			// label2
 			// 
@@ -150,25 +148,51 @@ namespace SheriffBotGUIApp {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
-			this->label1->Location = System::Drawing::Point(154, 18);
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 19.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label1->Location = System::Drawing::Point(106, 9);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(175, 29);
+			this->label1->Size = System::Drawing::Size(252, 43);
 			this->label1->TabIndex = 19;
 			this->label1->Text = L"Llamada al DTI";
+			// 
+			// txtLugar
+			// 
+			this->txtLugar->Location = System::Drawing::Point(253, 263);
+			this->txtLugar->Name = L"txtLugar";
+			this->txtLugar->Size = System::Drawing::Size(163, 22);
+			this->txtLugar->TabIndex = 48;
+			// 
+			// dtpFecha
+			// 
+			this->dtpFecha->Location = System::Drawing::Point(23, 263);
+			this->dtpFecha->Name = L"dtpFecha";
+			this->dtpFecha->Size = System::Drawing::Size(200, 22);
+			this->dtpFecha->TabIndex = 47;
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->label3->Location = System::Drawing::Point(19, 240);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(115, 20);
+			this->label3->TabIndex = 46;
+			this->label3->Text = L"Fecha y lugar:";
 			// 
 			// DTIReportForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(477, 509);
-			this->Controls->Add(this->comboBox1);
-			this->Controls->Add(this->label4);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
-			this->Controls->Add(this->textBox2);
+			this->ClientSize = System::Drawing::Size(477, 369);
+			this->Controls->Add(this->txtLugar);
+			this->Controls->Add(this->dtpFecha);
 			this->Controls->Add(this->label3);
-			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->cbTipoAlerta);
+			this->Controls->Add(this->label4);
+			this->Controls->Add(this->btnLlamar);
+			this->Controls->Add(this->btnVolver);
+			this->Controls->Add(this->txtDescription);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Name = L"DTIReportForm";
@@ -177,6 +201,25 @@ namespace SheriffBotGUIApp {
 			this->PerformLayout();
 
 		}
-#pragma endregion
+		#pragma endregion
+		private: System::Void btnVolver_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->Close();
+		}
+		private: System::Void btnLlamar_Click(System::Object^ sender, System::EventArgs^ e) {
+			DTIReport^ reporte = gcnew DTIReport();
+			reporte->Description = txtDescription->Text;
+			reporte->Fecha = dtpFecha->Value;
+			reporte->tipoReporte = cbTipoAlerta->Text;
+
+			Service::registrarAlerta(reporte);
+			MessageBox::Show("Se ha llamado al DTI", "Exito", MessageBoxButtons::OK);
+			ClearFields();
+		}
+		private: void ClearFields() {
+			txtDescription->Text = "";
+			txtLugar->Text = "";
+
+			cbTipoAlerta->SelectedIndex = -1;
+		}
 	};
 }

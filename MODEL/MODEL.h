@@ -36,8 +36,39 @@ namespace BotModel {
 		property Point^ PosicionRobot;
 		property int Bateria;
 		property array<Byte>^ Photo;
+		property bool Disponibilidad;
+		property String^ Caracteristicas;
 
 		Robot();
-		Robot(int ID, String^ nombre, String^ zona, Point^ ubicacion);
+		Robot(int ID, String^ nombre, String^ zona, Point^ ubicacion, String^ caracteristica);
 	};
+
+	[Serializable]
+	public ref class Alert {
+	public:
+		property DateTime^ Fecha;
+		property String^ Description;
+		property array<Byte>^ Photo;
+		property String^ Lugar;
+		
+
+		Alert();
+		Alert(String^ description, String^ lugar);
+	};
+	[Serializable]
+	public ref class DTIReport : Alert {
+	public:
+		property String^ tipoReporte;
+	};
+	[Serializable]
+	public ref class Altercado : Alert {
+		public:
+
+	};
+	[Serializable]
+	public ref class ObjPerdido : Alert {
+		public:
+
+	};
+
 }
