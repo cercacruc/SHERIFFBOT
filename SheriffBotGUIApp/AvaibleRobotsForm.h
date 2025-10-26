@@ -1,4 +1,5 @@
 #pragma once
+#include "ComboBoxItem.h"
 
 namespace SheriffBotGUIApp {
 
@@ -8,6 +9,10 @@ namespace SheriffBotGUIApp {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+
+	using namespace System::Collections::Generic;
+	using namespace BotModel;
+	using namespace BotService;
 
 	/// <summary>
 	/// Resumen de AvaibleRobotsForm
@@ -123,11 +128,27 @@ namespace SheriffBotGUIApp {
 			this->Controls->Add(this->label1);
 			this->Name = L"AvaibleRobotsForm";
 			this->Text = L"AvaibleRobotsForm";
+			this->Load += gcnew System::EventHandler(this, &AvaibleRobotsForm::AvaibleRobotsForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPhoto))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
+		private: System::Void AvaibleRobotsForm_Load(System::Object^ sender, System::EventArgs^ e) {
+			//CargarRobotsDisponibles();
+		}
+		private: void CargarRobotsDisponibles() {//ver como cargar los robots disponibles en una lista aparte, y luego subirla al combobox
+			List<Robot^>^ robots = Service::GetRobots();
+			cmbRobots->Items->Clear();
+			for each (Robot ^ item in robots) {
+				if (item->Disponibilidad == true) {
+					ComboBoxItem^ item = gcnew ComboBoxItem(item->Value, item->Name);
+					cmbRobots->Items->Add(item);
+				}
+				
+			}
+			
+		}
 	};
 }

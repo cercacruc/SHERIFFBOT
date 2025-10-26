@@ -1,4 +1,5 @@
 #pragma once
+#include "AvaibleRobotsForm.h"
 
 namespace SheriffBotGUIApp {
 
@@ -40,6 +41,8 @@ namespace SheriffBotGUIApp {
 	private: System::Windows::Forms::PictureBox^ pictureBox2;
 	private: System::Windows::Forms::Button^ btnRobots;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
+	private: System::Windows::Forms::PictureBox^ pictureBox3;
+	private: System::Windows::Forms::Button^ button1;
 
 	private:
 		/// <summary>
@@ -60,9 +63,12 @@ namespace SheriffBotGUIApp {
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->btnRobots = (gcnew System::Windows::Forms::Button());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
+			this->button1 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btnAccount
@@ -118,11 +124,34 @@ namespace SheriffBotGUIApp {
 			this->pictureBox1->TabIndex = 12;
 			this->pictureBox1->TabStop = false;
 			// 
+			// pictureBox3
+			// 
+			this->pictureBox3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox3.Image")));
+			this->pictureBox3->Location = System::Drawing::Point(353, 85);
+			this->pictureBox3->Name = L"pictureBox3";
+			this->pictureBox3->Size = System::Drawing::Size(161, 148);
+			this->pictureBox3->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox3->TabIndex = 17;
+			this->pictureBox3->TabStop = false;
+			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(353, 244);
+			this->button1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(157, 37);
+			this->button1->TabIndex = 18;
+			this->button1->Text = L"Robots Disponibles";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &SheriffForm::button1_Click);
+			// 
 			// SheriffForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(353, 556);
+			this->ClientSize = System::Drawing::Size(604, 556);
+			this->Controls->Add(this->button1);
+			this->Controls->Add(this->pictureBox3);
 			this->Controls->Add(this->btnAccount);
 			this->Controls->Add(this->btnInfo);
 			this->Controls->Add(this->pictureBox2);
@@ -133,9 +162,16 @@ namespace SheriffBotGUIApp {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
+		private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+			AvaibleRobotsForm^ form = gcnew AvaibleRobotsForm();
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
 	};
 }

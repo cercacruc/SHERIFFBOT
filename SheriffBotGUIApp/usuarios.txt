@@ -1,3 +1,4 @@
 221|Generico|1234|Estudiante
 991|Rodrigo|1708|Admin
 992|Marcelo|2105|Admin
+111|Sheriff|1234|Sherif

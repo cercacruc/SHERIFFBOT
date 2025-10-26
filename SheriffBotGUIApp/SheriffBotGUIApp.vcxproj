@@ -162,6 +162,7 @@
     <ClInclude Include="AvaibleRobotsForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="ComboBoxItem.h" />
     <ClInclude Include="ControlRobotForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
