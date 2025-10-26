@@ -986,10 +986,18 @@ namespace SheriffBotGUIApp {
 					MessageBox::Show("Por favor, seleccione el robot a controlar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 					return;
 				}
-				ControlRobotForm^ controlRobot = gcnew ControlRobotForm();
-				this->Hide();
-				controlRobot->ShowDialog();
-				this->Show();
+				int idRobot = Convert::ToInt32(IDRobot->Text);
+				Robot^ robotEncontrado = (Robot^)Service::buscarRobotID(idRobot);
+
+				if (robotEncontrado != nullptr) {
+					ControlRobotForm^ controlRobot = gcnew ControlRobotForm(robotEncontrado);
+					this->Hide();
+					controlRobot->ShowDialog();
+					this->Show();
+				}
+				else {
+					MessageBox::Show("No se encontró el robot seleccionado", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
 			}
 			catch(Exception^ ex){
 				MessageBox::Show("No se ha podido controlar el robot por el siguiente motivo:\n" + ex->Message);

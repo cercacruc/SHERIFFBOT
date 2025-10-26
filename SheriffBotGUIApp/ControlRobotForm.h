@@ -9,18 +9,24 @@ namespace SheriffBotGUIApp {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	using namespace BotModel;
+	using namespace BotPersistance;
+
 	/// <summary>
 	/// Resumen de ControlRobotForm
 	/// </summary>
 	public ref class ControlRobotForm : public System::Windows::Forms::Form
 	{
 	public:
-		ControlRobotForm(void)
+		Robot^ robotEncontrado;
+
+		ControlRobotForm(Robot^ robot)
 		{
 			InitializeComponent();
 			//
 			//TODO: agregar código de constructor aquí
 			//
+			robotEncontrado = robot;
 		}
 
 	protected:
@@ -231,6 +237,7 @@ namespace SheriffBotGUIApp {
 			this->Controls->Add(this->label1);
 			this->Name = L"ControlRobotForm";
 			this->Text = L"ControlRobotForm";
+			this->Load += gcnew System::EventHandler(this, &ControlRobotForm::ControlRobotForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroIzquierda))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroDerecha))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox5))->EndInit();
@@ -261,6 +268,11 @@ namespace SheriffBotGUIApp {
 		}
 		private: System::Void giroIzquierda_Click(System::Object^ sender, System::EventArgs^ e) {
 			MessageBox::Show("Giro hacia la izquierda", "Exito", MessageBoxButtons::OK);
+		}
+		private: System::Void ControlRobotForm_Load(System::Object^ sender, System::EventArgs^ e) {
+			if (robotEncontrado != nullptr) {
+				txtRobot->Text = robotEncontrado->Nombre;
+			}
 		}
 	};
 }
