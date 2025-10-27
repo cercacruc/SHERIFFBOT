@@ -56,7 +56,7 @@ List <Robot^>^ BotService::Service::GetRobots() {
 	return Persistance::GetRobots();
 }
 void BotService::Service::delimitarZonaTrabajo(double x, double y) {
-	return Persistance::delimitarZonaTrabajo(x, y);
+	//return Persistance::delimitarZonaTrabajo(x, y);
 }
 
 //CRUD Alert Report
@@ -83,6 +83,18 @@ List<Altercado^>^ BotService::Service::ShowAltercados() {
 }
 List<DTIReport^>^ BotService::Service::ShowDTIReport() {
 	return Persistance::ShowDTIReport();
+}
+Alert^ BotService::Service::buscarAlerta(int id) {
+	return Persistance::buscarAlerta(id);
+}
+ObjPerdido^ BotService::Service::buscarObjetoPerdido(int id) {
+	return Persistance::buscarObjetoPerdido(id);
+}
+Altercado^ BotService::Service::buscarAltercado(int id) {
+	return Persistance::buscarAltercado(id);
+}
+DTIReport^ BotService::Service::buscarDTIReport(int id) {
+	return Persistance::buscarDTIReport(id);
 }
 
 

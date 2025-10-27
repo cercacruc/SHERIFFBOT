@@ -625,3 +625,37 @@ List<DTIReport^>^ BotPersistance::Persistance::ShowDTIReport()
     }
     return lista;
 }
+
+Alert^ BotPersistance::Persistance::buscarAlerta(int id)
+{
+    for each (Alert ^ alerta in listaReportesAlertas) {
+        if (alerta->id == id) {
+            return alerta;
+        }
+    }
+    return nullptr;
+}
+
+ObjPerdido^ BotPersistance::Persistance::buscarObjetoPerdido(int id)
+{
+    Alert^ objeto = buscarAlerta(id);
+    if (objeto->GetType() == ObjPerdido::typeid)
+        return (ObjPerdido^)objeto;
+    return nullptr;
+}
+
+Altercado^ BotPersistance::Persistance::buscarAltercado(int id)
+{
+    Alert^ altercado = buscarAlerta(id);
+    if (altercado->GetType() == Altercado::typeid)
+        return (Altercado^)altercado;
+    return nullptr;
+}
+
+DTIReport^ BotPersistance::Persistance::buscarDTIReport(int id)
+{
+    Alert^ reporte = buscarAlerta(id);
+    if (reporte->GetType() == DTIReport::typeid)
+        return (DTIReport^)reporte;
+    return nullptr;
+}

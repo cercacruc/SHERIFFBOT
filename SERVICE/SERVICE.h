@@ -39,5 +39,10 @@ namespace BotService {
 		static List<ObjPerdido^>^ ShowObjetosPerdidos();
 		static List<Altercado^>^ ShowAltercados();
 		static List<DTIReport^>^ ShowDTIReport();
+
+		static Alert^ buscarAlerta(int id);
+		static ObjPerdido^ buscarObjetoPerdido(int id);
+		static Altercado^ buscarAltercado(int id);
+		static DTIReport^ buscarDTIReport(int id);
 	};
 }

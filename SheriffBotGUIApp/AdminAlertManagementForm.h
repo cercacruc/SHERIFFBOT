@@ -157,9 +157,10 @@ private: System::Windows::Forms::Label^ label2;
 private: System::Windows::Forms::Label^ label17;
 private: System::Windows::Forms::TextBox^ txtDescriptionAltercado;
 private: System::Windows::Forms::PictureBox^ pbPhotoAltercado;
+private: System::Windows::Forms::DateTimePicker^ dtpAltercado;
 
 
-private: System::Windows::Forms::DateTimePicker^ dateTimePicker2;
+
 private: System::Windows::Forms::Button^ btnSolucionAltercado;
 
 private: System::Windows::Forms::GroupBox^ groupBox2;
@@ -178,8 +179,10 @@ private: System::Windows::Forms::TextBox^ txtDescriptionDTI;
 private: System::Windows::Forms::Button^ btnSolucionDTI;
 
 private: System::Windows::Forms::GroupBox^ groupBox3;
-private: System::Windows::Forms::RadioButton^ radioButton3;
-private: System::Windows::Forms::RadioButton^ radioButton4;
+private: System::Windows::Forms::RadioButton^ rbtnSolucionDTINo;
+
+private: System::Windows::Forms::RadioButton^ rbtnSolucionDTIYes;
+
 private: System::Windows::Forms::Label^ label4;
 private: System::Windows::Forms::DateTimePicker^ dtpDTI;
 
@@ -237,7 +240,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->label17 = (gcnew System::Windows::Forms::Label());
 			this->txtDescriptionAltercado = (gcnew System::Windows::Forms::TextBox());
 			this->pbPhotoAltercado = (gcnew System::Windows::Forms::PictureBox());
-			this->dateTimePicker2 = (gcnew System::Windows::Forms::DateTimePicker());
+			this->dtpAltercado = (gcnew System::Windows::Forms::DateTimePicker());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->txtIDAltercado = (gcnew System::Windows::Forms::TextBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
@@ -252,8 +255,8 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->txtDescriptionDTI = (gcnew System::Windows::Forms::TextBox());
 			this->btnSolucionDTI = (gcnew System::Windows::Forms::Button());
 			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
-			this->radioButton3 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton4 = (gcnew System::Windows::Forms::RadioButton());
+			this->rbtnSolucionDTINo = (gcnew System::Windows::Forms::RadioButton());
+			this->rbtnSolucionDTIYes = (gcnew System::Windows::Forms::RadioButton());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->dtpDTI = (gcnew System::Windows::Forms::DateTimePicker());
 			this->cmbTipoAlertaDTI = (gcnew System::Windows::Forms::ComboBox());
@@ -319,7 +322,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			// btnEliminarObjPerd
 			// 
 			this->btnEliminarObjPerd->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnEliminarObjPerd->Location = System::Drawing::Point(20, 177);
+			this->btnEliminarObjPerd->Location = System::Drawing::Point(20, 199);
 			this->btnEliminarObjPerd->Name = L"btnEliminarObjPerd";
 			this->btnEliminarObjPerd->Size = System::Drawing::Size(162, 49);
 			this->btnEliminarObjPerd->TabIndex = 64;
@@ -462,7 +465,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			// btnSolucionObj
 			// 
 			this->btnSolucionObj->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnSolucionObj->Location = System::Drawing::Point(202, 179);
+			this->btnSolucionObj->Location = System::Drawing::Point(202, 199);
 			this->btnSolucionObj->Name = L"btnSolucionObj";
 			this->btnSolucionObj->Size = System::Drawing::Size(163, 49);
 			this->btnSolucionObj->TabIndex = 22;
@@ -483,6 +486,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->dgvOjbPerdido->RowTemplate->Height = 24;
 			this->dgvOjbPerdido->Size = System::Drawing::Size(882, 222);
 			this->dgvOjbPerdido->TabIndex = 18;
+			this->dgvOjbPerdido->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &AdminAlertManagementForm::dgvOjbPerdido_CellClick);
 			// 
 			// ResourceAlertDMO
 			// 
@@ -529,7 +533,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->tabPage1->Controls->Add(this->label17);
 			this->tabPage1->Controls->Add(this->txtDescriptionAltercado);
 			this->tabPage1->Controls->Add(this->pbPhotoAltercado);
-			this->tabPage1->Controls->Add(this->dateTimePicker2);
+			this->tabPage1->Controls->Add(this->dtpAltercado);
 			this->tabPage1->Controls->Add(this->label3);
 			this->tabPage1->Controls->Add(this->txtIDAltercado);
 			this->tabPage1->Controls->Add(this->label5);
@@ -643,12 +647,12 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->pbPhotoAltercado->TabIndex = 51;
 			this->pbPhotoAltercado->TabStop = false;
 			// 
-			// dateTimePicker2
+			// dtpAltercado
 			// 
-			this->dateTimePicker2->Location = System::Drawing::Point(188, 63);
-			this->dateTimePicker2->Name = L"dateTimePicker2";
-			this->dateTimePicker2->Size = System::Drawing::Size(213, 22);
-			this->dateTimePicker2->TabIndex = 50;
+			this->dtpAltercado->Location = System::Drawing::Point(188, 63);
+			this->dtpAltercado->Name = L"dtpAltercado";
+			this->dtpAltercado->Size = System::Drawing::Size(213, 22);
+			this->dtpAltercado->TabIndex = 50;
 			// 
 			// label3
 			// 
@@ -691,6 +695,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->dgvAltercado->RowTemplate->Height = 24;
 			this->dgvAltercado->Size = System::Drawing::Size(884, 222);
 			this->dgvAltercado->TabIndex = 34;
+			this->dgvAltercado->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &AdminAlertManagementForm::dgvAltercado_CellClick);
 			// 
 			// dataGridViewTextBoxColumn1
 			// 
@@ -786,8 +791,8 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			// 
 			// groupBox3
 			// 
-			this->groupBox3->Controls->Add(this->radioButton3);
-			this->groupBox3->Controls->Add(this->radioButton4);
+			this->groupBox3->Controls->Add(this->rbtnSolucionDTINo);
+			this->groupBox3->Controls->Add(this->rbtnSolucionDTIYes);
 			this->groupBox3->Location = System::Drawing::Point(153, 143);
 			this->groupBox3->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->groupBox3->Name = L"groupBox3";
@@ -796,29 +801,29 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->groupBox3->TabIndex = 59;
 			this->groupBox3->TabStop = false;
 			// 
-			// radioButton3
+			// rbtnSolucionDTINo
 			// 
-			this->radioButton3->AutoSize = true;
-			this->radioButton3->Location = System::Drawing::Point(68, 20);
-			this->radioButton3->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->radioButton3->Name = L"radioButton3";
-			this->radioButton3->Size = System::Drawing::Size(46, 20);
-			this->radioButton3->TabIndex = 1;
-			this->radioButton3->Text = L"No";
-			this->radioButton3->UseVisualStyleBackColor = true;
+			this->rbtnSolucionDTINo->AutoSize = true;
+			this->rbtnSolucionDTINo->Location = System::Drawing::Point(68, 20);
+			this->rbtnSolucionDTINo->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->rbtnSolucionDTINo->Name = L"rbtnSolucionDTINo";
+			this->rbtnSolucionDTINo->Size = System::Drawing::Size(46, 20);
+			this->rbtnSolucionDTINo->TabIndex = 1;
+			this->rbtnSolucionDTINo->Text = L"No";
+			this->rbtnSolucionDTINo->UseVisualStyleBackColor = true;
 			// 
-			// radioButton4
+			// rbtnSolucionDTIYes
 			// 
-			this->radioButton4->AutoSize = true;
-			this->radioButton4->Checked = true;
-			this->radioButton4->Location = System::Drawing::Point(12, 20);
-			this->radioButton4->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->radioButton4->Name = L"radioButton4";
-			this->radioButton4->Size = System::Drawing::Size(40, 20);
-			this->radioButton4->TabIndex = 0;
-			this->radioButton4->TabStop = true;
-			this->radioButton4->Text = L"Sí";
-			this->radioButton4->UseVisualStyleBackColor = true;
+			this->rbtnSolucionDTIYes->AutoSize = true;
+			this->rbtnSolucionDTIYes->Checked = true;
+			this->rbtnSolucionDTIYes->Location = System::Drawing::Point(12, 20);
+			this->rbtnSolucionDTIYes->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->rbtnSolucionDTIYes->Name = L"rbtnSolucionDTIYes";
+			this->rbtnSolucionDTIYes->Size = System::Drawing::Size(40, 20);
+			this->rbtnSolucionDTIYes->TabIndex = 0;
+			this->rbtnSolucionDTIYes->TabStop = true;
+			this->rbtnSolucionDTIYes->Text = L"Sí";
+			this->rbtnSolucionDTIYes->UseVisualStyleBackColor = true;
 			// 
 			// label4
 			// 
@@ -900,6 +905,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->dgvDTI->RowTemplate->Height = 24;
 			this->dgvDTI->Size = System::Drawing::Size(865, 222);
 			this->dgvDTI->TabIndex = 34;
+			this->dgvDTI->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &AdminAlertManagementForm::dgvDTI_CellClick);
 			// 
 			// dataGridViewTextBoxColumn6
 			// 
@@ -1034,10 +1040,93 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 				}
 			}
 		}
+		private: void SearchAndPutImagenOn(PictureBox^ pb) {
+			OpenFileDialog^ opfd = gcnew OpenFileDialog();
+			opfd->Filter = "Image Files (*.jpg;*.jpeg;)|*.jpg;*.jpeg;";
+			if (opfd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				pb->Image = gcnew Bitmap(opfd->FileName);
+			}
+		}
 		private: System::Void AdminAlertManagementForm_Load(System::Object^ sender, System::EventArgs^ e) {
 			CargarTablaAltercado();
 			CargarTablaDTIReport();
 			CargarTablaObjetoPerdido();
+		}
+		private: System::Void dgvOjbPerdido_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+			int objetoID = Int32::Parse(dgvOjbPerdido->Rows[dgvOjbPerdido->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
+			ObjPerdido^ objeto = Service::buscarObjetoPerdido(objetoID);
+			if (objeto != nullptr) {
+				txtDescriptionObj->Text = objeto->Description;
+				txtIDObjPerdido->Text = objeto->id.ToString();
+				txtObjetoPerdido->Text = objeto->ObjetoEncontrado;
+
+				rbtnSolucionObjYes->Checked = objeto->Solucionado;
+				rbtnSolucionObNo->Checked = !objeto->Solucionado;
+
+				if (objeto->Photo != nullptr) {
+					System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(objeto->Photo);
+					pbPhotoObj->Image = Image::FromStream(ms);
+				}
+				else {
+					pbPhotoObj->Image = nullptr;
+					pbPhotoObj->Invalidate();
+				}
+
+				if (objeto->Fecha != nullptr)
+					dtpObjetoPerdido->Value = *(objeto->Fecha);
+				else
+					dtpObjetoPerdido->Value = DateTime::Now;
+			}
+		}
+		private: System::Void dgvAltercado_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+			int id = Int32::Parse(dgvAltercado->Rows[dgvAltercado->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
+			Altercado^ altercado = Service::buscarAltercado(id);
+			if (altercado != nullptr) {
+				txtDescriptionAltercado->Text = altercado->Description;
+				txtIDAltercado->Text = altercado->id.ToString();
+
+				rbtnSolucionAltercadoYes->Checked = altercado->Solucionado;
+				rbtnSolucionAltercadoNo->Checked = !altercado->Solucionado;
+
+				if (altercado->Photo != nullptr) {
+					System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(altercado->Photo);
+					pbPhotoObj->Image = Image::FromStream(ms);
+				}
+				else {
+					pbPhotoObj->Image = nullptr;
+					pbPhotoObj->Invalidate();
+				}
+
+				if (altercado->Fecha != nullptr)
+					dtpAltercado->Value = *(altercado->Fecha);
+				else
+					dtpAltercado->Value = DateTime::Now;
+			}
+		}
+		private: System::Void dgvDTI_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+			int id = Int32::Parse(dgvDTI->Rows[dgvDTI->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
+			DTIReport^ reporte = Service::buscarDTIReport(id);
+			if (reporte != nullptr) {
+				txtDescriptionDTI->Text = reporte->Description;
+				txtIDAltercado->Text = reporte->id.ToString();
+
+				cmbTipoAlertaDTI->Visible = true;
+				cmbTipoAlertaDTI->Enabled = true;
+				for (int i = 0; i < cmbTipoAlertaDTI->Items->Count; i++) {
+					if (cmbTipoAlertaDTI->Items[i]->ToString() == reporte->tipoReporte) {
+						cmbTipoAlertaDTI->SelectedIndex = i;
+						break;
+					}
+				}
+
+				rbtnSolucionAltercadoYes->Checked = reporte->Solucionado;
+				rbtnSolucionAltercadoNo->Checked = !reporte->Solucionado;
+
+				if (reporte->Fecha != nullptr)
+					dtpDTI->Value = *(reporte->Fecha);
+				else
+					dtpDTI->Value = DateTime::Now;
+			}
 		}
 	};
 }
