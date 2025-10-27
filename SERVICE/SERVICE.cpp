@@ -63,5 +63,26 @@ void BotService::Service::delimitarZonaTrabajo(double x, double y) {
 void BotService::Service::registrarAlerta(Alert^ alerta) {
 	return Persistance::registrarAlerta(alerta);
 }
+void BotService::Service::registrarObjPerdido(ObjPerdido^ objeto) {
+	return Persistance::registrarObjPerdido(objeto);
+}
+void BotService::Service::registrarDTIReport(DTIReport^ reporte) {
+	return Persistance::registrarDTIReport(reporte);
+}
+void BotService::Service::registrarAlercado(Altercado^ altercado) {
+	return Persistance::registrarAlercado(altercado);
+}
+List<Alert^>^ BotService::Service::ShowAlertas() {
+	return Persistance::ShowAlertas();
+}
+List<ObjPerdido^>^ BotService::Service::ShowObjetosPerdidos() {
+	return Persistance::ShowObjetosPerdidos();
+}
+List<Altercado^>^ BotService::Service::ShowAltercados() {
+	return Persistance::ShowAltercados();
+}
+List<DTIReport^>^ BotService::Service::ShowDTIReport() {
+	return Persistance::ShowDTIReport();
+}
 
 

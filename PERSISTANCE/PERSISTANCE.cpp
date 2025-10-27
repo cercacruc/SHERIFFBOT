@@ -556,8 +556,19 @@ Point^ BotPersistance::Persistance::getPoint(double x, double y)
 
 //Registro de alertas
 void BotPersistance::Persistance::registrarAlerta(Alert^ alerta) {
+    
+    List<Alert^>^ alertasExistentes = ShowAlertas();
+    
+    int maxId = 0;
+    for each (Alert ^ alertaExistente in alertasExistentes) {
+        if (alertaExistente->id > maxId) {
+            maxId = alertaExistente->id;
+        }
+    }
+
+    alerta->id = maxId + 1;
+    
     listaReportesAlertas->Add(alerta);
-    //PersistTxtFileAlert(fileAlertReport, listaReportesAlertas);//falta implementar
     PersistBinaryFile(fileBinAlertReport, listaReportesAlertas);
 }
 void BotPersistance::Persistance::registrarObjPerdido(ObjPerdido^ objeto) {
@@ -568,4 +579,49 @@ void BotPersistance::Persistance::registrarDTIReport(DTIReport^ reporte) {
 }
 void BotPersistance::Persistance::registrarAlercado(Altercado^ altercado) {
     registrarAlerta(altercado);
+}
+
+List<Alert^>^ BotPersistance::Persistance::ShowAlertas()
+{
+    listaReportesAlertas = (List<Alert^>^)LoadBinaryFile(fileBinAlertReport);
+    if (listaReportesAlertas == nullptr) {
+        listaReportesAlertas = gcnew List<Alert^>();
+    }
+    return listaReportesAlertas;
+}
+
+List<ObjPerdido^>^  BotPersistance::Persistance::ShowObjetosPerdidos()
+{
+    List<ObjPerdido^>^ lista = gcnew List<ObjPerdido^>();
+    List<Alert^>^ alertasList = ShowAlertas();
+    for (int i = 0; i < alertasList->Count; i++) {
+        if (alertasList[i]->GetType() == ObjPerdido::typeid) {
+            lista->Add((ObjPerdido^)alertasList[i]);
+        }
+    }
+    return lista;
+}
+
+List<Altercado^>^ BotPersistance::Persistance::ShowAltercados()
+{
+    List<Altercado^>^ lista = gcnew List<Altercado^>();
+    List<Alert^>^ alertasList = ShowAlertas();
+    for (int i = 0; i < alertasList->Count; i++) {
+        if (alertasList[i]->GetType() == Altercado::typeid) {
+            lista->Add((Altercado^)alertasList[i]);
+        }
+    }
+    return lista;
+}
+
+List<DTIReport^>^ BotPersistance::Persistance::ShowDTIReport()
+{
+    List<DTIReport^>^ lista = gcnew List<DTIReport^>();
+    List<Alert^>^ alertasList = ShowAlertas();
+    for (int i = 0; i < alertasList->Count; i++) {
+        if (alertasList[i]->GetType() == DTIReport::typeid) {
+            lista->Add((DTIReport^)alertasList[i]);
+        }
+    }
+    return lista;
 }

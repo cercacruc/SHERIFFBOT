@@ -32,5 +32,12 @@ namespace BotService {
 
 		//CRUC Alert Reports
 		static void registrarAlerta(Alert^ alerta);
+		static void registrarObjPerdido(ObjPerdido^ objeto);
+		static void registrarDTIReport(DTIReport^ reporte);
+		static void registrarAlercado(Altercado^ altercado);
+		static List<Alert^>^ ShowAlertas();
+		static List<ObjPerdido^>^ ShowObjetosPerdidos();
+		static List<Altercado^>^ ShowAltercados();
+		static List<DTIReport^>^ ShowDTIReport();
 	};
 }

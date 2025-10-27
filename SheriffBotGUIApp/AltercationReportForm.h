@@ -210,7 +210,7 @@ namespace SheriffBotGUIApp {
 			this->Close();
 		}
 		private: System::Void btnEnviar_Click(System::Object^ sender, System::EventArgs^ e) {
-			Alert^ alerta = gcnew Alert();
+			Altercado^ alerta = gcnew Altercado();
 			alerta->Description = txtDescription->Text;
 			alerta->Lugar = txtLugar->Text;
 
@@ -221,6 +221,8 @@ namespace SheriffBotGUIApp {
 			}
 
 			alerta->Fecha = dtpFecha->Value;
+
+			alerta->Solucionado = false;
 
 			Service::registrarAlerta(alerta);
 			MessageBox::Show("Alerta enviada exitosamente", "Exito", MessageBoxButtons::OK);

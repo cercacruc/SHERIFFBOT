@@ -46,11 +46,12 @@ namespace BotModel {
 	[Serializable]
 		public ref class Alert : DatosUsuario {
 	public:
+		property int id;
 		property DateTime^ Fecha;
 		property String^ Description;
 		property array<Byte>^ Photo;
 		property String^ Lugar;
-		
+		property bool Solucionado;
 
 		Alert();
 		Alert(String^ description, String^ lugar);
@@ -63,12 +64,12 @@ namespace BotModel {
 	[Serializable]
 	public ref class Altercado : Alert {
 		public:
-
+			
 	};
 	[Serializable]
 	public ref class ObjPerdido : Alert {
 		public:
-
+			property String^ ObjetoEncontrado;
 	};
 
 }

@@ -9,6 +9,10 @@ namespace SheriffBotGUIApp {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	using namespace System::Collections::Generic;
+	using namespace BotModel;
+	using namespace BotService;
+
 	/// <summary>
 	/// Resumen de AdminAlertManagementForm
 	/// </summary>
@@ -45,17 +49,21 @@ namespace SheriffBotGUIApp {
 
 
 	private: System::Windows::Forms::Label^ label10;
-	private: System::Windows::Forms::TextBox^ BateriaRobot;
+	private: System::Windows::Forms::TextBox^ txtObjetoPerdido;
+
 	private: System::Windows::Forms::Label^ label11;
-	private: System::Windows::Forms::TextBox^ IDRobot;
+	private: System::Windows::Forms::TextBox^ txtIDObjPerdido;
+
 	private: System::Windows::Forms::Label^ label12;
-	private: System::Windows::Forms::Button^ btnSolucion;
+	private: System::Windows::Forms::Button^ btnSolucionObj;
+	private: System::Windows::Forms::DataGridView^ dgvOjbPerdido;
 
 
 
 
 
-	private: System::Windows::Forms::DataGridView^ dgvRobot;
+
+
 
 
 
@@ -93,15 +101,17 @@ namespace SheriffBotGUIApp {
 
 
 	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::TextBox^ txtIDAltercado;
 
 
-	private: System::Windows::Forms::TextBox^ textBox5;
+
 	private: System::Windows::Forms::Label^ label5;
+	private: System::Windows::Forms::DataGridView^ dgvAltercado;
 
 
 
 
-	private: System::Windows::Forms::DataGridView^ dataGridView1;
+
 
 
 
@@ -115,50 +125,69 @@ namespace SheriffBotGUIApp {
 	private: System::Windows::Forms::Label^ label13;
 
 	private: System::Windows::Forms::Label^ label14;
-	private: System::Windows::Forms::TextBox^ textBox10;
+private: System::Windows::Forms::TextBox^ txtIDDTI;
+
 	private: System::Windows::Forms::Label^ label15;
+private: System::Windows::Forms::DataGridView^ dgvDTI;
 
 
 
 
-	private: System::Windows::Forms::DataGridView^ dataGridView2;
+
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn6;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn7;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn8;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn9;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn10;
-private: System::Windows::Forms::PictureBox^ pictureBox1;
+private: System::Windows::Forms::PictureBox^ pbPhotoObj;
 
-private: System::Windows::Forms::DateTimePicker^ dateTimePicker1;
+private: System::Windows::Forms::DateTimePicker^ dtpObjetoPerdido;
+
+
 private: System::Windows::Forms::Label^ label16;
 private: System::Windows::Forms::GroupBox^ groupBox1;
-private: System::Windows::Forms::RadioButton^ rbtnContinuousUseNo;
-private: System::Windows::Forms::RadioButton^ rbtnContinuousUseYes;
+private: System::Windows::Forms::RadioButton^ rbtnSolucionObNo;
+
+private: System::Windows::Forms::RadioButton^ rbtnSolucionObjYes;
+
 private: System::Windows::Forms::Label^ label9;
-private: System::Windows::Forms::TextBox^ textBox11;
+private: System::Windows::Forms::TextBox^ txtDescriptionObj;
+
 private: System::Windows::Forms::Label^ label2;
 private: System::Windows::Forms::Label^ label17;
-private: System::Windows::Forms::TextBox^ textBox2;
-private: System::Windows::Forms::PictureBox^ pictureBox2;
+private: System::Windows::Forms::TextBox^ txtDescriptionAltercado;
+private: System::Windows::Forms::PictureBox^ pbPhotoAltercado;
+
+
 private: System::Windows::Forms::DateTimePicker^ dateTimePicker2;
-private: System::Windows::Forms::Button^ button1;
+private: System::Windows::Forms::Button^ btnSolucionAltercado;
+
 private: System::Windows::Forms::GroupBox^ groupBox2;
-private: System::Windows::Forms::RadioButton^ radioButton1;
-private: System::Windows::Forms::RadioButton^ radioButton2;
+private: System::Windows::Forms::RadioButton^ rbtnSolucionAltercadoNo;
+
+private: System::Windows::Forms::RadioButton^ rbtnSolucionAltercadoYes;
+
 private: System::Windows::Forms::Label^ label1;
 private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn1;
 private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn3;
 private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn4;
 private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn5;
 private: System::Windows::Forms::Label^ label6;
-private: System::Windows::Forms::TextBox^ textBox1;
-private: System::Windows::Forms::Button^ button2;
+private: System::Windows::Forms::TextBox^ txtDescriptionDTI;
+
+private: System::Windows::Forms::Button^ btnSolucionDTI;
+
 private: System::Windows::Forms::GroupBox^ groupBox3;
 private: System::Windows::Forms::RadioButton^ radioButton3;
 private: System::Windows::Forms::RadioButton^ radioButton4;
 private: System::Windows::Forms::Label^ label4;
-private: System::Windows::Forms::DateTimePicker^ dateTimePicker3;
-private: System::Windows::Forms::ComboBox^ comboBox1;
+private: System::Windows::Forms::DateTimePicker^ dtpDTI;
+
+private: System::Windows::Forms::ComboBox^ cmbTipoAlertaDTI;
+private: System::Windows::Forms::Button^ btnEliminarObjPerd;
+private: System::Windows::Forms::Button^ btnEliminarAltercado;
+private: System::Windows::Forms::Button^ btnEliminarDTI;
+
 
 	private:
 		/// <summary>
@@ -175,78 +204,81 @@ private: System::Windows::Forms::ComboBox^ comboBox1;
 		{
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
-			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->label16 = (gcnew System::Windows::Forms::Label());
+			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->rbtnSolucionObNo = (gcnew System::Windows::Forms::RadioButton());
+			this->rbtnSolucionObjYes = (gcnew System::Windows::Forms::RadioButton());
+			this->label9 = (gcnew System::Windows::Forms::Label());
+			this->txtDescriptionObj = (gcnew System::Windows::Forms::TextBox());
+			this->dtpObjetoPerdido = (gcnew System::Windows::Forms::DateTimePicker());
+			this->pbPhotoObj = (gcnew System::Windows::Forms::PictureBox());
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->label10 = (gcnew System::Windows::Forms::Label());
-			this->BateriaRobot = (gcnew System::Windows::Forms::TextBox());
+			this->txtObjetoPerdido = (gcnew System::Windows::Forms::TextBox());
 			this->label11 = (gcnew System::Windows::Forms::Label());
-			this->IDRobot = (gcnew System::Windows::Forms::TextBox());
+			this->txtIDObjPerdido = (gcnew System::Windows::Forms::TextBox());
 			this->label12 = (gcnew System::Windows::Forms::Label());
-			this->btnSolucion = (gcnew System::Windows::Forms::Button());
-			this->dgvRobot = (gcnew System::Windows::Forms::DataGridView());
+			this->btnSolucionObj = (gcnew System::Windows::Forms::Button());
+			this->dgvOjbPerdido = (gcnew System::Windows::Forms::DataGridView());
 			this->ResourceAlertDMO = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourceNameMO = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourceDateMO = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourceTimeMO = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourceStatusMO = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
+			this->btnSolucionAltercado = (gcnew System::Windows::Forms::Button());
+			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
+			this->rbtnSolucionAltercadoNo = (gcnew System::Windows::Forms::RadioButton());
+			this->rbtnSolucionAltercadoYes = (gcnew System::Windows::Forms::RadioButton());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label17 = (gcnew System::Windows::Forms::Label());
+			this->txtDescriptionAltercado = (gcnew System::Windows::Forms::TextBox());
+			this->pbPhotoAltercado = (gcnew System::Windows::Forms::PictureBox());
+			this->dateTimePicker2 = (gcnew System::Windows::Forms::DateTimePicker());
 			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
+			this->txtIDAltercado = (gcnew System::Windows::Forms::TextBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->dgvAltercado = (gcnew System::Windows::Forms::DataGridView());
+			this->dataGridViewTextBoxColumn1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->dataGridViewTextBoxColumn3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->dataGridViewTextBoxColumn4 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->dataGridViewTextBoxColumn5 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->txtDescriptionDTI = (gcnew System::Windows::Forms::TextBox());
+			this->btnSolucionDTI = (gcnew System::Windows::Forms::Button());
+			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
+			this->radioButton3 = (gcnew System::Windows::Forms::RadioButton());
+			this->radioButton4 = (gcnew System::Windows::Forms::RadioButton());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->dtpDTI = (gcnew System::Windows::Forms::DateTimePicker());
+			this->cmbTipoAlertaDTI = (gcnew System::Windows::Forms::ComboBox());
 			this->label13 = (gcnew System::Windows::Forms::Label());
 			this->label14 = (gcnew System::Windows::Forms::Label());
-			this->textBox10 = (gcnew System::Windows::Forms::TextBox());
+			this->txtIDDTI = (gcnew System::Windows::Forms::TextBox());
 			this->label15 = (gcnew System::Windows::Forms::Label());
-			this->dataGridView2 = (gcnew System::Windows::Forms::DataGridView());
+			this->dgvDTI = (gcnew System::Windows::Forms::DataGridView());
 			this->dataGridViewTextBoxColumn6 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn7 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn8 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn9 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn10 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->dateTimePicker1 = (gcnew System::Windows::Forms::DateTimePicker());
-			this->textBox11 = (gcnew System::Windows::Forms::TextBox());
-			this->label9 = (gcnew System::Windows::Forms::Label());
-			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
-			this->rbtnContinuousUseNo = (gcnew System::Windows::Forms::RadioButton());
-			this->rbtnContinuousUseYes = (gcnew System::Windows::Forms::RadioButton());
-			this->label16 = (gcnew System::Windows::Forms::Label());
-			this->dateTimePicker2 = (gcnew System::Windows::Forms::DateTimePicker());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->label17 = (gcnew System::Windows::Forms::Label());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
-			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
-			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton2 = (gcnew System::Windows::Forms::RadioButton());
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->dataGridViewTextBoxColumn1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->dataGridViewTextBoxColumn3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->dataGridViewTextBoxColumn4 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->dataGridViewTextBoxColumn5 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
-			this->dateTimePicker3 = (gcnew System::Windows::Forms::DateTimePicker());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
-			this->radioButton3 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton4 = (gcnew System::Windows::Forms::RadioButton());
-			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->btnEliminarDTI = (gcnew System::Windows::Forms::Button());
+			this->btnEliminarAltercado = (gcnew System::Windows::Forms::Button());
+			this->btnEliminarObjPerd = (gcnew System::Windows::Forms::Button());
 			this->tabControl1->SuspendLayout();
 			this->tabPage2->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvRobot))->BeginInit();
-			this->tabPage1->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
-			this->tabPage3->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->BeginInit();
 			this->groupBox1->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPhotoObj))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvOjbPerdido))->BeginInit();
+			this->tabPage1->SuspendLayout();
 			this->groupBox2->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPhotoAltercado))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvAltercado))->BeginInit();
+			this->tabPage3->SuspendLayout();
 			this->groupBox3->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvDTI))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// tabControl1
@@ -262,20 +294,21 @@ private: System::Windows::Forms::ComboBox^ comboBox1;
 			// 
 			// tabPage2
 			// 
+			this->tabPage2->Controls->Add(this->btnEliminarObjPerd);
 			this->tabPage2->Controls->Add(this->label16);
 			this->tabPage2->Controls->Add(this->groupBox1);
 			this->tabPage2->Controls->Add(this->label9);
-			this->tabPage2->Controls->Add(this->textBox11);
-			this->tabPage2->Controls->Add(this->dateTimePicker1);
-			this->tabPage2->Controls->Add(this->pictureBox1);
+			this->tabPage2->Controls->Add(this->txtDescriptionObj);
+			this->tabPage2->Controls->Add(this->dtpObjetoPerdido);
+			this->tabPage2->Controls->Add(this->pbPhotoObj);
 			this->tabPage2->Controls->Add(this->label8);
 			this->tabPage2->Controls->Add(this->label10);
-			this->tabPage2->Controls->Add(this->BateriaRobot);
+			this->tabPage2->Controls->Add(this->txtObjetoPerdido);
 			this->tabPage2->Controls->Add(this->label11);
-			this->tabPage2->Controls->Add(this->IDRobot);
+			this->tabPage2->Controls->Add(this->txtIDObjPerdido);
 			this->tabPage2->Controls->Add(this->label12);
-			this->tabPage2->Controls->Add(this->btnSolucion);
-			this->tabPage2->Controls->Add(this->dgvRobot);
+			this->tabPage2->Controls->Add(this->btnSolucionObj);
+			this->tabPage2->Controls->Add(this->dgvOjbPerdido);
 			this->tabPage2->Location = System::Drawing::Point(4, 25);
 			this->tabPage2->Name = L"tabPage2";
 			this->tabPage2->Size = System::Drawing::Size(916, 514);
@@ -283,13 +316,84 @@ private: System::Windows::Forms::ComboBox^ comboBox1;
 			this->tabPage2->Text = L"Administrar Objeto Perdido";
 			this->tabPage2->UseVisualStyleBackColor = true;
 			// 
-			// pictureBox1
+			// label16
 			// 
-			this->pictureBox1->Location = System::Drawing::Point(670, 49);
-			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(211, 177);
-			this->pictureBox1->TabIndex = 34;
-			this->pictureBox1->TabStop = false;
+			this->label16->AutoSize = true;
+			this->label16->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->label16->Location = System::Drawing::Point(665, 14);
+			this->label16->Name = L"label16";
+			this->label16->Size = System::Drawing::Size(77, 25);
+			this->label16->TabIndex = 39;
+			this->label16->Text = L"Imagen";
+			// 
+			// groupBox1
+			// 
+			this->groupBox1->Controls->Add(this->rbtnSolucionObNo);
+			this->groupBox1->Controls->Add(this->rbtnSolucionObjYes);
+			this->groupBox1->Location = System::Drawing::Point(152, 128);
+			this->groupBox1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->groupBox1->Name = L"groupBox1";
+			this->groupBox1->Padding = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->groupBox1->Size = System::Drawing::Size(133, 46);
+			this->groupBox1->TabIndex = 38;
+			this->groupBox1->TabStop = false;
+			// 
+			// rbtnSolucionObNo
+			// 
+			this->rbtnSolucionObNo->AutoSize = true;
+			this->rbtnSolucionObNo->Location = System::Drawing::Point(68, 20);
+			this->rbtnSolucionObNo->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->rbtnSolucionObNo->Name = L"rbtnSolucionObNo";
+			this->rbtnSolucionObNo->Size = System::Drawing::Size(46, 20);
+			this->rbtnSolucionObNo->TabIndex = 1;
+			this->rbtnSolucionObNo->Text = L"No";
+			this->rbtnSolucionObNo->UseVisualStyleBackColor = true;
+			// 
+			// rbtnSolucionObjYes
+			// 
+			this->rbtnSolucionObjYes->AutoSize = true;
+			this->rbtnSolucionObjYes->Checked = true;
+			this->rbtnSolucionObjYes->Location = System::Drawing::Point(12, 20);
+			this->rbtnSolucionObjYes->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->rbtnSolucionObjYes->Name = L"rbtnSolucionObjYes";
+			this->rbtnSolucionObjYes->Size = System::Drawing::Size(40, 20);
+			this->rbtnSolucionObjYes->TabIndex = 0;
+			this->rbtnSolucionObjYes->TabStop = true;
+			this->rbtnSolucionObjYes->Text = L"Sí";
+			this->rbtnSolucionObjYes->UseVisualStyleBackColor = true;
+			// 
+			// label9
+			// 
+			this->label9->AutoSize = true;
+			this->label9->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->label9->Location = System::Drawing::Point(406, 14);
+			this->label9->Name = L"label9";
+			this->label9->Size = System::Drawing::Size(114, 25);
+			this->label9->TabIndex = 37;
+			this->label9->Text = L"Descripción";
+			// 
+			// txtDescriptionObj
+			// 
+			this->txtDescriptionObj->Location = System::Drawing::Point(411, 49);
+			this->txtDescriptionObj->Multiline = true;
+			this->txtDescriptionObj->Name = L"txtDescriptionObj";
+			this->txtDescriptionObj->Size = System::Drawing::Size(226, 177);
+			this->txtDescriptionObj->TabIndex = 36;
+			// 
+			// dtpObjetoPerdido
+			// 
+			this->dtpObjetoPerdido->Location = System::Drawing::Point(152, 101);
+			this->dtpObjetoPerdido->Name = L"dtpObjetoPerdido";
+			this->dtpObjetoPerdido->Size = System::Drawing::Size(213, 22);
+			this->dtpObjetoPerdido->TabIndex = 35;
+			// 
+			// pbPhotoObj
+			// 
+			this->pbPhotoObj->Location = System::Drawing::Point(670, 49);
+			this->pbPhotoObj->Name = L"pbPhotoObj";
+			this->pbPhotoObj->Size = System::Drawing::Size(211, 177);
+			this->pbPhotoObj->TabIndex = 34;
+			this->pbPhotoObj->TabStop = false;
 			// 
 			// label8
 			// 
@@ -311,12 +415,12 @@ private: System::Windows::Forms::ComboBox^ comboBox1;
 			this->label10->TabIndex = 28;
 			this->label10->Text = L"Fecha";
 			// 
-			// BateriaRobot
+			// txtObjetoPerdido
 			// 
-			this->BateriaRobot->Location = System::Drawing::Point(152, 62);
-			this->BateriaRobot->Name = L"BateriaRobot";
-			this->BateriaRobot->Size = System::Drawing::Size(213, 22);
-			this->BateriaRobot->TabIndex = 27;
+			this->txtObjetoPerdido->Location = System::Drawing::Point(152, 62);
+			this->txtObjetoPerdido->Name = L"txtObjetoPerdido";
+			this->txtObjetoPerdido->Size = System::Drawing::Size(213, 22);
+			this->txtObjetoPerdido->TabIndex = 27;
 			// 
 			// label11
 			// 
@@ -328,12 +432,12 @@ private: System::Windows::Forms::ComboBox^ comboBox1;
 			this->label11->TabIndex = 26;
 			this->label11->Text = L"Objeto";
 			// 
-			// IDRobot
+			// txtIDObjPerdido
 			// 
-			this->IDRobot->Location = System::Drawing::Point(152, 18);
-			this->IDRobot->Name = L"IDRobot";
-			this->IDRobot->Size = System::Drawing::Size(213, 22);
-			this->IDRobot->TabIndex = 25;
+			this->txtIDObjPerdido->Location = System::Drawing::Point(152, 18);
+			this->txtIDObjPerdido->Name = L"txtIDObjPerdido";
+			this->txtIDObjPerdido->Size = System::Drawing::Size(213, 22);
+			this->txtIDObjPerdido->TabIndex = 25;
 			// 
 			// label12
 			// 
@@ -345,30 +449,30 @@ private: System::Windows::Forms::ComboBox^ comboBox1;
 			this->label12->TabIndex = 24;
 			this->label12->Text = L"ID Alerta";
 			// 
-			// btnSolucion
+			// btnSolucionObj
 			// 
-			this->btnSolucion->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnSolucion->Location = System::Drawing::Point(89, 189);
-			this->btnSolucion->Name = L"btnSolucion";
-			this->btnSolucion->Size = System::Drawing::Size(177, 49);
-			this->btnSolucion->TabIndex = 22;
-			this->btnSolucion->Text = L"Solucionado";
-			this->btnSolucion->UseVisualStyleBackColor = true;
+			this->btnSolucionObj->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->btnSolucionObj->Location = System::Drawing::Point(202, 179);
+			this->btnSolucionObj->Name = L"btnSolucionObj";
+			this->btnSolucionObj->Size = System::Drawing::Size(163, 49);
+			this->btnSolucionObj->TabIndex = 22;
+			this->btnSolucionObj->Text = L"Solucionado";
+			this->btnSolucionObj->UseVisualStyleBackColor = true;
 			// 
-			// dgvRobot
+			// dgvOjbPerdido
 			// 
-			this->dgvRobot->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgvRobot->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
+			this->dgvOjbPerdido->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgvOjbPerdido->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
 				this->ResourceAlertDMO,
 					this->ResourceNameMO, this->ResourceDateMO, this->ResourceTimeMO, this->ResourceStatusMO
 			});
-			this->dgvRobot->Location = System::Drawing::Point(20, 266);
-			this->dgvRobot->Name = L"dgvRobot";
-			this->dgvRobot->RowHeadersVisible = false;
-			this->dgvRobot->RowHeadersWidth = 51;
-			this->dgvRobot->RowTemplate->Height = 24;
-			this->dgvRobot->Size = System::Drawing::Size(882, 222);
-			this->dgvRobot->TabIndex = 18;
+			this->dgvOjbPerdido->Location = System::Drawing::Point(20, 266);
+			this->dgvOjbPerdido->Name = L"dgvOjbPerdido";
+			this->dgvOjbPerdido->RowHeadersVisible = false;
+			this->dgvOjbPerdido->RowHeadersWidth = 51;
+			this->dgvOjbPerdido->RowTemplate->Height = 24;
+			this->dgvOjbPerdido->Size = System::Drawing::Size(882, 222);
+			this->dgvOjbPerdido->TabIndex = 18;
 			// 
 			// ResourceAlertDMO
 			// 
@@ -407,18 +511,19 @@ private: System::Windows::Forms::ComboBox^ comboBox1;
 			// 
 			// tabPage1
 			// 
-			this->tabPage1->Controls->Add(this->button1);
+			this->tabPage1->Controls->Add(this->btnEliminarAltercado);
+			this->tabPage1->Controls->Add(this->btnSolucionAltercado);
 			this->tabPage1->Controls->Add(this->groupBox2);
 			this->tabPage1->Controls->Add(this->label1);
 			this->tabPage1->Controls->Add(this->label2);
 			this->tabPage1->Controls->Add(this->label17);
-			this->tabPage1->Controls->Add(this->textBox2);
-			this->tabPage1->Controls->Add(this->pictureBox2);
+			this->tabPage1->Controls->Add(this->txtDescriptionAltercado);
+			this->tabPage1->Controls->Add(this->pbPhotoAltercado);
 			this->tabPage1->Controls->Add(this->dateTimePicker2);
 			this->tabPage1->Controls->Add(this->label3);
-			this->tabPage1->Controls->Add(this->textBox5);
+			this->tabPage1->Controls->Add(this->txtIDAltercado);
 			this->tabPage1->Controls->Add(this->label5);
-			this->tabPage1->Controls->Add(this->dataGridView1);
+			this->tabPage1->Controls->Add(this->dgvAltercado);
 			this->tabPage1->Location = System::Drawing::Point(4, 25);
 			this->tabPage1->Name = L"tabPage1";
 			this->tabPage1->Size = System::Drawing::Size(916, 514);
@@ -426,238 +531,61 @@ private: System::Windows::Forms::ComboBox^ comboBox1;
 			this->tabPage1->Text = L"Administrar Altercado";
 			this->tabPage1->UseVisualStyleBackColor = true;
 			// 
-			// label3
+			// btnSolucionAltercado
 			// 
-			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label3->Location = System::Drawing::Point(16, 60);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(67, 25);
-			this->label3->TabIndex = 43;
-			this->label3->Text = L"Fecha";
+			this->btnSolucionAltercado->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->btnSolucionAltercado->Location = System::Drawing::Point(224, 179);
+			this->btnSolucionAltercado->Name = L"btnSolucionAltercado";
+			this->btnSolucionAltercado->Size = System::Drawing::Size(177, 49);
+			this->btnSolucionAltercado->TabIndex = 57;
+			this->btnSolucionAltercado->Text = L"Solucionado";
+			this->btnSolucionAltercado->UseVisualStyleBackColor = true;
 			// 
-			// textBox5
+			// groupBox2
 			// 
-			this->textBox5->Location = System::Drawing::Point(188, 19);
-			this->textBox5->Name = L"textBox5";
-			this->textBox5->Size = System::Drawing::Size(213, 22);
-			this->textBox5->TabIndex = 40;
+			this->groupBox2->Controls->Add(this->rbtnSolucionAltercadoNo);
+			this->groupBox2->Controls->Add(this->rbtnSolucionAltercadoYes);
+			this->groupBox2->Location = System::Drawing::Point(153, 101);
+			this->groupBox2->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->groupBox2->Name = L"groupBox2";
+			this->groupBox2->Padding = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->groupBox2->Size = System::Drawing::Size(133, 46);
+			this->groupBox2->TabIndex = 56;
+			this->groupBox2->TabStop = false;
 			// 
-			// label5
+			// rbtnSolucionAltercadoNo
 			// 
-			this->label5->AutoSize = true;
-			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label5->Location = System::Drawing::Point(16, 15);
-			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(87, 25);
-			this->label5->TabIndex = 39;
-			this->label5->Text = L"ID Alerta";
+			this->rbtnSolucionAltercadoNo->AutoSize = true;
+			this->rbtnSolucionAltercadoNo->Location = System::Drawing::Point(68, 20);
+			this->rbtnSolucionAltercadoNo->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->rbtnSolucionAltercadoNo->Name = L"rbtnSolucionAltercadoNo";
+			this->rbtnSolucionAltercadoNo->Size = System::Drawing::Size(46, 20);
+			this->rbtnSolucionAltercadoNo->TabIndex = 1;
+			this->rbtnSolucionAltercadoNo->Text = L"No";
+			this->rbtnSolucionAltercadoNo->UseVisualStyleBackColor = true;
 			// 
-			// dataGridView1
+			// rbtnSolucionAltercadoYes
 			// 
-			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(4) {
-				this->dataGridViewTextBoxColumn1,
-					this->dataGridViewTextBoxColumn3, this->dataGridViewTextBoxColumn4, this->dataGridViewTextBoxColumn5
-			});
-			this->dataGridView1->Location = System::Drawing::Point(21, 267);
-			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->RowHeadersVisible = false;
-			this->dataGridView1->RowHeadersWidth = 51;
-			this->dataGridView1->RowTemplate->Height = 24;
-			this->dataGridView1->Size = System::Drawing::Size(884, 222);
-			this->dataGridView1->TabIndex = 34;
+			this->rbtnSolucionAltercadoYes->AutoSize = true;
+			this->rbtnSolucionAltercadoYes->Checked = true;
+			this->rbtnSolucionAltercadoYes->Location = System::Drawing::Point(12, 20);
+			this->rbtnSolucionAltercadoYes->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->rbtnSolucionAltercadoYes->Name = L"rbtnSolucionAltercadoYes";
+			this->rbtnSolucionAltercadoYes->Size = System::Drawing::Size(40, 20);
+			this->rbtnSolucionAltercadoYes->TabIndex = 0;
+			this->rbtnSolucionAltercadoYes->TabStop = true;
+			this->rbtnSolucionAltercadoYes->Text = L"Sí";
+			this->rbtnSolucionAltercadoYes->UseVisualStyleBackColor = true;
 			// 
-			// tabPage3
+			// label1
 			// 
-			this->tabPage3->Controls->Add(this->label6);
-			this->tabPage3->Controls->Add(this->textBox1);
-			this->tabPage3->Controls->Add(this->button2);
-			this->tabPage3->Controls->Add(this->groupBox3);
-			this->tabPage3->Controls->Add(this->label4);
-			this->tabPage3->Controls->Add(this->dateTimePicker3);
-			this->tabPage3->Controls->Add(this->comboBox1);
-			this->tabPage3->Controls->Add(this->label13);
-			this->tabPage3->Controls->Add(this->label14);
-			this->tabPage3->Controls->Add(this->textBox10);
-			this->tabPage3->Controls->Add(this->label15);
-			this->tabPage3->Controls->Add(this->dataGridView2);
-			this->tabPage3->Location = System::Drawing::Point(4, 25);
-			this->tabPage3->Name = L"tabPage3";
-			this->tabPage3->Size = System::Drawing::Size(916, 514);
-			this->tabPage3->TabIndex = 1;
-			this->tabPage3->Text = L"Administrar Reporte DTI";
-			this->tabPage3->UseVisualStyleBackColor = true;
-			// 
-			// label13
-			// 
-			this->label13->AutoSize = true;
-			this->label13->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label13->Location = System::Drawing::Point(16, 102);
-			this->label13->Name = L"label13";
-			this->label13->Size = System::Drawing::Size(67, 25);
-			this->label13->TabIndex = 43;
-			this->label13->Text = L"Fecha";
-			// 
-			// label14
-			// 
-			this->label14->AutoSize = true;
-			this->label14->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label14->Location = System::Drawing::Point(16, 55);
-			this->label14->Name = L"label14";
-			this->label14->Size = System::Drawing::Size(131, 25);
-			this->label14->TabIndex = 41;
-			this->label14->Text = L"Tipo de alerta";
-			// 
-			// textBox10
-			// 
-			this->textBox10->Location = System::Drawing::Point(167, 14);
-			this->textBox10->Name = L"textBox10";
-			this->textBox10->Size = System::Drawing::Size(213, 22);
-			this->textBox10->TabIndex = 40;
-			// 
-			// label15
-			// 
-			this->label15->AutoSize = true;
-			this->label15->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label15->Location = System::Drawing::Point(16, 10);
-			this->label15->Name = L"label15";
-			this->label15->Size = System::Drawing::Size(87, 25);
-			this->label15->TabIndex = 39;
-			this->label15->Text = L"ID Alerta";
-			// 
-			// dataGridView2
-			// 
-			this->dataGridView2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView2->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
-				this->dataGridViewTextBoxColumn6,
-					this->dataGridViewTextBoxColumn7, this->dataGridViewTextBoxColumn8, this->dataGridViewTextBoxColumn9, this->dataGridViewTextBoxColumn10
-			});
-			this->dataGridView2->Location = System::Drawing::Point(21, 276);
-			this->dataGridView2->Name = L"dataGridView2";
-			this->dataGridView2->RowHeadersVisible = false;
-			this->dataGridView2->RowHeadersWidth = 51;
-			this->dataGridView2->RowTemplate->Height = 24;
-			this->dataGridView2->Size = System::Drawing::Size(865, 222);
-			this->dataGridView2->TabIndex = 34;
-			// 
-			// dataGridViewTextBoxColumn6
-			// 
-			this->dataGridViewTextBoxColumn6->DataPropertyName = L"ResourceAlertIDDTI";
-			this->dataGridViewTextBoxColumn6->HeaderText = L"ID Alerta";
-			this->dataGridViewTextBoxColumn6->MinimumWidth = 6;
-			this->dataGridViewTextBoxColumn6->Name = L"dataGridViewTextBoxColumn6";
-			this->dataGridViewTextBoxColumn6->Width = 125;
-			// 
-			// dataGridViewTextBoxColumn7
-			// 
-			this->dataGridViewTextBoxColumn7->DataPropertyName = L"ResourceAlertTypeDTI";
-			this->dataGridViewTextBoxColumn7->HeaderText = L"Tipo de alerta";
-			this->dataGridViewTextBoxColumn7->MinimumWidth = 6;
-			this->dataGridViewTextBoxColumn7->Name = L"dataGridViewTextBoxColumn7";
-			this->dataGridViewTextBoxColumn7->Width = 125;
-			// 
-			// dataGridViewTextBoxColumn8
-			// 
-			this->dataGridViewTextBoxColumn8->DataPropertyName = L"ResourceDateDTI";
-			this->dataGridViewTextBoxColumn8->HeaderText = L"Fecha";
-			this->dataGridViewTextBoxColumn8->MinimumWidth = 6;
-			this->dataGridViewTextBoxColumn8->Name = L"dataGridViewTextBoxColumn8";
-			this->dataGridViewTextBoxColumn8->Width = 125;
-			// 
-			// dataGridViewTextBoxColumn9
-			// 
-			this->dataGridViewTextBoxColumn9->DataPropertyName = L"ResourceTimeDTI";
-			this->dataGridViewTextBoxColumn9->HeaderText = L"Hora";
-			this->dataGridViewTextBoxColumn9->MinimumWidth = 6;
-			this->dataGridViewTextBoxColumn9->Name = L"dataGridViewTextBoxColumn9";
-			this->dataGridViewTextBoxColumn9->Width = 125;
-			// 
-			// dataGridViewTextBoxColumn10
-			// 
-			this->dataGridViewTextBoxColumn10->DataPropertyName = L"ResourceStatusDTI";
-			this->dataGridViewTextBoxColumn10->HeaderText = L"Estado";
-			this->dataGridViewTextBoxColumn10->MinimumWidth = 6;
-			this->dataGridViewTextBoxColumn10->Name = L"dataGridViewTextBoxColumn10";
-			this->dataGridViewTextBoxColumn10->Width = 125;
-			// 
-			// dateTimePicker1
-			// 
-			this->dateTimePicker1->Location = System::Drawing::Point(152, 101);
-			this->dateTimePicker1->Name = L"dateTimePicker1";
-			this->dateTimePicker1->Size = System::Drawing::Size(213, 22);
-			this->dateTimePicker1->TabIndex = 35;
-			// 
-			// textBox11
-			// 
-			this->textBox11->Location = System::Drawing::Point(411, 49);
-			this->textBox11->Multiline = true;
-			this->textBox11->Name = L"textBox11";
-			this->textBox11->Size = System::Drawing::Size(226, 177);
-			this->textBox11->TabIndex = 36;
-			// 
-			// label9
-			// 
-			this->label9->AutoSize = true;
-			this->label9->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label9->Location = System::Drawing::Point(406, 14);
-			this->label9->Name = L"label9";
-			this->label9->Size = System::Drawing::Size(114, 25);
-			this->label9->TabIndex = 37;
-			this->label9->Text = L"Descripción";
-			// 
-			// groupBox1
-			// 
-			this->groupBox1->Controls->Add(this->rbtnContinuousUseNo);
-			this->groupBox1->Controls->Add(this->rbtnContinuousUseYes);
-			this->groupBox1->Location = System::Drawing::Point(152, 128);
-			this->groupBox1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Padding = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->groupBox1->Size = System::Drawing::Size(133, 46);
-			this->groupBox1->TabIndex = 38;
-			this->groupBox1->TabStop = false;
-			// 
-			// rbtnContinuousUseNo
-			// 
-			this->rbtnContinuousUseNo->AutoSize = true;
-			this->rbtnContinuousUseNo->Location = System::Drawing::Point(68, 20);
-			this->rbtnContinuousUseNo->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->rbtnContinuousUseNo->Name = L"rbtnContinuousUseNo";
-			this->rbtnContinuousUseNo->Size = System::Drawing::Size(46, 20);
-			this->rbtnContinuousUseNo->TabIndex = 1;
-			this->rbtnContinuousUseNo->Text = L"No";
-			this->rbtnContinuousUseNo->UseVisualStyleBackColor = true;
-			// 
-			// rbtnContinuousUseYes
-			// 
-			this->rbtnContinuousUseYes->AutoSize = true;
-			this->rbtnContinuousUseYes->Checked = true;
-			this->rbtnContinuousUseYes->Location = System::Drawing::Point(12, 20);
-			this->rbtnContinuousUseYes->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->rbtnContinuousUseYes->Name = L"rbtnContinuousUseYes";
-			this->rbtnContinuousUseYes->Size = System::Drawing::Size(40, 20);
-			this->rbtnContinuousUseYes->TabIndex = 0;
-			this->rbtnContinuousUseYes->TabStop = true;
-			this->rbtnContinuousUseYes->Text = L"Sí";
-			this->rbtnContinuousUseYes->UseVisualStyleBackColor = true;
-			// 
-			// label16
-			// 
-			this->label16->AutoSize = true;
-			this->label16->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label16->Location = System::Drawing::Point(665, 14);
-			this->label16->Name = L"label16";
-			this->label16->Size = System::Drawing::Size(77, 25);
-			this->label16->TabIndex = 39;
-			this->label16->Text = L"Imagen";
-			// 
-			// dateTimePicker2
-			// 
-			this->dateTimePicker2->Location = System::Drawing::Point(188, 63);
-			this->dateTimePicker2->Name = L"dateTimePicker2";
-			this->dateTimePicker2->Size = System::Drawing::Size(213, 22);
-			this->dateTimePicker2->TabIndex = 50;
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->label1->Location = System::Drawing::Point(16, 113);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(121, 25);
+			this->label1->TabIndex = 55;
+			this->label1->Text = L"Solucionado";
 			// 
 			// label2
 			// 
@@ -679,77 +607,70 @@ private: System::Windows::Forms::ComboBox^ comboBox1;
 			this->label17->TabIndex = 53;
 			this->label17->Text = L"Descripción";
 			// 
-			// textBox2
+			// txtDescriptionAltercado
 			// 
-			this->textBox2->Location = System::Drawing::Point(431, 51);
-			this->textBox2->Multiline = true;
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(226, 177);
-			this->textBox2->TabIndex = 52;
+			this->txtDescriptionAltercado->Location = System::Drawing::Point(431, 51);
+			this->txtDescriptionAltercado->Multiline = true;
+			this->txtDescriptionAltercado->Name = L"txtDescriptionAltercado";
+			this->txtDescriptionAltercado->Size = System::Drawing::Size(226, 177);
+			this->txtDescriptionAltercado->TabIndex = 52;
 			// 
-			// pictureBox2
+			// pbPhotoAltercado
 			// 
-			this->pictureBox2->Location = System::Drawing::Point(690, 51);
-			this->pictureBox2->Name = L"pictureBox2";
-			this->pictureBox2->Size = System::Drawing::Size(211, 177);
-			this->pictureBox2->TabIndex = 51;
-			this->pictureBox2->TabStop = false;
+			this->pbPhotoAltercado->Location = System::Drawing::Point(690, 51);
+			this->pbPhotoAltercado->Name = L"pbPhotoAltercado";
+			this->pbPhotoAltercado->Size = System::Drawing::Size(211, 177);
+			this->pbPhotoAltercado->TabIndex = 51;
+			this->pbPhotoAltercado->TabStop = false;
 			// 
-			// groupBox2
+			// dateTimePicker2
 			// 
-			this->groupBox2->Controls->Add(this->radioButton1);
-			this->groupBox2->Controls->Add(this->radioButton2);
-			this->groupBox2->Location = System::Drawing::Point(153, 101);
-			this->groupBox2->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->groupBox2->Name = L"groupBox2";
-			this->groupBox2->Padding = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->groupBox2->Size = System::Drawing::Size(133, 46);
-			this->groupBox2->TabIndex = 56;
-			this->groupBox2->TabStop = false;
+			this->dateTimePicker2->Location = System::Drawing::Point(188, 63);
+			this->dateTimePicker2->Name = L"dateTimePicker2";
+			this->dateTimePicker2->Size = System::Drawing::Size(213, 22);
+			this->dateTimePicker2->TabIndex = 50;
 			// 
-			// radioButton1
+			// label3
 			// 
-			this->radioButton1->AutoSize = true;
-			this->radioButton1->Location = System::Drawing::Point(68, 20);
-			this->radioButton1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->radioButton1->Name = L"radioButton1";
-			this->radioButton1->Size = System::Drawing::Size(46, 20);
-			this->radioButton1->TabIndex = 1;
-			this->radioButton1->Text = L"No";
-			this->radioButton1->UseVisualStyleBackColor = true;
+			this->label3->AutoSize = true;
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->label3->Location = System::Drawing::Point(16, 60);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(67, 25);
+			this->label3->TabIndex = 43;
+			this->label3->Text = L"Fecha";
 			// 
-			// radioButton2
+			// txtIDAltercado
 			// 
-			this->radioButton2->AutoSize = true;
-			this->radioButton2->Checked = true;
-			this->radioButton2->Location = System::Drawing::Point(12, 20);
-			this->radioButton2->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->radioButton2->Name = L"radioButton2";
-			this->radioButton2->Size = System::Drawing::Size(40, 20);
-			this->radioButton2->TabIndex = 0;
-			this->radioButton2->TabStop = true;
-			this->radioButton2->Text = L"Sí";
-			this->radioButton2->UseVisualStyleBackColor = true;
+			this->txtIDAltercado->Location = System::Drawing::Point(188, 19);
+			this->txtIDAltercado->Name = L"txtIDAltercado";
+			this->txtIDAltercado->Size = System::Drawing::Size(213, 22);
+			this->txtIDAltercado->TabIndex = 40;
 			// 
-			// label1
+			// label5
 			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label1->Location = System::Drawing::Point(16, 113);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(121, 25);
-			this->label1->TabIndex = 55;
-			this->label1->Text = L"Solucionado";
+			this->label5->AutoSize = true;
+			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->label5->Location = System::Drawing::Point(16, 15);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(87, 25);
+			this->label5->TabIndex = 39;
+			this->label5->Text = L"ID Alerta";
 			// 
-			// button1
+			// dgvAltercado
 			// 
-			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->button1->Location = System::Drawing::Point(132, 179);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(177, 49);
-			this->button1->TabIndex = 57;
-			this->button1->Text = L"Solucionado";
-			this->button1->UseVisualStyleBackColor = true;
+			this->dgvAltercado->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgvAltercado->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(4) {
+				this->dataGridViewTextBoxColumn1,
+					this->dataGridViewTextBoxColumn3, this->dataGridViewTextBoxColumn4, this->dataGridViewTextBoxColumn5
+			});
+			this->dgvAltercado->Location = System::Drawing::Point(21, 267);
+			this->dgvAltercado->Name = L"dgvAltercado";
+			this->dgvAltercado->RowHeadersVisible = false;
+			this->dgvAltercado->RowHeadersWidth = 51;
+			this->dgvAltercado->RowTemplate->Height = 24;
+			this->dgvAltercado->Size = System::Drawing::Size(884, 222);
+			this->dgvAltercado->TabIndex = 34;
 			// 
 			// dataGridViewTextBoxColumn1
 			// 
@@ -783,34 +704,55 @@ private: System::Windows::Forms::ComboBox^ comboBox1;
 			this->dataGridViewTextBoxColumn5->Name = L"dataGridViewTextBoxColumn5";
 			this->dataGridViewTextBoxColumn5->Width = 125;
 			// 
-			// comboBox1
+			// tabPage3
 			// 
-			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
-				L"Necesidades tecnologicas", L"Prestamo de dispositivo",
-					L"Proteccion contra ciberdelincuencia", L"Autenticación y acceso a aplicaciones y datos PUCP"
-			});
-			this->comboBox1->Location = System::Drawing::Point(167, 55);
-			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(213, 24);
-			this->comboBox1->TabIndex = 44;
+			this->tabPage3->Controls->Add(this->btnEliminarDTI);
+			this->tabPage3->Controls->Add(this->label6);
+			this->tabPage3->Controls->Add(this->txtDescriptionDTI);
+			this->tabPage3->Controls->Add(this->btnSolucionDTI);
+			this->tabPage3->Controls->Add(this->groupBox3);
+			this->tabPage3->Controls->Add(this->label4);
+			this->tabPage3->Controls->Add(this->dtpDTI);
+			this->tabPage3->Controls->Add(this->cmbTipoAlertaDTI);
+			this->tabPage3->Controls->Add(this->label13);
+			this->tabPage3->Controls->Add(this->label14);
+			this->tabPage3->Controls->Add(this->txtIDDTI);
+			this->tabPage3->Controls->Add(this->label15);
+			this->tabPage3->Controls->Add(this->dgvDTI);
+			this->tabPage3->Location = System::Drawing::Point(4, 25);
+			this->tabPage3->Name = L"tabPage3";
+			this->tabPage3->Size = System::Drawing::Size(916, 514);
+			this->tabPage3->TabIndex = 1;
+			this->tabPage3->Text = L"Administrar Reporte DTI";
+			this->tabPage3->UseVisualStyleBackColor = true;
 			// 
-			// dateTimePicker3
+			// label6
 			// 
-			this->dateTimePicker3->Location = System::Drawing::Point(167, 104);
-			this->dateTimePicker3->Name = L"dateTimePicker3";
-			this->dateTimePicker3->Size = System::Drawing::Size(213, 22);
-			this->dateTimePicker3->TabIndex = 51;
+			this->label6->AutoSize = true;
+			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->label6->Location = System::Drawing::Point(410, 11);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(114, 25);
+			this->label6->TabIndex = 62;
+			this->label6->Text = L"Descripción";
 			// 
-			// button2
+			// txtDescriptionDTI
 			// 
-			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->button2->Location = System::Drawing::Point(132, 221);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(177, 49);
-			this->button2->TabIndex = 60;
-			this->button2->Text = L"Solucionado";
-			this->button2->UseVisualStyleBackColor = true;
+			this->txtDescriptionDTI->Location = System::Drawing::Point(415, 46);
+			this->txtDescriptionDTI->Multiline = true;
+			this->txtDescriptionDTI->Name = L"txtDescriptionDTI";
+			this->txtDescriptionDTI->Size = System::Drawing::Size(471, 177);
+			this->txtDescriptionDTI->TabIndex = 61;
+			// 
+			// btnSolucionDTI
+			// 
+			this->btnSolucionDTI->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->btnSolucionDTI->Location = System::Drawing::Point(203, 205);
+			this->btnSolucionDTI->Name = L"btnSolucionDTI";
+			this->btnSolucionDTI->Size = System::Drawing::Size(177, 49);
+			this->btnSolucionDTI->TabIndex = 60;
+			this->btnSolucionDTI->Text = L"Solucionado";
+			this->btnSolucionDTI->UseVisualStyleBackColor = true;
 			// 
 			// groupBox3
 			// 
@@ -858,23 +800,146 @@ private: System::Windows::Forms::ComboBox^ comboBox1;
 			this->label4->TabIndex = 58;
 			this->label4->Text = L"Solucionado";
 			// 
-			// label6
+			// dtpDTI
 			// 
-			this->label6->AutoSize = true;
-			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label6->Location = System::Drawing::Point(410, 11);
-			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(114, 25);
-			this->label6->TabIndex = 62;
-			this->label6->Text = L"Descripción";
+			this->dtpDTI->Location = System::Drawing::Point(167, 104);
+			this->dtpDTI->Name = L"dtpDTI";
+			this->dtpDTI->Size = System::Drawing::Size(213, 22);
+			this->dtpDTI->TabIndex = 51;
 			// 
-			// textBox1
+			// cmbTipoAlertaDTI
 			// 
-			this->textBox1->Location = System::Drawing::Point(415, 46);
-			this->textBox1->Multiline = true;
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(471, 177);
-			this->textBox1->TabIndex = 61;
+			this->cmbTipoAlertaDTI->FormattingEnabled = true;
+			this->cmbTipoAlertaDTI->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
+				L"Necesidades tecnologicas", L"Prestamo de dispositivo",
+					L"Proteccion contra ciberdelincuencia", L"Autenticación y acceso a aplicaciones y datos PUCP"
+			});
+			this->cmbTipoAlertaDTI->Location = System::Drawing::Point(167, 55);
+			this->cmbTipoAlertaDTI->Name = L"cmbTipoAlertaDTI";
+			this->cmbTipoAlertaDTI->Size = System::Drawing::Size(213, 24);
+			this->cmbTipoAlertaDTI->TabIndex = 44;
+			// 
+			// label13
+			// 
+			this->label13->AutoSize = true;
+			this->label13->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->label13->Location = System::Drawing::Point(16, 102);
+			this->label13->Name = L"label13";
+			this->label13->Size = System::Drawing::Size(67, 25);
+			this->label13->TabIndex = 43;
+			this->label13->Text = L"Fecha";
+			// 
+			// label14
+			// 
+			this->label14->AutoSize = true;
+			this->label14->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->label14->Location = System::Drawing::Point(16, 55);
+			this->label14->Name = L"label14";
+			this->label14->Size = System::Drawing::Size(131, 25);
+			this->label14->TabIndex = 41;
+			this->label14->Text = L"Tipo de alerta";
+			// 
+			// txtIDDTI
+			// 
+			this->txtIDDTI->Location = System::Drawing::Point(167, 14);
+			this->txtIDDTI->Name = L"txtIDDTI";
+			this->txtIDDTI->Size = System::Drawing::Size(213, 22);
+			this->txtIDDTI->TabIndex = 40;
+			// 
+			// label15
+			// 
+			this->label15->AutoSize = true;
+			this->label15->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->label15->Location = System::Drawing::Point(16, 10);
+			this->label15->Name = L"label15";
+			this->label15->Size = System::Drawing::Size(87, 25);
+			this->label15->TabIndex = 39;
+			this->label15->Text = L"ID Alerta";
+			// 
+			// dgvDTI
+			// 
+			this->dgvDTI->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgvDTI->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
+				this->dataGridViewTextBoxColumn6,
+					this->dataGridViewTextBoxColumn7, this->dataGridViewTextBoxColumn8, this->dataGridViewTextBoxColumn9, this->dataGridViewTextBoxColumn10
+			});
+			this->dgvDTI->Location = System::Drawing::Point(21, 276);
+			this->dgvDTI->Name = L"dgvDTI";
+			this->dgvDTI->RowHeadersVisible = false;
+			this->dgvDTI->RowHeadersWidth = 51;
+			this->dgvDTI->RowTemplate->Height = 24;
+			this->dgvDTI->Size = System::Drawing::Size(865, 222);
+			this->dgvDTI->TabIndex = 34;
+			// 
+			// dataGridViewTextBoxColumn6
+			// 
+			this->dataGridViewTextBoxColumn6->DataPropertyName = L"ResourceAlertIDDTI";
+			this->dataGridViewTextBoxColumn6->HeaderText = L"ID Alerta";
+			this->dataGridViewTextBoxColumn6->MinimumWidth = 6;
+			this->dataGridViewTextBoxColumn6->Name = L"dataGridViewTextBoxColumn6";
+			this->dataGridViewTextBoxColumn6->Width = 125;
+			// 
+			// dataGridViewTextBoxColumn7
+			// 
+			this->dataGridViewTextBoxColumn7->DataPropertyName = L"ResourceAlertTypeDTI";
+			this->dataGridViewTextBoxColumn7->HeaderText = L"Tipo de alerta";
+			this->dataGridViewTextBoxColumn7->MinimumWidth = 6;
+			this->dataGridViewTextBoxColumn7->Name = L"dataGridViewTextBoxColumn7";
+			this->dataGridViewTextBoxColumn7->Width = 125;
+			// 
+			// dataGridViewTextBoxColumn8
+			// 
+			this->dataGridViewTextBoxColumn8->DataPropertyName = L"ResourceDateDTI";
+			this->dataGridViewTextBoxColumn8->HeaderText = L"Fecha";
+			this->dataGridViewTextBoxColumn8->MinimumWidth = 6;
+			this->dataGridViewTextBoxColumn8->Name = L"dataGridViewTextBoxColumn8";
+			this->dataGridViewTextBoxColumn8->Width = 125;
+			// 
+			// dataGridViewTextBoxColumn9
+			// 
+			this->dataGridViewTextBoxColumn9->DataPropertyName = L"ResourceTimeDTI";
+			this->dataGridViewTextBoxColumn9->HeaderText = L"Hora";
+			this->dataGridViewTextBoxColumn9->MinimumWidth = 6;
+			this->dataGridViewTextBoxColumn9->Name = L"dataGridViewTextBoxColumn9";
+			this->dataGridViewTextBoxColumn9->Width = 125;
+			// 
+			// dataGridViewTextBoxColumn10
+			// 
+			this->dataGridViewTextBoxColumn10->DataPropertyName = L"ResourceStatusDTI";
+			this->dataGridViewTextBoxColumn10->HeaderText = L"Estado";
+			this->dataGridViewTextBoxColumn10->MinimumWidth = 6;
+			this->dataGridViewTextBoxColumn10->Name = L"dataGridViewTextBoxColumn10";
+			this->dataGridViewTextBoxColumn10->Width = 125;
+			// 
+			// btnEliminarDTI
+			// 
+			this->btnEliminarDTI->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->btnEliminarDTI->Location = System::Drawing::Point(21, 205);
+			this->btnEliminarDTI->Name = L"btnEliminarDTI";
+			this->btnEliminarDTI->Size = System::Drawing::Size(176, 49);
+			this->btnEliminarDTI->TabIndex = 63;
+			this->btnEliminarDTI->Text = L"Eliminar";
+			this->btnEliminarDTI->UseVisualStyleBackColor = true;
+			// 
+			// btnEliminarAltercado
+			// 
+			this->btnEliminarAltercado->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->btnEliminarAltercado->Location = System::Drawing::Point(21, 179);
+			this->btnEliminarAltercado->Name = L"btnEliminarAltercado";
+			this->btnEliminarAltercado->Size = System::Drawing::Size(176, 49);
+			this->btnEliminarAltercado->TabIndex = 64;
+			this->btnEliminarAltercado->Text = L"Eliminar";
+			this->btnEliminarAltercado->UseVisualStyleBackColor = true;
+			// 
+			// btnEliminarObjPerd
+			// 
+			this->btnEliminarObjPerd->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->btnEliminarObjPerd->Location = System::Drawing::Point(20, 177);
+			this->btnEliminarObjPerd->Name = L"btnEliminarObjPerd";
+			this->btnEliminarObjPerd->Size = System::Drawing::Size(162, 49);
+			this->btnEliminarObjPerd->TabIndex = 64;
+			this->btnEliminarObjPerd->Text = L"Eliminar";
+			this->btnEliminarObjPerd->UseVisualStyleBackColor = true;
 			// 
 			// AdminAlertManagementForm
 			// 
@@ -887,24 +952,51 @@ private: System::Windows::Forms::ComboBox^ comboBox1;
 			this->tabControl1->ResumeLayout(false);
 			this->tabPage2->ResumeLayout(false);
 			this->tabPage2->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvRobot))->EndInit();
-			this->tabPage1->ResumeLayout(false);
-			this->tabPage1->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
-			this->tabPage3->ResumeLayout(false);
-			this->tabPage3->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView2))->EndInit();
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPhotoObj))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvOjbPerdido))->EndInit();
+			this->tabPage1->ResumeLayout(false);
+			this->tabPage1->PerformLayout();
 			this->groupBox2->ResumeLayout(false);
 			this->groupBox2->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPhotoAltercado))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvAltercado))->EndInit();
+			this->tabPage3->ResumeLayout(false);
+			this->tabPage3->PerformLayout();
 			this->groupBox3->ResumeLayout(false);
 			this->groupBox3->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvDTI))->EndInit();
 			this->ResumeLayout(false);
 
 		}
-#pragma endregion
+		#pragma endregion
+		private: void CargarTablaObjetoPerdido() {
+			List<ObjPerdido^>^ objeto = Service::ShowObjetosPerdidos();
+			if (objeto != nullptr) {
+				dgvOjbPerdido->Rows->Clear();
+				for (int i = 0; i < objeto->Count; i++) {
+					String^ fecha = objeto[i]->Fecha->ToString("dd/MM/yyyy");
+					String^ hora = objeto[i]->Fecha->ToString("HH:mm:ss");
+					String^ estado = objeto[i]->Solucionado ? "Solucionado" : "No solucionado";
+
+					if (objeto[i]->GetType() == ObjPerdido::typeid) {
+						dgvOjbPerdido->Rows->Add(gcnew array<String^>{
+							"" + objeto[i]->id,
+							objeto[i]->ObjetoEncontrado, 
+							fecha, 
+							hora, 
+							estado
+						});
+					}
+				}
+			}
+		}
+		private: void CargarTablaAltercado() {
+
+		}
+		private: void CargarTablaDTIReport() {
+
+		}
 	};
 }

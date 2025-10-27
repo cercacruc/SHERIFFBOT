@@ -862,7 +862,7 @@ namespace SheriffBotGUIApp {
 			SearchAndPutImagenOn(pbPhotoRobot);
 			MessageBox::Show("Imagen agregada exitosamente", "Exito", MessageBoxButtons::OK);
 		}
-		private: void ShowRobots() {//crear un atributo de bateria al robot
+		private: void ShowRobots() {
 			List<Robot^>^ robots = Service::GetRobots();
 			if (robots != nullptr) {
 				dgvRobot->Rows->Clear();
@@ -1011,7 +1011,7 @@ namespace SheriffBotGUIApp {
 					dgvUser->Rows->Clear();
 					for (int i = 0; i < usuarioList->Count; i++) {
 						if (usuarioList[i]->GetType() == DatosUsuario::typeid) {
-							String^ passwordAsterisco = gcnew String('*', usuarioList[i]->Contra->Length);
+							String^ passwordAsterisco = gcnew String(L'*', usuarioList[i]->Contra->Length);
 							
 							dgvUser->Rows->Add(gcnew array<String^>{
 								"" + usuarioList[i]->ID, usuarioList[i]->Nombre,

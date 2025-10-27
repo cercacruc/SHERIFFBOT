@@ -59,6 +59,8 @@ namespace SheriffBotGUIApp {
 
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::TextBox^ txtLugar;
+	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::TextBox^ txtObjeto;
 
 
 	private:
@@ -84,13 +86,15 @@ namespace SheriffBotGUIApp {
 			this->dtpFecha = (gcnew System::Windows::Forms::DateTimePicker());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->txtLugar = (gcnew System::Windows::Forms::TextBox());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->txtObjeto = (gcnew System::Windows::Forms::TextBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPhoto))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btnEnviar
 			// 
 			this->btnEnviar->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnEnviar->Location = System::Drawing::Point(31, 345);
+			this->btnEnviar->Location = System::Drawing::Point(34, 387);
 			this->btnEnviar->Name = L"btnEnviar";
 			this->btnEnviar->Size = System::Drawing::Size(193, 47);
 			this->btnEnviar->TabIndex = 26;
@@ -101,7 +105,7 @@ namespace SheriffBotGUIApp {
 			// btnVolver
 			// 
 			this->btnVolver->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnVolver->Location = System::Drawing::Point(241, 345);
+			this->btnVolver->Location = System::Drawing::Point(244, 387);
 			this->btnVolver->Name = L"btnVolver";
 			this->btnVolver->Size = System::Drawing::Size(193, 47);
 			this->btnVolver->TabIndex = 25;
@@ -160,7 +164,7 @@ namespace SheriffBotGUIApp {
 			// 
 			// dtpFecha
 			// 
-			this->dtpFecha->Location = System::Drawing::Point(39, 304);
+			this->dtpFecha->Location = System::Drawing::Point(42, 346);
 			this->dtpFecha->Name = L"dtpFecha";
 			this->dtpFecha->Size = System::Drawing::Size(200, 22);
 			this->dtpFecha->TabIndex = 42;
@@ -169,7 +173,7 @@ namespace SheriffBotGUIApp {
 			// 
 			this->label4->AutoSize = true;
 			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
-			this->label4->Location = System::Drawing::Point(15, 271);
+			this->label4->Location = System::Drawing::Point(18, 313);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(251, 20);
 			this->label4->TabIndex = 23;
@@ -177,16 +181,35 @@ namespace SheriffBotGUIApp {
 			// 
 			// txtLugar
 			// 
-			this->txtLugar->Location = System::Drawing::Point(271, 304);
+			this->txtLugar->Location = System::Drawing::Point(274, 346);
 			this->txtLugar->Name = L"txtLugar";
 			this->txtLugar->Size = System::Drawing::Size(163, 22);
 			this->txtLugar->TabIndex = 43;
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10));
+			this->label3->Location = System::Drawing::Point(18, 282);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(153, 20);
+			this->label3->TabIndex = 44;
+			this->label3->Text = L"Objeto Encontrado:";
+			// 
+			// txtObjeto
+			// 
+			this->txtObjeto->Location = System::Drawing::Point(274, 282);
+			this->txtObjeto->Name = L"txtObjeto";
+			this->txtObjeto->Size = System::Drawing::Size(163, 22);
+			this->txtObjeto->TabIndex = 45;
 			// 
 			// MissingObjectForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(477, 404);
+			this->ClientSize = System::Drawing::Size(477, 452);
+			this->Controls->Add(this->txtObjeto);
+			this->Controls->Add(this->label3);
 			this->Controls->Add(this->txtLugar);
 			this->Controls->Add(this->dtpFecha);
 			this->Controls->Add(this->btnCargarImagen);
@@ -210,9 +233,10 @@ namespace SheriffBotGUIApp {
 			this->Close();
 		}
 		private: System::Void btnEnviar_Click(System::Object^ sender, System::EventArgs^ e) {
-			Alert^ alerta = gcnew Alert();
+			ObjPerdido^ alerta = gcnew ObjPerdido();
 			alerta->Description = txtDescripcion->Text;
 			alerta->Lugar = txtLugar->Text;
+			alerta->ObjetoEncontrado = txtObjeto->Text;
 
 			if (pbPhoto != nullptr && pbPhoto->Image != nullptr) {
 				System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream();
@@ -221,6 +245,7 @@ namespace SheriffBotGUIApp {
 			}
 
 			alerta->Fecha = dtpFecha->Value;
+			alerta->Solucionado = false;
 
 			Service::registrarAlerta(alerta);
 			MessageBox::Show("Alerta enviada exitosamente", "Exito", MessageBoxButtons::OK);

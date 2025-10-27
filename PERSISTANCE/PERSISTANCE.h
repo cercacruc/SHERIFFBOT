@@ -5,28 +5,6 @@ using namespace BotModel;
 using namespace System::Collections::Generic;
 
 namespace BotPersistance {
-	/*public ref class RobotWrapper {
-	private:
-		BotModel::Robot^ robot;
-	public:
-		[XmlElement("Data")]
-		property Robot^ TheRobot {
-			Robot^ get() { return robot; }
-			void set(Robot^ value) { robot = value; }
-		}
-	};
-	[XmlRoot("Robots")]
-	public ref class RobotsCollection {
-	private:
-		List<RobotWrapper^>^ list = gcnew List<RobotWrapper^>();
-	public:
-		[XmlElement("Robot")]
-		property List<RobotWrapper^>^ TheList {
-			List<RobotWrapper^>^ get() { return list; }
-			void set(List<RobotWrapper^>^ value) { list = value; }
-		}
-	};*/
-
 	public ref class Persistance{
 	private:
 		static List<DatosUsuario^>^ listaUsuarios = gcnew List<DatosUsuario^>();
@@ -91,6 +69,10 @@ namespace BotPersistance {
 		static void registrarObjPerdido(ObjPerdido^ objeto);
 		static void registrarDTIReport(DTIReport^ reporte);
 		static void registrarAlercado(Altercado^ altercado);
+		static List<Alert^>^ ShowAlertas();
+		static List<ObjPerdido^>^ ShowObjetosPerdidos();
+		static List<Altercado^>^ ShowAltercados();
+		static List<DTIReport^>^ ShowDTIReport();
 
 	};
 }

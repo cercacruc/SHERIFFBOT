@@ -211,6 +211,8 @@ namespace SheriffBotGUIApp {
 			reporte->Fecha = dtpFecha->Value;
 			reporte->tipoReporte = cbTipoAlerta->Text;
 
+			reporte->Solucionado = false;
+
 			Service::registrarAlerta(reporte);
 			MessageBox::Show("Se ha llamado al DTI", "Exito", MessageBoxButtons::OK);
 			ClearFields();
