@@ -767,14 +767,14 @@ namespace SheriffBotGUIApp {
 				
 				double x = Convert::ToDouble(XRobot->Text);
 				double y = Convert::ToDouble(YRobot->Text);
-				//robot->Zona = Service::delimitarZonaTrabajo(x, y);
-				/*
-				if (Service::delimitarZonaTrabajo(x, y) == "BASE") {
+				robot->Zona = ZonaRobot->Text;//se cambiara por lo de marcelo
+				
+				if (ZonaRobot->Text == "BASE") {//se modificara por una funcion
 					robot->Disponibilidad = true;
 				}
 				else {
 					robot->Disponibilidad = !rbtnDisponibilidadYes->Checked;
-				}*///tmr marcelo XD
+				}//tmr marcelo XD
 
 				if (pbPhotoRobot != nullptr && pbPhotoRobot->Image != nullptr) {
 					System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream();

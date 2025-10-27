@@ -62,7 +62,7 @@ namespace BotPersistance {
 		static List <Robot^>^ GetRobots();
 		static void delimitarZonaTrabajo(double x, double y);
 		static Point^ getPoint(double x, double y);
-
+		static List<Robot^>^ listaRobotsDisponibles();
 
 		//CRUD Alert Report
 		static void registrarAlerta(Alert^ alerta);

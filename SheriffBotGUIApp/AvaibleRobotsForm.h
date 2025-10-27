@@ -50,6 +50,7 @@ namespace SheriffBotGUIApp {
 
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::TextBox^ txtCaracteristicas;
+	private: System::Windows::Forms::Button^ btnVolver;
 
 
 	private:
@@ -70,6 +71,7 @@ namespace SheriffBotGUIApp {
 			this->pbPhoto = (gcnew System::Windows::Forms::PictureBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->txtCaracteristicas = (gcnew System::Windows::Forms::TextBox());
+			this->btnVolver = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPhoto))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -90,12 +92,14 @@ namespace SheriffBotGUIApp {
 			this->cmbRobots->Name = L"cmbRobots";
 			this->cmbRobots->Size = System::Drawing::Size(215, 24);
 			this->cmbRobots->TabIndex = 3;
+			this->cmbRobots->SelectedIndexChanged += gcnew System::EventHandler(this, &AvaibleRobotsForm::cmbRobots_SelectedIndexChanged);
 			// 
 			// pbPhoto
 			// 
 			this->pbPhoto->Location = System::Drawing::Point(17, 59);
 			this->pbPhoto->Name = L"pbPhoto";
 			this->pbPhoto->Size = System::Drawing::Size(216, 175);
+			this->pbPhoto->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pbPhoto->TabIndex = 4;
 			this->pbPhoto->TabStop = false;
 			// 
@@ -116,11 +120,23 @@ namespace SheriffBotGUIApp {
 			this->txtCaracteristicas->Size = System::Drawing::Size(202, 156);
 			this->txtCaracteristicas->TabIndex = 7;
 			// 
+			// btnVolver
+			// 
+			this->btnVolver->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->btnVolver->Location = System::Drawing::Point(136, 258);
+			this->btnVolver->Name = L"btnVolver";
+			this->btnVolver->Size = System::Drawing::Size(193, 47);
+			this->btnVolver->TabIndex = 25;
+			this->btnVolver->Text = L"Volver";
+			this->btnVolver->UseVisualStyleBackColor = true;
+			this->btnVolver->Click += gcnew System::EventHandler(this, &AvaibleRobotsForm::btnVolver_Click);
+			// 
 			// AvaibleRobotsForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(468, 252);
+			this->ClientSize = System::Drawing::Size(468, 317);
+			this->Controls->Add(this->btnVolver);
 			this->Controls->Add(this->txtCaracteristicas);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->pbPhoto);
@@ -134,21 +150,37 @@ namespace SheriffBotGUIApp {
 			this->PerformLayout();
 
 		}
-#pragma endregion
+		#pragma endregion
 		private: System::Void AvaibleRobotsForm_Load(System::Object^ sender, System::EventArgs^ e) {
-			//CargarRobotsDisponibles();
+			CargarRobotsDisponibles();
 		}
-		private: void CargarRobotsDisponibles() {//ver como cargar los robots disponibles en una lista aparte, y luego subirla al combobox
-			List<Robot^>^ robots = Service::GetRobots();
+		private: void CargarRobotsDisponibles() {
+			List<Robot^>^ robots = Service::listaRobotsDisponibles();
+			cmbRobots->Visible = true;
+			cmbRobots->Enabled = true;
 			cmbRobots->Items->Clear();
-			for each (Robot ^ item in robots) {
-				if (item->Disponibilidad == true) {
-					ComboBoxItem^ item = gcnew ComboBoxItem(item->Value, item->Name);
-					cmbRobots->Items->Add(item);
-				}
-				
+
+			for each (Robot ^ robot in robots) {
+				cmbRobots->Items->Add(robot->Nombre);
 			}
-			
+		}
+		private: System::Void cmbRobots_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+			Robot^ robotElegido = Service::buscarRobotNombre(cmbRobots->Text);
+			txtCaracteristicas->Text = robotElegido->Caracteristicas;
+			ActualizarFotoRobot(robotElegido);
+		}
+		private: void ActualizarFotoRobot(Robot^ robot) {
+			if (robot->Photo != nullptr) {
+				System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(robot->Photo);
+				pbPhoto->Image = Image::FromStream(ms);
+			}
+			else {
+				pbPhoto->Image = nullptr;
+				pbPhoto->Invalidate();
+			}
+		}
+		private: System::Void btnVolver_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->Close();
 		}
 	};
 }

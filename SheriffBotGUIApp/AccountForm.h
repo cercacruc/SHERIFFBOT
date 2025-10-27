@@ -54,6 +54,7 @@ namespace SheriffBotGUIApp {
 
 
 
+
 	private:
 		/// <summary>
 		/// Variable del diseñador necesaria.
@@ -80,7 +81,7 @@ namespace SheriffBotGUIApp {
 			// btnReturnPassword
 			// 
 			this->btnReturnPassword->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnReturnPassword->Location = System::Drawing::Point(37, 437);
+			this->btnReturnPassword->Location = System::Drawing::Point(39, 423);
 			this->btnReturnPassword->Name = L"btnReturnPassword";
 			this->btnReturnPassword->Size = System::Drawing::Size(193, 47);
 			this->btnReturnPassword->TabIndex = 30;
@@ -110,21 +111,21 @@ namespace SheriffBotGUIApp {
 			// 
 			// textUsuario
 			// 
-			this->textUsuario->Location = System::Drawing::Point(53, 238);
+			this->textUsuario->Location = System::Drawing::Point(53, 212);
 			this->textUsuario->Name = L"textUsuario";
 			this->textUsuario->Size = System::Drawing::Size(167, 22);
 			this->textUsuario->TabIndex = 32;
 			// 
 			// textID
 			// 
-			this->textID->Location = System::Drawing::Point(53, 303);
+			this->textID->Location = System::Drawing::Point(53, 281);
 			this->textID->Name = L"textID";
 			this->textID->Size = System::Drawing::Size(167, 22);
 			this->textID->TabIndex = 33;
 			// 
 			// textCargo
 			// 
-			this->textCargo->Location = System::Drawing::Point(53, 368);
+			this->textCargo->Location = System::Drawing::Point(53, 355);
 			this->textCargo->Name = L"textCargo";
 			this->textCargo->Size = System::Drawing::Size(167, 22);
 			this->textCargo->TabIndex = 34;
@@ -161,5 +162,6 @@ namespace SheriffBotGUIApp {
 		private: System::Void btnReturnPassword_Click(System::Object^ sender, System::EventArgs^ e) {
 			this->Close();
 		}
+		
 	};
 }

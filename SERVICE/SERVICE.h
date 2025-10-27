@@ -29,6 +29,7 @@ namespace BotService {
 		static int modificarRobotID(Robot^ robot);
 		static List <Robot^>^ GetRobots();
 		static void delimitarZonaTrabajo(double x, double y);
+		static List<Robot^>^ listaRobotsDisponibles();
 
 		//CRUC Alert Reports
 		static void registrarAlerta(Alert^ alerta);

@@ -58,6 +58,9 @@ List <Robot^>^ BotService::Service::GetRobots() {
 void BotService::Service::delimitarZonaTrabajo(double x, double y) {
 	//return Persistance::delimitarZonaTrabajo(x, y);
 }
+List<Robot^>^ BotService::Service::listaRobotsDisponibles() {
+	return Persistance::listaRobotsDisponibles();
+}
 
 //CRUD Alert Report
 void BotService::Service::registrarAlerta(Alert^ alerta) {

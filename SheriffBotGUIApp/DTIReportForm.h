@@ -44,7 +44,7 @@ namespace SheriffBotGUIApp {
 	protected:
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Button^ btnLlamar;
-	private: System::Windows::Forms::Button^ btnVolver;
+
 
 
 
@@ -57,6 +57,7 @@ namespace SheriffBotGUIApp {
 	private: System::Windows::Forms::DateTimePicker^ dtpFecha;
 
 	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::Button^ btnVolver;
 
 	private:
 		/// <summary>
@@ -74,13 +75,13 @@ namespace SheriffBotGUIApp {
 			this->cbTipoAlerta = (gcnew System::Windows::Forms::ComboBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->btnLlamar = (gcnew System::Windows::Forms::Button());
-			this->btnVolver = (gcnew System::Windows::Forms::Button());
 			this->txtDescription = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->txtLugar = (gcnew System::Windows::Forms::TextBox());
 			this->dtpFecha = (gcnew System::Windows::Forms::DateTimePicker());
 			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->btnVolver = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// cbTipoAlerta
@@ -115,17 +116,6 @@ namespace SheriffBotGUIApp {
 			this->btnLlamar->Text = L"Llamar";
 			this->btnLlamar->UseVisualStyleBackColor = true;
 			this->btnLlamar->Click += gcnew System::EventHandler(this, &DTIReportForm::btnLlamar_Click);
-			// 
-			// btnVolver
-			// 
-			this->btnVolver->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnVolver->Location = System::Drawing::Point(253, 310);
-			this->btnVolver->Name = L"btnVolver";
-			this->btnVolver->Size = System::Drawing::Size(193, 47);
-			this->btnVolver->TabIndex = 24;
-			this->btnVolver->Text = L"Volver";
-			this->btnVolver->UseVisualStyleBackColor = true;
-			this->btnVolver->Click += gcnew System::EventHandler(this, &DTIReportForm::btnVolver_Click);
 			// 
 			// txtDescription
 			// 
@@ -179,6 +169,17 @@ namespace SheriffBotGUIApp {
 			this->label3->Size = System::Drawing::Size(115, 20);
 			this->label3->TabIndex = 46;
 			this->label3->Text = L"Fecha y lugar:";
+			// 
+			// btnVolver
+			// 
+			this->btnVolver->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->btnVolver->Location = System::Drawing::Point(253, 310);
+			this->btnVolver->Name = L"btnVolver";
+			this->btnVolver->Size = System::Drawing::Size(193, 47);
+			this->btnVolver->TabIndex = 24;
+			this->btnVolver->Text = L"Volver";
+			this->btnVolver->UseVisualStyleBackColor = true;
+			this->btnVolver->Click += gcnew System::EventHandler(this, &DTIReportForm::btnVolver_Click);
 			// 
 			// DTIReportForm
 			// 

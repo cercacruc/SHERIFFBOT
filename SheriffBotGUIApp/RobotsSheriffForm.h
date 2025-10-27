@@ -213,10 +213,14 @@ namespace SheriffBotGUIApp {
 			}
 		}
 		private: System::Void btnRobots_Click(System::Object^ sender, System::EventArgs^ e) {
+			String^ lugarDestino = cmbLugares->Text;
+			String^ robotElegido = cmbRobots->Text;
 
+			String^ mensaje = String::Format("Se ha enviado a {0} a {1}", robotElegido, lugarDestino);
+			MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
 		}
 		private: void CargarListaLugares() {
-
+			//completar con lista de marcelo de lugares
 		}
 	};
 }

@@ -2,3 +2,6 @@
 992|Marcelo|2105|Admin
 221|Generico|1234|Estudiante
 111|Sherif|1234|Sheriff
+993|Boris|1234|Admin
+994|Julian|1234|Admin
+995|Fabrizio|1234|Admin

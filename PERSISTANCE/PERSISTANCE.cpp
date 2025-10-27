@@ -427,7 +427,7 @@ Object^ BotPersistance::Persistance::LoadAlertFormTxtFile(String^ fileName)//com
             Alert^ alerta = gcnew Alert();
             alerta->Fecha = Convert::ToDateTime(record[0]);
             alerta->Description = record[1];
-            //Ni idea de como guardar el arreglo de bytes
+            //Ni idea de como guardar el arreglo de bytes    no usaremos txt XD
             //alerta->Photo = Convert::ToByte(record[2]);
             alerta->Lugar = record[3];
 
@@ -551,6 +551,18 @@ Point^ BotPersistance::Persistance::getPoint(double x, double y)
         }
     }
     return nullptr;
+}
+
+List<Robot^>^ BotPersistance::Persistance::listaRobotsDisponibles()
+{
+    List<Robot^>^ listaRobots = GetRobots();
+    List<Robot^>^ listaRobotsDisponibles = gcnew List<Robot^>();
+    for each (Robot ^ robot in listaRobots) {
+        if (robot->Disponibilidad == true) {
+            listaRobotsDisponibles->Add(robot);
+        }
+    }
+    return listaRobotsDisponibles;
 }
 
 
