@@ -24,6 +24,7 @@ namespace SheriffBotGUIApp {
 		{
 			InitializeComponent();
 			
+			PasswordUser->PasswordChar = '*';
 			//
 			//TODO: agregar código de constructor aquí
 			//
@@ -1010,9 +1011,11 @@ namespace SheriffBotGUIApp {
 					dgvUser->Rows->Clear();
 					for (int i = 0; i < usuarioList->Count; i++) {
 						if (usuarioList[i]->GetType() == DatosUsuario::typeid) {
+							String^ passwordAsterisco = gcnew String('*', usuarioList[i]->Contra->Length);
+							
 							dgvUser->Rows->Add(gcnew array<String^>{
 								"" + usuarioList[i]->ID, usuarioList[i]->Nombre,
-									usuarioList[i]->Contra, usuarioList[i]->Cargo
+									passwordAsterisco, usuarioList[i]->Cargo
 							});
 						}
 					}

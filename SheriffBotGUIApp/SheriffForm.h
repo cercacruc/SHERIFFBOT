@@ -84,7 +84,7 @@ namespace SheriffBotGUIApp {
 			// 
 			// btnInfo
 			// 
-			this->btnInfo->Location = System::Drawing::Point(114, 487);
+			this->btnInfo->Location = System::Drawing::Point(16, 490);
 			this->btnInfo->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->btnInfo->Name = L"btnInfo";
 			this->btnInfo->Size = System::Drawing::Size(157, 37);
@@ -95,7 +95,7 @@ namespace SheriffBotGUIApp {
 			// pictureBox2
 			// 
 			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
-			this->pictureBox2->Location = System::Drawing::Point(110, 328);
+			this->pictureBox2->Location = System::Drawing::Point(12, 331);
 			this->pictureBox2->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->pictureBox2->Name = L"pictureBox2";
 			this->pictureBox2->Size = System::Drawing::Size(161, 148);
@@ -105,7 +105,7 @@ namespace SheriffBotGUIApp {
 			// 
 			// btnRobots
 			// 
-			this->btnRobots->Location = System::Drawing::Point(112, 244);
+			this->btnRobots->Location = System::Drawing::Point(14, 247);
 			this->btnRobots->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->btnRobots->Name = L"btnRobots";
 			this->btnRobots->Size = System::Drawing::Size(157, 37);
@@ -116,7 +116,7 @@ namespace SheriffBotGUIApp {
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(110, 85);
+			this->pictureBox1->Location = System::Drawing::Point(12, 88);
 			this->pictureBox1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(161, 148);
@@ -127,7 +127,7 @@ namespace SheriffBotGUIApp {
 			// pictureBox3
 			// 
 			this->pictureBox3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox3.Image")));
-			this->pictureBox3->Location = System::Drawing::Point(353, 85);
+			this->pictureBox3->Location = System::Drawing::Point(203, 88);
 			this->pictureBox3->Name = L"pictureBox3";
 			this->pictureBox3->Size = System::Drawing::Size(161, 148);
 			this->pictureBox3->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
@@ -136,7 +136,7 @@ namespace SheriffBotGUIApp {
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(353, 244);
+			this->button1->Location = System::Drawing::Point(203, 247);
 			this->button1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(157, 37);
@@ -149,7 +149,7 @@ namespace SheriffBotGUIApp {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(604, 556);
+			this->ClientSize = System::Drawing::Size(377, 556);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->pictureBox3);
 			this->Controls->Add(this->btnAccount);

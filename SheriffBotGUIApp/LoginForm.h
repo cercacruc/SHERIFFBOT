@@ -26,6 +26,8 @@ namespace SheriffBotGUIApp {
 		{
 			InitializeComponent();
 			ClearFields();
+
+			Password->PasswordChar = '*';
 			//
 			//TODO: agregar código de constructor aquí
 			//
