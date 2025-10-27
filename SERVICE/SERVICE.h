@@ -28,7 +28,7 @@ namespace BotService {
 		static bool borrarRobotNombre(String^ nombre);
 		static int modificarRobotID(Robot^ robot);
 		static List <Robot^>^ GetRobots();
-		static String^ delimitarZonaTrabajo(double x, double y);
+		static void delimitarZonaTrabajo(double x, double y);
 
 		//CRUC Alert Reports
 		static void registrarAlerta(Alert^ alerta);

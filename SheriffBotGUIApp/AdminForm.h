@@ -12,6 +12,7 @@ namespace SheriffBotGUIApp {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	//ejemplo
 
 	/// <summary>
 	/// Resumen de AdminForm

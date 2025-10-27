@@ -386,19 +386,68 @@ Object^ BotPersistance::Persistance::LoadBinaryFile(String^ fileName)
 
 void BotPersistance::Persistance::PersistTxtFileAlert(String^ fileName, List<Alert^>^ lista)//completar
 {
-    throw gcnew System::NotImplementedException();
+    FileStream^ file = nullptr;
+    StreamWriter^ writer = nullptr;
+    try {
+        file = gcnew FileStream(fileName, FileMode::Create, FileAccess::Write);
+        writer = gcnew StreamWriter(file);
+        for each (Alert ^ Alerta in listaAlerts) {
+            //Cambiar luego segun sea necesario
+            writer->WriteLine("{0}|{1}|{2}|{3}",
+                Alerta->Fecha,
+                Alerta->Description,
+                //Alerta->Nombre,
+                Alerta->Lugar
+            );
+        }
+    }
+    catch (Exception^ ex) {
+        throw ex;
+    }
+    finally {
+        if (writer != nullptr) writer->Close();
+        if (file != nullptr) file->Close();
+    }
 }
 
 Object^ BotPersistance::Persistance::LoadAlertFormTxtFile(String^ fileName)//completar
 {
-    throw gcnew System::NotImplementedException();
-    // TODO: Insertar una instrucción "return" aquí
+    FileStream^ file;
+    StreamReader^ reader;
+    Object^ result = gcnew List<Alert^>();
+    try {
+
+        file = gcnew FileStream(fileName, FileMode::Open, FileAccess::Read);
+        reader = gcnew StreamReader(file);
+        while (!reader->EndOfStream) {
+            String^ line = reader->ReadLine();
+            if (String::IsNullOrEmpty(line)) continue;
+
+            array<String^>^ record = line->Split('|');
+            Alert^ alerta = gcnew Alert();
+            alerta->Fecha = Convert::ToDateTime(record[0]);
+            alerta->Description = record[1];
+            //Ni idea de como guardar el arreglo de bytes
+            //alerta->Photo = Convert::ToByte(record[2]);
+            alerta->Lugar = record[3];
+
+            ((List<Alert^>^)result)->Add(alerta);
+        }
+    }
+    catch (Exception^ ex) {
+        throw ex;
+    }
+    finally {
+        if (reader != nullptr) reader->Close();
+        if (file != nullptr) file->Close();
+    }
+    return result;
 }
 
 //Funcion de zonas
-String^ BotPersistance::Persistance::delimitarZonaTrabajo(double x, double y) {
+void BotPersistance::Persistance::delimitarZonaTrabajo(double x, double y) {
     String^ Ubicacion = "nullptr";
-    if (x >= 0 && x < 62) {
+    /*if (x >= 0 && x < 62) {
         if (y >= 0 && y < 223) {
             Ubicacion = "Criadero";
         }
@@ -487,11 +536,21 @@ String^ BotPersistance::Persistance::delimitarZonaTrabajo(double x, double y) {
     }
     else if (x >= 779 && x < 935 && y >= 342 && y < 465) {
         Ubicacion = "INRAS";
-    }
+    }*/
     /*else if (x == -1 && y == -1) {//base de operaciones
         Ubicacion = "BASE";
     }*/
-    return Ubicacion;
+    //listPoints->Add(nuevoPunto);
+}
+
+Point^ BotPersistance::Persistance::getPoint(double x, double y)
+{
+    for each (Point ^ p in listPoints) {
+        if (p->x == x && p->y == y) {
+            return p;
+        }
+    }
+    return nullptr;
 }
 
 

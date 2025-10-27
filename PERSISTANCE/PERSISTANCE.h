@@ -31,6 +31,8 @@ namespace BotPersistance {
 	private:
 		static List<DatosUsuario^>^ listaUsuarios = gcnew List<DatosUsuario^>();
 		static List<Robot^>^ listaRobots = gcnew List<Robot^>();
+		static List<Alert^>^ listaAlerts = gcnew List<Alert^>();
+		static List<Point^>^ listPoints = gcnew List<Point^>();
 
 		static void PersistTextFileUsers(String^ fileName, List<DatosUsuario^>^ lista);
 		static Object^ LoadUsuariosFromTextFile(String^ fileName);
@@ -80,7 +82,8 @@ namespace BotPersistance {
 		static bool borrarRobotNombre(String^ nombre);
 		static int modificarRobotID(Robot^ robot);
 		static List <Robot^>^ GetRobots();
-		static String^ delimitarZonaTrabajo(double x, double y);
+		static void delimitarZonaTrabajo(double x, double y);
+		static Point^ getPoint(double x, double y);
 
 
 		//CRUD Alert Report

@@ -44,7 +44,7 @@ namespace BotModel {
 	};
 
 	[Serializable]
-	public ref class Alert {
+		public ref class Alert : DatosUsuario {
 	public:
 		property DateTime^ Fecha;
 		property String^ Description;
