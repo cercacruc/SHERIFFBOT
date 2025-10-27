@@ -75,9 +75,18 @@ List <Robot^>^ BotPersistance::Persistance::GetRobots() {
 
 //funciones de usuario en persistance
 void BotPersistance::Persistance::registrarUsuario(DatosUsuario^ user) {
-    listaUsuarios->Add(user);
-    PersistTextFileUsers(fileUsersName, listaUsuarios);
-    //PersistBinaryFile(fileBinUsers, listaUsuarios);
+    List<DatosUsuario^>^ todosUsuarios = GetUsuarios();
+
+    for each (DatosUsuario ^ usuarioExistente in todosUsuarios) {
+        if (usuarioExistente->ID == user->ID) {
+            throw gcnew Exception("El usuario ya existe");
+        }
+    }
+    
+    todosUsuarios->Add(user);
+    listaUsuarios = todosUsuarios;
+
+    PersistTextFileUsers(fileUsersName, todosUsuarios);
 }
 int BotPersistance::Persistance::generarAutoID(String^ cargo) {
     String^ prefijo = nullptr;
@@ -100,7 +109,10 @@ int BotPersistance::Persistance::generarAutoID(String^ cargo) {
         prefijo = "88"; // Prefijo por defecto para cargos no reconocidos
     }
     int maxNumero = 0;
-    for each (DatosUsuario ^ usuario in listaUsuarios) {
+
+    List<DatosUsuario^>^ todosUsuarios = GetUsuarios();
+
+    for each (DatosUsuario ^ usuario in todosUsuarios) {
         String^ idString = usuario->ID.ToString();
         if (idString->StartsWith(prefijo) && idString->Length >= 3) {
             try {
@@ -115,9 +127,9 @@ int BotPersistance::Persistance::generarAutoID(String^ cargo) {
             }
         }
     }
+
     int nuevoNumero = maxNumero + 1;
     String^ nuevoIDString = prefijo + nuevoNumero.ToString("D1");
-
     int nuevoID = Convert::ToInt32(nuevoIDString);
 
     return nuevoID;
@@ -203,10 +215,12 @@ int BotPersistance::Persistance::modificarUsuarioID(DatosUsuario^ usuario) {
     return 0;
 }
 List <DatosUsuario^>^ BotPersistance::Persistance::GetUsuarios() {
-    Object^ res = LoadUsuariosFromTextFile(fileUsersName);
-    //Object^ res = LoadBinaryFile(fileBinUsers);
-    if (res != nullptr) {
-        listaUsuarios = (List<DatosUsuario^>^) res;
+    if (listaUsuarios->Count == 0) {
+        Object^ res = LoadUsuariosFromTextFile(fileUsersName);
+        //Object^ res = LoadBinaryFile(fileBinUsers);
+        if (res != nullptr) {
+            listaUsuarios = (List<DatosUsuario^>^) res;
+        }
     }
     return listaUsuarios;
 }
