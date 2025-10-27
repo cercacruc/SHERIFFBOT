@@ -1,5 +1,6 @@
 #pragma once
 #include "AvaibleRobotsForm.h"
+#include "AccountForm.h"
 
 namespace SheriffBotGUIApp {
 
@@ -16,12 +17,14 @@ namespace SheriffBotGUIApp {
 	public ref class SheriffForm : public System::Windows::Forms::Form
 	{
 	public:
-		SheriffForm(void)
+		DatosUsuario^ Usuario;
+		SheriffForm(DatosUsuario^ usuario)
 		{
 			InitializeComponent();
 			//
 			//TODO: agregar código de constructor aquí
 			//
+			Usuario = usuario;
 		}
 
 	protected:
@@ -81,6 +84,7 @@ namespace SheriffBotGUIApp {
 			this->btnAccount->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->btnAccount->TabIndex = 16;
 			this->btnAccount->TabStop = false;
+			this->btnAccount->Click += gcnew System::EventHandler(this, &SheriffForm::btnAccount_Click);
 			// 
 			// btnInfo
 			// 
@@ -166,9 +170,15 @@ namespace SheriffBotGUIApp {
 			this->ResumeLayout(false);
 
 		}
-#pragma endregion
+		#pragma endregion
 		private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 			AvaibleRobotsForm^ form = gcnew AvaibleRobotsForm();
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
+		private: System::Void btnAccount_Click(System::Object^ sender, System::EventArgs^ e) {
+			AccountForm^ form = gcnew AccountForm(Usuario);
 			this->Hide();
 			form->ShowDialog();
 			this->Show();

@@ -25,6 +25,7 @@ namespace SheriffBotGUIApp {
 			//
 			//TODO: agregar código de constructor aquí
 			//
+			textPassword->PasswordChar = '*';
 		}
 
 	protected:

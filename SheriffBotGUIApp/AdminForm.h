@@ -18,12 +18,14 @@ namespace SheriffBotGUIApp {
 	public ref class AdminForm : public System::Windows::Forms::Form
 	{
 	public:
-		AdminForm(void)
+		DatosUsuario^ Usuario;
+		AdminForm(DatosUsuario^ usuario)
 		{
 			InitializeComponent();
 			//
 			//TODO: agregar código de constructor aquí
 			//
+			Usuario = usuario;
 		}
 
 	protected:
@@ -151,8 +153,10 @@ namespace SheriffBotGUIApp {
 			this->Show();
 		}
 		private: System::Void btnAccount_Click(System::Object^ sender, System::EventArgs^ e) {
-			//AccountForm^ form = gcnew AccountForm(nombre);
-			//ver como pasar hasta aca el dato del nombre de usuario
+			AccountForm^ form = gcnew AccountForm(Usuario);
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
 		}
 	};
 }

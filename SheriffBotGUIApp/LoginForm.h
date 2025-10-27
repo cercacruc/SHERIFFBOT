@@ -185,19 +185,19 @@ namespace SheriffBotGUIApp {
 						String^ primerosDigitos = strID->Substring(0, 2);
 
 						if (primerosDigitos == "99") {//Admin
-							AdminForm^ adminForm = gcnew AdminForm();
+							AdminForm^ adminForm = gcnew AdminForm(usuarioEncontrado);
 							this->Hide();
 							adminForm->ShowDialog();
 							this->Show();
 						}
 						else if (primerosDigitos == "11") {//Sherif
-							SheriffForm^ sherifForm = gcnew SheriffForm();
+							SheriffForm^ sherifForm = gcnew SheriffForm(usuarioEncontrado);
 							this->Hide();
 							sherifForm->ShowDialog();
 							this->Show();
 						}
 						else if (primerosDigitos == "22" || primerosDigitos == "33" || primerosDigitos == "44") {//public general
-							UsuarioPromedioForm^ usuarioForm = gcnew UsuarioPromedioForm();
+							UsuarioPromedioForm^ usuarioForm = gcnew UsuarioPromedioForm(usuarioEncontrado);
 							this->Hide();
 							usuarioForm->ShowDialog();
 							this->Show();

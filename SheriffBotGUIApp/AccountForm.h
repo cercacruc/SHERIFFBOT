@@ -17,17 +17,16 @@ namespace SheriffBotGUIApp {
 	/// </summary>
 	public ref class AccountForm : public System::Windows::Forms::Form
 	{
-	private:
-		String^ username;
 	public:
-		AccountForm(String^ nombre)
+		DatosUsuario^ Usuario;
+
+		AccountForm(DatosUsuario^ usuario)
 		{
-			this->username = nombre;
 			InitializeComponent();
-			CargarDatosUsuario(nombre);
 			//
 			//TODO: agregar código de constructor aquí
 			//
+			Usuario = usuario;
 		}
 
 	protected:
@@ -151,7 +150,7 @@ namespace SheriffBotGUIApp {
 		}
 		#pragma endregion
 		private: System::Void AccountForm_Load(System::Object^ sender, System::EventArgs^ e) {
-			CargarDatosUsuario(username);
+			CargarDatosUsuario(Usuario->Nombre);
 		}
 		private: void CargarDatosUsuario(String^ username) {
 			DatosUsuario^ encontrado = Service::buscarUsuarioNombre(username);

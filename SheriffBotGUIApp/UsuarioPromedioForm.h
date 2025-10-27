@@ -1,6 +1,7 @@
 #pragma once
 #include "InformationRequestForm.h"
 #include "AlertForm.h"
+#include "AccountForm.h"
 
 namespace SheriffBotGUIApp {
 
@@ -17,12 +18,14 @@ namespace SheriffBotGUIApp {
 	public ref class UsuarioPromedioForm : public System::Windows::Forms::Form
 	{
 	public:
-		UsuarioPromedioForm(void)
+		DatosUsuario^ Usuario;
+		UsuarioPromedioForm(DatosUsuario^ usuario)
 		{
 			InitializeComponent();
 			//
 			//TODO: agregar código de constructor aquí
 			//
+			Usuario = usuario;
 		}
 
 	protected:
@@ -82,6 +85,7 @@ namespace SheriffBotGUIApp {
 			this->btnAccount->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->btnAccount->TabIndex = 14;
 			this->btnAccount->TabStop = false;
+			this->btnAccount->Click += gcnew System::EventHandler(this, &UsuarioPromedioForm::btnAccount_Click);
 			// 
 			// btnAlert
 			// 
@@ -178,6 +182,12 @@ namespace SheriffBotGUIApp {
 		}
 		private: System::Void btnAlert_Click(System::Object^ sender, System::EventArgs^ e) {
 			AlertForm^ form = gcnew AlertForm();
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
+		private: System::Void btnAccount_Click(System::Object^ sender, System::EventArgs^ e) {
+			AccountForm^ form = gcnew AccountForm(Usuario);
 			this->Hide();
 			form->ShowDialog();
 			this->Show();
