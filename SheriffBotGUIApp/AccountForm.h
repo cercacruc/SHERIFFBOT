@@ -115,6 +115,7 @@ namespace SheriffBotGUIApp {
 			this->textUsuario->Name = L"textUsuario";
 			this->textUsuario->Size = System::Drawing::Size(167, 22);
 			this->textUsuario->TabIndex = 32;
+			this->textUsuario->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			// 
 			// textID
 			// 
@@ -122,6 +123,7 @@ namespace SheriffBotGUIApp {
 			this->textID->Name = L"textID";
 			this->textID->Size = System::Drawing::Size(167, 22);
 			this->textID->TabIndex = 33;
+			this->textID->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			// 
 			// textCargo
 			// 
@@ -129,6 +131,7 @@ namespace SheriffBotGUIApp {
 			this->textCargo->Name = L"textCargo";
 			this->textCargo->Size = System::Drawing::Size(167, 22);
 			this->textCargo->TabIndex = 34;
+			this->textCargo->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			// 
 			// AccountForm
 			// 
