@@ -204,6 +204,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 		{
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
+			this->btnEliminarObjPerd = (gcnew System::Windows::Forms::Button());
 			this->label16 = (gcnew System::Windows::Forms::Label());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->rbtnSolucionObNo = (gcnew System::Windows::Forms::RadioButton());
@@ -226,6 +227,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->ResourceTimeMO = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourceStatusMO = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
+			this->btnEliminarAltercado = (gcnew System::Windows::Forms::Button());
 			this->btnSolucionAltercado = (gcnew System::Windows::Forms::Button());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			this->rbtnSolucionAltercadoNo = (gcnew System::Windows::Forms::RadioButton());
@@ -245,6 +247,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->dataGridViewTextBoxColumn4 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn5 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
+			this->btnEliminarDTI = (gcnew System::Windows::Forms::Button());
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->txtDescriptionDTI = (gcnew System::Windows::Forms::TextBox());
 			this->btnSolucionDTI = (gcnew System::Windows::Forms::Button());
@@ -264,9 +267,6 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->dataGridViewTextBoxColumn8 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn9 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn10 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->btnEliminarDTI = (gcnew System::Windows::Forms::Button());
-			this->btnEliminarAltercado = (gcnew System::Windows::Forms::Button());
-			this->btnEliminarObjPerd = (gcnew System::Windows::Forms::Button());
 			this->tabControl1->SuspendLayout();
 			this->tabPage2->SuspendLayout();
 			this->groupBox1->SuspendLayout();
@@ -315,6 +315,16 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->tabPage2->TabIndex = 0;
 			this->tabPage2->Text = L"Administrar Objeto Perdido";
 			this->tabPage2->UseVisualStyleBackColor = true;
+			// 
+			// btnEliminarObjPerd
+			// 
+			this->btnEliminarObjPerd->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->btnEliminarObjPerd->Location = System::Drawing::Point(20, 177);
+			this->btnEliminarObjPerd->Name = L"btnEliminarObjPerd";
+			this->btnEliminarObjPerd->Size = System::Drawing::Size(162, 49);
+			this->btnEliminarObjPerd->TabIndex = 64;
+			this->btnEliminarObjPerd->Text = L"Eliminar";
+			this->btnEliminarObjPerd->UseVisualStyleBackColor = true;
 			// 
 			// label16
 			// 
@@ -531,6 +541,16 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->tabPage1->Text = L"Administrar Altercado";
 			this->tabPage1->UseVisualStyleBackColor = true;
 			// 
+			// btnEliminarAltercado
+			// 
+			this->btnEliminarAltercado->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->btnEliminarAltercado->Location = System::Drawing::Point(21, 179);
+			this->btnEliminarAltercado->Name = L"btnEliminarAltercado";
+			this->btnEliminarAltercado->Size = System::Drawing::Size(176, 49);
+			this->btnEliminarAltercado->TabIndex = 64;
+			this->btnEliminarAltercado->Text = L"Eliminar";
+			this->btnEliminarAltercado->UseVisualStyleBackColor = true;
+			// 
 			// btnSolucionAltercado
 			// 
 			this->btnSolucionAltercado->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
@@ -726,6 +746,16 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->tabPage3->Text = L"Administrar Reporte DTI";
 			this->tabPage3->UseVisualStyleBackColor = true;
 			// 
+			// btnEliminarDTI
+			// 
+			this->btnEliminarDTI->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->btnEliminarDTI->Location = System::Drawing::Point(21, 205);
+			this->btnEliminarDTI->Name = L"btnEliminarDTI";
+			this->btnEliminarDTI->Size = System::Drawing::Size(176, 49);
+			this->btnEliminarDTI->TabIndex = 63;
+			this->btnEliminarDTI->Text = L"Eliminar";
+			this->btnEliminarDTI->UseVisualStyleBackColor = true;
+			// 
 			// label6
 			// 
 			this->label6->AutoSize = true;
@@ -911,36 +941,6 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->dataGridViewTextBoxColumn10->Name = L"dataGridViewTextBoxColumn10";
 			this->dataGridViewTextBoxColumn10->Width = 125;
 			// 
-			// btnEliminarDTI
-			// 
-			this->btnEliminarDTI->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnEliminarDTI->Location = System::Drawing::Point(21, 205);
-			this->btnEliminarDTI->Name = L"btnEliminarDTI";
-			this->btnEliminarDTI->Size = System::Drawing::Size(176, 49);
-			this->btnEliminarDTI->TabIndex = 63;
-			this->btnEliminarDTI->Text = L"Eliminar";
-			this->btnEliminarDTI->UseVisualStyleBackColor = true;
-			// 
-			// btnEliminarAltercado
-			// 
-			this->btnEliminarAltercado->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnEliminarAltercado->Location = System::Drawing::Point(21, 179);
-			this->btnEliminarAltercado->Name = L"btnEliminarAltercado";
-			this->btnEliminarAltercado->Size = System::Drawing::Size(176, 49);
-			this->btnEliminarAltercado->TabIndex = 64;
-			this->btnEliminarAltercado->Text = L"Eliminar";
-			this->btnEliminarAltercado->UseVisualStyleBackColor = true;
-			// 
-			// btnEliminarObjPerd
-			// 
-			this->btnEliminarObjPerd->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnEliminarObjPerd->Location = System::Drawing::Point(20, 177);
-			this->btnEliminarObjPerd->Name = L"btnEliminarObjPerd";
-			this->btnEliminarObjPerd->Size = System::Drawing::Size(162, 49);
-			this->btnEliminarObjPerd->TabIndex = 64;
-			this->btnEliminarObjPerd->Text = L"Eliminar";
-			this->btnEliminarObjPerd->UseVisualStyleBackColor = true;
-			// 
 			// AdminAlertManagementForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -949,6 +949,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->Controls->Add(this->tabControl1);
 			this->Name = L"AdminAlertManagementForm";
 			this->Text = L"AdminAlertManagementForm";
+			this->Load += gcnew System::EventHandler(this, &AdminAlertManagementForm::AdminAlertManagementForm_Load);
 			this->tabControl1->ResumeLayout(false);
 			this->tabPage2->ResumeLayout(false);
 			this->tabPage2->PerformLayout();
@@ -993,10 +994,50 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			}
 		}
 		private: void CargarTablaAltercado() {
+			List<Altercado^>^ altercado = Service::ShowAltercados();
+			if (altercado != nullptr) {
+				dgvAltercado->Rows->Clear();
+				for (int i = 0; i < altercado->Count; i++) {
+					String^ fecha = altercado[i]->Fecha->ToString("dd/MM/yyyy");
+					String^ hora = altercado[i]->Fecha->ToString("HH:mm:ss");
+					String^ estado = altercado[i]->Solucionado ? "Solucionado" : "No solucionado";
 
+					if (altercado[i]->GetType() == Altercado::typeid) {
+						dgvAltercado->Rows->Add(gcnew array<String^>{
+							"" + altercado[i]->id,
+								fecha,
+								hora,
+								estado
+						});
+					}
+				}
+			}
 		}
 		private: void CargarTablaDTIReport() {
+			List<DTIReport^>^ reporte = Service::ShowDTIReport();
+			if (reporte != nullptr) {
+				dgvDTI->Rows->Clear();
+				for (int i = 0; i < reporte->Count; i++) {
+					String^ fecha = reporte[i]->Fecha->ToString("dd/MM/yyyy");
+					String^ hora = reporte[i]->Fecha->ToString("HH:mm:ss");
+					String^ estado = reporte[i]->Solucionado ? "Solucionado" : "No solucionado";
 
+					if (reporte[i]->GetType() == DTIReport::typeid) {
+						dgvDTI->Rows->Add(gcnew array<String^>{
+							"" + reporte[i]->id,
+								reporte[i]->tipoReporte,
+								fecha,
+								hora,
+								estado
+						});
+					}
+				}
+			}
+		}
+		private: System::Void AdminAlertManagementForm_Load(System::Object^ sender, System::EventArgs^ e) {
+			CargarTablaAltercado();
+			CargarTablaDTIReport();
+			CargarTablaObjetoPerdido();
 		}
 	};
 }

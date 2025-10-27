@@ -716,14 +716,15 @@ namespace SheriffBotGUIApp {
 
 				double x = Convert::ToDouble(XRobot->Text);
 				double y = Convert::ToDouble(YRobot->Text);
-				robot->Zona = Service::delimitarZonaTrabajo(x, y); //revisar esa función
+				//robot->Zona = Service::delimitarZonaTrabajo(x, y); //revisar esa función
 
+				/*
 				if (Service::delimitarZonaTrabajo(x, y) == "BASE") {
 					robot->Disponibilidad = true;
 				}
 				else {
 					robot->Disponibilidad = rbtnDisponibilidadNo->Checked;
-				}
+				}*/
 
 				robot->PosicionRobot->x = Convert::ToDouble(XRobot->Text);
 				robot->PosicionRobot->y = Convert::ToDouble(YRobot->Text);
@@ -766,14 +767,14 @@ namespace SheriffBotGUIApp {
 				
 				double x = Convert::ToDouble(XRobot->Text);
 				double y = Convert::ToDouble(YRobot->Text);
-				robot->Zona = Service::delimitarZonaTrabajo(x, y);
-
+				//robot->Zona = Service::delimitarZonaTrabajo(x, y);
+				/*
 				if (Service::delimitarZonaTrabajo(x, y) == "BASE") {
 					robot->Disponibilidad = true;
 				}
 				else {
 					robot->Disponibilidad = !rbtnDisponibilidadYes->Checked;
-				}
+				}*///tmr marcelo XD
 
 				if (pbPhotoRobot != nullptr && pbPhotoRobot->Image != nullptr) {
 					System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream();
