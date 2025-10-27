@@ -1,6 +1,7 @@
 #pragma once
 #include "DatosRobotsUsuariosForm.h"
 #include "AccountForm.h"
+#include "AdminAlertManagementForm.h"
 //faltan añadir demas ventanas
 
 namespace SheriffBotGUIApp {
@@ -81,6 +82,7 @@ namespace SheriffBotGUIApp {
 			this->button1->TabIndex = 20;
 			this->button1->Text = L"Registro de Incidencias";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &AdminForm::button1_Click);
 			// 
 			// pictureBox2
 			// 
@@ -154,6 +156,12 @@ namespace SheriffBotGUIApp {
 		}
 		private: System::Void btnAccount_Click(System::Object^ sender, System::EventArgs^ e) {
 			AccountForm^ form = gcnew AccountForm(Usuario);
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
+		private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+			AdminAlertManagementForm^ form = gcnew AdminAlertManagementForm();
 			this->Hide();
 			form->ShowDialog();
 			this->Show();
