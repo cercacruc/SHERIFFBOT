@@ -136,6 +136,7 @@
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="MissingObjectForm.cpp" />
     <ClCompile Include="RegisteForm.cpp" />
+    <ClCompile Include="RobotsSheriffForm.cpp" />
     <ClCompile Include="SheriffForm.cpp" />
     <ClCompile Include="UserAlertViewForm.cpp" />
     <ClCompile Include="UsuarioPromedioForm.cpp" />
@@ -188,6 +189,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="RegisteForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="RobotsSheriffForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="SheriffForm.h">
@@ -248,6 +252,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RegisteForm.resx">
       <DependentUpon>RegisteForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RobotsSheriffForm.resx">
+      <DependentUpon>RobotsSheriffForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SheriffForm.resx">
       <DependentUpon>SheriffForm.h</DependentUpon>

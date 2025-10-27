@@ -1,6 +1,7 @@
 #pragma once
 #include "AvaibleRobotsForm.h"
 #include "AccountForm.h"
+#include "RobotsSheriffForm.h"
 
 namespace SheriffBotGUIApp {
 
@@ -116,6 +117,7 @@ namespace SheriffBotGUIApp {
 			this->btnRobots->TabIndex = 13;
 			this->btnRobots->Text = L"Gestión de robots";
 			this->btnRobots->UseVisualStyleBackColor = true;
+			this->btnRobots->Click += gcnew System::EventHandler(this, &SheriffForm::btnRobots_Click);
 			// 
 			// pictureBox1
 			// 
@@ -179,6 +181,12 @@ namespace SheriffBotGUIApp {
 		}
 		private: System::Void btnAccount_Click(System::Object^ sender, System::EventArgs^ e) {
 			AccountForm^ form = gcnew AccountForm(Usuario);
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
+		private: System::Void btnRobots_Click(System::Object^ sender, System::EventArgs^ e) {
+			RobotsSheriffForm^ form = gcnew RobotsSheriffForm();
 			this->Hide();
 			form->ShowDialog();
 			this->Show();
