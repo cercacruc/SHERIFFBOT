@@ -242,6 +242,7 @@ namespace SheriffBotGUIApp {
 			});
 			this->dgvZona->Location = System::Drawing::Point(32, 292);
 			this->dgvZona->Name = L"dgvZona";
+			this->dgvZona->RowHeadersVisible = false;
 			this->dgvZona->RowHeadersWidth = 51;
 			this->dgvZona->RowTemplate->Height = 24;
 			this->dgvZona->Size = System::Drawing::Size(493, 246);

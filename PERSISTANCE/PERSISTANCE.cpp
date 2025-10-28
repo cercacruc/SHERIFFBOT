@@ -588,6 +588,7 @@ Point^ BotPersistance::Persistance::getPoint(double x, double y)
     return nullptr;
 }
 
+//Lista Robot Disponible
 List<Robot^>^ BotPersistance::Persistance::listaRobotsDisponibles()
 {
     List<Robot^>^ listaRobots = GetRobots();
@@ -681,7 +682,12 @@ ZonaTrabajo^ BotPersistance::Persistance::buscarReturnZonaId(int id)
 
 List<ZonaTrabajo^>^ BotPersistance::Persistance::GetZonas()
 {
-    listaZonas = (List<ZonaTrabajo^>^)LoadZonasFormTxtFile(fileZonaTrabajo);
+    if (listaZonas->Count == 0) {
+        Object^ res = LoadZonasFormTxtFile(fileZonaTrabajo);
+        if (res != nullptr) {
+            listaZonas = (List<ZonaTrabajo^>^) res;
+        }
+    }
     return listaZonas;
 }
 

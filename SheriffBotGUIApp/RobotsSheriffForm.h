@@ -220,7 +220,14 @@ namespace SheriffBotGUIApp {
 			MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
 		}
 		private: void CargarListaLugares() {
-			//completar con lista de marcelo de lugares
+			List<ZonaTrabajo^>^ listaLugares = Service::GetZonas();
+			cmbLugares->Visible = true;
+			cmbLugares->Enabled = true;
+			cmbLugares->Items->Clear();
+
+			for each (ZonaTrabajo ^ zona in listaLugares) {
+				cmbLugares->Items->Add(zona->zona);
+			}
 		}
 	};
 }

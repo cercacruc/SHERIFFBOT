@@ -716,15 +716,15 @@ namespace SheriffBotGUIApp {
 
 				double x = Convert::ToDouble(XRobot->Text);
 				double y = Convert::ToDouble(YRobot->Text);
-				//robot->Zona = Service::delimitarZonaTrabajo(x, y); //revisar esa función
+				robot->Zona = Service::delimitarZonaTrabajo(x, y);
 
-				/*
+				
 				if (Service::delimitarZonaTrabajo(x, y) == "BASE") {
 					robot->Disponibilidad = true;
 				}
 				else {
 					robot->Disponibilidad = rbtnDisponibilidadNo->Checked;
-				}*/
+				}
 
 				robot->PosicionRobot->x = Convert::ToDouble(XRobot->Text);
 				robot->PosicionRobot->y = Convert::ToDouble(YRobot->Text);
@@ -767,14 +767,17 @@ namespace SheriffBotGUIApp {
 				
 				double x = Convert::ToDouble(XRobot->Text);
 				double y = Convert::ToDouble(YRobot->Text);
-				robot->Zona = ZonaRobot->Text;//se cambiara por lo de marcelo
+				robot->Zona = Service::delimitarZonaTrabajo(x, y);
+
+				robot->PosicionRobot->x = Convert::ToDouble(XRobot->Text);
+				robot->PosicionRobot->y = Convert::ToDouble(YRobot->Text);
 				
-				if (ZonaRobot->Text == "BASE") {//se modificara por una funcion
+				if (Service::delimitarZonaTrabajo(x, y) == "BASE") {
 					robot->Disponibilidad = true;
 				}
 				else {
 					robot->Disponibilidad = !rbtnDisponibilidadYes->Checked;
-				}//tmr marcelo XD
+				}
 
 				if (pbPhotoRobot != nullptr && pbPhotoRobot->Image != nullptr) {
 					System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream();
@@ -1064,6 +1067,7 @@ namespace SheriffBotGUIApp {
 			ShowRobots();
 			ClearFieldsR();
 			ClearFieldsU();
+			ShowZonas();
 			tabControl1->SelectedTab = tabPage2;
 		}
 		private: void SearchAndPutImagenOn(PictureBox^ pb) {//se encarga de poder añadir la foto
@@ -1072,6 +1076,9 @@ namespace SheriffBotGUIApp {
 			if (opfd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 				pb->Image = gcnew Bitmap(opfd->FileName);
 			}
+		}
+		private: void ShowZonas() {
+			List<ZonaTrabajo^>^ listaZonas = Service::GetZonas();
 		}
 	};
 }

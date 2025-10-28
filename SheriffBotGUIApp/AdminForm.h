@@ -49,6 +49,7 @@ namespace SheriffBotGUIApp {
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::PictureBox^ btnAccount;
 	private: System::Windows::Forms::Button^ btnZonasT;
+	private: System::Windows::Forms::PictureBox^ pictureBox3;
 
 	private:
 		/// <summary>
@@ -70,9 +71,11 @@ namespace SheriffBotGUIApp {
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->btnAccount = (gcnew System::Windows::Forms::PictureBox());
 			this->btnZonasT = (gcnew System::Windows::Forms::Button());
+			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// button1
@@ -144,11 +147,23 @@ namespace SheriffBotGUIApp {
 			this->btnZonasT->UseVisualStyleBackColor = true;
 			this->btnZonasT->Click += gcnew System::EventHandler(this, &AdminForm::btnZonasT_Click);
 			// 
+			// pictureBox3
+			// 
+			this->pictureBox3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox3.Image")));
+			this->pictureBox3->Location = System::Drawing::Point(482, 95);
+			this->pictureBox3->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->pictureBox3->Name = L"pictureBox3";
+			this->pictureBox3->Size = System::Drawing::Size(161, 148);
+			this->pictureBox3->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox3->TabIndex = 22;
+			this->pictureBox3->TabStop = false;
+			// 
 			// AdminForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(716, 610);
+			this->Controls->Add(this->pictureBox3);
 			this->Controls->Add(this->btnZonasT);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->pictureBox2);
@@ -160,6 +175,7 @@ namespace SheriffBotGUIApp {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
 			this->ResumeLayout(false);
 
 		}
