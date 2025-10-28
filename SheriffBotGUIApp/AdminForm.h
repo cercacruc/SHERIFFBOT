@@ -2,6 +2,7 @@
 #include "DatosRobotsUsuariosForm.h"
 #include "AccountForm.h"
 #include "AdminAlertManagementForm.h"
+#include "DelimitarZonasTrabajoAdmin.h"
 //faltan añadir demas ventanas
 
 namespace SheriffBotGUIApp {
@@ -47,6 +48,7 @@ namespace SheriffBotGUIApp {
 	private: System::Windows::Forms::Button^ btnRobots;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::PictureBox^ btnAccount;
+	private: System::Windows::Forms::Button^ btnZonasT;
 
 	private:
 		/// <summary>
@@ -67,6 +69,7 @@ namespace SheriffBotGUIApp {
 			this->btnRobots = (gcnew System::Windows::Forms::Button());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->btnAccount = (gcnew System::Windows::Forms::PictureBox());
+			this->btnZonasT = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->BeginInit();
@@ -130,11 +133,23 @@ namespace SheriffBotGUIApp {
 			this->btnAccount->TabStop = false;
 			this->btnAccount->Click += gcnew System::EventHandler(this, &AdminForm::btnAccount_Click);
 			// 
+			// btnZonasT
+			// 
+			this->btnZonasT->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F));
+			this->btnZonasT->Location = System::Drawing::Point(482, 254);
+			this->btnZonasT->Name = L"btnZonasT";
+			this->btnZonasT->Size = System::Drawing::Size(158, 64);
+			this->btnZonasT->TabIndex = 21;
+			this->btnZonasT->Text = L"Delimitar Zonas de Trabajo";
+			this->btnZonasT->UseVisualStyleBackColor = true;
+			this->btnZonasT->Click += gcnew System::EventHandler(this, &AdminForm::btnZonasT_Click);
+			// 
 			// AdminForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(716, 610);
+			this->Controls->Add(this->btnZonasT);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->pictureBox2);
 			this->Controls->Add(this->btnRobots);
@@ -167,5 +182,11 @@ namespace SheriffBotGUIApp {
 			form->ShowDialog();
 			this->Show();
 		}
-	};
+	private: System::Void btnZonasT_Click(System::Object^ sender, System::EventArgs^ e) {
+		DelimitarZonasTrabajoAdmin^ form = gcnew DelimitarZonasTrabajoAdmin();
+		this->Hide();
+		form->ShowDialog();
+		this->Show();
+	}
+};
 }

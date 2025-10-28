@@ -71,5 +71,16 @@ namespace BotModel {
 		public:
 			property String^ ObjetoEncontrado;
 	};
-
+	[Serializable]
+		public ref class ZonaTrabajo {
+		public:
+			property int ID;
+			property double x_min;
+			property double x_max;
+			property double y_min;
+			property double y_max;
+			property String^ zona;
+			ZonaTrabajo();
+			ZonaTrabajo(int ID, double x_min, double x_max, double y_min, double y_max, String^ zona);
+	};
 }

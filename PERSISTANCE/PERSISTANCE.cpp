@@ -444,103 +444,138 @@ Object^ BotPersistance::Persistance::LoadAlertFormTxtFile(String^ fileName)//com
     return result;
 }
 
+void BotPersistance::Persistance::PersistTxtFileZonas(String^ fileName, List<ZonaTrabajo^>^ lista)
+{
+    FileStream^ file = nullptr;
+    StreamWriter^ writer = nullptr;
+    try {
+        file = gcnew FileStream(fileName, FileMode::Create, FileAccess::Write);
+        writer = gcnew StreamWriter(file);
+        for each (ZonaTrabajo ^ z in listaZonas) {
+            writer->WriteLine("{0}|{1}|{2}|{3}|{4}|{5}",
+                z->ID,
+                z->x_min,
+                z->x_max,
+                z->y_min,
+                z->y_max,
+                z->zona
+            );
+        }
+    }
+    catch (Exception^ ex) {
+        throw ex;
+    }
+    finally {
+        if (writer != nullptr) writer->Close();
+        if (file != nullptr) file->Close();
+    }
+}
+
+Object^ BotPersistance::Persistance::LoadZonasFormTxtFile(String^ fileName)
+{
+    FileStream^ file;
+    StreamReader^ reader;
+    Object^ result = gcnew List<ZonaTrabajo^>();
+    try {
+
+        file = gcnew FileStream(fileName, FileMode::Open, FileAccess::Read);
+        reader = gcnew StreamReader(file);
+        while (!reader->EndOfStream) {
+            String^ line = reader->ReadLine();
+            if (String::IsNullOrEmpty(line)) continue;
+
+            array<String^>^ record = line->Split('|');
+            ZonaTrabajo^ zona = gcnew ZonaTrabajo();
+            zona->ID = Convert::ToInt32(record[0]);
+            zona->x_min = Convert::ToDouble(record[1]);
+            zona->x_max = Convert::ToDouble(record[2]);
+            zona->y_min = Convert::ToDouble(record[3]);
+            zona->y_max = Convert::ToDouble(record[4]);
+            zona->zona = record[5];
+
+            ((List<ZonaTrabajo^>^)result)->Add(zona);
+        }
+    }
+    catch (Exception^ ex) {
+        throw ex;
+    }
+    finally {
+        if (reader != nullptr) reader->Close();
+        if (file != nullptr) file->Close();
+    }
+    return result;
+}
+
+void BotPersistance::Persistance::PersistTxtFilePoint(String^ fileName, List<Point^>^ lista)
+{
+    FileStream^ file = nullptr;
+    StreamWriter^ writer = nullptr;
+    try {
+        file = gcnew FileStream(fileName, FileMode::Create, FileAccess::Write);
+        writer = gcnew StreamWriter(file);
+        for each (Point ^ p in listPoints) {
+            writer->WriteLine("{0}|{1}|{2}",
+                p->x,
+                p->y,
+                p->Ubicacion 
+            );
+        }
+    }
+    catch (Exception^ ex) {
+        throw ex;
+    }
+    finally {
+        if (writer != nullptr) writer->Close();
+        if (file != nullptr) file->Close();
+    }
+}
+
+Object^ BotPersistance::Persistance::LoadPointsFormTxtFile(String^ fileName)
+{
+    FileStream^ file;
+    StreamReader^ reader;
+    Object^ result = gcnew List<Point^>();
+    try {
+
+        file = gcnew FileStream(fileName, FileMode::Open, FileAccess::Read);
+        reader = gcnew StreamReader(file);
+        while (!reader->EndOfStream) {
+            String^ line = reader->ReadLine();
+            if (String::IsNullOrEmpty(line)) continue;
+
+            array<String^>^ record = line->Split('|');
+            Point^ p = gcnew Point();
+            p->x = Convert::ToDouble(record[0]);
+            p->y = Convert::ToDouble(record[1]);
+            p->Ubicacion = record[2];
+            ((List<Point^>^)result)->Add(p);
+        }
+    }
+    catch (Exception^ ex) {
+        throw ex;
+    }
+    finally {
+        if (reader != nullptr) reader->Close();
+        if (file != nullptr) file->Close();
+    }
+    return result;
+}
+
 //Funcion de zonas
-void BotPersistance::Persistance::delimitarZonaTrabajo(double x, double y) {
+String^ BotPersistance::Persistance::delimitarZonaTrabajo(double x, double y) {
     String^ Ubicacion = "nullptr";
-    /*if (x >= 0 && x < 62) {
-        if (y >= 0 && y < 223) {
-            Ubicacion = "Criadero";
-        }
-        else if (y >= 223 && y < 285) {
-            Ubicacion = "Digimundo";
-        }
-        else if (y >= 285 && y < 379) {
-            Ubicacion = "Pabellón V";
-        }
-        else if (y >= 379 && y <= 465) {
-            if (x >= 0 && x < 37) {
-                Ubicacion = "Ingeniería Mecatrónica";
-            }
-            if (x >= 37 && x < 62) {
-                Ubicacion = "Ingeniería Industrial";
-            }
+    for each (ZonaTrabajo ^ z in listaZonas) {
+        if (x > z->x_min && x < z->x_max && y > z->y_min && y < z->y_max) {
+            Ubicacion = z->zona;
+
+            Point^ nuevoPunto = gcnew Point(x, y, Ubicacion);
+            listPoints->Add(nuevoPunto);
+            PersistTxtFilePoint(filePoints, listPoints);
+            return Ubicacion;
         }
     }
-    else if (x >= 62 && x < 99 && y >= 0 && y <= 465) {
-        Ubicacion = "Huaca";
-    }
-    else if (y >= 0 && y < 58) {
-        if (x >= 99 && x < 165) {
-            Ubicacion = "CEPRE PUCP";
-        }
-        else if (x >= 165 && x < 287) {
-            Ubicacion = "Estacionamiento CEPRE PUCP";
-        }
-        else if (y >= 287 && y < 330) {
-            Ubicacion = "Entrada Ciencias";
-        }
-        else if (x >= 330 && x < 528) {
-            Ubicacion = "Estacionamiento Ciencias";
-        }
-        else if (y >= 528 && y < 598) {
-            Ubicacion = "Puerta Principal";
-        }
-        else if (y >= 779 && y < 935) {
-            Ubicacion = "Artes escénicas";
-        }
-    }
-    else if (x >= 99 && x < 189 && y >= 58 && y < 149) {
-        Ubicacion = "FACI";
-    }
-    else if (x >= 189 && x < 254 && y >= 58 && y < 149) {
-        Ubicacion = "Química";
-    }
-    else if (x >= 254 && x < 287) {
-        if (y >= 58 && y < 90) {
-            Ubicacion = "FAD";
-        }
-        else if (y >= 90 && y < 149) {
-            Ubicacion = "El puesto";
-        }
-    }
-    else if (x >= 287 && x < 367 && y >= 58 && y < 185) {
-        Ubicacion = "EEGGCC";
-    }
-    else if (x >= 367 && x < 459) {
-        if (y >= 58 && y < 143) {
-            Ubicacion = "ARTES VIEJAS";
-        }
-        else if (y >= 143 && y < 185) {
-            Ubicacion = "Comedor de arte viejas";
-        }
-    }
-    else if (x >= 459 && x < 528 && y >= 58 && y < 185) {
-        Ubicacion = "Tópico";
-    }
-    else if (x >= 528 && x < 598 && y >= 58 && y < 185) {
-        Ubicacion = "Jardin central";
-    }
-    else if (x >= 598 && x < 670) {
-        if (y >= 0 && y < 135) {
-            Ubicacion = "Mac Gregor";
-        }
-        else if (y >= 135 && y < 185) {
-            Ubicacion = "Tinkuy";
-        }
-    }
-    else if (x >= 670 && x < 779 && y >= 0 && y < 185) {
-        Ubicacion = "Educa/Fares";
-    }
-    else if (x >= 779 && x < 935 && y >= 58 && y < 342) {
-        Ubicacion = "Canchas";
-    }
-    else if (x >= 779 && x < 935 && y >= 342 && y < 465) {
-        Ubicacion = "INRAS";
-    }*/
-    /*else if (x == -1 && y == -1) {//base de operaciones
-        Ubicacion = "BASE";
-    }*/
-    //listPoints->Add(nuevoPunto);
+
+    return Ubicacion;
 }
 
 Point^ BotPersistance::Persistance::getPoint(double x, double y)
@@ -591,6 +626,63 @@ void BotPersistance::Persistance::registrarDTIReport(DTIReport^ reporte) {
 }
 void BotPersistance::Persistance::registrarAlercado(Altercado^ altercado) {
     registrarAlerta(altercado);
+}
+void BotPersistance::Persistance::registrarZona(ZonaTrabajo^ zona)
+{
+    listaZonas->Add(zona);
+    PersistTxtFileZonas(fileZonaTrabajo, listaZonas);
+}
+
+int BotPersistance::Persistance::modificarZona(ZonaTrabajo^ zona)
+{
+    for (int i = 0; i < listaZonas->Count; i++) {
+        if (listaZonas[i]->ID == zona->ID) {
+            listaZonas[i] = zona;
+            PersistTxtFileZonas(fileZonaTrabajo, listaZonas);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+bool BotPersistance::Persistance::eliminarZona(int id)
+{
+    for (int i = 0; i < listaZonas->Count; i++) {
+        if (listaZonas[i]->ID == id) {
+            listaZonas->RemoveAt(i);
+            PersistTxtFileZonas(fileZonaTrabajo, listaZonas);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool BotPersistance::Persistance::buscarZonaID(int id)
+{
+    for (int i = 0; i < listaZonas->Count; i++) {
+        if (listaZonas[i]->ID == id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+ZonaTrabajo^ BotPersistance::Persistance::buscarReturnZonaId(int id)
+{
+    ZonaTrabajo^ zonaEncontrada = nullptr;
+    for (int i = 0; i < listaZonas->Count; i++) {
+        if (listaZonas[i]->ID == id) {
+            zonaEncontrada = listaZonas[i];
+            return zonaEncontrada;
+        }
+    }
+    return zonaEncontrada;
+}
+
+List<ZonaTrabajo^>^ BotPersistance::Persistance::GetZonas()
+{
+    listaZonas = (List<ZonaTrabajo^>^)LoadZonasFormTxtFile(fileZonaTrabajo);
+    return listaZonas;
 }
 
 List<Alert^>^ BotPersistance::Persistance::ShowAlertas()

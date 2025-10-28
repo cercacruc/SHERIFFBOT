@@ -129,6 +129,7 @@
     <ClCompile Include="AvaibleRobotsForm.cpp" />
     <ClCompile Include="ControlRobotForm.cpp" />
     <ClCompile Include="DatosRobotsUsuariosForm.cpp" />
+    <ClCompile Include="DelimitarZonasTrabajoAdmin.cpp" />
     <ClCompile Include="DTIReportForm.cpp" />
     <ClCompile Include="ForgotPasswordForm.cpp" />
     <ClCompile Include="InformationRequestForm.cpp" />
@@ -168,6 +169,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="DatosRobotsUsuariosForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="DelimitarZonasTrabajoAdmin.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="DTIReportForm.h">
@@ -231,6 +235,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DatosRobotsUsuariosForm.resx">
       <DependentUpon>DatosRobotsUsuariosForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DelimitarZonasTrabajoAdmin.resx">
+      <DependentUpon>DelimitarZonasTrabajoAdmin.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DTIReportForm.resx">
       <DependentUpon>DTIReportForm.h</DependentUpon>

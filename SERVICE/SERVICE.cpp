@@ -55,8 +55,8 @@ int BotService::Service::modificarRobotID(Robot^ robot) {
 List <Robot^>^ BotService::Service::GetRobots() {
 	return Persistance::GetRobots();
 }
-void BotService::Service::delimitarZonaTrabajo(double x, double y) {
-	//return Persistance::delimitarZonaTrabajo(x, y);
+String^ BotService::Service::delimitarZonaTrabajo(double x, double y) {
+	return Persistance::delimitarZonaTrabajo(x, y);
 }
 List<Robot^>^ BotService::Service::listaRobotsDisponibles() {
 	return Persistance::listaRobotsDisponibles();
@@ -99,5 +99,26 @@ Altercado^ BotService::Service::buscarAltercado(int id) {
 DTIReport^ BotService::Service::buscarDTIReport(int id) {
 	return Persistance::buscarDTIReport(id);
 }
+
+//CRUD zonas de trabajo
+void BotService::Service::registrarZona(ZonaTrabajo^ zona) {
+	return Persistance::registrarZona(zona);
+}
+int BotService::Service::modificarZona(ZonaTrabajo^ zona) {
+	return Persistance::modificarZona(zona);
+}
+bool BotService::Service::eliminarZona(int id) {
+	return Persistance::eliminarZona(id);
+}
+bool BotService::Service::buscarZonaID(int id) {
+	return Persistance::buscarZonaID(id);
+}
+ZonaTrabajo^ BotService::Service::buscarReturnZonaId(int id) {
+	return Persistance::buscarReturnZonaId(id);
+}
+List <ZonaTrabajo^>^ BotService::Service::GetZonas() {
+	return Persistance::GetZonas();
+}
+
 
 

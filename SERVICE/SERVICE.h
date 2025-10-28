@@ -28,7 +28,7 @@ namespace BotService {
 		static bool borrarRobotNombre(String^ nombre);
 		static int modificarRobotID(Robot^ robot);
 		static List <Robot^>^ GetRobots();
-		static void delimitarZonaTrabajo(double x, double y);
+		static String^ delimitarZonaTrabajo(double x, double y);
 		static List<Robot^>^ listaRobotsDisponibles();
 
 		//CRUC Alert Reports
@@ -45,5 +45,14 @@ namespace BotService {
 		static ObjPerdido^ buscarObjetoPerdido(int id);
 		static Altercado^ buscarAltercado(int id);
 		static DTIReport^ buscarDTIReport(int id);
+		//Zonas
+		static void registrarZona(ZonaTrabajo^ zona);
+		static int modificarZona(ZonaTrabajo^ zona);
+		static bool eliminarZona(int id);
+		static bool buscarZonaID(int id);
+		static ZonaTrabajo^ buscarReturnZonaId(int id);
+		static List <ZonaTrabajo^>^ GetZonas();
+
+
 	};
 }

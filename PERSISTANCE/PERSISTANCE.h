@@ -11,6 +11,7 @@ namespace BotPersistance {
 		static List<Robot^>^ listaRobots = gcnew List<Robot^>();
 		static List<Alert^>^ listaAlerts = gcnew List<Alert^>();
 		static List<Point^>^ listPoints = gcnew List<Point^>();
+		static List<ZonaTrabajo^>^ listaZonas = gcnew List<ZonaTrabajo^>;
 
 		static void PersistTextFileUsers(String^ fileName, List<DatosUsuario^>^ lista);
 		static Object^ LoadUsuariosFromTextFile(String^ fileName);
@@ -28,6 +29,12 @@ namespace BotPersistance {
 		static Object^ LoadAlertFormTxtFile(String^ fileName);
 		static List<Alert^>^ listaReportesAlertas = gcnew List<Alert^>();
 
+		static void PersistTxtFileZonas(String^ fileName, List<ZonaTrabajo^>^ lista);
+		static Object^ LoadZonasFormTxtFile(String^ fileName);
+		static void PersistTxtFilePoint(String^ fileName, List<Point^>^ lista);
+		static Object^ LoadPointsFormTxtFile(String^ fileName);
+		
+
 	public:
 		//Datos de guardado
 		static String^ fileUsersName = "usuarios.txt";
@@ -38,6 +45,8 @@ namespace BotPersistance {
 
 		static String^ fileAlertReport = "alertReport.txt";
 		static String^ fileBinAlertReport = "alertReport.bin";
+		static String^ fileZonaTrabajo = "Zonas.txt";
+		static String^ filePoints = "Point.txt";
 
 
 		//CRUD Usuarios
@@ -60,7 +69,7 @@ namespace BotPersistance {
 		static bool borrarRobotNombre(String^ nombre);
 		static int modificarRobotID(Robot^ robot);
 		static List <Robot^>^ GetRobots();
-		static void delimitarZonaTrabajo(double x, double y);
+		static String^ delimitarZonaTrabajo(double x, double y);
 		static Point^ getPoint(double x, double y);
 		static List<Robot^>^ listaRobotsDisponibles();
 
@@ -78,6 +87,13 @@ namespace BotPersistance {
 		static ObjPerdido^ buscarObjetoPerdido(int id);
 		static Altercado^ buscarAltercado(int id);
 		static DTIReport^ buscarDTIReport(int id);
+
+		static void registrarZona(ZonaTrabajo^ zona);
+		static int modificarZona(ZonaTrabajo^ zona);
+		static bool eliminarZona(int id);
+		static bool buscarZonaID(int id);
+		static ZonaTrabajo^ buscarReturnZonaId(int id);
+		static List<ZonaTrabajo^>^ GetZonas();
 
 	};
 }
