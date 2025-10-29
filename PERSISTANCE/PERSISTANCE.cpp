@@ -565,7 +565,7 @@ Object^ BotPersistance::Persistance::LoadPointsFormTxtFile(String^ fileName)
 String^ BotPersistance::Persistance::delimitarZonaTrabajo(double x, double y) {
     String^ Ubicacion = "nullptr";
     for each (ZonaTrabajo ^ z in listaZonas) {
-        if (x > z->x_min && x < z->x_max && y > z->y_min && y < z->y_max) {
+        if (x >= z->x_min && x < z->x_max && y >= z->y_min && y < z->y_max) {
             Ubicacion = z->zona;
 
             Point^ nuevoPunto = gcnew Point(x, y, Ubicacion);
