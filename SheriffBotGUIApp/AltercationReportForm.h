@@ -164,6 +164,7 @@ namespace SheriffBotGUIApp {
 			this->pbPhoto->Location = System::Drawing::Point(256, 90);
 			this->pbPhoto->Name = L"pbPhoto";
 			this->pbPhoto->Size = System::Drawing::Size(207, 137);
+			this->pbPhoto->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pbPhoto->TabIndex = 42;
 			this->pbPhoto->TabStop = false;
 			this->pbPhoto->Click += gcnew System::EventHandler(this, &AltercationReportForm::pbPhoto_Click);

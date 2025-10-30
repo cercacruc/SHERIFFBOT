@@ -384,66 +384,6 @@ Object^ BotPersistance::Persistance::LoadBinaryFile(String^ fileName)
     return result;
 }
 
-void BotPersistance::Persistance::PersistTxtFileAlert(String^ fileName, List<Alert^>^ lista)//completar
-{
-    FileStream^ file = nullptr;
-    StreamWriter^ writer = nullptr;
-    try {
-        file = gcnew FileStream(fileName, FileMode::Create, FileAccess::Write);
-        writer = gcnew StreamWriter(file);
-        for each (Alert ^ Alerta in listaAlerts) {
-            //Cambiar luego segun sea necesario
-            writer->WriteLine("{0}|{1}|{2}|{3}",
-                Alerta->Fecha,
-                Alerta->Description,
-                //Alerta->Nombre,
-                Alerta->Lugar
-            );
-        }
-    }
-    catch (Exception^ ex) {
-        throw ex;
-    }
-    finally {
-        if (writer != nullptr) writer->Close();
-        if (file != nullptr) file->Close();
-    }
-}
-
-Object^ BotPersistance::Persistance::LoadAlertFormTxtFile(String^ fileName)//completar
-{
-    FileStream^ file;
-    StreamReader^ reader;
-    Object^ result = gcnew List<Alert^>();
-    try {
-
-        file = gcnew FileStream(fileName, FileMode::Open, FileAccess::Read);
-        reader = gcnew StreamReader(file);
-        while (!reader->EndOfStream) {
-            String^ line = reader->ReadLine();
-            if (String::IsNullOrEmpty(line)) continue;
-
-            array<String^>^ record = line->Split('|');
-            Alert^ alerta = gcnew Alert();
-            alerta->Fecha = Convert::ToDateTime(record[0]);
-            alerta->Description = record[1];
-            //Ni idea de como guardar el arreglo de bytes    no usaremos txt XD
-            //alerta->Photo = Convert::ToByte(record[2]);
-            alerta->Lugar = record[3];
-
-            ((List<Alert^>^)result)->Add(alerta);
-        }
-    }
-    catch (Exception^ ex) {
-        throw ex;
-    }
-    finally {
-        if (reader != nullptr) reader->Close();
-        if (file != nullptr) file->Close();
-    }
-    return result;
-}
-
 void BotPersistance::Persistance::PersistTxtFileZonas(String^ fileName, List<ZonaTrabajo^>^ lista)
 {
     FileStream^ file = nullptr;
@@ -768,4 +708,16 @@ DTIReport^ BotPersistance::Persistance::buscarDTIReport(int id)
     if (reporte->GetType() == DTIReport::typeid)
         return (DTIReport^)reporte;
     return nullptr;
+}
+
+bool BotPersistance::Persistance::eliminarAlerta(int id)
+{
+    for (int i = 0; i < listaReportesAlertas->Count; i++) {
+        if (listaReportesAlertas[i]->id == id) {
+            listaReportesAlertas->RemoveAt(i);
+            PersistBinaryFile(fileBinAlertReport, listaReportesAlertas);
+            return true;
+        }
+    }
+    return false;
 }

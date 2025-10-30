@@ -147,6 +147,7 @@ namespace SheriffBotGUIApp {
 			this->pbPhoto->Location = System::Drawing::Point(257, 89);
 			this->pbPhoto->Name = L"pbPhoto";
 			this->pbPhoto->Size = System::Drawing::Size(207, 137);
+			this->pbPhoto->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pbPhoto->TabIndex = 27;
 			this->pbPhoto->TabStop = false;
 			this->pbPhoto->Click += gcnew System::EventHandler(this, &MissingObjectForm::pbPhoto_Click);
@@ -271,8 +272,9 @@ namespace SheriffBotGUIApp {
 				pbPhoto->Image = nullptr;
 				pbPhoto->Invalidate();
 			}
-			txtDescripcion->Text = "";
-			txtLugar->Text = "";
+			txtDescripcion->Clear();
+			txtLugar->Clear();
+			txtObjeto->Clear();
 		}
 		private: System::Void MissingObjectForm_Load(System::Object^ sender, System::EventArgs^ e) {
 			ClearFields();

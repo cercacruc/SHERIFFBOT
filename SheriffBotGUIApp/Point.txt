@@ -1,4 +1,2 @@
--1|-1|BASE
--1|-1|BASE
-32|264|DIGI
-32|264|DIGI
+10|5|Criadero
+10|5|Criadero

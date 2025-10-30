@@ -119,6 +119,9 @@ ZonaTrabajo^ BotService::Service::buscarReturnZonaId(int id) {
 List <ZonaTrabajo^>^ BotService::Service::GetZonas() {
 	return Persistance::GetZonas();
 }
+bool BotService::Service::eliminarAlerta(int id) {
+	return Persistance::eliminarAlerta(id);
+}
 
 
 

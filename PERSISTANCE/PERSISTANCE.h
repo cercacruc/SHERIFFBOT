@@ -9,7 +9,6 @@ namespace BotPersistance {
 	private:
 		static List<DatosUsuario^>^ listaUsuarios = gcnew List<DatosUsuario^>();
 		static List<Robot^>^ listaRobots = gcnew List<Robot^>();
-		static List<Alert^>^ listaAlerts = gcnew List<Alert^>();
 		static List<Point^>^ listPoints = gcnew List<Point^>();
 		static List<ZonaTrabajo^>^ listaZonas = gcnew List<ZonaTrabajo^>;
 
@@ -25,8 +24,6 @@ namespace BotPersistance {
 
 
 		//vista de reportes
-		static void PersistTxtFileAlert(String^ fileName, List<Alert^>^ lista);
-		static Object^ LoadAlertFormTxtFile(String^ fileName);
 		static List<Alert^>^ listaReportesAlertas = gcnew List<Alert^>();
 
 		static void PersistTxtFileZonas(String^ fileName, List<ZonaTrabajo^>^ lista);
@@ -81,11 +78,11 @@ namespace BotPersistance {
 		static List<ObjPerdido^>^ ShowObjetosPerdidos();
 		static List<Altercado^>^ ShowAltercados();
 		static List<DTIReport^>^ ShowDTIReport();
-
 		static Alert^ buscarAlerta(int id);
 		static ObjPerdido^ buscarObjetoPerdido(int id);
 		static Altercado^ buscarAltercado(int id);
 		static DTIReport^ buscarDTIReport(int id);
+		static bool eliminarAlerta(int id);
 
 		static void registrarZona(ZonaTrabajo^ zona);
 		static int modificarZona(ZonaTrabajo^ zona);
@@ -93,6 +90,5 @@ namespace BotPersistance {
 		static bool buscarZonaID(int id);
 		static ZonaTrabajo^ buscarReturnZonaId(int id);
 		static List<ZonaTrabajo^>^ GetZonas();
-
 	};
 }
