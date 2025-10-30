@@ -9,6 +9,7 @@ namespace BotModel {
 		property String^ Contra;//Contraseña
 		property String^ Cargo;
 		property int ID;
+		property int cant_alertas;
 		//property array<Byte>^ Photo;
 
 		DatosUsuario();
@@ -52,7 +53,7 @@ namespace BotModel {
 		property array<Byte>^ Photo;
 		property String^ Lugar;
 		property bool Solucionado;
-
+		
 		Alert();
 		Alert(String^ description, String^ lugar);
 	};

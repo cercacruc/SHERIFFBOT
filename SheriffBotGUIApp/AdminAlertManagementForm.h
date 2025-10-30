@@ -1177,7 +1177,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 				if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
 					bool eliminado = Service::eliminarAlerta(Convert::ToInt32(id));
 					if (eliminado) {
-						CargarTablaAltercado();
+						CargarTablaObjetoPerdido();
 						ClearFields();
 						MessageBox::Show("Alerta eliminada exitosamente", "Exito", MessageBoxButtons::OK);
 					}
@@ -1198,7 +1198,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 				if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
 					bool eliminado = Service::eliminarAlerta(Convert::ToInt32(id));
 					if (eliminado) {
-						CargarTablaObjetoPerdido();
+						CargarTablaAltercado();
 						ClearFields();
 						MessageBox::Show("Alerta eliminada exitosamente", "Exito", MessageBoxButtons::OK);
 					}
@@ -1209,7 +1209,25 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			}
 		}
 		private: System::Void btnEliminarDTI_Click(System::Object^ sender, System::EventArgs^ e) {
-			//lo mismo que el anterior
+			if (String::IsNullOrEmpty(txtIDDTI->Text)) {
+				MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			}
+			try {
+				int id = Convert::ToInt32(txtIDDTI->Text);
+				System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar la alerta?",
+					"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
+				if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
+					bool eliminado = Service::eliminarAlerta(Convert::ToInt32(id));
+					if (eliminado) {
+						CargarTablaDTIReport();
+						ClearFields();
+						MessageBox::Show("Alerta eliminada exitosamente", "Exito", MessageBoxButtons::OK);
+					}
+				}
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al eliminar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
 		}
 		private: System::Void btnSolucionObj_Click(System::Object^ sender, System::EventArgs^ e) {
 			if (String::IsNullOrEmpty(txtIDObjPerdido->Text)) {
