@@ -82,7 +82,7 @@ namespace SheriffBotGUIApp {
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label1->Location = System::Drawing::Point(310, 23);
+			this->label1->Location = System::Drawing::Point(324, 23);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(303, 25);
 			this->label1->TabIndex = 7;
@@ -92,7 +92,7 @@ namespace SheriffBotGUIApp {
 			// 
 			this->pictureBox1->BackColor = System::Drawing::Color::White;
 			this->pictureBox1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->pictureBox1->Location = System::Drawing::Point(-2, 80);
+			this->pictureBox1->Location = System::Drawing::Point(12, 80);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(760, 450);
 			this->pictureBox1->TabIndex = 6;
@@ -103,7 +103,7 @@ namespace SheriffBotGUIApp {
 			// 
 			this->btnLimpiar->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->btnLimpiar->Location = System::Drawing::Point(154, 12);
+			this->btnLimpiar->Location = System::Drawing::Point(168, 12);
 			this->btnLimpiar->Name = L"btnLimpiar";
 			this->btnLimpiar->Size = System::Drawing::Size(150, 45);
 			this->btnLimpiar->TabIndex = 5;
@@ -115,7 +115,7 @@ namespace SheriffBotGUIApp {
 			// 
 			this->btnGenerar->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->btnGenerar->Location = System::Drawing::Point(-2, 12);
+			this->btnGenerar->Location = System::Drawing::Point(12, 12);
 			this->btnGenerar->Name = L"btnGenerar";
 			this->btnGenerar->Size = System::Drawing::Size(150, 45);
 			this->btnGenerar->TabIndex = 4;
@@ -127,7 +127,7 @@ namespace SheriffBotGUIApp {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(757, 542);
+			this->ClientSize = System::Drawing::Size(784, 544);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->btnLimpiar);

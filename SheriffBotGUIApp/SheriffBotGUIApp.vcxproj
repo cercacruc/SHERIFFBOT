@@ -253,6 +253,9 @@
     <EmbeddedResource Include="ForgotPasswordForm.resx">
       <DependentUpon>ForgotPasswordForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GraficsUsersForm.resx">
+      <DependentUpon>GraficsUsersForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="InformationRequestForm.resx">
       <DependentUpon>InformationRequestForm.h</DependentUpon>
     </EmbeddedResource>
