@@ -19,12 +19,14 @@ namespace SheriffBotGUIApp {
 	public ref class DTIReportForm : public System::Windows::Forms::Form
 	{
 	public:
-		DTIReportForm(void)
+		DatosUsuario^ Usuario;
+		DTIReportForm(DatosUsuario^ usuario)
 		{
 			InitializeComponent();
 			//
 			//TODO: agregar código de constructor aquí
 			//
+			Usuario = usuario;
 		}
 
 	protected:

@@ -62,7 +62,7 @@ namespace SheriffBotGUIApp {
 	private: System::Windows::Forms::ListView^ listView2;
 	private: System::Windows::Forms::ColumnHeader^ columnHeader7;
 	private: System::Windows::Forms::ColumnHeader^ columnHeader8;
-	private: System::Windows::Forms::ColumnHeader^ columnHeader9;
+
 	private: System::Windows::Forms::ColumnHeader^ columnHeader10;
 	private: System::Windows::Forms::ColumnHeader^ columnHeader11;
 	private: System::Windows::Forms::ColumnHeader^ columnHeader12;
@@ -107,7 +107,6 @@ namespace SheriffBotGUIApp {
 			this->listView2 = (gcnew System::Windows::Forms::ListView());
 			this->columnHeader7 = (gcnew System::Windows::Forms::ColumnHeader());
 			this->columnHeader8 = (gcnew System::Windows::Forms::ColumnHeader());
-			this->columnHeader9 = (gcnew System::Windows::Forms::ColumnHeader());
 			this->columnHeader10 = (gcnew System::Windows::Forms::ColumnHeader());
 			this->columnHeader11 = (gcnew System::Windows::Forms::ColumnHeader());
 			this->columnHeader12 = (gcnew System::Windows::Forms::ColumnHeader());
@@ -132,10 +131,10 @@ namespace SheriffBotGUIApp {
 			this->tabControl1->Controls->Add(this->tabPage1);
 			this->tabControl1->Controls->Add(this->tabPage2);
 			this->tabControl1->Controls->Add(this->tabPage3);
-			this->tabControl1->Location = System::Drawing::Point(3, 76);
+			this->tabControl1->Location = System::Drawing::Point(3, 3);
 			this->tabControl1->Name = L"tabControl1";
 			this->tabControl1->SelectedIndex = 0;
-			this->tabControl1->Size = System::Drawing::Size(639, 407);
+			this->tabControl1->Size = System::Drawing::Size(639, 418);
 			this->tabControl1->TabIndex = 0;
 			// 
 			// tabPage1
@@ -146,7 +145,7 @@ namespace SheriffBotGUIApp {
 			this->tabPage1->Location = System::Drawing::Point(4, 25);
 			this->tabPage1->Name = L"tabPage1";
 			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage1->Size = System::Drawing::Size(631, 378);
+			this->tabPage1->Size = System::Drawing::Size(631, 389);
 			this->tabPage1->TabIndex = 0;
 			this->tabPage1->Text = L"Objeto perdido";
 			this->tabPage1->UseVisualStyleBackColor = true;
@@ -220,7 +219,7 @@ namespace SheriffBotGUIApp {
 			this->tabPage2->Location = System::Drawing::Point(4, 25);
 			this->tabPage2->Name = L"tabPage2";
 			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage2->Size = System::Drawing::Size(631, 378);
+			this->tabPage2->Size = System::Drawing::Size(631, 389);
 			this->tabPage2->TabIndex = 1;
 			this->tabPage2->Text = L"Altercado";
 			this->tabPage2->UseVisualStyleBackColor = true;
@@ -249,14 +248,14 @@ namespace SheriffBotGUIApp {
 			// 
 			// listView2
 			// 
-			this->listView2->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(6) {
+			this->listView2->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(5) {
 				this->columnHeader7, this->columnHeader8,
-					this->columnHeader9, this->columnHeader10, this->columnHeader11, this->columnHeader12
+					this->columnHeader10, this->columnHeader11, this->columnHeader12
 			});
 			this->listView2->HideSelection = false;
-			this->listView2->Location = System::Drawing::Point(0, 137);
+			this->listView2->Location = System::Drawing::Point(6, 137);
 			this->listView2->Name = L"listView2";
-			this->listView2->Size = System::Drawing::Size(635, 245);
+			this->listView2->Size = System::Drawing::Size(615, 245);
 			this->listView2->TabIndex = 3;
 			this->listView2->UseCompatibleStateImageBehavior = false;
 			this->listView2->View = System::Windows::Forms::View::Details;
@@ -270,11 +269,6 @@ namespace SheriffBotGUIApp {
 			// 
 			this->columnHeader8->Text = L"Usuario";
 			this->columnHeader8->Width = 114;
-			// 
-			// columnHeader9
-			// 
-			this->columnHeader9->Text = L"Tipo de altercado";
-			this->columnHeader9->Width = 111;
 			// 
 			// columnHeader10
 			// 
@@ -298,7 +292,7 @@ namespace SheriffBotGUIApp {
 			this->tabPage3->Controls->Add(this->listView3);
 			this->tabPage3->Location = System::Drawing::Point(4, 25);
 			this->tabPage3->Name = L"tabPage3";
-			this->tabPage3->Size = System::Drawing::Size(631, 378);
+			this->tabPage3->Size = System::Drawing::Size(631, 389);
 			this->tabPage3->TabIndex = 2;
 			this->tabPage3->Text = L"Reporte DTI";
 			this->tabPage3->UseVisualStyleBackColor = true;
@@ -371,7 +365,7 @@ namespace SheriffBotGUIApp {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(640, 517);
+			this->ClientSize = System::Drawing::Size(640, 427);
 			this->Controls->Add(this->tabControl1);
 			this->Name = L"AlertManagementForm";
 			this->Text = L"AlertManagementForm";

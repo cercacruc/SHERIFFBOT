@@ -181,7 +181,7 @@ namespace SheriffBotGUIApp {
 			this->Show();
 		}
 		private: System::Void btnAlert_Click(System::Object^ sender, System::EventArgs^ e) {
-			AlertForm^ form = gcnew AlertForm();
+			AlertForm^ form = gcnew AlertForm(Usuario);
 			this->Hide();
 			form->ShowDialog();
 			this->Show();

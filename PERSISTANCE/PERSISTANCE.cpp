@@ -236,11 +236,12 @@ void BotPersistance::Persistance::PersistTextFileUsers(String^ fileName, List<Da
         file = gcnew FileStream(fileName, FileMode::Create, FileAccess::Write);
         writer = gcnew StreamWriter(file);
         for each (DatosUsuario ^ usuario in listaUsuarios) {
-            writer->WriteLine("{0}|{1}|{2}|{3}",
+            writer->WriteLine("{0}|{1}|{2}|{3}|{4}",
                 usuario->ID,
                 usuario->Nombre,
                 usuario->Contra,
-                usuario->Cargo
+                usuario->Cargo,
+                usuario->cant_alertas
             );
         }
     }
@@ -270,6 +271,7 @@ Object^ BotPersistance::Persistance::LoadUsuariosFromTextFile(String^ fileName) 
             usuario->Nombre = record[1];
             usuario->Contra = record[2];
             usuario->Cargo = record[3];
+            usuario->cant_alertas = Convert::ToInt32(record[4]);
             
             
             ((List<DatosUsuario^>^)result)->Add(usuario);

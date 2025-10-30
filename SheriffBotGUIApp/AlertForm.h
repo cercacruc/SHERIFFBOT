@@ -12,18 +12,23 @@ namespace SheriffBotGUIApp {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	using namespace BotModel;
+	using namespace BotService;
+
 	/// <summary>
 	/// Resumen de AlertForm
 	/// </summary>
 	public ref class AlertForm : public System::Windows::Forms::Form
 	{
 	public:
-		AlertForm(void)
+		DatosUsuario^ Usuario;
+		AlertForm(DatosUsuario^ usuario)
 		{
 			InitializeComponent();
 			//
 			//TODO: agregar código de constructor aquí
 			//
+			Usuario = usuario;
 		}
 
 	protected:
@@ -140,19 +145,19 @@ namespace SheriffBotGUIApp {
 		}
 #pragma endregion
 		private: System::Void btnMissingObject_Click(System::Object^ sender, System::EventArgs^ e) {
-			MissingObjectForm^ form = gcnew MissingObjectForm();
+			MissingObjectForm^ form = gcnew MissingObjectForm(Usuario);
 			this->Hide();
 			form->ShowDialog();
 			this->Show();
 		}
 		private: System::Void btnAltercation_Click(System::Object^ sender, System::EventArgs^ e) {
-			AltercationReportForm^ form = gcnew AltercationReportForm();
+			AltercationReportForm^ form = gcnew AltercationReportForm(Usuario);
 			this->Hide();
 			form->ShowDialog();
 			this->Show();
 		}
 		private: System::Void btnDTIReport_Click(System::Object^ sender, System::EventArgs^ e) {
-			DTIReportForm^ form = gcnew DTIReportForm();
+			DTIReportForm^ form = gcnew DTIReportForm(Usuario);
 			this->Hide();
 			form->ShowDialog();
 			this->Show();

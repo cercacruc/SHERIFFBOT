@@ -19,12 +19,14 @@ namespace SheriffBotGUIApp {
 	public ref class MissingObjectForm : public System::Windows::Forms::Form
 	{
 	public:
-		MissingObjectForm(void)
+		DatosUsuario^ Usuario;
+		MissingObjectForm(DatosUsuario^ usuario)
 		{
 			InitializeComponent();
 			//
 			//TODO: agregar código de constructor aquí
 			//
+			Usuario = usuario;
 		}
 
 	protected:
@@ -247,6 +249,12 @@ namespace SheriffBotGUIApp {
 
 			alerta->Fecha = dtpFecha->Value;
 			alerta->Solucionado = false;
+
+			//vincular Usuario con Alertas-por ahora con cantidad de alertas hechas
+			DatosUsuario^ usuario = gcnew DatosUsuario();
+			usuario->cant_alertas += 1;
+			Service::modificarUsuarioID(usuario);
+			//
 
 			Service::registrarAlerta(alerta);
 			MessageBox::Show("Alerta enviada exitosamente", "Exito", MessageBoxButtons::OK);

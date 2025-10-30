@@ -5,13 +5,18 @@ using namespace System;
 using namespace BotModel;
 
 DatosUsuario::DatosUsuario() {
-
+	this->ID = 0;
+	this->Nombre = nullptr;
+	this->Contra = nullptr;
+	this->Cargo = nullptr;
+	this->cant_alertas = 0;
 }
-DatosUsuario::DatosUsuario(int id, String^ nombre, String^ contra, String^ cargo) {
+DatosUsuario::DatosUsuario(int id, String^ nombre, String^ contra, String^ cargo, int cantAlertas) {
 	this->ID = id;
 	this->Nombre = nombre;
 	this->Contra = contra;
 	this->Cargo = cargo;
+	this->cant_alertas = cantAlertas;
 }
 
 Point::Point() {

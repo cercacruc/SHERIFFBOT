@@ -13,7 +13,7 @@ namespace BotModel {
 		//property array<Byte>^ Photo;
 
 		DatosUsuario();
-		DatosUsuario(int ID, String^ nombre, String^ contra, String^ cargo);
+		DatosUsuario(int ID, String^ nombre, String^ contra, String^ cargo, int cantAlertas);
 	};
 
 	[Serializable]

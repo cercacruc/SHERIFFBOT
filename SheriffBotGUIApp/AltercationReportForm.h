@@ -19,12 +19,15 @@ namespace SheriffBotGUIApp {
 	public ref class AltercationReportForm : public System::Windows::Forms::Form
 	{
 	public:
-		AltercationReportForm(void)
+		DatosUsuario^ Usuario;
+
+		AltercationReportForm(DatosUsuario^ usuario)
 		{
 			InitializeComponent();
 			//
 			//TODO: agregar código de constructor aquí
 			//
+			Usuario = usuario;
 		}
 
 	protected:

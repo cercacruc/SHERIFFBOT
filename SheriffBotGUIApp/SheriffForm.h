@@ -96,6 +96,7 @@ namespace SheriffBotGUIApp {
 			this->btnInfo->TabIndex = 15;
 			this->btnInfo->Text = L"Menú de Solicitudes\r\n";
 			this->btnInfo->UseVisualStyleBackColor = true;
+			this->btnInfo->Click += gcnew System::EventHandler(this, &SheriffForm::btnInfo_Click);
 			// 
 			// pictureBox2
 			// 
@@ -190,6 +191,9 @@ namespace SheriffBotGUIApp {
 			this->Hide();
 			form->ShowDialog();
 			this->Show();
+		}
+		private: System::Void btnInfo_Click(System::Object^ sender, System::EventArgs^ e) {
+
 		}
 	};
 }
