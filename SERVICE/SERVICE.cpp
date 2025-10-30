@@ -122,6 +122,9 @@ List <ZonaTrabajo^>^ BotService::Service::GetZonas() {
 bool BotService::Service::eliminarAlerta(int id) {
 	return Persistance::eliminarAlerta(id);
 }
+int BotService::Service::modificarAlerta(Alert^ alerta) {
+	return Persistance::modificarAlerta(alerta);
+}
 
 
 

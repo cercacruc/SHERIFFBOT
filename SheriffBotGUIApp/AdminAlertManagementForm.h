@@ -570,6 +570,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->btnSolucionAltercado->TabIndex = 57;
 			this->btnSolucionAltercado->Text = L"Solucionado";
 			this->btnSolucionAltercado->UseVisualStyleBackColor = true;
+			this->btnSolucionAltercado->Click += gcnew System::EventHandler(this, &AdminAlertManagementForm::btnSolucionAltercado_Click);
 			// 
 			// groupBox2
 			// 
@@ -795,6 +796,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->btnSolucionDTI->TabIndex = 60;
 			this->btnSolucionDTI->Text = L"Solucionado";
 			this->btnSolucionDTI->UseVisualStyleBackColor = true;
+			this->btnSolucionDTI->Click += gcnew System::EventHandler(this, &AdminAlertManagementForm::btnSolucionDTI_Click);
 			// 
 			// groupBox3
 			// 
@@ -1063,16 +1065,30 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			txtDescriptionObj->Clear();
 			txtIDObjPerdido->Clear();
 			txtObjetoPerdido->Clear();
-
 			rbtnSolucionObjYes->Checked = true;
 			rbtnSolucionObNo->Checked = false;
-
 			if (pbPhotoObj != nullptr) {
 				pbPhotoObj->Image = nullptr;
 				pbPhotoObj->Invalidate();
 			}
-
 			dtpObjetoPerdido->Value = DateTime::Now;
+
+			txtIDAltercado->Clear();
+			txtDescriptionAltercado->Clear();
+			rbtnSolucionAltercadoYes->Checked = true;
+			rbtnSolucionAltercadoNo->Checked = false;
+			if (pbPhotoAltercado != nullptr) {
+				pbPhotoAltercado->Image = nullptr;
+				pbPhotoAltercado->Invalidate();
+			}
+			dtpAltercado->Value = DateTime::Now;
+
+			txtDescriptionDTI->Clear();
+			txtIDDTI->Clear();
+			rbtnSolucionDTIYes->Checked = true;
+			rbtnSolucionDTINo->Checked = false;
+			dtpDTI->Value = DateTime::Now;
+			cmbTipoAlertaDTI->SelectedIndex = -1;
 		}
 		private: System::Void dgvOjbPerdido_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
 			int objetoID = Int32::Parse(dgvOjbPerdido->Rows[dgvOjbPerdido->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
@@ -1130,7 +1146,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			DTIReport^ reporte = Service::buscarDTIReport(id);
 			if (reporte != nullptr) {
 				txtDescriptionDTI->Text = reporte->Description;
-				txtIDAltercado->Text = reporte->id.ToString();
+				txtIDDTI->Text = reporte->id.ToString();
 
 				cmbTipoAlertaDTI->Visible = true;
 				cmbTipoAlertaDTI->Enabled = true;
@@ -1156,17 +1172,14 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			}
 			try {
 				int id = Convert::ToInt32(txtIDObjPerdido->Text);
-				if (String::IsNullOrEmpty(txtIDObjPerdido->Text)) {
-					MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-				}
 				System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar la alerta?",
 					"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
 				if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
 					bool eliminado = Service::eliminarAlerta(Convert::ToInt32(id));
 					if (eliminado) {
-						CargarTablaObjetoPerdido();
+						CargarTablaAltercado();
 						ClearFields();
-						MessageBox::Show("Operador eliminado exitosamente", "Exito", MessageBoxButtons::OK);
+						MessageBox::Show("Alerta eliminada exitosamente", "Exito", MessageBoxButtons::OK);
 					}
 				}
 			}
@@ -1175,13 +1188,91 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			}
 		}
 		private: System::Void btnEliminarAltercado_Click(System::Object^ sender, System::EventArgs^ e) {
-			//lo mismo que el anterior
+			if (String::IsNullOrEmpty(txtIDAltercado->Text)) {
+				MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			}
+			try {
+				int id = Convert::ToInt32(txtIDAltercado->Text);
+				System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar la alerta?",
+					"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
+				if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
+					bool eliminado = Service::eliminarAlerta(Convert::ToInt32(id));
+					if (eliminado) {
+						CargarTablaObjetoPerdido();
+						ClearFields();
+						MessageBox::Show("Alerta eliminada exitosamente", "Exito", MessageBoxButtons::OK);
+					}
+				}
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al eliminar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
 		}
 		private: System::Void btnEliminarDTI_Click(System::Object^ sender, System::EventArgs^ e) {
 			//lo mismo que el anterior
 		}
 		private: System::Void btnSolucionObj_Click(System::Object^ sender, System::EventArgs^ e) {
-			//crear la funcion modificarAlert
+			if (String::IsNullOrEmpty(txtIDObjPerdido->Text)) {
+				MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			}
+			try {
+				int id = Convert::ToInt32(txtIDObjPerdido->Text);
+				Alert^ alertaEncontrada = Service::buscarAlerta(id);
+				if (alertaEncontrada != nullptr) {
+					alertaEncontrada->Solucionado = true;
+					int alertaModificada = Service::modificarAlerta(alertaEncontrada);
+					if (alertaModificada != 0) {
+						CargarTablaObjetoPerdido();
+						ClearFields();
+						MessageBox::Show("Alert solucionada manualmente", "Exito", MessageBoxButtons::OK);
+					}
+				}
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al solucionar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		private: System::Void btnSolucionAltercado_Click(System::Object^ sender, System::EventArgs^ e) {
+			if (String::IsNullOrEmpty(txtIDAltercado->Text)) {
+				MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			}
+			try {
+				int id = Convert::ToInt32(txtIDAltercado->Text);
+				Alert^ alertaEncontrada = Service::buscarAlerta(id);
+				if (alertaEncontrada != nullptr) {
+					alertaEncontrada->Solucionado = true;
+					int alertaModificada = Service::modificarAlerta(alertaEncontrada);
+					if (alertaModificada != 0) {
+						CargarTablaAltercado();
+						ClearFields();
+						MessageBox::Show("Alert solucionada manualmente", "Exito", MessageBoxButtons::OK);
+					}
+				}
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al solucionar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		private: System::Void btnSolucionDTI_Click(System::Object^ sender, System::EventArgs^ e) {
+			if (String::IsNullOrEmpty(txtIDDTI->Text)) {
+				MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			}
+			try {
+				int id = Convert::ToInt32(txtIDDTI->Text);
+				Alert^ alertaEncontrada = Service::buscarAlerta(id);
+				if (alertaEncontrada != nullptr) {
+					alertaEncontrada->Solucionado = true;
+					int alertaModificada = Service::modificarAlerta(alertaEncontrada);
+					if (alertaModificada != 0) {
+						CargarTablaDTIReport();
+						ClearFields();
+						MessageBox::Show("Alert solucionada manualmente", "Exito", MessageBoxButtons::OK);
+					}
+				}
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al solucionar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
 		}
 	};
 }

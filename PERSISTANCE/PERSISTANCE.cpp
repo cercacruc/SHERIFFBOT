@@ -710,6 +710,18 @@ DTIReport^ BotPersistance::Persistance::buscarDTIReport(int id)
     return nullptr;
 }
 
+int BotPersistance::Persistance::modificarAlerta(Alert^ alerta)
+{
+    for (int i = 0; i < listaReportesAlertas->Count; i++) {
+        if (listaReportesAlertas[i]->id == alerta->id) {
+            listaReportesAlertas[i] = alerta;
+            PersistBinaryFile(fileBinAlertReport, listaReportesAlertas);
+            return 1;
+        }
+    }
+    return 0;
+}
+
 bool BotPersistance::Persistance::eliminarAlerta(int id)
 {
     for (int i = 0; i < listaReportesAlertas->Count; i++) {

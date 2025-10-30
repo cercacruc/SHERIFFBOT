@@ -82,6 +82,7 @@ namespace BotPersistance {
 		static ObjPerdido^ buscarObjetoPerdido(int id);
 		static Altercado^ buscarAltercado(int id);
 		static DTIReport^ buscarDTIReport(int id);
+		static int modificarAlerta(Alert^ alerta);
 		static bool eliminarAlerta(int id);
 
 		static void registrarZona(ZonaTrabajo^ zona);
