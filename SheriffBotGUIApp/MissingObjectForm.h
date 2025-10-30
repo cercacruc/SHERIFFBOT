@@ -252,7 +252,7 @@ namespace SheriffBotGUIApp {
 
 			//vincular Usuario con Alertas-por ahora con cantidad de alertas hechas
 			DatosUsuario^ usuario = gcnew DatosUsuario();
-			usuario->cant_alertas += 1;
+			usuario->cant_alertas[0] +=1;
 			Service::modificarUsuarioID(usuario);
 			//
 

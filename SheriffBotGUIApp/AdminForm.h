@@ -3,6 +3,7 @@
 #include "AccountForm.h"
 #include "AdminAlertManagementForm.h"
 #include "DelimitarZonasTrabajoAdmin.h"
+#include "GraficsAdminForm.h"
 //faltan añadir demas ventanas
 
 namespace SheriffBotGUIApp {
@@ -50,6 +51,8 @@ namespace SheriffBotGUIApp {
 	private: System::Windows::Forms::PictureBox^ btnAccount;
 	private: System::Windows::Forms::Button^ btnZonasT;
 	private: System::Windows::Forms::PictureBox^ pictureBox3;
+	private: System::Windows::Forms::PictureBox^ pictureBox4;
+	private: System::Windows::Forms::Button^ btnEstadistica;
 
 	private:
 		/// <summary>
@@ -72,10 +75,13 @@ namespace SheriffBotGUIApp {
 			this->btnAccount = (gcnew System::Windows::Forms::PictureBox());
 			this->btnZonasT = (gcnew System::Windows::Forms::Button());
 			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox4 = (gcnew System::Windows::Forms::PictureBox());
+			this->btnEstadistica = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// button1
@@ -158,11 +164,36 @@ namespace SheriffBotGUIApp {
 			this->pictureBox3->TabIndex = 22;
 			this->pictureBox3->TabStop = false;
 			// 
+			// pictureBox4
+			// 
+			this->pictureBox4->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox4.Image")));
+			this->pictureBox4->Location = System::Drawing::Point(32, 343);
+			this->pictureBox4->Name = L"pictureBox4";
+			this->pictureBox4->Size = System::Drawing::Size(159, 148);
+			this->pictureBox4->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox4->TabIndex = 23;
+			this->pictureBox4->TabStop = false;
+			// 
+			// btnEstadistica
+			// 
+			this->btnEstadistica->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnEstadistica->Location = System::Drawing::Point(34, 512);
+			this->btnEstadistica->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->btnEstadistica->Name = L"btnEstadistica";
+			this->btnEstadistica->Size = System::Drawing::Size(157, 64);
+			this->btnEstadistica->TabIndex = 24;
+			this->btnEstadistica->Text = L"Estadisticas";
+			this->btnEstadistica->UseVisualStyleBackColor = true;
+			this->btnEstadistica->Click += gcnew System::EventHandler(this, &AdminForm::btnEstadistica_Click);
+			// 
 			// AdminForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(716, 610);
+			this->Controls->Add(this->btnEstadistica);
+			this->Controls->Add(this->pictureBox4);
 			this->Controls->Add(this->pictureBox3);
 			this->Controls->Add(this->btnZonasT);
 			this->Controls->Add(this->button1);
@@ -176,6 +207,7 @@ namespace SheriffBotGUIApp {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->EndInit();
 			this->ResumeLayout(false);
 
 		}
@@ -198,11 +230,17 @@ namespace SheriffBotGUIApp {
 			form->ShowDialog();
 			this->Show();
 		}
-	private: System::Void btnZonasT_Click(System::Object^ sender, System::EventArgs^ e) {
-		DelimitarZonasTrabajoAdmin^ form = gcnew DelimitarZonasTrabajoAdmin();
-		this->Hide();
-		form->ShowDialog();
-		this->Show();
-	}
-};
+		private: System::Void btnZonasT_Click(System::Object^ sender, System::EventArgs^ e) {
+			DelimitarZonasTrabajoAdmin^ form = gcnew DelimitarZonasTrabajoAdmin();
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
+		private: System::Void btnEstadistica_Click(System::Object^ sender, System::EventArgs^ e) {
+			GraficsAdminForm^ form = gcnew GraficsAdminForm();
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
+	};
 }

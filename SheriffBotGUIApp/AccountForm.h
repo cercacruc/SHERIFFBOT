@@ -1,4 +1,5 @@
 #pragma once
+//#include "GraficsUsersForm.h"
 
 namespace SheriffBotGUIApp {
 
@@ -50,6 +51,7 @@ namespace SheriffBotGUIApp {
 	private: System::Windows::Forms::TextBox^ textUsuario;
 	private: System::Windows::Forms::TextBox^ textID;
 	private: System::Windows::Forms::TextBox^ textCargo;
+	private: System::Windows::Forms::Button^ btnEstadistica;
 
 
 
@@ -75,13 +77,14 @@ namespace SheriffBotGUIApp {
 			this->textUsuario = (gcnew System::Windows::Forms::TextBox());
 			this->textID = (gcnew System::Windows::Forms::TextBox());
 			this->textCargo = (gcnew System::Windows::Forms::TextBox());
+			this->btnEstadistica = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btnReturnPassword
 			// 
 			this->btnReturnPassword->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnReturnPassword->Location = System::Drawing::Point(39, 423);
+			this->btnReturnPassword->Location = System::Drawing::Point(36, 447);
 			this->btnReturnPassword->Name = L"btnReturnPassword";
 			this->btnReturnPassword->Size = System::Drawing::Size(193, 47);
 			this->btnReturnPassword->TabIndex = 30;
@@ -133,11 +136,23 @@ namespace SheriffBotGUIApp {
 			this->textCargo->TabIndex = 34;
 			this->textCargo->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			// 
+			// btnEstadistica
+			// 
+			this->btnEstadistica->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->btnEstadistica->Location = System::Drawing::Point(36, 394);
+			this->btnEstadistica->Name = L"btnEstadistica";
+			this->btnEstadistica->Size = System::Drawing::Size(193, 47);
+			this->btnEstadistica->TabIndex = 35;
+			this->btnEstadistica->Text = L"Estadísticas";
+			this->btnEstadistica->UseVisualStyleBackColor = true;
+			this->btnEstadistica->Click += gcnew System::EventHandler(this, &AccountForm::btnEstadistica_Click);
+			// 
 			// AccountForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(275, 518);
+			this->Controls->Add(this->btnEstadistica);
 			this->Controls->Add(this->textCargo);
 			this->Controls->Add(this->textID);
 			this->Controls->Add(this->textUsuario);
@@ -166,5 +181,11 @@ namespace SheriffBotGUIApp {
 			this->Close();
 		}
 		
+		private: System::Void btnEstadistica_Click(System::Object^ sender, System::EventArgs^ e) {
+			/*GraficsUsersForm^ form = gcnew GraficsUsersForm(Usuario);
+			this->Hide();
+			form->ShowDialog();
+			this->Close();*/
+		}
 	};
 }

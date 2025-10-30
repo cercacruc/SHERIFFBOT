@@ -2,6 +2,7 @@
 #include "InformationRequestForm.h"
 #include "AlertForm.h"
 #include "AccountForm.h"
+#include "GraficsUsersForm.h"
 
 namespace SheriffBotGUIApp {
 
@@ -45,7 +46,8 @@ namespace SheriffBotGUIApp {
 	private: System::Windows::Forms::PictureBox^ pictureBox3;
 	private: System::Windows::Forms::Button^ btnInfo;
 	private: System::Windows::Forms::PictureBox^ pictureBox2;
-	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::Button^ btnEstadisticas;
+
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 
 	private:
@@ -67,7 +69,7 @@ namespace SheriffBotGUIApp {
 			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
 			this->btnInfo = (gcnew System::Windows::Forms::Button());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
-			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->btnEstadisticas = (gcnew System::Windows::Forms::Button());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
@@ -131,15 +133,16 @@ namespace SheriffBotGUIApp {
 			this->pictureBox2->TabIndex = 10;
 			this->pictureBox2->TabStop = false;
 			// 
-			// button1
+			// btnEstadisticas
 			// 
-			this->button1->Location = System::Drawing::Point(256, 248);
-			this->button1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(157, 37);
-			this->button1->TabIndex = 15;
-			this->button1->Text = L"Estadisticas";
-			this->button1->UseVisualStyleBackColor = true;
+			this->btnEstadisticas->Location = System::Drawing::Point(256, 248);
+			this->btnEstadisticas->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->btnEstadisticas->Name = L"btnEstadisticas";
+			this->btnEstadisticas->Size = System::Drawing::Size(157, 37);
+			this->btnEstadisticas->TabIndex = 15;
+			this->btnEstadisticas->Text = L"Estadisticas";
+			this->btnEstadisticas->UseVisualStyleBackColor = true;
+			this->btnEstadisticas->Click += gcnew System::EventHandler(this, &UsuarioPromedioForm::btnEstadisticas_Click);
 			// 
 			// pictureBox1
 			// 
@@ -158,7 +161,7 @@ namespace SheriffBotGUIApp {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(430, 536);
 			this->Controls->Add(this->pictureBox1);
-			this->Controls->Add(this->button1);
+			this->Controls->Add(this->btnEstadisticas);
 			this->Controls->Add(this->btnAccount);
 			this->Controls->Add(this->btnAlert);
 			this->Controls->Add(this->pictureBox3);
@@ -188,6 +191,13 @@ namespace SheriffBotGUIApp {
 		}
 		private: System::Void btnAccount_Click(System::Object^ sender, System::EventArgs^ e) {
 			AccountForm^ form = gcnew AccountForm(Usuario);
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
+
+		private: System::Void btnEstadisticas_Click(System::Object^ sender, System::EventArgs^ e) {
+			GraficsUsersForm^ form = gcnew GraficsUsersForm(Usuario);
 			this->Hide();
 			form->ShowDialog();
 			this->Show();

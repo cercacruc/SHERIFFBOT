@@ -9,11 +9,11 @@ namespace BotModel {
 		property String^ Contra;//Contraseña
 		property String^ Cargo;
 		property int ID;
-		property int cant_alertas;
+		property array<int>^ cant_alertas;
 		//property array<Byte>^ Photo;
 
 		DatosUsuario();
-		DatosUsuario(int ID, String^ nombre, String^ contra, String^ cargo, int cantAlertas);
+		DatosUsuario(int ID, String^ nombre, String^ contra, String^ cargo, array<int>^ cantAlertas);
 	};
 
 	[Serializable]

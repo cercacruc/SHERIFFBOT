@@ -86,7 +86,8 @@ void BotPersistance::Persistance::registrarUsuario(DatosUsuario^ user) {
     todosUsuarios->Add(user);
     listaUsuarios = todosUsuarios;
 
-    PersistTextFileUsers(fileUsersName, todosUsuarios);
+    //PersistTextFileUsers(fileUsersName, todosUsuarios);
+    PersistBinaryFile(fileBinUsers, todosUsuarios);
 }
 int BotPersistance::Persistance::generarAutoID(String^ cargo) {
     String^ prefijo = nullptr;
@@ -163,8 +164,8 @@ bool BotPersistance::Persistance::borrarUsuarioID(int id) {
     for (int i = 0; i < listaUsuarios->Count; i++) {
         if (listaUsuarios[i]->ID == id) {
             listaUsuarios->RemoveAt(i);
-            PersistTextFileUsers(fileUsersName, listaUsuarios);
-            //PersistBinaryFile(fileBinUsers, listaUsuarios);
+            //PersistTextFileUsers(fileUsersName, listaUsuarios);
+            PersistBinaryFile(fileBinUsers, listaUsuarios);
             return true;
         }
     }
@@ -174,8 +175,8 @@ bool BotPersistance::Persistance::borrarUsuarioNombre(String^ nombre) {
     for (int i = 0; i < listaUsuarios->Count; i++) {
         if (listaUsuarios[i]->Nombre->Equals(nombre)) {
             listaUsuarios->RemoveAt(i);
-            PersistTextFileUsers(fileUsersName, listaUsuarios);
-            //PersistBinaryFile(fileBinUsers, listaUsuarios);
+            //PersistTextFileUsers(fileUsersName, listaUsuarios);
+            PersistBinaryFile(fileBinUsers, listaUsuarios);
             return true;
         }
     }
@@ -195,7 +196,8 @@ int BotPersistance::Persistance::restablecerUsuario(String^ usuario, String^ nue
     DatosUsuario^ usuarioEncontrado = buscarUsuarioNombre(usuario);
     if (usuarioEncontrado != nullptr) {
         usuarioEncontrado->Contra = nuevaContra;
-        PersistTextFileUsers(fileUsersName, listaUsuarios);
+        //PersistTextFileUsers(fileUsersName, listaUsuarios);
+        PersistBinaryFile(fileBinUsers, listaUsuarios);
         return 1;
     }
     else {
@@ -207,8 +209,8 @@ int BotPersistance::Persistance::modificarUsuarioID(DatosUsuario^ usuario) {
     for (int i = 0; i < listaUsuarios->Count; i++) {
         if (listaUsuarios[i]->ID == usuario->ID) {
             listaUsuarios[i] = usuario;
-            PersistTextFileUsers(fileUsersName, listaUsuarios);
-            //PersistBinaryFile(fileBinUsers, listaUsuarios);
+            //PersistTextFileUsers(fileUsersName, listaUsuarios);
+            PersistBinaryFile(fileBinUsers, listaUsuarios);
             return 1;
         }
     }
@@ -216,8 +218,8 @@ int BotPersistance::Persistance::modificarUsuarioID(DatosUsuario^ usuario) {
 }
 List <DatosUsuario^>^ BotPersistance::Persistance::GetUsuarios() {
     if (listaUsuarios->Count == 0) {
-        Object^ res = LoadUsuariosFromTextFile(fileUsersName);
-        //Object^ res = LoadBinaryFile(fileBinUsers);
+        //Object^ res = LoadUsuariosFromTextFile(fileUsersName);
+        Object^ res = LoadBinaryFile(fileBinUsers);
         if (res != nullptr) {
             listaUsuarios = (List<DatosUsuario^>^) res;
         }
@@ -236,12 +238,14 @@ void BotPersistance::Persistance::PersistTextFileUsers(String^ fileName, List<Da
         file = gcnew FileStream(fileName, FileMode::Create, FileAccess::Write);
         writer = gcnew StreamWriter(file);
         for each (DatosUsuario ^ usuario in listaUsuarios) {
-            writer->WriteLine("{0}|{1}|{2}|{3}|{4}",
+            writer->WriteLine("{0}|{1}|{2}|{3}|{4}|{5}|{6}",
                 usuario->ID,
                 usuario->Nombre,
                 usuario->Contra,
                 usuario->Cargo,
-                usuario->cant_alertas
+                usuario->cant_alertas[0],
+                usuario->cant_alertas[1],
+                usuario->cant_alertas[2]
             );
         }
     }
@@ -271,8 +275,10 @@ Object^ BotPersistance::Persistance::LoadUsuariosFromTextFile(String^ fileName) 
             usuario->Nombre = record[1];
             usuario->Contra = record[2];
             usuario->Cargo = record[3];
-            usuario->cant_alertas = Convert::ToInt32(record[4]);
-            
+            usuario->cant_alertas[0] = Convert::ToInt32(record[4]);
+            usuario->cant_alertas[1] = Convert::ToInt32(record[5]);
+            usuario->cant_alertas[2] = Convert::ToInt32(record[6]);
+
             
             ((List<DatosUsuario^>^)result)->Add(usuario);
         }

@@ -132,6 +132,8 @@
     <ClCompile Include="DelimitarZonasTrabajoAdmin.cpp" />
     <ClCompile Include="DTIReportForm.cpp" />
     <ClCompile Include="ForgotPasswordForm.cpp" />
+    <ClCompile Include="GraficsAdminForm.cpp" />
+    <ClCompile Include="GraficsUsersForm.cpp" />
     <ClCompile Include="InformationRequestForm.cpp" />
     <ClCompile Include="LoginForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
@@ -178,6 +180,12 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="ForgotPasswordForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="GraficsAdminForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="GraficsUsersForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="InformationRequestForm.h">

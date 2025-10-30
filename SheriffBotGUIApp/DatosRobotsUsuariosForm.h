@@ -106,6 +106,7 @@ namespace SheriffBotGUIApp {
 
 	private: System::Windows::Forms::Label^ label6;
 	private: System::Windows::Forms::TextBox^ txtCaracteristicas;
+	private: System::Windows::Forms::TextBox^ textBox1;
 
 	private:
 		/// <summary>
@@ -170,6 +171,7 @@ namespace SheriffBotGUIApp {
 			this->ResourceUserName = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourcePassword = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourceRole = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->tabControl1->SuspendLayout();
 			this->tabPage2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPhotoRobot))->BeginInit();
@@ -515,6 +517,7 @@ namespace SheriffBotGUIApp {
 			// 
 			// tabPage1
 			// 
+			this->tabPage1->Controls->Add(this->textBox1);
 			this->tabPage1->Controls->Add(this->CargoUser);
 			this->tabPage1->Controls->Add(this->label4);
 			this->tabPage1->Controls->Add(this->PasswordUser);
@@ -678,6 +681,13 @@ namespace SheriffBotGUIApp {
 			this->ResourceRole->MinimumWidth = 6;
 			this->ResourceRole->Name = L"ResourceRole";
 			this->ResourceRole->Width = 125;
+			// 
+			// textBox1
+			// 
+			this->textBox1->Location = System::Drawing::Point(711, 104);
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(213, 22);
+			this->textBox1->TabIndex = 14;
 			// 
 			// DatosRobotsUsuariosForm
 			// 
@@ -1006,6 +1016,7 @@ namespace SheriffBotGUIApp {
 				NombreUser->Text = usuario->Nombre;
 				CargoUser->Text = usuario->Cargo;
 				PasswordUser->Text = usuario->Contra;
+				textBox1->Text = usuario->cant_alertas[0].ToString();
 			}
 		}
 		private:
