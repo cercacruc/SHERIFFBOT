@@ -13,6 +13,10 @@ DatosUsuario::DatosUsuario(int id, String^ nombre, String^ contra, String^ cargo
 	this->Contra = contra;
 	this->Cargo = cargo;
 	this->cant_alertas = gcnew array<int>(3);
+
+	for (int i = 0; i < 3; i++) {
+		this->cant_alertas[i] = 0;
+	}
 }
 
 Point::Point() {

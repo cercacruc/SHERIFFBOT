@@ -250,11 +250,10 @@ namespace SheriffBotGUIApp {
 			alerta->Fecha = dtpFecha->Value;
 			alerta->Solucionado = false;
 
-			//vincular Usuario con Alertas-por ahora con cantidad de alertas hechas
-			DatosUsuario^ usuario = gcnew DatosUsuario();
-			usuario->cant_alertas[0] +=1;
-			Service::modificarUsuarioID(usuario);
-			//
+			if (Usuario != nullptr && Usuario->cant_alertas != nullptr) {
+				Usuario->cant_alertas[0] += 1;
+				Service::modificarUsuarioID(Usuario);
+			}
 
 			Service::registrarAlerta(alerta);
 			MessageBox::Show("Alerta enviada exitosamente", "Exito", MessageBoxButtons::OK);

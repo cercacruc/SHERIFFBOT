@@ -193,7 +193,10 @@ namespace SheriffBotGUIApp {
 				String^ cargo = textRole->Text;
 				usuario->ID = Service::generarAutoID(cargo);
 
-				usuario->cant_alertas = gcnew array<int>(3) { 0, 0, 0 };
+				usuario->cant_alertas = gcnew array<int>(3);
+				for (int i = 0; i < 3; i++) {
+					usuario->cant_alertas[i] = 0;
+				}
 
 				Service::registrarUsuario(usuario);
 				MessageBox::Show("¡Registro exitoso!", "Exito", MessageBoxButtons::OK);

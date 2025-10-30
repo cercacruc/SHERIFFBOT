@@ -216,6 +216,11 @@ namespace SheriffBotGUIApp {
 
 			reporte->Solucionado = false;
 
+			if (Usuario != nullptr && Usuario->cant_alertas != nullptr) {
+				Usuario->cant_alertas[2] += 1;
+				Service::modificarUsuarioID(Usuario);
+			}
+
 			Service::registrarAlerta(reporte);
 			MessageBox::Show("Se ha llamado al DTI", "Exito", MessageBoxButtons::OK);
 			ClearFields();

@@ -228,6 +228,11 @@ namespace SheriffBotGUIApp {
 
 			alerta->Solucionado = false;
 
+			if (Usuario != nullptr && Usuario->cant_alertas != nullptr) {
+				Usuario->cant_alertas[1] += 1; 
+				Service::modificarUsuarioID(Usuario);
+			}
+
 			Service::registrarAlerta(alerta);
 			MessageBox::Show("Alerta enviada exitosamente", "Exito", MessageBoxButtons::OK);
 			ClearFields();
