@@ -625,7 +625,7 @@ void BotPersistance::Persistance::registrarObjPerdido(ObjPerdido^ objeto) {
 void BotPersistance::Persistance::registrarDTIReport(DTIReport^ reporte) {
     registrarAlerta(reporte);
 }
-void BotPersistance::Persistance::registrarAlercado(Altercado^ altercado) {
+void BotPersistance::Persistance::registrarAltercado(Altercado^ altercado) {
     registrarAlerta(altercado);
 }
 void BotPersistance::Persistance::registrarZona(ZonaTrabajo^ zona)

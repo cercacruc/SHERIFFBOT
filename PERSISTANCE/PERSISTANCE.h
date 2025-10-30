@@ -42,7 +42,6 @@ namespace BotPersistance {
 		static String^ fileBinUsers = "usuarios.bin";
 		static String^ fileBinRobots = "robos.bin";
 
-
 		static String^ fileAlertReport = "alertReport.txt";
 		static String^ fileBinAlertReport = "alertReport.bin";
 		static String^ fileZonaTrabajo = "Zonas.txt";
@@ -77,7 +76,7 @@ namespace BotPersistance {
 		static void registrarAlerta(Alert^ alerta);
 		static void registrarObjPerdido(ObjPerdido^ objeto);
 		static void registrarDTIReport(DTIReport^ reporte);
-		static void registrarAlercado(Altercado^ altercado);
+		static void registrarAltercado(Altercado^ altercado);
 		static List<Alert^>^ ShowAlertas();
 		static List<ObjPerdido^>^ ShowObjetosPerdidos();
 		static List<Altercado^>^ ShowAltercados();

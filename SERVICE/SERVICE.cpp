@@ -72,8 +72,8 @@ void BotService::Service::registrarObjPerdido(ObjPerdido^ objeto) {
 void BotService::Service::registrarDTIReport(DTIReport^ reporte) {
 	return Persistance::registrarDTIReport(reporte);
 }
-void BotService::Service::registrarAlercado(Altercado^ altercado) {
-	return Persistance::registrarAlercado(altercado);
+void BotService::Service::registrarAltercado(Altercado^ altercado) {
+	return Persistance::registrarAltercado(altercado);
 }
 List<Alert^>^ BotService::Service::ShowAlertas() {
 	return Persistance::ShowAlertas();
