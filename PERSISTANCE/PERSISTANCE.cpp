@@ -552,9 +552,9 @@ List<Robot^>^ BotPersistance::Persistance::listaRobotsDisponibles()
 
 //Registro de alertas
 void BotPersistance::Persistance::registrarAlerta(Alert^ alerta) {
-    
+
     List<Alert^>^ alertasExistentes = ShowAlertas();
-    
+
     int maxId = 0;
     for each (Alert ^ alertaExistente in alertasExistentes) {
         if (alertaExistente->id > maxId) {
@@ -563,7 +563,20 @@ void BotPersistance::Persistance::registrarAlerta(Alert^ alerta) {
     }
 
     alerta->id = maxId + 1;
-    
+
+    if (dynamic_cast<DTIReport^>(alerta) != nullptr) {
+        alerta->TipoAlerta = "DTI Reporte";
+    }
+    else if (dynamic_cast<Altercado^>(alerta) != nullptr) {
+        alerta->TipoAlerta = "Altercado";
+    }
+    else if (dynamic_cast<ObjPerdido^>(alerta) != nullptr) {
+        alerta->TipoAlerta = "Objeto Perdido";
+    }
+    else {
+        alerta->TipoAlerta = "General";
+    }
+
     listaReportesAlertas->Add(alerta);
     PersistBinaryFile(fileBinAlertReport, listaReportesAlertas);
 }

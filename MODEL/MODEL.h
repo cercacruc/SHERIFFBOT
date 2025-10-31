@@ -53,9 +53,10 @@ namespace BotModel {
 		property array<Byte>^ Photo;
 		property String^ Lugar;
 		property bool Solucionado;
+		property String^ TipoAlerta;
 		
 		Alert();
-		Alert(String^ description, String^ lugar);
+		Alert(int id, DateTime^ fecha, String^ description, String^ lugar, bool solucionado, String^ tipoAlerta);
 	};
 	[Serializable]
 	public ref class DTIReport : Alert {
@@ -69,8 +70,8 @@ namespace BotModel {
 	};
 	[Serializable]
 	public ref class ObjPerdido : Alert {
-		public:
-			property String^ ObjetoEncontrado;
+	public:
+		property String^ ObjetoEncontrado;
 	};
 	[Serializable]
 		public ref class ZonaTrabajo {

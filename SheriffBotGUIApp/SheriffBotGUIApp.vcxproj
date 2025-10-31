@@ -124,6 +124,7 @@
     <ClCompile Include="AdminAlertManagementForm.cpp" />
     <ClCompile Include="AdminForm.cpp" />
     <ClCompile Include="AlertForm.cpp" />
+    <ClCompile Include="AlertHistForm.cpp" />
     <ClCompile Include="AlertManagementForm.cpp" />
     <ClCompile Include="AltercationReportForm.cpp" />
     <ClCompile Include="AvaibleRobotsForm.cpp" />
@@ -155,6 +156,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="AlertForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="AlertHistForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="AlertManagementForm.h">
@@ -228,6 +232,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AlertForm.resx">
       <DependentUpon>AlertForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlertHistForm.resx">
+      <DependentUpon>AlertHistForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AlertManagementForm.resx">
       <DependentUpon>AlertManagementForm.h</DependentUpon>

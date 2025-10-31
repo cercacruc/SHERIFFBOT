@@ -46,9 +46,13 @@ Robot::Robot(int ID, String^ nombre, String^ zona, Point^ ubicacion, String^ car
 Alert::Alert() {
 
 }
-Alert::Alert(String^ description, String^ lugar) {
+Alert::Alert(int id, DateTime^ fecha, String^ description, String^ lugar, bool solucionado, String^ tipoAlerta) {
+	this->ID = id;
+	this->Fecha = fecha;
 	this->Description = description;
 	this->Lugar = lugar;
+	this->Solucionado = solucionado;
+	this->TipoAlerta = tipoAlerta;
 }
 
 ZonaTrabajo::ZonaTrabajo() {
