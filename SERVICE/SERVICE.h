@@ -47,6 +47,7 @@ namespace BotService {
 		static DTIReport^ buscarDTIReport(int id);
 		static int modificarAlerta(Alert^ alerta);
 		static bool eliminarAlerta(int id);
+		static List<Alert^>^ GetAlertasPorUsuario(int usuarioID);
 		//Zonas
 		static void registrarZona(ZonaTrabajo^ zona);
 		static int modificarZona(ZonaTrabajo^ zona);

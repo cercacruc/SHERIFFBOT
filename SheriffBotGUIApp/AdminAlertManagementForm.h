@@ -58,147 +58,99 @@ namespace SheriffBotGUIApp {
 	private: System::Windows::Forms::Button^ btnSolucionObj;
 	private: System::Windows::Forms::DataGridView^ dgvOjbPerdido;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	private: System::Windows::Forms::TabPage^ tabPage3;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceAlertDMO;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceNameMO;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceDateMO;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceTimeMO;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceStatusMO;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUsuarioMO;
+
+	private: System::Windows::Forms::TabPage^ tabPage3;
+
 	private: System::Windows::Forms::TabPage^ tabPage1;
-
-
-
-
 
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::TextBox^ txtIDAltercado;
 
-
-
 	private: System::Windows::Forms::Label^ label5;
 	private: System::Windows::Forms::DataGridView^ dgvAltercado;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn1;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn3;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn4;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn5;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUsuarioALT;
 
 	private: System::Windows::Forms::Label^ label13;
 
 	private: System::Windows::Forms::Label^ label14;
-private: System::Windows::Forms::TextBox^ txtIDDTI;
+	private: System::Windows::Forms::TextBox^ txtIDDTI;
 
 	private: System::Windows::Forms::Label^ label15;
-private: System::Windows::Forms::DataGridView^ dgvDTI;
-
-
-
-
+	private: System::Windows::Forms::DataGridView^ dgvDTI;
 
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn6;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn7;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn8;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn9;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn10;
-private: System::Windows::Forms::PictureBox^ pbPhotoObj;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUsuarioDTI;
 
-private: System::Windows::Forms::DateTimePicker^ dtpObjetoPerdido;
+	private: System::Windows::Forms::PictureBox^ pbPhotoObj;
 
-
-private: System::Windows::Forms::Label^ label16;
-private: System::Windows::Forms::GroupBox^ groupBox1;
-private: System::Windows::Forms::RadioButton^ rbtnSolucionObNo;
-
-private: System::Windows::Forms::RadioButton^ rbtnSolucionObjYes;
-
-private: System::Windows::Forms::Label^ label9;
-private: System::Windows::Forms::TextBox^ txtDescriptionObj;
-
-private: System::Windows::Forms::Label^ label2;
-private: System::Windows::Forms::Label^ label17;
-private: System::Windows::Forms::TextBox^ txtDescriptionAltercado;
-private: System::Windows::Forms::PictureBox^ pbPhotoAltercado;
-private: System::Windows::Forms::DateTimePicker^ dtpAltercado;
+	private: System::Windows::Forms::DateTimePicker^ dtpObjetoPerdido;
 
 
+	private: System::Windows::Forms::Label^ label16;
+	private: System::Windows::Forms::GroupBox^ groupBox1;
+	private: System::Windows::Forms::RadioButton^ rbtnSolucionObNo;
 
-private: System::Windows::Forms::Button^ btnSolucionAltercado;
+	private: System::Windows::Forms::RadioButton^ rbtnSolucionObjYes;
 
-private: System::Windows::Forms::GroupBox^ groupBox2;
-private: System::Windows::Forms::RadioButton^ rbtnSolucionAltercadoNo;
+	private: System::Windows::Forms::Label^ label9;
+	private: System::Windows::Forms::TextBox^ txtDescriptionObj;
 
-private: System::Windows::Forms::RadioButton^ rbtnSolucionAltercadoYes;
+	private: System::Windows::Forms::Label^ label2;
+	private: System::Windows::Forms::Label^ label17;
+	private: System::Windows::Forms::TextBox^ txtDescriptionAltercado;
+	private: System::Windows::Forms::PictureBox^ pbPhotoAltercado;
+	private: System::Windows::Forms::DateTimePicker^ dtpAltercado;
 
-private: System::Windows::Forms::Label^ label1;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn1;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn3;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn4;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn5;
-private: System::Windows::Forms::Label^ label6;
-private: System::Windows::Forms::TextBox^ txtDescriptionDTI;
 
-private: System::Windows::Forms::Button^ btnSolucionDTI;
 
-private: System::Windows::Forms::GroupBox^ groupBox3;
-private: System::Windows::Forms::RadioButton^ rbtnSolucionDTINo;
+	private: System::Windows::Forms::Button^ btnSolucionAltercado;
 
-private: System::Windows::Forms::RadioButton^ rbtnSolucionDTIYes;
+	private: System::Windows::Forms::GroupBox^ groupBox2;
+	private: System::Windows::Forms::RadioButton^ rbtnSolucionAltercadoNo;
 
-private: System::Windows::Forms::Label^ label4;
-private: System::Windows::Forms::DateTimePicker^ dtpDTI;
+	private: System::Windows::Forms::RadioButton^ rbtnSolucionAltercadoYes;
 
-private: System::Windows::Forms::ComboBox^ cmbTipoAlertaDTI;
-private: System::Windows::Forms::Button^ btnEliminarObjPerd;
-private: System::Windows::Forms::Button^ btnEliminarAltercado;
-private: System::Windows::Forms::Button^ btnEliminarDTI;
+	private: System::Windows::Forms::Label^ label1;
+
+	private: System::Windows::Forms::Label^ label6;
+	private: System::Windows::Forms::TextBox^ txtDescriptionDTI;
+
+	private: System::Windows::Forms::Button^ btnSolucionDTI;
+
+	private: System::Windows::Forms::GroupBox^ groupBox3;
+	private: System::Windows::Forms::RadioButton^ rbtnSolucionDTINo;
+
+	private: System::Windows::Forms::RadioButton^ rbtnSolucionDTIYes;
+
+	private: System::Windows::Forms::Label^ label4;
+	private: System::Windows::Forms::DateTimePicker^ dtpDTI;
+
+	private: System::Windows::Forms::ComboBox^ cmbTipoAlertaDTI;
+	private: System::Windows::Forms::Button^ btnEliminarObjPerd;
+	private: System::Windows::Forms::Button^ btnEliminarAltercado;
+	private: System::Windows::Forms::Button^ btnEliminarDTI;
 
 
 	private:
 		/// <summary>
 		/// Variable del diseñador necesaria.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -231,6 +183,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->ResourceDateMO = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourceTimeMO = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourceStatusMO = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->ResourceUsuarioMO = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
 			this->btnEliminarAltercado = (gcnew System::Windows::Forms::Button());
 			this->btnSolucionAltercado = (gcnew System::Windows::Forms::Button());
@@ -251,6 +204,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->dataGridViewTextBoxColumn3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn4 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn5 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->ResourceUsuarioALT = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
 			this->btnEliminarDTI = (gcnew System::Windows::Forms::Button());
 			this->label6 = (gcnew System::Windows::Forms::Label());
@@ -272,6 +226,7 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->dataGridViewTextBoxColumn8 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn9 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn10 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->ResourceUsuarioDTI = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->tabControl1->SuspendLayout();
 			this->tabPage2->SuspendLayout();
 			this->groupBox1->SuspendLayout();
@@ -480,9 +435,9 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			// dgvOjbPerdido
 			// 
 			this->dgvOjbPerdido->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgvOjbPerdido->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
+			this->dgvOjbPerdido->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(6) {
 				this->ResourceAlertDMO,
-					this->ResourceNameMO, this->ResourceDateMO, this->ResourceTimeMO, this->ResourceStatusMO
+					this->ResourceNameMO, this->ResourceDateMO, this->ResourceTimeMO, this->ResourceStatusMO, this->ResourceUsuarioMO
 			});
 			this->dgvOjbPerdido->Location = System::Drawing::Point(20, 266);
 			this->dgvOjbPerdido->Name = L"dgvOjbPerdido";
@@ -527,6 +482,13 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->ResourceStatusMO->MinimumWidth = 6;
 			this->ResourceStatusMO->Name = L"ResourceStatusMO";
 			this->ResourceStatusMO->Width = 125;
+			// 
+			// ResourceUsuarioMO
+			// 
+			this->ResourceUsuarioMO->HeaderText = L"Usuario";
+			this->ResourceUsuarioMO->MinimumWidth = 6;
+			this->ResourceUsuarioMO->Name = L"ResourceUsuarioMO";
+			this->ResourceUsuarioMO->Width = 125;
 			// 
 			// tabPage1
 			// 
@@ -691,9 +653,9 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			// dgvAltercado
 			// 
 			this->dgvAltercado->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgvAltercado->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(4) {
+			this->dgvAltercado->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
 				this->dataGridViewTextBoxColumn1,
-					this->dataGridViewTextBoxColumn3, this->dataGridViewTextBoxColumn4, this->dataGridViewTextBoxColumn5
+					this->dataGridViewTextBoxColumn3, this->dataGridViewTextBoxColumn4, this->dataGridViewTextBoxColumn5, this->ResourceUsuarioALT
 			});
 			this->dgvAltercado->Location = System::Drawing::Point(21, 267);
 			this->dgvAltercado->Name = L"dgvAltercado";
@@ -735,6 +697,13 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->dataGridViewTextBoxColumn5->MinimumWidth = 6;
 			this->dataGridViewTextBoxColumn5->Name = L"dataGridViewTextBoxColumn5";
 			this->dataGridViewTextBoxColumn5->Width = 125;
+			// 
+			// ResourceUsuarioALT
+			// 
+			this->ResourceUsuarioALT->HeaderText = L"Usuario";
+			this->ResourceUsuarioALT->MinimumWidth = 6;
+			this->ResourceUsuarioALT->Name = L"ResourceUsuarioALT";
+			this->ResourceUsuarioALT->Width = 125;
 			// 
 			// tabPage3
 			// 
@@ -903,9 +872,9 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			// dgvDTI
 			// 
 			this->dgvDTI->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgvDTI->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
+			this->dgvDTI->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(6) {
 				this->dataGridViewTextBoxColumn6,
-					this->dataGridViewTextBoxColumn7, this->dataGridViewTextBoxColumn8, this->dataGridViewTextBoxColumn9, this->dataGridViewTextBoxColumn10
+					this->dataGridViewTextBoxColumn7, this->dataGridViewTextBoxColumn8, this->dataGridViewTextBoxColumn9, this->dataGridViewTextBoxColumn10, this->ResourceUsuarioDTI
 			});
 			this->dgvDTI->Location = System::Drawing::Point(21, 276);
 			this->dgvDTI->Name = L"dgvDTI";
@@ -956,6 +925,13 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->dataGridViewTextBoxColumn10->Name = L"dataGridViewTextBoxColumn10";
 			this->dataGridViewTextBoxColumn10->Width = 125;
 			// 
+			// ResourceUsuarioDTI
+			// 
+			this->ResourceUsuarioDTI->HeaderText = L"Usuario";
+			this->ResourceUsuarioDTI->MinimumWidth = 6;
+			this->ResourceUsuarioDTI->Name = L"ResourceUsuarioDTI";
+			this->ResourceUsuarioDTI->Width = 125;
+			// 
 			// AdminAlertManagementForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -986,311 +962,317 @@ private: System::Windows::Forms::Button^ btnEliminarDTI;
 			this->ResumeLayout(false);
 
 		}
-		#pragma endregion
-		private: void CargarTablaObjetoPerdido() {
-			List<ObjPerdido^>^ objeto = Service::ShowObjetosPerdidos();
-			if (objeto != nullptr) {
-				dgvOjbPerdido->Rows->Clear();
-				for (int i = 0; i < objeto->Count; i++) {
-					String^ fecha = objeto[i]->Fecha->ToString("dd/MM/yyyy");
-					String^ hora = objeto[i]->Fecha->ToString("HH:mm:ss");
-					String^ estado = objeto[i]->Solucionado ? "Solucionado" : "No solucionado";
+#pragma endregion
+	private: void CargarTablaObjetoPerdido() {
+		List<ObjPerdido^>^ objeto = Service::ShowObjetosPerdidos();
+		if (objeto != nullptr) {
+			dgvOjbPerdido->Rows->Clear();
+			for (int i = 0; i < objeto->Count; i++) {
+				String^ fecha = objeto[i]->Fecha->ToString("dd/MM/yyyy");
+				String^ hora = objeto[i]->Fecha->ToString("HH:mm:ss");
+				String^ estado = objeto[i]->Solucionado ? "Solucionado" : "No solucionado";
+				String^ usuario = objeto[i]->UsuarioNombre + " (ID: " + objeto[i]->UsuarioID + ")";
 
-					if (objeto[i]->GetType() == ObjPerdido::typeid) {
-						dgvOjbPerdido->Rows->Add(gcnew array<String^>{
-							"" + objeto[i]->id,
-							objeto[i]->ObjetoEncontrado, 
-							fecha, 
-							hora, 
-							estado
-						});
-					}
+				if (objeto[i]->GetType() == ObjPerdido::typeid) {
+					dgvOjbPerdido->Rows->Add(gcnew array<String^>{
+						"" + objeto[i]->id,
+							objeto[i]->ObjetoEncontrado,
+							fecha,
+							hora,
+							estado,
+							usuario
+					});
 				}
 			}
 		}
-		private: void CargarTablaAltercado() {
-			List<Altercado^>^ altercado = Service::ShowAltercados();
-			if (altercado != nullptr) {
-				dgvAltercado->Rows->Clear();
-				for (int i = 0; i < altercado->Count; i++) {
-					String^ fecha = altercado[i]->Fecha->ToString("dd/MM/yyyy");
-					String^ hora = altercado[i]->Fecha->ToString("HH:mm:ss");
-					String^ estado = altercado[i]->Solucionado ? "Solucionado" : "No solucionado";
+	}
+	private: void CargarTablaAltercado() {
+		List<Altercado^>^ altercado = Service::ShowAltercados();
+		if (altercado != nullptr) {
+			dgvAltercado->Rows->Clear();
+			for (int i = 0; i < altercado->Count; i++) {
+				String^ fecha = altercado[i]->Fecha->ToString("dd/MM/yyyy");
+				String^ hora = altercado[i]->Fecha->ToString("HH:mm:ss");
+				String^ estado = altercado[i]->Solucionado ? "Solucionado" : "No solucionado";
+				String^ usuario = altercado[i]->UsuarioNombre + " (ID: " + altercado[i]->UsuarioID + ")";
 
-					if (altercado[i]->GetType() == Altercado::typeid) {
-						dgvAltercado->Rows->Add(gcnew array<String^>{
-							"" + altercado[i]->id,
-								fecha,
-								hora,
-								estado
-						});
-					}
+				if (altercado[i]->GetType() == Altercado::typeid) {
+					dgvAltercado->Rows->Add(gcnew array<String^>{
+						"" + altercado[i]->id,
+							fecha,
+							hora,
+							estado,
+							usuario
+					});
 				}
 			}
 		}
-		private: void CargarTablaDTIReport() {
-			List<DTIReport^>^ reporte = Service::ShowDTIReport();
-			if (reporte != nullptr) {
-				dgvDTI->Rows->Clear();
-				for (int i = 0; i < reporte->Count; i++) {
-					String^ fecha = reporte[i]->Fecha->ToString("dd/MM/yyyy");
-					String^ hora = reporte[i]->Fecha->ToString("HH:mm:ss");
-					String^ estado = reporte[i]->Solucionado ? "Solucionado" : "No solucionado";
+	}
+	private: void CargarTablaDTIReport() {
+		List<DTIReport^>^ reporte = Service::ShowDTIReport();
+		if (reporte != nullptr) {
+			dgvDTI->Rows->Clear();
+			for (int i = 0; i < reporte->Count; i++) {
+				String^ fecha = reporte[i]->Fecha->ToString("dd/MM/yyyy");
+				String^ hora = reporte[i]->Fecha->ToString("HH:mm:ss");
+				String^ estado = reporte[i]->Solucionado ? "Solucionado" : "No solucionado";
+				String^ usuario = reporte[i]->UsuarioNombre + " (ID: " + reporte[i]->UsuarioID + ")";
 
-					if (reporte[i]->GetType() == DTIReport::typeid) {
-						dgvDTI->Rows->Add(gcnew array<String^>{
-							"" + reporte[i]->id,
-								reporte[i]->tipoReporte,
-								fecha,
-								hora,
-								estado
-						});
-					}
+				if (reporte[i]->GetType() == DTIReport::typeid) {
+					dgvDTI->Rows->Add(gcnew array<String^>{
+						"" + reporte[i]->id,
+							reporte[i]->tipoReporte,
+							fecha,
+							hora,
+							estado,
+							usuario
+					});
 				}
 			}
 		}
-		private: void SearchAndPutImagenOn(PictureBox^ pb) {
-			OpenFileDialog^ opfd = gcnew OpenFileDialog();
-			opfd->Filter = "Image Files (*.jpg;*.jpeg;)|*.jpg;*.jpeg;";
-			if (opfd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-				pb->Image = gcnew Bitmap(opfd->FileName);
+	}
+	private: void SearchAndPutImagenOn(PictureBox^ pb) {
+		OpenFileDialog^ opfd = gcnew OpenFileDialog();
+		opfd->Filter = "Image Files (*.jpg;*.jpeg;)|*.jpg;*.jpeg;";
+		if (opfd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+			pb->Image = gcnew Bitmap(opfd->FileName);
+		}
+	}
+	private: System::Void AdminAlertManagementForm_Load(System::Object^ sender, System::EventArgs^ e) {
+		CargarTablaAltercado();
+		CargarTablaDTIReport();
+		CargarTablaObjetoPerdido();
+	}
+	private: void ClearFields() {
+		txtDescriptionObj->Clear();
+		txtIDObjPerdido->Clear();
+		txtObjetoPerdido->Clear();
+		rbtnSolucionObjYes->Checked = true;
+		rbtnSolucionObNo->Checked = false;
+		if (pbPhotoObj != nullptr) {
+			pbPhotoObj->Image = nullptr;
+			pbPhotoObj->Invalidate();
+		}
+		dtpObjetoPerdido->Value = DateTime::Now;
+
+		txtIDAltercado->Clear();
+		txtDescriptionAltercado->Clear();
+		rbtnSolucionAltercadoYes->Checked = true;
+		rbtnSolucionAltercadoNo->Checked = false;
+		if (pbPhotoAltercado != nullptr) {
+			pbPhotoAltercado->Image = nullptr;
+			pbPhotoAltercado->Invalidate();
+		}
+		dtpAltercado->Value = DateTime::Now;
+
+		txtDescriptionDTI->Clear();
+		txtIDDTI->Clear();
+		rbtnSolucionDTIYes->Checked = true;
+		rbtnSolucionDTINo->Checked = false;
+		dtpDTI->Value = DateTime::Now;
+		cmbTipoAlertaDTI->SelectedIndex = -1;
+	}
+	private: System::Void dgvOjbPerdido_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+		int objetoID = Int32::Parse(dgvOjbPerdido->Rows[dgvOjbPerdido->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
+		ObjPerdido^ objeto = Service::buscarObjetoPerdido(objetoID);
+		if (objeto != nullptr) {
+			txtDescriptionObj->Text = objeto->Description;
+			txtIDObjPerdido->Text = objeto->id.ToString();
+			txtObjetoPerdido->Text = objeto->ObjetoEncontrado;
+
+			rbtnSolucionObjYes->Checked = objeto->Solucionado;
+			rbtnSolucionObNo->Checked = !objeto->Solucionado;
+
+			if (objeto->Photo != nullptr) {
+				System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(objeto->Photo);
+				pbPhotoObj->Image = Image::FromStream(ms);
 			}
-		}
-		private: System::Void AdminAlertManagementForm_Load(System::Object^ sender, System::EventArgs^ e) {
-			CargarTablaAltercado();
-			CargarTablaDTIReport();
-			CargarTablaObjetoPerdido();
-		}
-		private: void ClearFields() {
-			txtDescriptionObj->Clear();
-			txtIDObjPerdido->Clear();
-			txtObjetoPerdido->Clear();
-			rbtnSolucionObjYes->Checked = true;
-			rbtnSolucionObNo->Checked = false;
-			if (pbPhotoObj != nullptr) {
+			else {
 				pbPhotoObj->Image = nullptr;
 				pbPhotoObj->Invalidate();
 			}
-			dtpObjetoPerdido->Value = DateTime::Now;
 
-			txtIDAltercado->Clear();
-			txtDescriptionAltercado->Clear();
-			rbtnSolucionAltercadoYes->Checked = true;
-			rbtnSolucionAltercadoNo->Checked = false;
-			if (pbPhotoAltercado != nullptr) {
-				pbPhotoAltercado->Image = nullptr;
-				pbPhotoAltercado->Invalidate();
-			}
-			dtpAltercado->Value = DateTime::Now;
-
-			txtDescriptionDTI->Clear();
-			txtIDDTI->Clear();
-			rbtnSolucionDTIYes->Checked = true;
-			rbtnSolucionDTINo->Checked = false;
-			dtpDTI->Value = DateTime::Now;
-			cmbTipoAlertaDTI->SelectedIndex = -1;
+			if (objeto->Fecha != nullptr)
+				dtpObjetoPerdido->Value = *(objeto->Fecha);
+			else
+				dtpObjetoPerdido->Value = DateTime::Now;
 		}
-		private: System::Void dgvOjbPerdido_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-			int objetoID = Int32::Parse(dgvOjbPerdido->Rows[dgvOjbPerdido->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
-			ObjPerdido^ objeto = Service::buscarObjetoPerdido(objetoID);
-			if (objeto != nullptr) {
-				txtDescriptionObj->Text = objeto->Description;
-				txtIDObjPerdido->Text = objeto->id.ToString();
-				txtObjetoPerdido->Text = objeto->ObjetoEncontrado;
+	}
+	private: System::Void dgvAltercado_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+		int id = Int32::Parse(dgvAltercado->Rows[dgvAltercado->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
+		Altercado^ altercado = Service::buscarAltercado(id);
+		if (altercado != nullptr) {
+			txtDescriptionAltercado->Text = altercado->Description;
+			txtIDAltercado->Text = altercado->id.ToString();
 
-				rbtnSolucionObjYes->Checked = objeto->Solucionado;
-				rbtnSolucionObNo->Checked = !objeto->Solucionado;
+			rbtnSolucionAltercadoYes->Checked = altercado->Solucionado;
+			rbtnSolucionAltercadoNo->Checked = !altercado->Solucionado;
 
-				if (objeto->Photo != nullptr) {
-					System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(objeto->Photo);
-					pbPhotoObj->Image = Image::FromStream(ms);
-				}
-				else {
-					pbPhotoObj->Image = nullptr;
-					pbPhotoObj->Invalidate();
-				}
-
-				if (objeto->Fecha != nullptr)
-					dtpObjetoPerdido->Value = *(objeto->Fecha);
-				else
-					dtpObjetoPerdido->Value = DateTime::Now;
+			if (altercado->Photo != nullptr) {
+				System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(altercado->Photo);
+				pbPhotoObj->Image = Image::FromStream(ms);
 			}
-		}
-		private: System::Void dgvAltercado_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-			int id = Int32::Parse(dgvAltercado->Rows[dgvAltercado->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
-			Altercado^ altercado = Service::buscarAltercado(id);
-			if (altercado != nullptr) {
-				txtDescriptionAltercado->Text = altercado->Description;
-				txtIDAltercado->Text = altercado->id.ToString();
-
-				rbtnSolucionAltercadoYes->Checked = altercado->Solucionado;
-				rbtnSolucionAltercadoNo->Checked = !altercado->Solucionado;
-
-				if (altercado->Photo != nullptr) {
-					System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(altercado->Photo);
-					pbPhotoObj->Image = Image::FromStream(ms);
-				}
-				else {
-					pbPhotoObj->Image = nullptr;
-					pbPhotoObj->Invalidate();
-				}
-
-				if (altercado->Fecha != nullptr)
-					dtpAltercado->Value = *(altercado->Fecha);
-				else
-					dtpAltercado->Value = DateTime::Now;
+			else {
+				pbPhotoObj->Image = nullptr;
+				pbPhotoObj->Invalidate();
 			}
+
+			if (altercado->Fecha != nullptr)
+				dtpAltercado->Value = *(altercado->Fecha);
+			else
+				dtpAltercado->Value = DateTime::Now;
 		}
-		private: System::Void dgvDTI_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-			int id = Int32::Parse(dgvDTI->Rows[dgvDTI->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
-			DTIReport^ reporte = Service::buscarDTIReport(id);
-			if (reporte != nullptr) {
-				txtDescriptionDTI->Text = reporte->Description;
-				txtIDDTI->Text = reporte->id.ToString();
+	}
+	private: System::Void dgvDTI_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+		int id = Int32::Parse(dgvDTI->Rows[dgvDTI->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
+		DTIReport^ reporte = Service::buscarDTIReport(id);
+		if (reporte != nullptr) {
+			txtDescriptionDTI->Text = reporte->Description;
+			txtIDDTI->Text = reporte->id.ToString();
 
-				cmbTipoAlertaDTI->Visible = true;
-				cmbTipoAlertaDTI->Enabled = true;
-				for (int i = 0; i < cmbTipoAlertaDTI->Items->Count; i++) {
-					if (cmbTipoAlertaDTI->Items[i]->ToString() == reporte->tipoReporte) {
-						cmbTipoAlertaDTI->SelectedIndex = i;
-						break;
-					}
+			cmbTipoAlertaDTI->Visible = true;
+			cmbTipoAlertaDTI->Enabled = true;
+			for (int i = 0; i < cmbTipoAlertaDTI->Items->Count; i++) {
+				if (cmbTipoAlertaDTI->Items[i]->ToString() == reporte->tipoReporte) {
+					cmbTipoAlertaDTI->SelectedIndex = i;
+					break;
 				}
+			}
 
-				rbtnSolucionAltercadoYes->Checked = reporte->Solucionado;
-				rbtnSolucionAltercadoNo->Checked = !reporte->Solucionado;
+			rbtnSolucionAltercadoYes->Checked = reporte->Solucionado;
+			rbtnSolucionAltercadoNo->Checked = !reporte->Solucionado;
 
-				if (reporte->Fecha != nullptr)
-					dtpDTI->Value = *(reporte->Fecha);
-				else
-					dtpDTI->Value = DateTime::Now;
+			if (reporte->Fecha != nullptr)
+				dtpDTI->Value = *(reporte->Fecha);
+			else
+				dtpDTI->Value = DateTime::Now;
+		}
+	}
+	private: System::Void btnEliminarObjPerd_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (String::IsNullOrEmpty(txtIDObjPerdido->Text)) {
+			MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		}
+		try {
+			int id = Convert::ToInt32(txtIDObjPerdido->Text);
+			System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar la alerta?",
+				"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
+			if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
+				bool eliminado = Service::eliminarAlerta(Convert::ToInt32(id));
+				if (eliminado) {
+					CargarTablaObjetoPerdido();
+					ClearFields();
+					MessageBox::Show("Alerta eliminada exitosamente", "Exito", MessageBoxButtons::OK);
+				}
 			}
 		}
-		private: System::Void btnEliminarObjPerd_Click(System::Object^ sender, System::EventArgs^ e) {
-			if (String::IsNullOrEmpty(txtIDObjPerdido->Text)) {
-				MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-			}
-			try {
-				int id = Convert::ToInt32(txtIDObjPerdido->Text);
-				System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar la alerta?",
-					"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
-				if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
-					bool eliminado = Service::eliminarAlerta(Convert::ToInt32(id));
-					if (eliminado) {
-						CargarTablaObjetoPerdido();
-						ClearFields();
-						MessageBox::Show("Alerta eliminada exitosamente", "Exito", MessageBoxButtons::OK);
-					}
+		catch (Exception^ ex) {
+			MessageBox::Show("Error al eliminar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+	}
+	private: System::Void btnEliminarAltercado_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (String::IsNullOrEmpty(txtIDAltercado->Text)) {
+			MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		}
+		try {
+			int id = Convert::ToInt32(txtIDAltercado->Text);
+			System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar la alerta?",
+				"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
+			if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
+				bool eliminado = Service::eliminarAlerta(Convert::ToInt32(id));
+				if (eliminado) {
+					CargarTablaAltercado();
+					ClearFields();
+					MessageBox::Show("Alerta eliminada exitosamente", "Exito", MessageBoxButtons::OK);
 				}
 			}
-			catch (Exception^ ex) {
-				MessageBox::Show("Error al eliminar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}
 		}
-		private: System::Void btnEliminarAltercado_Click(System::Object^ sender, System::EventArgs^ e) {
-			if (String::IsNullOrEmpty(txtIDAltercado->Text)) {
-				MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-			}
-			try {
-				int id = Convert::ToInt32(txtIDAltercado->Text);
-				System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar la alerta?",
-					"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
-				if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
-					bool eliminado = Service::eliminarAlerta(Convert::ToInt32(id));
-					if (eliminado) {
-						CargarTablaAltercado();
-						ClearFields();
-						MessageBox::Show("Alerta eliminada exitosamente", "Exito", MessageBoxButtons::OK);
-					}
+		catch (Exception^ ex) {
+			MessageBox::Show("Error al eliminar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+	}
+	private: System::Void btnEliminarDTI_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (String::IsNullOrEmpty(txtIDDTI->Text)) {
+			MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		}
+		try {
+			int id = Convert::ToInt32(txtIDDTI->Text);
+			System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar la alerta?",
+				"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
+			if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
+				bool eliminado = Service::eliminarAlerta(Convert::ToInt32(id));
+				if (eliminado) {
+					CargarTablaDTIReport();
+					ClearFields();
+					MessageBox::Show("Alerta eliminada exitosamente", "Exito", MessageBoxButtons::OK);
 				}
 			}
-			catch (Exception^ ex) {
-				MessageBox::Show("Error al eliminar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}
 		}
-		private: System::Void btnEliminarDTI_Click(System::Object^ sender, System::EventArgs^ e) {
-			if (String::IsNullOrEmpty(txtIDDTI->Text)) {
-				MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-			}
-			try {
-				int id = Convert::ToInt32(txtIDDTI->Text);
-				System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar la alerta?",
-					"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
-				if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
-					bool eliminado = Service::eliminarAlerta(Convert::ToInt32(id));
-					if (eliminado) {
-						CargarTablaDTIReport();
-						ClearFields();
-						MessageBox::Show("Alerta eliminada exitosamente", "Exito", MessageBoxButtons::OK);
-					}
+		catch (Exception^ ex) {
+			MessageBox::Show("Error al eliminar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+	}
+	private: System::Void btnSolucionObj_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (String::IsNullOrEmpty(txtIDObjPerdido->Text)) {
+			MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		}
+		try {
+			int id = Convert::ToInt32(txtIDObjPerdido->Text);
+			Alert^ alertaEncontrada = Service::buscarAlerta(id);
+			if (alertaEncontrada != nullptr) {
+				alertaEncontrada->Solucionado = true;
+				int alertaModificada = Service::modificarAlerta(alertaEncontrada);
+				if (alertaModificada != 0) {
+					CargarTablaObjetoPerdido();
+					ClearFields();
+					MessageBox::Show("Alert solucionada manualmente", "Exito", MessageBoxButtons::OK);
 				}
 			}
-			catch (Exception^ ex) {
-				MessageBox::Show("Error al eliminar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}
 		}
-		private: System::Void btnSolucionObj_Click(System::Object^ sender, System::EventArgs^ e) {
-			if (String::IsNullOrEmpty(txtIDObjPerdido->Text)) {
-				MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-			}
-			try {
-				int id = Convert::ToInt32(txtIDObjPerdido->Text);
-				Alert^ alertaEncontrada = Service::buscarAlerta(id);
-				if (alertaEncontrada != nullptr) {
-					alertaEncontrada->Solucionado = true;
-					int alertaModificada = Service::modificarAlerta(alertaEncontrada);
-					if (alertaModificada != 0) {
-						CargarTablaObjetoPerdido();
-						ClearFields();
-						MessageBox::Show("Alert solucionada manualmente", "Exito", MessageBoxButtons::OK);
-					}
+		catch (Exception^ ex) {
+			MessageBox::Show("Error al solucionar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+	}
+	private: System::Void btnSolucionAltercado_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (String::IsNullOrEmpty(txtIDAltercado->Text)) {
+			MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		}
+		try {
+			int id = Convert::ToInt32(txtIDAltercado->Text);
+			Alert^ alertaEncontrada = Service::buscarAlerta(id);
+			if (alertaEncontrada != nullptr) {
+				alertaEncontrada->Solucionado = true;
+				int alertaModificada = Service::modificarAlerta(alertaEncontrada);
+				if (alertaModificada != 0) {
+					CargarTablaAltercado();
+					ClearFields();
+					MessageBox::Show("Alert solucionada manualmente", "Exito", MessageBoxButtons::OK);
 				}
 			}
-			catch (Exception^ ex) {
-				MessageBox::Show("Error al solucionar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}
 		}
-		private: System::Void btnSolucionAltercado_Click(System::Object^ sender, System::EventArgs^ e) {
-			if (String::IsNullOrEmpty(txtIDAltercado->Text)) {
-				MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-			}
-			try {
-				int id = Convert::ToInt32(txtIDAltercado->Text);
-				Alert^ alertaEncontrada = Service::buscarAlerta(id);
-				if (alertaEncontrada != nullptr) {
-					alertaEncontrada->Solucionado = true;
-					int alertaModificada = Service::modificarAlerta(alertaEncontrada);
-					if (alertaModificada != 0) {
-						CargarTablaAltercado();
-						ClearFields();
-						MessageBox::Show("Alert solucionada manualmente", "Exito", MessageBoxButtons::OK);
-					}
+		catch (Exception^ ex) {
+			MessageBox::Show("Error al solucionar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+	}
+	private: System::Void btnSolucionDTI_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (String::IsNullOrEmpty(txtIDDTI->Text)) {
+			MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		}
+		try {
+			int id = Convert::ToInt32(txtIDDTI->Text);
+			Alert^ alertaEncontrada = Service::buscarAlerta(id);
+			if (alertaEncontrada != nullptr) {
+				alertaEncontrada->Solucionado = true;
+				int alertaModificada = Service::modificarAlerta(alertaEncontrada);
+				if (alertaModificada != 0) {
+					CargarTablaDTIReport();
+					ClearFields();
+					MessageBox::Show("Alert solucionada manualmente", "Exito", MessageBoxButtons::OK);
 				}
 			}
-			catch (Exception^ ex) {
-				MessageBox::Show("Error al solucionar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}
 		}
-		private: System::Void btnSolucionDTI_Click(System::Object^ sender, System::EventArgs^ e) {
-			if (String::IsNullOrEmpty(txtIDDTI->Text)) {
-				MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-			}
-			try {
-				int id = Convert::ToInt32(txtIDDTI->Text);
-				Alert^ alertaEncontrada = Service::buscarAlerta(id);
-				if (alertaEncontrada != nullptr) {
-					alertaEncontrada->Solucionado = true;
-					int alertaModificada = Service::modificarAlerta(alertaEncontrada);
-					if (alertaModificada != 0) {
-						CargarTablaDTIReport();
-						ClearFields();
-						MessageBox::Show("Alert solucionada manualmente", "Exito", MessageBoxButtons::OK);
-					}
-				}
-			}
-			catch (Exception^ ex) {
-				MessageBox::Show("Error al solucionar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}
+		catch (Exception^ ex) {
+			MessageBox::Show("Error al solucionar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
+	}
 	};
 }

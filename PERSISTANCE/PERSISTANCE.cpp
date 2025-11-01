@@ -754,3 +754,25 @@ bool BotPersistance::Persistance::eliminarAlerta(int id)
     }
     return false;
 }
+
+List<Alert^>^ BotPersistance::Persistance::GetAlertasPorUsuario(int usuarioID)
+{
+    List<Alert^>^ alertasUsuario = gcnew List<Alert^>();
+    List<Alert^>^ todasAlertas = ShowAlertas();
+
+    if (todasAlertas != nullptr) {
+        for each(Alert ^ alerta in todasAlertas) {
+            if (alerta->UsuarioID == usuarioID) {
+                alertasUsuario->Add(alerta);
+            }
+        }
+    }
+
+    return alertasUsuario;
+}
+
+int BotPersistance::Persistance::GetCantidadAlertasPorUsuario(int usuarioID)
+{
+    List<Alert^>^ alertasUsuario = GetAlertasPorUsuario(usuarioID);
+    return alertasUsuario != nullptr ? alertasUsuario->Count : 0;
+}

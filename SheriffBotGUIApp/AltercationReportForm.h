@@ -218,6 +218,11 @@ namespace SheriffBotGUIApp {
 			alerta->Description = txtDescription->Text;
 			alerta->Lugar = txtLugar->Text;
 
+			//vincula con usuario
+			alerta->UsuarioID = Usuario->ID;
+			alerta->UsuarioNombre = Usuario->Nombre;
+
+
 			if (pbPhoto != nullptr && pbPhoto->Image != nullptr) {
 				System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream();
 				pbPhoto->Image->Save(ms, System::Drawing::Imaging::ImageFormat::Jpeg);

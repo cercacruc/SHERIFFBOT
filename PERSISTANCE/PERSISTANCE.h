@@ -85,6 +85,9 @@ namespace BotPersistance {
 		static int modificarAlerta(Alert^ alerta);
 		static bool eliminarAlerta(int id);
 
+		static List<Alert^>^ GetAlertasPorUsuario(int usuarioID);
+		static int GetCantidadAlertasPorUsuario(int usuarioID);
+
 		static void registrarZona(ZonaTrabajo^ zona);
 		static int modificarZona(ZonaTrabajo^ zona);
 		static bool eliminarZona(int id);

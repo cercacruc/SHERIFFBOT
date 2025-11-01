@@ -214,6 +214,10 @@ namespace SheriffBotGUIApp {
 			reporte->Fecha = dtpFecha->Value;
 			reporte->tipoReporte = cbTipoAlerta->Text;
 
+			//vincula con usuario
+			reporte->UsuarioID = Usuario->ID;
+			reporte->UsuarioNombre = Usuario->Nombre;
+
 			reporte->Solucionado = false;
 
 			if (Usuario != nullptr && Usuario->cant_alertas != nullptr) {

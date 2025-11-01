@@ -155,7 +155,7 @@ namespace SheriffBotGUIApp {
 		#pragma endregion
 		private: System::Void AlertHistForm_Load(System::Object^ sender, System::EventArgs^ e) {//falta vincular con el usuario, luego lo integramos
 			try {
-				List<Alert^>^ listaAlertas = BotPersistance::Persistance::ShowAlertas();
+				List<Alert^>^ listaAlertas = Service::GetAlertasPorUsuario(Usuario->ID);
 
 				dgvAlertHist->Rows->Clear();
 

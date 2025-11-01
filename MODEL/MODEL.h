@@ -54,6 +54,9 @@ namespace BotModel {
 		property String^ Lugar;
 		property bool Solucionado;
 		property String^ TipoAlerta;
+
+		property int UsuarioID;
+		property String^ UsuarioNombre;
 		
 		Alert();
 		Alert(int id, DateTime^ fecha, String^ description, String^ lugar, bool solucionado, String^ tipoAlerta);

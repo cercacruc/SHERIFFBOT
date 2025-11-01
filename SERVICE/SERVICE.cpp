@@ -99,6 +99,9 @@ Altercado^ BotService::Service::buscarAltercado(int id) {
 DTIReport^ BotService::Service::buscarDTIReport(int id) {
 	return Persistance::buscarDTIReport(id);
 }
+List<Alert^>^ BotService::Service::GetAlertasPorUsuario(int usuarioID) {
+	return Persistance::GetAlertasPorUsuario(usuarioID);
+}
 
 //CRUD zonas de trabajo
 void BotService::Service::registrarZona(ZonaTrabajo^ zona) {
