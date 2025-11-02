@@ -755,6 +755,16 @@ bool BotPersistance::Persistance::eliminarAlerta(int id)
     return false;
 }
 
+Alert^ BotPersistance::Persistance::buscarAlertaDescrip(String^ descrip)
+{
+    for each (Alert ^ alerta in listaReportesAlertas) {
+        if (alerta->Description == descrip) {
+            return alerta;
+        }
+    }
+    return nullptr;
+}
+
 List<Alert^>^ BotPersistance::Persistance::GetAlertasPorUsuario(int usuarioID)
 {
     List<Alert^>^ alertasUsuario = gcnew List<Alert^>();

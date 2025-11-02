@@ -90,6 +90,9 @@ List<DTIReport^>^ BotService::Service::ShowDTIReport() {
 Alert^ BotService::Service::buscarAlerta(int id) {
 	return Persistance::buscarAlerta(id);
 }
+Alert^ BotService::Service::buscarAlertaDescrip(String^ descrip) {
+	return Persistance::buscarAlertaDescrip(descrip);
+}
 ObjPerdido^ BotService::Service::buscarObjetoPerdido(int id) {
 	return Persistance::buscarObjetoPerdido(id);
 }

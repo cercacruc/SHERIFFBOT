@@ -2,6 +2,7 @@
 #include "AvaibleRobotsForm.h"
 #include "AccountForm.h"
 #include "RobotsSheriffForm.h"
+#include "AlertManagementForm.h"
 
 namespace SheriffBotGUIApp {
 
@@ -193,7 +194,10 @@ namespace SheriffBotGUIApp {
 			this->Show();
 		}
 		private: System::Void btnInfo_Click(System::Object^ sender, System::EventArgs^ e) {
-
+			AlertManagementForm^ form = gcnew AlertManagementForm();
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
 		}
 	};
 }

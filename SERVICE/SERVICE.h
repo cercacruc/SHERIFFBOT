@@ -42,6 +42,7 @@ namespace BotService {
 		static List<DTIReport^>^ ShowDTIReport();
 
 		static Alert^ buscarAlerta(int id);
+		static Alert^ buscarAlertaDescrip(String^ descrip);
 		static ObjPerdido^ buscarObjetoPerdido(int id);
 		static Altercado^ buscarAltercado(int id);
 		static DTIReport^ buscarDTIReport(int id);

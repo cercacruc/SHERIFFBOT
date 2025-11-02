@@ -84,6 +84,7 @@ namespace BotPersistance {
 		static DTIReport^ buscarDTIReport(int id);
 		static int modificarAlerta(Alert^ alerta);
 		static bool eliminarAlerta(int id);
+		static Alert^ buscarAlertaDescrip(String^ descrip);
 
 		static List<Alert^>^ GetAlertasPorUsuario(int usuarioID);
 		static int GetCantidadAlertasPorUsuario(int usuarioID);

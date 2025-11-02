@@ -1007,7 +1007,6 @@ namespace SheriffBotGUIApp {
 				NombreUser->Text = usuario->Nombre;
 				CargoUser->Text = usuario->Cargo;
 				PasswordUser->Text = usuario->Contra;
-				textBox1->Text = usuario->cant_alertas[0].ToString();
 			}
 		}
 		private:
