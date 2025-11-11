@@ -5,6 +5,11 @@ using namespace BotModel;
 using namespace BotPersistance;
 using namespace System::Collections::Generic;
 
+using namespace System::Net::WebSockets;
+using namespace System::Threading;
+using namespace System::Text;
+using namespace System::Collections::Generic;
+
 namespace BotService {
 	public ref class Service{
 	public:
@@ -58,5 +63,38 @@ namespace BotService {
 		static List <ZonaTrabajo^>^ GetZonas();
 
 
+	};
+	public ref class MQTTClient {
+	private:
+		static ClientWebSocket^ webSocket;
+		static String^ brokerUrl;
+		static bool conectado;
+
+	public:
+		property bool EstaConectado;
+
+		MQTTClient();
+		static bool Conectar();
+		static bool EnviarComando(String^ comando);
+		static bool EnviarComandoConVelocidad(String^ comando, int velocidad);
+
+		// Métodos específicos para cada movimiento
+		static bool Adelante();
+		static bool Atras();
+		static bool Izquierda();
+		static bool Derecha();
+		static bool RotarIzquierda();
+		static bool RotarDerecha();
+		static bool Detener();
+
+		// Métodos con velocidad
+		static bool AdelanteConVelocidad(int velocidad);
+		static bool AtrasConVelocidad(int velocidad);
+		static bool IzquierdaConVelocidad(int velocidad);
+		static bool DerechaConVelocidad(int velocidad);
+
+		// Métodos para desconectar
+		static void Desconectar();
+		~MQTTClient();
 	};
 }

@@ -17,7 +17,7 @@ namespace SheriffBotGUIApp {
 	using namespace msclr::interop;
 
 	using namespace BotModel;
-	using namespace BotPersistance;
+	using namespace BotService;
 
 	/// <summary>
 	/// Resumen de ControlRobotForm
@@ -267,21 +267,27 @@ namespace SheriffBotGUIApp {
 		#pragma endregion
 		private: System::Void pictureBox4_Click(System::Object^ sender, System::EventArgs^ e) {
 			MessageBox::Show("Avanzo", "Exito", MessageBoxButtons::OK);
+			MQTTClient::Adelante();
 		}
 		private: System::Void pictureBox5_Click(System::Object^ sender, System::EventArgs^ e) {
 			MessageBox::Show("Retrocedo", "Exito", MessageBoxButtons::OK);
+			MQTTClient::Atras();
 		}
 		private: System::Void btnLeft_Click(System::Object^ sender, System::EventArgs^ e) {
 			MessageBox::Show("Avanzo hacia la izquierda", "Exito", MessageBoxButtons::OK);
+			MQTTClient::Izquierda();
 		}
 		private: System::Void pictureBox3_Click(System::Object^ sender, System::EventArgs^ e) {
 			MessageBox::Show("Avanzo hacia la derecha", "Exito", MessageBoxButtons::OK);
+			MQTTClient::Derecha();
 		}
 		private: System::Void giroDerecha_Click(System::Object^ sender, System::EventArgs^ e) {
 			MessageBox::Show("Giro hacia la derecha", "Exito", MessageBoxButtons::OK);
+			MQTTClient::RotarDerecha();
 		}
 		private: System::Void giroIzquierda_Click(System::Object^ sender, System::EventArgs^ e) {
 			MessageBox::Show("Giro hacia la izquierda", "Exito", MessageBoxButtons::OK);
+			MQTTClient::RotarIzquierda();
 		}
 		private: System::Void ControlRobotForm_Load(System::Object^ sender, System::EventArgs^ e) {
 			if (robotEncontrado != nullptr) {
@@ -293,31 +299,31 @@ namespace SheriffBotGUIApp {
 				}
 				timer->Start();
 			}
+			bool conectado = MQTTClient::Conectar();
+			if (conectado == true) {
+				MessageBox::Show("Se ha conectado exitosamente");
+			}
 		}
-			   void timer_Tick(System::Object^ sender, System::EventArgs^ e)
-			   {
-				   cv::Mat frame;
-				   if (!cap->read(frame) || frame.empty()) return;
+		private: void timer_Tick(System::Object^ sender, System::EventArgs^ e) {
+			cv::Mat frame;
+			if (!cap->read(frame) || frame.empty()) return;
+			cv::cvtColor(frame, frame, cv::COLOR_RGB2BGR);
+			cv::Mat* clonedFrame = new cv::Mat(frame.clone());
 
-				   cv::cvtColor(frame, frame, cv::COLOR_RGB2BGR);
+			System::Drawing::Bitmap^ bmp = gcnew System::Drawing::Bitmap(
+				clonedFrame->cols, clonedFrame->rows, clonedFrame->step,
+				System::Drawing::Imaging::PixelFormat::Format24bppRgb,
+				System::IntPtr(clonedFrame->data));
 
-				   cv::Mat* clonedFrame = new cv::Mat(frame.clone());
+			bmp->Tag = System::IntPtr(clonedFrame);
 
-				   System::Drawing::Bitmap^ bmp = gcnew System::Drawing::Bitmap(
-					   clonedFrame->cols, clonedFrame->rows, clonedFrame->step,
-					   System::Drawing::Imaging::PixelFormat::Format24bppRgb,
-					   System::IntPtr(clonedFrame->data));
+			if (pictureBox1->Image != nullptr) {
+				Bitmap_Disposed(pictureBox1->Image, nullptr);
+				delete pictureBox1->Image;
+			}
 
-				   bmp->Tag = System::IntPtr(clonedFrame);
-
-				   if (pictureBox1->Image != nullptr)
-				   {
-					   Bitmap_Disposed(pictureBox1->Image, nullptr);
-					   delete pictureBox1->Image;
-				   }
-
-				   pictureBox1->Image = bmp;
-			   }
+			pictureBox1->Image = bmp;
+		}
 		private: void Bitmap_Disposed(System::Object^ sender, System::EventArgs^ e) {
 			System::Drawing::Bitmap^ bmp = safe_cast<System::Drawing::Bitmap^>(sender);
 
