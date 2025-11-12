@@ -1,4 +1,5 @@
 #pragma once
+#include "MapaForm.h"
 
 namespace GUIApp {
 
@@ -83,8 +84,10 @@ namespace GUIApp {
 	private: Bitmap^ currentFrame;
 	Object^ frameLock = gcnew Object();
 	bool isProcesing = false;//////////////////////////////////////
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Button^ button2;
+	private: System::Windows::Forms::Button^ btnSalir;
+
+	private: System::Windows::Forms::Button^ btnVerMapa;
+
 		   bool isClosing = false;
 
 #pragma region Windows Form Designer generated code
@@ -106,8 +109,8 @@ namespace GUIApp {
 			this->btnLeft = (gcnew System::Windows::Forms::PictureBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->btnSalir = (gcnew System::Windows::Forms::Button());
+			this->btnVerMapa = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbCamara))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroIzquierda))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroDerecha))->BeginInit();
@@ -128,11 +131,12 @@ namespace GUIApp {
 			// 
 			// txtRobot
 			// 
-			this->txtRobot->Location = System::Drawing::Point(170, 9);
+			this->txtRobot->Location = System::Drawing::Point(197, 24);
 			this->txtRobot->Multiline = true;
 			this->txtRobot->Name = L"txtRobot";
 			this->txtRobot->Size = System::Drawing::Size(138, 29);
 			this->txtRobot->TabIndex = 34;
+			this->txtRobot->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			// 
 			// giroIzquierda
 			// 
@@ -214,41 +218,43 @@ namespace GUIApp {
 			// 
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
-			this->label1->Location = System::Drawing::Point(9, 9);
+			this->label1->Location = System::Drawing::Point(36, 24);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(155, 29);
 			this->label1->TabIndex = 24;
 			this->label1->Text = L"Robot Name:";
 			// 
-			// button1
+			// btnSalir
 			// 
-			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnSalir->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button1->Location = System::Drawing::Point(586, 12);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(143, 60);
-			this->button1->TabIndex = 36;
-			this->button1->Text = L"SALIR";
-			this->button1->UseVisualStyleBackColor = true;
+			this->btnSalir->Location = System::Drawing::Point(586, 12);
+			this->btnSalir->Name = L"btnSalir";
+			this->btnSalir->Size = System::Drawing::Size(143, 60);
+			this->btnSalir->TabIndex = 36;
+			this->btnSalir->Text = L"SALIR";
+			this->btnSalir->UseVisualStyleBackColor = true;
+			this->btnSalir->Click += gcnew System::EventHandler(this, &ControlRobotForm::btnSalir_Click);
 			// 
-			// button2
+			// btnVerMapa
 			// 
-			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnVerMapa->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button2->Location = System::Drawing::Point(437, 12);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(143, 60);
-			this->button2->TabIndex = 37;
-			this->button2->Text = L"VER MAPA";
-			this->button2->UseVisualStyleBackColor = true;
+			this->btnVerMapa->Location = System::Drawing::Point(437, 12);
+			this->btnVerMapa->Name = L"btnVerMapa";
+			this->btnVerMapa->Size = System::Drawing::Size(143, 60);
+			this->btnVerMapa->TabIndex = 37;
+			this->btnVerMapa->Text = L"VER MAPA";
+			this->btnVerMapa->UseVisualStyleBackColor = true;
+			this->btnVerMapa->Click += gcnew System::EventHandler(this, &ControlRobotForm::btnVerMapa_Click);
 			// 
 			// ControlRobotForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(741, 697);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
+			this->Controls->Add(this->btnVerMapa);
+			this->Controls->Add(this->btnSalir);
 			this->Controls->Add(this->pbCamara);
 			this->Controls->Add(this->txtRobot);
 			this->Controls->Add(this->giroIzquierda);
@@ -423,6 +429,15 @@ namespace GUIApp {
 			finally {
 				Monitor::Exit(frameLock);
 			}
+		}
+		private: System::Void btnSalir_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->Close();
+		}
+		private: System::Void btnVerMapa_Click(System::Object^ sender, System::EventArgs^ e) {
+			MapaForm^ form = gcnew MapaForm();
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
 		}
 	};
 }

@@ -151,6 +151,7 @@
     <ClCompile Include="InformationRequestForm.cpp" />
     <ClCompile Include="LoginForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="MapaForm.cpp" />
     <ClCompile Include="MissingObjectForm.cpp" />
     <ClCompile Include="RegisterForm.cpp" />
     <ClCompile Include="RobotsSheriffForm.cpp" />
@@ -214,6 +215,9 @@
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="MapaForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="MissingObjectForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -253,6 +257,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MapaForm.resx">
+      <DependentUpon>MapaForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RobotsSheriffForm.resx">
+      <DependentUpon>RobotsSheriffForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SheriffForm.resx">
       <DependentUpon>SheriffForm.h</DependentUpon>

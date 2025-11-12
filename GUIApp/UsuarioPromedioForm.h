@@ -51,6 +51,7 @@ namespace GUIApp {
 	private: System::Windows::Forms::PictureBox^ pictureBox2;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::PictureBox^ pictureBox3;
+	private: System::Windows::Forms::Button^ btnCerrarSesion;
 
 
 
@@ -75,6 +76,7 @@ namespace GUIApp {
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
+			this->btnCerrarSesion = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
@@ -124,6 +126,7 @@ namespace GUIApp {
 			this->btnAccount->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->btnAccount->TabIndex = 21;
 			this->btnAccount->TabStop = false;
+			this->btnAccount->Click += gcnew System::EventHandler(this, &UsuarioPromedioForm::btnAccount_Click_1);
 			// 
 			// pictureBox2
 			// 
@@ -158,11 +161,25 @@ namespace GUIApp {
 			this->pictureBox3->TabIndex = 24;
 			this->pictureBox3->TabStop = false;
 			// 
+			// btnCerrarSesion
+			// 
+			this->btnCerrarSesion->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnCerrarSesion->Location = System::Drawing::Point(269, 11);
+			this->btnCerrarSesion->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->btnCerrarSesion->Name = L"btnCerrarSesion";
+			this->btnCerrarSesion->Size = System::Drawing::Size(144, 59);
+			this->btnCerrarSesion->TabIndex = 32;
+			this->btnCerrarSesion->Text = L"Cerrar Sesión";
+			this->btnCerrarSesion->UseVisualStyleBackColor = true;
+			this->btnCerrarSesion->Click += gcnew System::EventHandler(this, &UsuarioPromedioForm::btnCerrarSesion_Click);
+			// 
 			// UsuarioPromedioForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(430, 536);
+			this->Controls->Add(this->btnCerrarSesion);
 			this->Controls->Add(this->pictureBox3);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->pictureBox2);
@@ -179,31 +196,33 @@ namespace GUIApp {
 			this->ResumeLayout(false);
 
 		}
-#pragma endregion
-	private: System::Void btnInfo_Click(System::Object^ sender, System::EventArgs^ e) {
-		InformationRequestForm^ Informationform = gcnew InformationRequestForm();
-		this->Hide();
-		Informationform->ShowDialog();
-		this->Show();
-	}
-	private: System::Void btnAlert_Click(System::Object^ sender, System::EventArgs^ e) {
-		AlertForm^ form = gcnew AlertForm(Usuario);
-		this->Hide();
-		form->ShowDialog();
-		this->Show();
-	}
-	private: System::Void btnAccount_Click(System::Object^ sender, System::EventArgs^ e) {
-		AccountForm^ form = gcnew AccountForm(Usuario);
-		this->Hide();
-		form->ShowDialog();
-		this->Show();
-	}
-
-	private: System::Void btnEstadisticas_Click(System::Object^ sender, System::EventArgs^ e) {
-		GraficsUsersForm^ form = gcnew GraficsUsersForm(Usuario);
-		this->Hide();
-		form->ShowDialog();
-		this->Show();
-	}
+		#pragma endregion
+		private: System::Void btnInfo_Click(System::Object^ sender, System::EventArgs^ e) {
+			InformationRequestForm^ Informationform = gcnew InformationRequestForm();
+			this->Hide();
+			Informationform->ShowDialog();
+			this->Show();
+		}
+		private: System::Void btnAlert_Click(System::Object^ sender, System::EventArgs^ e) {
+			AlertForm^ form = gcnew AlertForm(Usuario);
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
+		private: System::Void btnEstadisticas_Click(System::Object^ sender, System::EventArgs^ e) {
+			GraficsUsersForm^ form = gcnew GraficsUsersForm(Usuario);
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
+		private: System::Void btnAccount_Click_1(System::Object^ sender, System::EventArgs^ e) {
+			AccountForm^ form = gcnew AccountForm(Usuario);
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
+		private: System::Void btnCerrarSesion_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->Close();
+		}
 	};
 }

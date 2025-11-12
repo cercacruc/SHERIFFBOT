@@ -1,4 +1,5 @@
 #pragma once
+#include "ControlRobotForm.h"
 
 namespace GUIApp {
 
@@ -50,6 +51,8 @@ namespace GUIApp {
 
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::ComboBox^ cmbLugares;
+	private: System::Windows::Forms::Button^ btnControlRobot;
+	private: System::Windows::Forms::Button^ btnSalir;
 
 
 	private:
@@ -73,6 +76,8 @@ namespace GUIApp {
 			this->btnRobots = (gcnew System::Windows::Forms::Button());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->cmbLugares = (gcnew System::Windows::Forms::ComboBox());
+			this->btnControlRobot = (gcnew System::Windows::Forms::Button());
+			this->btnSalir = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPhoto))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -156,11 +161,39 @@ namespace GUIApp {
 			this->cmbLugares->Size = System::Drawing::Size(181, 24);
 			this->cmbLugares->TabIndex = 17;
 			// 
+			// btnControlRobot
+			// 
+			this->btnControlRobot->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnControlRobot->Location = System::Drawing::Point(46, 262);
+			this->btnControlRobot->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->btnControlRobot->Name = L"btnControlRobot";
+			this->btnControlRobot->Size = System::Drawing::Size(159, 47);
+			this->btnControlRobot->TabIndex = 18;
+			this->btnControlRobot->Text = L"CONTROLAR";
+			this->btnControlRobot->UseVisualStyleBackColor = true;
+			this->btnControlRobot->Click += gcnew System::EventHandler(this, &RobotsSheriffForm::btnControlRobot_Click);
+			// 
+			// btnSalir
+			// 
+			this->btnSalir->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnSalir->Location = System::Drawing::Point(216, 262);
+			this->btnSalir->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->btnSalir->Name = L"btnSalir";
+			this->btnSalir->Size = System::Drawing::Size(159, 47);
+			this->btnSalir->TabIndex = 19;
+			this->btnSalir->Text = L"SALIR";
+			this->btnSalir->UseVisualStyleBackColor = true;
+			this->btnSalir->Click += gcnew System::EventHandler(this, &RobotsSheriffForm::btnSalir_Click);
+			// 
 			// RobotsSheriffForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(450, 264);
+			this->ClientSize = System::Drawing::Size(450, 320);
+			this->Controls->Add(this->btnSalir);
+			this->Controls->Add(this->btnControlRobot);
 			this->Controls->Add(this->cmbLugares);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->btnRobots);
@@ -178,56 +211,84 @@ namespace GUIApp {
 
 		}
 #pragma endregion
-	private: void CargarListaRobots() {
-		List<Robot^>^ robots = Service::GetRobots();
-		cmbRobots->Visible = true;
-		cmbRobots->Enabled = true;
-		cmbRobots->Items->Clear();
+		private: void CargarListaRobots() {
+			List<Robot^>^ robots = Service::GetRobots();
+			cmbRobots->Visible = true;
+			cmbRobots->Enabled = true;
+			cmbRobots->Items->Clear();
 
-		for each (Robot ^ robot in robots) {
-			cmbRobots->Items->Add(robot->Nombre);
+			for each (Robot ^ robot in robots) {
+				cmbRobots->Items->Add(robot->Nombre);
+			}
 		}
-	}
-	private: System::Void RobotsSheriffForm_Load(System::Object^ sender, System::EventArgs^ e) {
-		CargarListaRobots();
-		CargarListaLugares();
-	}
-	private: System::Void cmbRobots_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
-		String^ robotLista = cmbRobots->Text;
+		private: System::Void RobotsSheriffForm_Load(System::Object^ sender, System::EventArgs^ e) {
+			CargarListaRobots();
+			CargarListaLugares();
+		}
+		private: System::Void cmbRobots_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+			String^ robotLista = cmbRobots->Text;
 
-		Robot^ robotSeleccionado = Service::buscarRobotNombre(robotLista);
-		ActualizarCaracteristicasRobot(robotSeleccionado);
-		ActualizarFotoRobot(robotSeleccionado);
-	}
-	private: void ActualizarCaracteristicasRobot(Robot^ robot) {
-		txtCaracteristicas->Text = robot->Caracteristicas;
-	}
-	private: void ActualizarFotoRobot(Robot^ robot) {
-		if (robot->Photo != nullptr) {
-			System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(robot->Photo);
-			pbPhoto->Image = Image::FromStream(ms);
+			Robot^ robotSeleccionado = Service::buscarRobotNombre(robotLista);
+			ActualizarCaracteristicasRobot(robotSeleccionado);
+			ActualizarFotoRobot(robotSeleccionado);
 		}
-		else {
-			pbPhoto->Image = nullptr;
-			pbPhoto->Invalidate();
+		private: void ActualizarCaracteristicasRobot(Robot^ robot) {
+			txtCaracteristicas->Text = robot->Caracteristicas;
 		}
-	}
-	private: System::Void btnRobots_Click(System::Object^ sender, System::EventArgs^ e) {
-		String^ lugarDestino = cmbLugares->Text;
-		String^ robotElegido = cmbRobots->Text;
+		private: void ActualizarFotoRobot(Robot^ robot) {
+			if (robot->Photo != nullptr) {
+				System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(robot->Photo);
+				pbPhoto->Image = Image::FromStream(ms);
+			}
+			else {
+				pbPhoto->Image = nullptr;
+				pbPhoto->Invalidate();
+			}
+		}
+		private: System::Void btnRobots_Click(System::Object^ sender, System::EventArgs^ e) {
+			String^ lugarDestino = cmbLugares->Text;
+			String^ robotElegido = cmbRobots->Text;
 
-		String^ mensaje = String::Format("Se ha enviado a {0} a {1}", robotElegido, lugarDestino);
-		MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
-	}
-	private: void CargarListaLugares() {
-		List<ZonaTrabajo^>^ listaLugares = Service::GetZonas();
-		cmbLugares->Visible = true;
-		cmbLugares->Enabled = true;
-		cmbLugares->Items->Clear();
+			Robot^ robot = Service::buscarRobotNombre(robotElegido);
 
-		for each (ZonaTrabajo ^ zona in listaLugares) {
-			cmbLugares->Items->Add(zona->zona);
+			if (robot->Disponibilidad == true) {
+				String^ mensaje = String::Format("Se ha enviado a {0} a {1}", robotElegido, lugarDestino);
+				robot->Zona = lugarDestino;
+				Service::modificarRobotID(robot);
+				MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
+			}
+			else if (lugarDestino == "BASE") {
+				robot->Zona = lugarDestino;
+				robot->Disponibilidad = true;
+				Service::modificarRobotID(robot);
+				MessageBox::Show("Regresando a la base", "Exito", MessageBoxButtons::OK);
+			}
+			else {
+				MessageBox::Show("El robot se encuentra ocupado", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			CargarListaRobots();
 		}
-	}
+		private: void CargarListaLugares() {
+			List<ZonaTrabajo^>^ listaLugares = Service::GetZonas();
+			cmbLugares->Visible = true;
+			cmbLugares->Enabled = true;
+			cmbLugares->Items->Clear();
+
+			for each (ZonaTrabajo ^ zona in listaLugares) {
+				cmbLugares->Items->Add(zona->zona);
+			}
+		}
+		private: System::Void btnControlRobot_Click(System::Object^ sender, System::EventArgs^ e) {
+			String^ NombreRobot = cmbRobots->Text;
+			Robot^ robotEncontrado = Service::buscarRobotNombre(NombreRobot);
+			ControlRobotForm^ controlRobot = gcnew ControlRobotForm(robotEncontrado);
+			this->Hide();
+			controlRobot->ShowDialog();
+			this->Show();
+		}
+		private: System::Void btnSalir_Click(System::Object^ sender, System::EventArgs^ e) {
+			this->Close();
+		}
 	};
 }
