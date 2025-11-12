@@ -1,10 +1,4 @@
 #pragma once
-//#define CV_DISABLE_OPTIMIZATION
-/*#include <opencv2/core.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/videoio.hpp>
-#include <opencv2/imgproc.hpp>
-#include <msclr/marshal_cppstd.h>*/
 
 namespace GUIApp {
 
@@ -14,10 +8,15 @@ namespace GUIApp {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-	//using namespace msclr::interop;
+
 
 	using namespace BotModel;
 	using namespace BotService;
+
+	using namespace AForge::Video;
+	using namespace AForge::Video::DirectShow;
+	using namespace ZXing;
+	using namespace System::Threading;
 
 	/// <summary>
 	/// Resumen de ControlRobotForm
@@ -34,9 +33,7 @@ namespace GUIApp {
 			//TODO: agregar código de constructor aquí
 			//
 			robotEncontrado = robot;
-			/*timer = gcnew System::Windows::Forms::Timer();
-			timer->Interval = 33; // ~30 fps
-			timer->Tick += gcnew System::EventHandler(this, &ControlRobotForm::timer_Tick);*/
+
 		}
 
 	protected:
@@ -57,25 +54,12 @@ namespace GUIApp {
 	protected:
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 	private:
 		/// <summary>
 		/// Variable del diseñador necesaria.
 		/// </summary>
 		System::ComponentModel::Container^ components;
 	private: System::Windows::Forms::PictureBox^ pbCamara;
-		   //cv::VideoCapture* cap;
 
 	private: System::Windows::Forms::TextBox^ txtRobot;
 	private: System::Windows::Forms::PictureBox^ giroIzquierda;
@@ -90,11 +74,18 @@ namespace GUIApp {
 
 	private: System::Windows::Forms::PictureBox^ btnLeft;
 	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::PictureBox^ pictureBox2;
-	private: System::Windows::Forms::Label^ label2;
+
+
 	private: System::Windows::Forms::Label^ label1;
-	private:
-		System::Windows::Forms::Timer^ timer;
+
+	private: AForge::Video::DirectShow::FilterInfoCollection^ videoDivices;
+	private: AForge::Video::DirectShow::VideoCaptureDevice^ videoSource;
+	private: Bitmap^ currentFrame;
+	Object^ frameLock = gcnew Object();
+	bool isProcesing = false;//////////////////////////////////////
+	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::Button^ button2;
+		   bool isClosing = false;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -114,9 +105,9 @@ namespace GUIApp {
 			this->btnRight = (gcnew System::Windows::Forms::PictureBox());
 			this->btnLeft = (gcnew System::Windows::Forms::PictureBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
-			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->button2 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbCamara))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroIzquierda))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroDerecha))->BeginInit();
@@ -124,21 +115,20 @@ namespace GUIApp {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAdelante))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnRight))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnLeft))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// pbCamara
 			// 
 			this->pbCamara->Location = System::Drawing::Point(18, 114);
 			this->pbCamara->Name = L"pbCamara";
-			this->pbCamara->Size = System::Drawing::Size(302, 197);
+			this->pbCamara->Size = System::Drawing::Size(711, 362);
 			this->pbCamara->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pbCamara->TabIndex = 35;
 			this->pbCamara->TabStop = false;
 			// 
 			// txtRobot
 			// 
-			this->txtRobot->Location = System::Drawing::Point(362, 21);
+			this->txtRobot->Location = System::Drawing::Point(170, 9);
 			this->txtRobot->Multiline = true;
 			this->txtRobot->Name = L"txtRobot";
 			this->txtRobot->Size = System::Drawing::Size(138, 29);
@@ -147,9 +137,9 @@ namespace GUIApp {
 			// giroIzquierda
 			// 
 			this->giroIzquierda->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"giroIzquierda.Image")));
-			this->giroIzquierda->Location = System::Drawing::Point(14, 403);
+			this->giroIzquierda->Location = System::Drawing::Point(128, 521);
 			this->giroIzquierda->Name = L"giroIzquierda";
-			this->giroIzquierda->Size = System::Drawing::Size(182, 155);
+			this->giroIzquierda->Size = System::Drawing::Size(127, 122);
 			this->giroIzquierda->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->giroIzquierda->TabIndex = 33;
 			this->giroIzquierda->TabStop = false;
@@ -158,9 +148,9 @@ namespace GUIApp {
 			// giroDerecha
 			// 
 			this->giroDerecha->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"giroDerecha.Image")));
-			this->giroDerecha->Location = System::Drawing::Point(545, 403);
+			this->giroDerecha->Location = System::Drawing::Point(486, 521);
 			this->giroDerecha->Name = L"giroDerecha";
-			this->giroDerecha->Size = System::Drawing::Size(182, 155);
+			this->giroDerecha->Size = System::Drawing::Size(127, 122);
 			this->giroDerecha->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->giroDerecha->TabIndex = 32;
 			this->giroDerecha->TabStop = false;
@@ -169,9 +159,9 @@ namespace GUIApp {
 			// btnAtras
 			// 
 			this->btnAtras->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnAtras.Image")));
-			this->btnAtras->Location = System::Drawing::Point(310, 523);
+			this->btnAtras->Location = System::Drawing::Point(334, 623);
 			this->btnAtras->Name = L"btnAtras";
-			this->btnAtras->Size = System::Drawing::Size(107, 95);
+			this->btnAtras->Size = System::Drawing::Size(74, 65);
 			this->btnAtras->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->btnAtras->TabIndex = 31;
 			this->btnAtras->TabStop = false;
@@ -180,9 +170,9 @@ namespace GUIApp {
 			// btnAdelante
 			// 
 			this->btnAdelante->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnAdelante.Image")));
-			this->btnAdelante->Location = System::Drawing::Point(310, 346);
+			this->btnAdelante->Location = System::Drawing::Point(334, 481);
 			this->btnAdelante->Name = L"btnAdelante";
-			this->btnAdelante->Size = System::Drawing::Size(107, 95);
+			this->btnAdelante->Size = System::Drawing::Size(74, 65);
 			this->btnAdelante->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->btnAdelante->TabIndex = 30;
 			this->btnAdelante->TabStop = false;
@@ -191,9 +181,9 @@ namespace GUIApp {
 			// btnRight
 			// 
 			this->btnRight->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnRight.Image")));
-			this->btnRight->Location = System::Drawing::Point(408, 435);
+			this->btnRight->Location = System::Drawing::Point(406, 552);
 			this->btnRight->Name = L"btnRight";
-			this->btnRight->Size = System::Drawing::Size(107, 95);
+			this->btnRight->Size = System::Drawing::Size(74, 65);
 			this->btnRight->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->btnRight->TabIndex = 29;
 			this->btnRight->TabStop = false;
@@ -202,9 +192,9 @@ namespace GUIApp {
 			// btnLeft
 			// 
 			this->btnLeft->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnLeft.Image")));
-			this->btnLeft->Location = System::Drawing::Point(213, 435);
+			this->btnLeft->Location = System::Drawing::Point(261, 552);
 			this->btnLeft->Name = L"btnLeft";
-			this->btnLeft->Size = System::Drawing::Size(107, 95);
+			this->btnLeft->Size = System::Drawing::Size(74, 65);
 			this->btnLeft->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->btnLeft->TabIndex = 28;
 			this->btnLeft->TabStop = false;
@@ -220,41 +210,45 @@ namespace GUIApp {
 			this->label3->TabIndex = 27;
 			this->label3->Text = L"Cámara del robot:";
 			// 
-			// pictureBox2
-			// 
-			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
-			this->pictureBox2->Location = System::Drawing::Point(419, 114);
-			this->pictureBox2->Name = L"pictureBox2";
-			this->pictureBox2->Size = System::Drawing::Size(291, 197);
-			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-			this->pictureBox2->TabIndex = 26;
-			this->pictureBox2->TabStop = false;
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
-			this->label2->Location = System::Drawing::Point(414, 71);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(214, 29);
-			this->label2->TabIndex = 25;
-			this->label2->Text = L"Posición del robot:";
-			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
-			this->label1->Location = System::Drawing::Point(173, 21);
+			this->label1->Location = System::Drawing::Point(9, 9);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(183, 29);
+			this->label1->Size = System::Drawing::Size(155, 29);
 			this->label1->TabIndex = 24;
-			this->label1->Text = L"Controlar Robot";
+			this->label1->Text = L"Robot Name:";
+			// 
+			// button1
+			// 
+			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button1->Location = System::Drawing::Point(586, 12);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(143, 60);
+			this->button1->TabIndex = 36;
+			this->button1->Text = L"SALIR";
+			this->button1->UseVisualStyleBackColor = true;
+			// 
+			// button2
+			// 
+			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button2->Location = System::Drawing::Point(437, 12);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(143, 60);
+			this->button2->TabIndex = 37;
+			this->button2->Text = L"VER MAPA";
+			this->button2->UseVisualStyleBackColor = true;
 			// 
 			// ControlRobotForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(741, 639);
+			this->ClientSize = System::Drawing::Size(741, 697);
+			this->Controls->Add(this->button2);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->pbCamara);
 			this->Controls->Add(this->txtRobot);
 			this->Controls->Add(this->giroIzquierda);
@@ -264,11 +258,10 @@ namespace GUIApp {
 			this->Controls->Add(this->btnRight);
 			this->Controls->Add(this->btnLeft);
 			this->Controls->Add(this->label3);
-			this->Controls->Add(this->pictureBox2);
-			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Name = L"ControlRobotForm";
 			this->Text = L"ControlRobotForm";
+			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &ControlRobotForm::ControlRobotForm_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &ControlRobotForm::ControlRobotForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbCamara))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroIzquierda))->EndInit();
@@ -277,83 +270,159 @@ namespace GUIApp {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAdelante))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnRight))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnLeft))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void ControlRobotForm_Load(System::Object^ sender, System::EventArgs^ e) {
-		if (robotEncontrado != nullptr) {
-			txtRobot->Text = robotEncontrado->Nombre;
-			/*cap = new cv::VideoCapture(0, cv::CAP_DSHOW);
-			if (!cap->isOpened()) {
-				MessageBox::Show("No se pudo abrir la cámara");
+		private: System::Void ControlRobotForm_Load(System::Object^ sender, System::EventArgs^ e) {
+			txtRobot->Enabled = false;
+			if (robotEncontrado != nullptr) {
+				txtRobot->Text = robotEncontrado->Nombre;
+			}
+			try {
+				if (!this->InicializarCamara()) {
+					MessageBox::Show("No se pudo acceder a la cámara");
+					this->Close();
+				}
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error inicializando cámara: " + ex->Message);
+				this->Close();
+			}
+		}
+		private: void Bitmap_Disposed(System::Object^ sender, System::EventArgs^ e) {
+		
+		}
+		private: System::Void btnAdelante_Click(System::Object^ sender, System::EventArgs^ e) {
+			MessageBox::Show("Avanzo", "Exito", MessageBoxButtons::OK);
+			MQTTClient::Adelante();
+		}
+		private: System::Void btnAtras_Click(System::Object^ sender, System::EventArgs^ e) {
+			MessageBox::Show("Retrocedo", "Exito", MessageBoxButtons::OK);
+			MQTTClient::Atras();
+		}
+		private: System::Void btnRight_Click(System::Object^ sender, System::EventArgs^ e) {
+			MessageBox::Show("Avanzo hacia la derecha", "Exito", MessageBoxButtons::OK);
+			MQTTClient::Derecha();
+		}
+		private: System::Void btnLeft_Click_1(System::Object^ sender, System::EventArgs^ e) {
+			MessageBox::Show("Avanzo hacia la izquierda", "Exito", MessageBoxButtons::OK);
+			MQTTClient::Izquierda();
+		}
+		private: System::Void giroDerecha_Click_1(System::Object^ sender, System::EventArgs^ e) {
+			MessageBox::Show("Giro hacia la derecha", "Exito", MessageBoxButtons::OK);
+			MQTTClient::RotarDerecha();
+		}
+		private: System::Void giroIzquierda_Click_1(System::Object^ sender, System::EventArgs^ e) {
+			MessageBox::Show("Giro hacia la izquierda", "Exito", MessageBoxButtons::OK);
+			MQTTClient::RotarIzquierda();
+		}
+		private: System::Boolean InicializarCamara() {
+			try {
+				this->videoDivices = gcnew FilterInfoCollection(FilterCategory::VideoInputDevice);
+				if (videoDivices->Count == 0) {
+					return false;
+				}
+
+				String^ camID = this->videoDivices[0]->MonikerString;
+				this->videoSource = gcnew VideoCaptureDevice(camID);
+				this->videoSource->NewFrame += gcnew AForge::Video::NewFrameEventHandler(this, &ControlRobotForm::video_NewFrame);
+
+				this->videoSource->Start();
+				return true;
+			}
+			catch (Exception^ ex) {
+				throw ex;
+				return false;
+			}
+		}
+		private: System::Void video_NewFrame(System::Object^ sender, AForge::Video::NewFrameEventArgs^ e) {
+			if (this->isClosing) return;
+
+			Bitmap^ newFrame = nullptr;
+			Bitmap^ oldFrame = nullptr;
+
+			try {
+				newFrame = (Bitmap^)e->Frame->Clone();
+
+				if (Monitor::TryEnter(frameLock, 0)) {
+					try {
+						if (this->isClosing) return;
+
+						oldFrame = this->currentFrame;
+						this->currentFrame = (Bitmap^)newFrame->Clone();
+					}
+					finally {
+						Monitor::Exit(frameLock);
+					}
+
+					if (!this->isClosing && this->pbCamara->InvokeRequired) {
+						this->pbCamara->BeginInvoke(gcnew Action<Bitmap^>(this, &ControlRobotForm::ActualizarPictureBox), newFrame);
+					}
+					else if (!this->isClosing) {
+						ActualizarPictureBox(newFrame);
+					}
+				}
+
+				//Liberar frame anterior si existe
+				if (oldFrame != nullptr) {
+					delete oldFrame;
+				}
+			}
+			catch (Exception^ ex) {
+				//Ignorar errores durante el cierre
+				if (!this->isClosing) {
+					System::Diagnostics::Debug::WriteLine("Error en video_NewFrame: " + ex->Message);
+				}
+				if (newFrame != nullptr) delete newFrame;
+				if (oldFrame != nullptr) delete oldFrame;
+			}
+		}
+		private: System::Void ActualizarPictureBox(Bitmap^ frame) {
+			if (this->isClosing) {
+				delete frame; // Importante: liberar frame si no se usará
 				return;
 			}
-			timer->Start();*/
-		}
-		/*bool conectado = MQTTClient::Conectar();
-		if (conectado == true) {
-			MessageBox::Show("Se ha conectado exitosamente");
-		}*/
-	}
-	private: void timer_Tick(System::Object^ sender, System::EventArgs^ e) {
-		/*cv::Mat frame;
-		if (!cap->read(frame) || frame.empty()) return;
-		cv::cvtColor(frame, frame, cv::COLOR_RGB2BGR);
-		cv::Mat* clonedFrame = new cv::Mat(frame.clone());
 
-		System::Drawing::Bitmap^ bmp = gcnew System::Drawing::Bitmap(
-			clonedFrame->cols, clonedFrame->rows, clonedFrame->step,
-			System::Drawing::Imaging::PixelFormat::Format24bppRgb,
-			System::IntPtr(clonedFrame->data));
-
-		bmp->Tag = System::IntPtr(clonedFrame);
-
-		if (pictureBox1->Image != nullptr) {
-			Bitmap_Disposed(pictureBox1->Image, nullptr);
-			delete pictureBox1->Image;
-		}
-
-		pictureBox1->Image = bmp;*/
-	}
-	private: void Bitmap_Disposed(System::Object^ sender, System::EventArgs^ e) {
-		/*System::Drawing::Bitmap^ bmp = safe_cast<System::Drawing::Bitmap^>(sender);
-
-		if (bmp->Tag != nullptr)
-		{
-			System::IntPtr ptr = safe_cast<System::IntPtr>(bmp->Tag);
-			cv::Mat* matPtr = static_cast<cv::Mat*>(ptr.ToPointer());
-			if (matPtr != nullptr) {
-				delete matPtr;
-				bmp->Tag = nullptr;
+			try {
+				Image^ oldImage = this->pbCamara->Image;
+				this->pbCamara->Image = frame;
+				if (oldImage != nullptr) {
+					delete oldImage;
+				}
 			}
-		}*/
-	}
-	private: System::Void btnAdelante_Click(System::Object^ sender, System::EventArgs^ e) {
-		MessageBox::Show("Avanzo", "Exito", MessageBoxButtons::OK);
-		MQTTClient::Adelante();
-	}
-	private: System::Void btnAtras_Click(System::Object^ sender, System::EventArgs^ e) {
-		MessageBox::Show("Retrocedo", "Exito", MessageBoxButtons::OK);
-		MQTTClient::Atras();
-	}
-	private: System::Void btnRight_Click(System::Object^ sender, System::EventArgs^ e) {
-		MessageBox::Show("Avanzo hacia la derecha", "Exito", MessageBoxButtons::OK);
-		MQTTClient::Derecha();
-	}
-	private: System::Void btnLeft_Click_1(System::Object^ sender, System::EventArgs^ e) {
-		MessageBox::Show("Avanzo hacia la izquierda", "Exito", MessageBoxButtons::OK);
-		MQTTClient::Izquierda();
-	}
-	private: System::Void giroDerecha_Click_1(System::Object^ sender, System::EventArgs^ e) {
-		MessageBox::Show("Giro hacia la derecha", "Exito", MessageBoxButtons::OK);
-		MQTTClient::RotarDerecha();
-	}
-	private: System::Void giroIzquierda_Click_1(System::Object^ sender, System::EventArgs^ e) {
-		MessageBox::Show("Giro hacia la izquierda", "Exito", MessageBoxButtons::OK);
-		MQTTClient::RotarIzquierda();
-	}
-};
+			catch (Exception^ ex) {
+				delete frame; // Liberar frame si hay error
+				System::Diagnostics::Debug::WriteLine("Error actualizando PictureBox: " + ex->Message);
+			}
+		}
+		private: System::Void ControlRobotForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
+			this->DesactivarCamara();
+		}
+		private: System::Void DesactivarCamara() {
+			this->isClosing = true;
+
+			if (this->videoSource != nullptr) {
+
+				videoSource->SignalToStop();
+
+				System::Threading::Thread::Sleep(100);
+
+				delete videoSource;
+				videoSource = nullptr;
+			}
+
+			Monitor::Enter(frameLock);
+			try {
+				if (this->currentFrame != nullptr) {
+					delete currentFrame;
+					currentFrame = nullptr;
+				}
+			}
+			finally {
+				Monitor::Exit(frameLock);
+			}
+		}
+	};
 }

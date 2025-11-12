@@ -383,7 +383,7 @@ namespace GUIApp {
 				MessageBox::Show("No se encontró la zona", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 		}
-		catch (FormatException^) {
+		catch (System::FormatException^) {
 			MessageBox::Show("Por favor, ingrese valores válidos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 		catch (Exception^ ex) {

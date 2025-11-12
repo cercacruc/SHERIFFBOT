@@ -798,7 +798,7 @@ namespace GUIApp {
 				MessageBox::Show("No se encontró el robot", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 		}
-		catch (FormatException^) {
+		catch (System::FormatException^) {
 			MessageBox::Show("Por favor, ingrese valores válidos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 		catch (Exception^ ex) {
@@ -939,7 +939,7 @@ namespace GUIApp {
 			ClearFieldsU();
 
 		}
-		catch (FormatException^) {
+		catch (System::FormatException^) {
 			MessageBox::Show("Por favor, ingrese valores válidos en los campos numéricos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 		catch (Exception^ ex) {
@@ -965,7 +965,7 @@ namespace GUIApp {
 			MessageBox::Show("Usuario modificado exitosamente", "Exito", MessageBoxButtons::OK);
 
 		}
-		catch (FormatException^) {
+		catch (System::FormatException^) {
 			MessageBox::Show("Por favor, ingrese valores válidos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 		catch (Exception^ ex) {
