@@ -5,7 +5,7 @@ using namespace System;
 using namespace BotModel;
 
 DatosUsuario::DatosUsuario() {
-	
+
 }
 DatosUsuario::DatosUsuario(int id, String^ nombre, String^ contra, String^ cargo, array<int>^ cantAlertas) {
 	this->ID = id;
@@ -73,4 +73,3 @@ BotModel::ZonaTrabajo::ZonaTrabajo(int ID, double x_min, double x_max, double y_
 	this->y_max = y_max;
 	this->zona = zona;
 }
-

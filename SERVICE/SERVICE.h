@@ -11,7 +11,7 @@ using namespace System::Text;
 using namespace System::Collections::Generic;
 
 namespace BotService {
-	public ref class Service{
+	public ref class Service {
 	public:
 		//CRUD Usuarios
 		static void registrarUsuario(DatosUsuario^ usuario);
@@ -78,7 +78,7 @@ namespace BotService {
 		static bool EnviarComando(String^ comando);
 		static bool EnviarComandoConVelocidad(String^ comando, int velocidad);
 
-		// Métodos específicos para cada movimiento
+		// MÃ©todos especÃ­ficos para cada movimiento
 		static bool Adelante();
 		static bool Atras();
 		static bool Izquierda();
@@ -87,13 +87,14 @@ namespace BotService {
 		static bool RotarDerecha();
 		static bool Detener();
 
-		// Métodos con velocidad
+		// MÃ©todos con velocidad
 		static bool AdelanteConVelocidad(int velocidad);
 		static bool AtrasConVelocidad(int velocidad);
 		static bool IzquierdaConVelocidad(int velocidad);
 		static bool DerechaConVelocidad(int velocidad);
 
-		// Métodos para desconectar
+		// MÃ©todos para desconectar
 		static void Desconectar();
 		~MQTTClient();
 	};
+}

@@ -8,7 +8,7 @@ using namespace System;
 using namespace System::Collections::Generic;
 
 //funciones del robot en persistance
-void BotPersistance::Persistance::registrarRobot(Robot^ robot) {  
+void BotPersistance::Persistance::registrarRobot(Robot^ robot) {
     listaRobots->Add(robot);
     //PersistTextFileRobots(fileRobotName, listaRobots);
     PersistBinaryFile(fileBinRobots, listaRobots);
@@ -82,7 +82,7 @@ void BotPersistance::Persistance::registrarUsuario(DatosUsuario^ user) {
             throw gcnew Exception("El usuario ya existe");
         }
     }
-    
+
     todosUsuarios->Add(user);
     listaUsuarios = todosUsuarios;
 
@@ -202,7 +202,7 @@ int BotPersistance::Persistance::restablecerUsuario(String^ usuario, String^ nue
     }
     else {
         throw gcnew Exception("Usuario no encontrado");
-    }    
+    }
     return 0;
 }
 int BotPersistance::Persistance::modificarUsuarioID(DatosUsuario^ usuario) {
@@ -262,7 +262,7 @@ Object^ BotPersistance::Persistance::LoadUsuariosFromTextFile(String^ fileName) 
     StreamReader^ reader;
     Object^ result = gcnew List<DatosUsuario^>();
     try {
-        
+
         file = gcnew FileStream(fileName, FileMode::Open, FileAccess::Read);
         reader = gcnew StreamReader(file);
         while (!reader->EndOfStream) {
@@ -279,7 +279,7 @@ Object^ BotPersistance::Persistance::LoadUsuariosFromTextFile(String^ fileName) 
             usuario->cant_alertas[1] = Convert::ToInt32(record[5]);
             usuario->cant_alertas[2] = Convert::ToInt32(record[6]);
 
-            
+
             ((List<DatosUsuario^>^)result)->Add(usuario);
         }
     }
@@ -339,7 +339,7 @@ Object^ BotPersistance::Persistance::LoadRobotsFromTextFile(String^ fileName) {
             robot->Zona = record[3];
             robot->PosicionRobot->x = Convert::ToDouble(record[4]);
             robot->PosicionRobot->y = Convert::ToDouble(record[5]);
-            
+
             ((List<Robot^>^)result)->Add(robot);
         }
     }
@@ -361,8 +361,8 @@ void BotPersistance::Persistance::PersistBinaryFile(String^ fileName, Object^ pe
         file = gcnew FileStream(fileName, FileMode::Create, FileAccess::Write);
         formatter->Serialize(file, persistObject);
     }
-    catch (Exception^ ex) { 
-        throw ex; 
+    catch (Exception^ ex) {
+        throw ex;
     }
     finally {
         if (file != nullptr) file->Close();
@@ -465,7 +465,7 @@ void BotPersistance::Persistance::PersistTxtFilePoint(String^ fileName, List<Poi
             writer->WriteLine("{0}|{1}|{2}",
                 p->x,
                 p->y,
-                p->Ubicacion 
+                p->Ubicacion
             );
         }
     }
@@ -661,7 +661,7 @@ List<Alert^>^ BotPersistance::Persistance::ShowAlertas()
     return listaReportesAlertas;
 }
 
-List<ObjPerdido^>^  BotPersistance::Persistance::ShowObjetosPerdidos()
+List<ObjPerdido^>^ BotPersistance::Persistance::ShowObjetosPerdidos()
 {
     List<ObjPerdido^>^ lista = gcnew List<ObjPerdido^>();
     List<Alert^>^ alertasList = ShowAlertas();
@@ -771,7 +771,7 @@ List<Alert^>^ BotPersistance::Persistance::GetAlertasPorUsuario(int usuarioID)
     List<Alert^>^ todasAlertas = ShowAlertas();
 
     if (todasAlertas != nullptr) {
-        for each(Alert ^ alerta in todasAlertas) {
+        for each (Alert ^ alerta in todasAlertas) {
             if (alerta->UsuarioID == usuarioID) {
                 alertasUsuario->Add(alerta);
             }

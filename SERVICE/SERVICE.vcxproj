@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
-    <ProjectGuid>{54D58E6A-4876-7413-16E5-C280F69B6AD5}</ProjectGuid>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <ProjectGuid>{1A28ECC0-90AB-0E76-113B-4071DF14FAAA}</ProjectGuid>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>SERVICE</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
@@ -145,11 +145,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\MODEL\MODEL.vcxproj">
-      <Project>{4dda8e53-e69c-42b8-d61c-3cac58647830}</Project>
+      <Project>{30c04796-38c1-5553-a373-7bef0a5cdeba}</Project>
     </ProjectReference>
     <ProjectReference Include="..\PERSISTANCE\PERSISTANCE.vcxproj">
-      <Project>{eb3cb780-4d0d-76e8-9a97-962bc77b31dd}</Project>
+      <Project>{3b0f4b14-9288-56dd-5b46-75b7e0efe8b0}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

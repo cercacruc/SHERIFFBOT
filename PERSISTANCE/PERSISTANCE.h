@@ -5,7 +5,7 @@ using namespace BotModel;
 using namespace System::Collections::Generic;
 
 namespace BotPersistance {
-	public ref class Persistance{
+	public ref class Persistance {
 	private:
 		static List<DatosUsuario^>^ listaUsuarios = gcnew List<DatosUsuario^>();
 		static List<Robot^>^ listaRobots = gcnew List<Robot^>();
@@ -30,7 +30,7 @@ namespace BotPersistance {
 		static Object^ LoadZonasFormTxtFile(String^ fileName);
 		static void PersistTxtFilePoint(String^ fileName, List<Point^>^ lista);
 		static Object^ LoadPointsFormTxtFile(String^ fileName);
-		
+
 
 	public:
 		//Datos de guardado
@@ -47,7 +47,7 @@ namespace BotPersistance {
 
 		//CRUD Usuarios
 		static void registrarUsuario(DatosUsuario^ usuario);//modificado
-		static int generarAutoID(String^ cargo); //nueva función
+		static int generarAutoID(String^ cargo); //nueva funciÃ³n
 		static DatosUsuario^ buscarUsuarioID(int id);
 		static DatosUsuario^ buscarUsuarioNombre(String^ nombre);
 		static DatosUsuario^ buscarUsuarioCredenciales(String^ nombre, String^ contra);

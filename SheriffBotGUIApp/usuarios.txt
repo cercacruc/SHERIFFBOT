@@ -1,7 +1,0 @@
-991|Rodrigo|1708|Admin|0|0|0
-992|Marcelo|2105|Admin|0|0|0
-221|Generico|1234|Estudiante|0|0|0
-111|Sherif|1234|Sheriff|0|0|0
-993|Boris|1234|Admin|0|0|0
-994|Julian|1234|Admin|0|0|0
-995|Fabrizio|1234|Admin|0|0|0
