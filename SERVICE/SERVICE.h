@@ -97,4 +97,3 @@ namespace BotService {
 		static void Desconectar();
 		~MQTTClient();
 	};
-}
