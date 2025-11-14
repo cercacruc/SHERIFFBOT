@@ -652,6 +652,94 @@ List<ZonaTrabajo^>^ BotPersistance::Persistance::GetZonas()
     return listaZonas;
 }
 
+List<Robot^>^ BotPersistance::Persistance::GetRobotsConAlertas()
+{
+    List<Robot^>^ robots = GetRobots();
+    List<Robot^>^ robotsConAlertas = gcnew List<Robot^>();
+
+    for each (Robot ^ robot in robots)
+    {
+        if (robot->AlertaAsignadaID > 0)
+        {
+            robotsConAlertas->Add(robot);
+        }
+    }
+    return robotsConAlertas;
+}
+
+bool BotPersistance::Persistance::AsignarAlertaRobot(int robotID, int alertaID)
+{
+    Robot^ robot = buscarRobotID(robotID);
+    Alert^ alerta = buscarAlerta(alertaID);
+
+    if (robot != nullptr && alerta != nullptr && robot->Disponibilidad)
+    {
+        robot->AlertaAsignadaID = alertaID;
+        robot->TipoMision = "ALERTA";
+        robot->Disponibilidad = false;
+        robot->Zona = alerta->Lugar;
+
+        return modificarRobotID(robot) == 1;
+    }
+    return false;
+}
+
+bool BotPersistance::Persistance::LiberarRobot(int robotID)
+{
+    Robot^ robot = buscarRobotID(robotID);
+
+    if (robot != nullptr) {
+        int alertaID = robot->AlertaAsignadaID;
+
+        robot->AlertaAsignadaID = 0;
+        robot->TipoMision = "";
+        robot->Disponibilidad = true;
+        robot->Zona = "BASE";
+
+        // Actualizar el robot en la base de datos
+        bool robotActualizado = modificarRobotID(robot) == 1;
+
+        // Si el robot tenía una alerta asignada, marcarla como solucionada
+        if (robotActualizado && alertaID > 0) {
+            // Necesitarás una función para marcar la alerta como solucionada
+            return MarcarAlertaSolucionada(alertaID);
+        }
+
+        return robotActualizado;
+    }
+    return false;
+}
+
+List<Alert^>^ BotPersistance::Persistance::GetAlertasPendientes()
+{
+    List<Alert^>^ todasAlertas = ShowAlertas();
+    List<Alert^>^ alertasPendientes = gcnew List<Alert^>();
+
+    for each (Alert ^ alerta in todasAlertas)
+    {
+        if (!alerta->Solucionado)
+        {
+            alertasPendientes->Add(alerta);
+        }
+    }
+    return alertasPendientes;
+}
+
+bool BotPersistance::Persistance::MarcarAlertaSolucionada(int alertaID)
+{
+    // Buscar la alerta por ID
+    Alert^ alerta = buscarAlerta(alertaID);
+
+    if (alerta != nullptr) {
+        // Marcar la alerta como solucionada
+        alerta->Solucionado = true;
+
+        // Actualizar la alerta en la base de datos
+        return modificarAlerta(alerta) == 1;
+    }
+    return false;
+}
+
 List<Alert^>^ BotPersistance::Persistance::ShowAlertas()
 {
     listaReportesAlertas = (List<Alert^>^)LoadBinaryFile(fileBinAlertReport);

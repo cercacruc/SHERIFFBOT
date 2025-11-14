@@ -1,8 +1,9 @@
 #pragma once
-#include "AvaibleRobotsForm.h"
+#include "TasksRobotsForm.h"
 #include "AccountForm.h"
 #include "RobotsSheriffForm.h"
 #include "AlertManagementForm.h"
+#include "AsignarAlertaRobotForm.h"
 
 namespace GUIApp {
 
@@ -111,7 +112,7 @@ namespace GUIApp {
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(157, 37);
 			this->button1->TabIndex = 18;
-			this->button1->Text = L"Robots Disponibles";
+			this->button1->Text = L"Asignar Robots";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &SheriffForm::button1_Click);
 			// 
@@ -196,7 +197,7 @@ namespace GUIApp {
 		}
 		#pragma endregion
 		private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-			AvaibleRobotsForm^ form = gcnew AvaibleRobotsForm();
+			AsignarAlertaRobotForm^ form = gcnew AsignarAlertaRobotForm();
 			this->Hide();
 			form->ShowDialog();
 			this->Show();

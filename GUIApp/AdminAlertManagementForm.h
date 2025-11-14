@@ -75,11 +75,11 @@ namespace GUIApp {
 	private: System::Windows::Forms::Label^ label5;
 	private: System::Windows::Forms::DataGridView^ dgvAltercado;
 
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn1;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn3;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn4;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn5;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUsuarioALT;
+
+
+
+
+
 
 	private: System::Windows::Forms::Label^ label13;
 
@@ -89,12 +89,12 @@ namespace GUIApp {
 	private: System::Windows::Forms::Label^ label15;
 	private: System::Windows::Forms::DataGridView^ dgvDTI;
 
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn6;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn7;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn8;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn9;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn10;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUsuarioDTI;
+
+
+
+
+
+
 
 	private: System::Windows::Forms::PictureBox^ pbPhotoObj;
 
@@ -144,6 +144,20 @@ namespace GUIApp {
 	private: System::Windows::Forms::Button^ btnEliminarObjPerd;
 	private: System::Windows::Forms::Button^ btnEliminarAltercado;
 	private: System::Windows::Forms::Button^ btnEliminarDTI;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignado;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn1;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn3;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn4;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn5;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUsuarioALT;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignadoALT;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn6;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn7;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn8;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn9;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn10;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUsuarioDTI;
+private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignadoDTI;
 
 
 	private:
@@ -184,6 +198,7 @@ namespace GUIApp {
 			this->ResourceTimeMO = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourceStatusMO = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourceUsuarioMO = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->ResourceRobotAsignado = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
 			this->btnEliminarAltercado = (gcnew System::Windows::Forms::Button());
 			this->btnSolucionAltercado = (gcnew System::Windows::Forms::Button());
@@ -200,11 +215,6 @@ namespace GUIApp {
 			this->txtIDAltercado = (gcnew System::Windows::Forms::TextBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->dgvAltercado = (gcnew System::Windows::Forms::DataGridView());
-			this->dataGridViewTextBoxColumn1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->dataGridViewTextBoxColumn3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->dataGridViewTextBoxColumn4 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->dataGridViewTextBoxColumn5 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->ResourceUsuarioALT = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
 			this->btnEliminarDTI = (gcnew System::Windows::Forms::Button());
 			this->label6 = (gcnew System::Windows::Forms::Label());
@@ -221,12 +231,19 @@ namespace GUIApp {
 			this->txtIDDTI = (gcnew System::Windows::Forms::TextBox());
 			this->label15 = (gcnew System::Windows::Forms::Label());
 			this->dgvDTI = (gcnew System::Windows::Forms::DataGridView());
+			this->dataGridViewTextBoxColumn1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->dataGridViewTextBoxColumn3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->dataGridViewTextBoxColumn4 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->dataGridViewTextBoxColumn5 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->ResourceUsuarioALT = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->ResourceRobotAsignadoALT = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn6 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn7 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn8 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn9 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn10 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourceUsuarioDTI = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->ResourceRobotAsignadoDTI = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->tabControl1->SuspendLayout();
 			this->tabPage2->SuspendLayout();
 			this->groupBox1->SuspendLayout();
@@ -435,9 +452,9 @@ namespace GUIApp {
 			// dgvOjbPerdido
 			// 
 			this->dgvOjbPerdido->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgvOjbPerdido->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(6) {
+			this->dgvOjbPerdido->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(7) {
 				this->ResourceAlertDMO,
-					this->ResourceNameMO, this->ResourceDateMO, this->ResourceTimeMO, this->ResourceStatusMO, this->ResourceUsuarioMO
+					this->ResourceNameMO, this->ResourceDateMO, this->ResourceTimeMO, this->ResourceStatusMO, this->ResourceUsuarioMO, this->ResourceRobotAsignado
 			});
 			this->dgvOjbPerdido->Location = System::Drawing::Point(20, 266);
 			this->dgvOjbPerdido->Name = L"dgvOjbPerdido";
@@ -489,6 +506,13 @@ namespace GUIApp {
 			this->ResourceUsuarioMO->MinimumWidth = 6;
 			this->ResourceUsuarioMO->Name = L"ResourceUsuarioMO";
 			this->ResourceUsuarioMO->Width = 125;
+			// 
+			// ResourceRobotAsignado
+			// 
+			this->ResourceRobotAsignado->HeaderText = L"Robot Asignado";
+			this->ResourceRobotAsignado->MinimumWidth = 6;
+			this->ResourceRobotAsignado->Name = L"ResourceRobotAsignado";
+			this->ResourceRobotAsignado->Width = 125;
 			// 
 			// tabPage1
 			// 
@@ -653,9 +677,10 @@ namespace GUIApp {
 			// dgvAltercado
 			// 
 			this->dgvAltercado->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgvAltercado->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
+			this->dgvAltercado->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(6) {
 				this->dataGridViewTextBoxColumn1,
-					this->dataGridViewTextBoxColumn3, this->dataGridViewTextBoxColumn4, this->dataGridViewTextBoxColumn5, this->ResourceUsuarioALT
+					this->dataGridViewTextBoxColumn3, this->dataGridViewTextBoxColumn4, this->dataGridViewTextBoxColumn5, this->ResourceUsuarioALT,
+					this->ResourceRobotAsignadoALT
 			});
 			this->dgvAltercado->Location = System::Drawing::Point(21, 267);
 			this->dgvAltercado->Name = L"dgvAltercado";
@@ -665,45 +690,6 @@ namespace GUIApp {
 			this->dgvAltercado->Size = System::Drawing::Size(884, 222);
 			this->dgvAltercado->TabIndex = 34;
 			this->dgvAltercado->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &AdminAlertManagementForm::dgvAltercado_CellClick);
-			// 
-			// dataGridViewTextBoxColumn1
-			// 
-			this->dataGridViewTextBoxColumn1->DataPropertyName = L"ResourceAlertIDALT";
-			this->dataGridViewTextBoxColumn1->HeaderText = L"ID Alerta";
-			this->dataGridViewTextBoxColumn1->MinimumWidth = 6;
-			this->dataGridViewTextBoxColumn1->Name = L"dataGridViewTextBoxColumn1";
-			this->dataGridViewTextBoxColumn1->Width = 125;
-			// 
-			// dataGridViewTextBoxColumn3
-			// 
-			this->dataGridViewTextBoxColumn3->DataPropertyName = L"ResourceDateALT";
-			this->dataGridViewTextBoxColumn3->HeaderText = L"Fecha";
-			this->dataGridViewTextBoxColumn3->MinimumWidth = 6;
-			this->dataGridViewTextBoxColumn3->Name = L"dataGridViewTextBoxColumn3";
-			this->dataGridViewTextBoxColumn3->Width = 125;
-			// 
-			// dataGridViewTextBoxColumn4
-			// 
-			this->dataGridViewTextBoxColumn4->DataPropertyName = L"ResourceTimeALT";
-			this->dataGridViewTextBoxColumn4->HeaderText = L"Hora";
-			this->dataGridViewTextBoxColumn4->MinimumWidth = 6;
-			this->dataGridViewTextBoxColumn4->Name = L"dataGridViewTextBoxColumn4";
-			this->dataGridViewTextBoxColumn4->Width = 125;
-			// 
-			// dataGridViewTextBoxColumn5
-			// 
-			this->dataGridViewTextBoxColumn5->DataPropertyName = L"ResourceStatusALT";
-			this->dataGridViewTextBoxColumn5->HeaderText = L"Estado";
-			this->dataGridViewTextBoxColumn5->MinimumWidth = 6;
-			this->dataGridViewTextBoxColumn5->Name = L"dataGridViewTextBoxColumn5";
-			this->dataGridViewTextBoxColumn5->Width = 125;
-			// 
-			// ResourceUsuarioALT
-			// 
-			this->ResourceUsuarioALT->HeaderText = L"Usuario";
-			this->ResourceUsuarioALT->MinimumWidth = 6;
-			this->ResourceUsuarioALT->Name = L"ResourceUsuarioALT";
-			this->ResourceUsuarioALT->Width = 125;
 			// 
 			// tabPage3
 			// 
@@ -872,10 +858,10 @@ namespace GUIApp {
 			// dgvDTI
 			// 
 			this->dgvDTI->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgvDTI->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(6) {
+			this->dgvDTI->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(7) {
 				this->dataGridViewTextBoxColumn6,
 					this->dataGridViewTextBoxColumn7, this->dataGridViewTextBoxColumn8, this->dataGridViewTextBoxColumn9, this->dataGridViewTextBoxColumn10,
-					this->ResourceUsuarioDTI
+					this->ResourceUsuarioDTI, this->ResourceRobotAsignadoDTI
 			});
 			this->dgvDTI->Location = System::Drawing::Point(21, 276);
 			this->dgvDTI->Name = L"dgvDTI";
@@ -885,6 +871,52 @@ namespace GUIApp {
 			this->dgvDTI->Size = System::Drawing::Size(865, 222);
 			this->dgvDTI->TabIndex = 34;
 			this->dgvDTI->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &AdminAlertManagementForm::dgvDTI_CellClick);
+			// 
+			// dataGridViewTextBoxColumn1
+			// 
+			this->dataGridViewTextBoxColumn1->DataPropertyName = L"ResourceAlertIDALT";
+			this->dataGridViewTextBoxColumn1->HeaderText = L"ID Alerta";
+			this->dataGridViewTextBoxColumn1->MinimumWidth = 6;
+			this->dataGridViewTextBoxColumn1->Name = L"dataGridViewTextBoxColumn1";
+			this->dataGridViewTextBoxColumn1->Width = 125;
+			// 
+			// dataGridViewTextBoxColumn3
+			// 
+			this->dataGridViewTextBoxColumn3->DataPropertyName = L"ResourceDateALT";
+			this->dataGridViewTextBoxColumn3->HeaderText = L"Fecha";
+			this->dataGridViewTextBoxColumn3->MinimumWidth = 6;
+			this->dataGridViewTextBoxColumn3->Name = L"dataGridViewTextBoxColumn3";
+			this->dataGridViewTextBoxColumn3->Width = 125;
+			// 
+			// dataGridViewTextBoxColumn4
+			// 
+			this->dataGridViewTextBoxColumn4->DataPropertyName = L"ResourceTimeALT";
+			this->dataGridViewTextBoxColumn4->HeaderText = L"Hora";
+			this->dataGridViewTextBoxColumn4->MinimumWidth = 6;
+			this->dataGridViewTextBoxColumn4->Name = L"dataGridViewTextBoxColumn4";
+			this->dataGridViewTextBoxColumn4->Width = 125;
+			// 
+			// dataGridViewTextBoxColumn5
+			// 
+			this->dataGridViewTextBoxColumn5->DataPropertyName = L"ResourceStatusALT";
+			this->dataGridViewTextBoxColumn5->HeaderText = L"Estado";
+			this->dataGridViewTextBoxColumn5->MinimumWidth = 6;
+			this->dataGridViewTextBoxColumn5->Name = L"dataGridViewTextBoxColumn5";
+			this->dataGridViewTextBoxColumn5->Width = 125;
+			// 
+			// ResourceUsuarioALT
+			// 
+			this->ResourceUsuarioALT->HeaderText = L"Usuario";
+			this->ResourceUsuarioALT->MinimumWidth = 6;
+			this->ResourceUsuarioALT->Name = L"ResourceUsuarioALT";
+			this->ResourceUsuarioALT->Width = 125;
+			// 
+			// ResourceRobotAsignadoALT
+			// 
+			this->ResourceRobotAsignadoALT->HeaderText = L"Robot Asignado";
+			this->ResourceRobotAsignadoALT->MinimumWidth = 6;
+			this->ResourceRobotAsignadoALT->Name = L"ResourceRobotAsignadoALT";
+			this->ResourceRobotAsignadoALT->Width = 125;
 			// 
 			// dataGridViewTextBoxColumn6
 			// 
@@ -933,6 +965,13 @@ namespace GUIApp {
 			this->ResourceUsuarioDTI->Name = L"ResourceUsuarioDTI";
 			this->ResourceUsuarioDTI->Width = 125;
 			// 
+			// ResourceRobotAsignadoDTI
+			// 
+			this->ResourceRobotAsignadoDTI->HeaderText = L"Robot Asignado";
+			this->ResourceRobotAsignadoDTI->MinimumWidth = 6;
+			this->ResourceRobotAsignadoDTI->Name = L"ResourceRobotAsignadoDTI";
+			this->ResourceRobotAsignadoDTI->Width = 125;
+			// 
 			// AdminAlertManagementForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -974,6 +1013,15 @@ namespace GUIApp {
 				String^ estado = objeto[i]->Solucionado ? "Solucionado" : "No solucionado";
 				String^ usuario = objeto[i]->UsuarioNombre + " (ID: " + objeto[i]->UsuarioID + ")";
 
+				String^ robotAsignado = "Ninguno";
+				List<Robot^>^ robots = Service::GetRobots();
+				for each (Robot ^ robot in robots) {
+					if (robot->AlertaAsignadaID == objeto[i]->id) {
+						robotAsignado = robot->Nombre + " (ID: " + robot->ID + ")";
+						break;
+					}
+				}
+
 				if (objeto[i]->GetType() == ObjPerdido::typeid) {
 					dgvOjbPerdido->Rows->Add(gcnew array<String^>{
 						"" + objeto[i]->id,
@@ -981,7 +1029,8 @@ namespace GUIApp {
 							fecha,
 							hora,
 							estado,
-							usuario
+							usuario,
+							robotAsignado
 					});
 				}
 			}
@@ -997,13 +1046,23 @@ namespace GUIApp {
 				String^ estado = altercado[i]->Solucionado ? "Solucionado" : "No solucionado";
 				String^ usuario = altercado[i]->UsuarioNombre + " (ID: " + altercado[i]->UsuarioID + ")";
 
+				String^ robotAsignado = "Ninguno";
+				List<Robot^>^ robots = Service::GetRobots();
+				for each (Robot ^ robot in robots) {
+					if (robot->AlertaAsignadaID == altercado[i]->id) {
+						robotAsignado = robot->Nombre + " (ID: " + robot->ID + ")";
+						break;
+					}
+				}
+
 				if (altercado[i]->GetType() == Altercado::typeid) {
 					dgvAltercado->Rows->Add(gcnew array<String^>{
 						"" + altercado[i]->id,
 							fecha,
 							hora,
 							estado,
-							usuario
+							usuario,
+							robotAsignado
 					});
 				}
 			}
@@ -1019,6 +1078,15 @@ namespace GUIApp {
 				String^ estado = reporte[i]->Solucionado ? "Solucionado" : "No solucionado";
 				String^ usuario = reporte[i]->UsuarioNombre + " (ID: " + reporte[i]->UsuarioID + ")";
 
+				String^ robotAsignado = "Ninguno";
+				List<Robot^>^ robots = Service::GetRobots();
+				for each (Robot ^ robot in robots) {
+					if (robot->AlertaAsignadaID == reporte[i]->id) {
+						robotAsignado = robot->Nombre + " (ID: " + robot->ID + ")";
+						break;
+					}
+				}
+
 				if (reporte[i]->GetType() == DTIReport::typeid) {
 					dgvDTI->Rows->Add(gcnew array<String^>{
 						"" + reporte[i]->id,
@@ -1026,7 +1094,8 @@ namespace GUIApp {
 							fecha,
 							hora,
 							estado,
-							usuario
+							usuario,
+							robotAsignado
 					});
 				}
 			}

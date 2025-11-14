@@ -14,8 +14,6 @@ namespace BotPersistance {
 
 		static void PersistTextFileUsers(String^ fileName, List<DatosUsuario^>^ lista);
 		static Object^ LoadUsuariosFromTextFile(String^ fileName);
-		/*static void PersistXMLFileRobots(String^ fileName, Object^ persistObject);
-		static Object^ LoadRobotsFromXMLFile(String^ fileName);*/
 		static void PersistTextFileRobots(String^ fileName, List<Robot^>^ lista);
 		static Object^ LoadRobotsFromTextFile(String^ fileName);
 
@@ -95,5 +93,11 @@ namespace BotPersistance {
 		static bool buscarZonaID(int id);
 		static ZonaTrabajo^ buscarReturnZonaId(int id);
 		static List<ZonaTrabajo^>^ GetZonas();
+
+		static List<Robot^>^ GetRobotsConAlertas();
+		static bool AsignarAlertaRobot(int robotID, int alertaID);
+		static bool LiberarRobot(int robotID);
+		static List<Alert^>^ GetAlertasPendientes();
+		static bool MarcarAlertaSolucionada(int alertaID);
 	};
 }

@@ -36,7 +36,7 @@
     <ClCompile Include="AltercationReportForm.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="AvaibleRobotsForm.cpp">
+    <ClCompile Include="TasksRobotsForm.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="ControlRobotForm.cpp">
@@ -90,6 +90,9 @@
     <ClCompile Include="MapaForm.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="AsignarAlertaRobotForm.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AccountForm.h">
@@ -113,7 +116,7 @@
     <ClInclude Include="AltercationReportForm.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="AvaibleRobotsForm.h">
+    <ClInclude Include="TasksRobotsForm.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="ComboBoxItem.h">
@@ -168,6 +171,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="MapaForm.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="AsignarAlertaRobotForm.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

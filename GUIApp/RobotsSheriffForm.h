@@ -1,5 +1,6 @@
 #pragma once
 #include "ControlRobotForm.h"
+#include "AsignarAlertaRobotForm.h"
 
 namespace GUIApp {
 
@@ -166,10 +167,10 @@ namespace GUIApp {
 			// 
 			this->btnControlRobot->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->btnControlRobot->Location = System::Drawing::Point(46, 262);
+			this->btnControlRobot->Location = System::Drawing::Point(43, 262);
 			this->btnControlRobot->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->btnControlRobot->Name = L"btnControlRobot";
-			this->btnControlRobot->Size = System::Drawing::Size(159, 47);
+			this->btnControlRobot->Size = System::Drawing::Size(162, 47);
 			this->btnControlRobot->TabIndex = 18;
 			this->btnControlRobot->Text = L"CONTROLAR";
 			this->btnControlRobot->UseVisualStyleBackColor = true;
@@ -211,7 +212,7 @@ namespace GUIApp {
 			this->PerformLayout();
 
 		}
-#pragma endregion
+		#pragma endregion
 		private: void CargarListaRobots() {
 			List<Robot^>^ robots = Service::GetRobots();
 			cmbRobots->Visible = true;
@@ -231,19 +232,10 @@ namespace GUIApp {
 				cmbRobots->SelectedIndex = -1;
 			}
 		}
-		/*private: void CargarListaRobots() {
-			List<Robot^>^ robots = Service::GetRobots();
-			cmbRobots->Visible = true;
-			cmbRobots->Enabled = true;
-			cmbRobots->Items->Clear();
-
-			for each (Robot ^ robot in robots) {
-				cmbRobots->Items->Add(robot->Nombre);
-			}
-		}*/
 		private: System::Void RobotsSheriffForm_Load(System::Object^ sender, System::EventArgs^ e) {
 			CargarListaRobots();
 			CargarListaLugares();
+			txtCaracteristicas->Enabled = false;
 		}
 		private: System::Void cmbRobots_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 			if (cmbRobots->SelectedIndex == -1) return;

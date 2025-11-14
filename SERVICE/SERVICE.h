@@ -61,7 +61,10 @@ namespace BotService {
 		static bool buscarZonaID(int id);
 		static ZonaTrabajo^ buscarReturnZonaId(int id);
 		static List <ZonaTrabajo^>^ GetZonas();
-
+		static List<Robot^>^ GetRobotsConAlertas();
+		static bool AsignarAlertaRobot(int robotID, int alertaID);
+		static bool LiberarRobot(int robotID);
+		static List<Alert^>^ GetAlertasPendientes();
 
 	};
 	public ref class MQTTClient {

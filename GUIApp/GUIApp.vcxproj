@@ -140,7 +140,8 @@
     <ClCompile Include="AlertHistForm.cpp" />
     <ClCompile Include="AlertManagementForm.cpp" />
     <ClCompile Include="AltercationReportForm.cpp" />
-    <ClCompile Include="AvaibleRobotsForm.cpp" />
+    <ClCompile Include="AsignarAlertaRobotForm.cpp" />
+    <ClCompile Include="TasksRobotsForm.cpp" />
     <ClCompile Include="ControlRobotForm.cpp" />
     <ClCompile Include="DatosRobotsUsuariosForm.cpp" />
     <ClCompile Include="DelimitarZonasTrabajoAdmin.cpp" />
@@ -181,7 +182,10 @@
     <ClInclude Include="AltercationReportForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="AvaibleRobotsForm.h">
+    <ClInclude Include="AsignarAlertaRobotForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="TasksRobotsForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="ComboBoxItem.h" />
@@ -249,8 +253,20 @@
     <EmbeddedResource Include="AccountForm.resx">
       <DependentUpon>AccountForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AdminAlertManagementForm.resx">
+      <DependentUpon>AdminAlertManagementForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AdminForm.resx">
       <DependentUpon>AdminForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlertManagementForm.resx">
+      <DependentUpon>AlertManagementForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AsignarAlertaRobotForm.resx">
+      <DependentUpon>AsignarAlertaRobotForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TasksRobotsForm.resx">
+      <DependentUpon>TasksRobotsForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ControlRobotForm.resx">
       <DependentUpon>ControlRobotForm.h</DependentUpon>

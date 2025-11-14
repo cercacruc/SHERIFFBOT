@@ -131,7 +131,18 @@ bool BotService::Service::eliminarAlerta(int id) {
 int BotService::Service::modificarAlerta(Alert^ alerta) {
 	return Persistance::modificarAlerta(alerta);
 }
-
+List<Robot^>^ BotService::Service::GetRobotsConAlertas() {
+	return Persistance::GetRobotsConAlertas();
+}
+bool BotService::Service::AsignarAlertaRobot(int robotID, int alertaID) {
+	return Persistance::AsignarAlertaRobot(robotID, alertaID);
+}
+bool BotService::Service::LiberarRobot(int robotID) {
+	return Persistance::LiberarRobot(robotID);
+}
+List<Alert^>^ BotService::Service::GetAlertasPendientes() {
+	return Persistance::GetAlertasPendientes();
+}
 
 //Cosas para la conexión con el carro
 BotService::MQTTClient::MQTTClient() {

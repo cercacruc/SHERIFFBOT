@@ -40,6 +40,8 @@ namespace BotModel {
 			property array<Byte>^ Photo;
 			property bool Disponibilidad;
 			property String^ Caracteristicas;
+			property int AlertaAsignadaID;
+			property String^ TipoMision;
 
 			Robot();
 			Robot(int ID, String^ nombre, String^ zona, Point^ ubicacion, String^ caracteristica);
