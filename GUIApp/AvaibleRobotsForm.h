@@ -153,6 +153,7 @@ namespace GUIApp {
 #pragma endregion
 	private: System::Void AvaibleRobotsForm_Load(System::Object^ sender, System::EventArgs^ e) {
 		CargarRobotsDisponibles();
+		txtCaracteristicas->Enabled = false;
 	}
 	private: void CargarRobotsDisponibles() {
 		List<Robot^>^ robots = Service::listaRobotsDisponibles();

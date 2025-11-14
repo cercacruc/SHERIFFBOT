@@ -160,6 +160,7 @@ namespace GUIApp {
 			this->cmbLugares->Name = L"cmbLugares";
 			this->cmbLugares->Size = System::Drawing::Size(181, 24);
 			this->cmbLugares->TabIndex = 17;
+			this->cmbLugares->SelectedIndexChanged += gcnew System::EventHandler(this, &RobotsSheriffForm::cmbLugares_SelectedIndexChanged);
 			// 
 			// btnControlRobot
 			// 
@@ -217,20 +218,73 @@ namespace GUIApp {
 			cmbRobots->Enabled = true;
 			cmbRobots->Items->Clear();
 
+			for each(Robot ^ robot in robots) {
+				String^ nombreConEstado = robot->Nombre;
+				if (!robot->Disponibilidad) {
+					nombreConEstado += " (Ocupado en " + robot->Zona + ")";
+				}
+				cmbRobots->Items->Add(nombreConEstado);
+			}
+
+			// Si hay robots seleccionados, mantener la selección actual
+			if (cmbRobots->Items->Count > 0 && cmbRobots->SelectedIndex == -1) {
+				cmbRobots->SelectedIndex = -1;
+			}
+		}
+		/*private: void CargarListaRobots() {
+			List<Robot^>^ robots = Service::GetRobots();
+			cmbRobots->Visible = true;
+			cmbRobots->Enabled = true;
+			cmbRobots->Items->Clear();
+
 			for each (Robot ^ robot in robots) {
 				cmbRobots->Items->Add(robot->Nombre);
 			}
-		}
+		}*/
 		private: System::Void RobotsSheriffForm_Load(System::Object^ sender, System::EventArgs^ e) {
 			CargarListaRobots();
 			CargarListaLugares();
 		}
 		private: System::Void cmbRobots_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+			if (cmbRobots->SelectedIndex == -1) return;
+
 			String^ robotLista = cmbRobots->Text;
 
-			Robot^ robotSeleccionado = Service::buscarRobotNombre(robotLista);
-			ActualizarCaracteristicasRobot(robotSeleccionado);
-			ActualizarFotoRobot(robotSeleccionado);
+			// Extraer solo el nombre del robot (sin el estado entre paréntesis)
+			String^ nombreRobot = robotLista;
+			int indexParentesis = robotLista->IndexOf('(');
+			if (indexParentesis > 0) {
+				nombreRobot = robotLista->Substring(0, indexParentesis)->Trim();
+			}
+
+			Robot^ robotSeleccionado = Service::buscarRobotNombre(nombreRobot);
+			if (robotSeleccionado != nullptr) {
+				ActualizarCaracteristicasRobot(robotSeleccionado);
+				ActualizarFotoRobot(robotSeleccionado);
+
+				// Actualizar el estado del botón de enviar según la disponibilidad
+				btnRobots->Enabled = robotSeleccionado->Disponibilidad ||
+					(cmbLugares->Text->ToUpper() == "BASE" && !robotSeleccionado->Disponibilidad);
+			}
+		}
+		private: System::Void cmbLugares_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+			if (cmbRobots->SelectedIndex == -1) return;
+
+			String^ robotLista = cmbRobots->Text;
+			String^ nombreRobot = robotLista;
+			int indexParentesis = robotLista->IndexOf('(');
+			if (indexParentesis > 0) {
+				nombreRobot = robotLista->Substring(0, indexParentesis)->Trim();
+			}
+
+			Robot^ robotSeleccionado = Service::buscarRobotNombre(nombreRobot);
+			if (robotSeleccionado != nullptr) {
+				// Habilitar el botón solo si:
+				// - El robot está disponible Y el destino no es BASE
+				// - O el robot NO está disponible Y el destino es BASE
+				btnRobots->Enabled = (robotSeleccionado->Disponibilidad && cmbLugares->Text->ToUpper() != "BASE") ||
+					(!robotSeleccionado->Disponibilidad && cmbLugares->Text->ToUpper() == "BASE");
+			}
 		}
 		private: void ActualizarCaracteristicasRobot(Robot^ robot) {
 			txtCaracteristicas->Text = robot->Caracteristicas;
@@ -249,25 +303,72 @@ namespace GUIApp {
 			String^ lugarDestino = cmbLugares->Text;
 			String^ robotElegido = cmbRobots->Text;
 
-			Robot^ robot = Service::buscarRobotNombre(robotElegido);
-
-			if (robot->Disponibilidad == true) {
-				String^ mensaje = String::Format("Se ha enviado a {0} a {1}", robotElegido, lugarDestino);
-				robot->Zona = lugarDestino;
-				Service::modificarRobotID(robot);
-				MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
-			}
-			else if (lugarDestino == "BASE") {
-				robot->Zona = lugarDestino;
-				robot->Disponibilidad = true;
-				Service::modificarRobotID(robot);
-				MessageBox::Show("Regresando a la base", "Exito", MessageBoxButtons::OK);
-			}
-			else {
-				MessageBox::Show("El robot se encuentra ocupado", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			// Validar selecciones
+			if (String::IsNullOrEmpty(robotElegido)) {
+				MessageBox::Show("Por favor seleccione un robot", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 				return;
 			}
-			CargarListaRobots();
+
+			if (String::IsNullOrEmpty(lugarDestino)) {
+				MessageBox::Show("Por favor seleccione un lugar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			String^ nombreRobot = robotElegido;
+			int indexParentesis = robotElegido->IndexOf('(');
+			if (indexParentesis > 0) {
+				nombreRobot = robotElegido->Substring(0, indexParentesis)->Trim();
+			}
+
+			Robot^ robot = Service::buscarRobotNombre(nombreRobot);
+
+			if (robot == nullptr) {
+				MessageBox::Show("Robot no encontrado", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			// Si el destino es BASE
+			if (lugarDestino->ToUpper() == "BASE") {
+				robot->Zona = lugarDestino;
+				robot->Disponibilidad = true; // Hacerlo disponible
+				Service::modificarRobotID(robot);
+
+				String^ mensaje = String::Format("{0} ha regresado a la BASE", robotElegido);
+				MessageBox::Show(mensaje, "Éxito", MessageBoxButtons::OK);
+			}
+			// Si el destino NO es BASE
+			else {
+				// Verificar si el robot está disponible
+				if (robot->Disponibilidad == true) {
+					robot->Zona = lugarDestino;
+					robot->Disponibilidad = false; // Hacerlo NO disponible
+					Service::modificarRobotID(robot);
+
+					String^ mensaje = String::Format("Se ha enviado a {0} a {1}", robotElegido, lugarDestino);
+					MessageBox::Show(mensaje, "Éxito", MessageBoxButtons::OK);
+				}
+				else {
+					// Si el robot no está disponible y no va a BASE, mostrar error
+					if (robot->Zona != lugarDestino) {
+						MessageBox::Show("El robot se encuentra ocupado en " + robot->Zona +
+							". Solo puede ser enviado a BASE.",
+							"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+						return;
+					}
+					else {
+						// Si ya está en ese lugar, solo mostrar mensaje informativo
+						MessageBox::Show("El robot ya se encuentra en " + lugarDestino,
+							"Información", MessageBoxButtons::OK, MessageBoxIcon::Information);
+						return;
+					}
+				}
+			}
+
+			// Actualizar la interfaz
+			ActualizarCaracteristicasRobot(robot);
+			cmbRobots->SelectedIndex = -1;
+			cmbLugares->SelectedIndex = -1;
+			CargarListaRobots(); // Esto recargará la lista y mostrará el estado actualizado
 		}
 		private: void CargarListaLugares() {
 			List<ZonaTrabajo^>^ listaLugares = Service::GetZonas();
