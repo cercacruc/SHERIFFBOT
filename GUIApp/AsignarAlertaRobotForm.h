@@ -39,6 +39,13 @@ namespace GUIApp {
         System::Windows::Forms::Label^ label1;
         System::Windows::Forms::Label^ label2;
         System::Windows::Forms::Label^ label3;
+
+
+
+
+
+    private: System::Windows::Forms::TextBox^ txtDescripcion;
+    private: System::Windows::Forms::Label^ label4;
     private: System::Windows::Forms::DataGridViewTextBoxColumn^ RobotID;
     private: System::Windows::Forms::DataGridViewTextBoxColumn^ RobotNombre;
     private: System::Windows::Forms::DataGridViewTextBoxColumn^ AlertaAsignadaID;
@@ -57,6 +64,8 @@ namespace GUIApp {
             this->label1 = (gcnew System::Windows::Forms::Label());
             this->label2 = (gcnew System::Windows::Forms::Label());
             this->label3 = (gcnew System::Windows::Forms::Label());
+            this->txtDescripcion = (gcnew System::Windows::Forms::TextBox());
+            this->label4 = (gcnew System::Windows::Forms::Label());
             this->RobotID = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
             this->RobotNombre = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
             this->AlertaAsignadaID = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
@@ -80,10 +89,11 @@ namespace GUIApp {
             this->cmbAlertasPendientes->Name = L"cmbAlertasPendientes";
             this->cmbAlertasPendientes->Size = System::Drawing::Size(200, 24);
             this->cmbAlertasPendientes->TabIndex = 1;
+            this->cmbAlertasPendientes->SelectedIndexChanged += gcnew System::EventHandler(this, &AsignarAlertaRobotForm::cmbAlertasPendientes_SelectedIndexChanged);
             // 
             // btnAsignar
             // 
-            this->btnAsignar->Location = System::Drawing::Point(351, 20);
+            this->btnAsignar->Location = System::Drawing::Point(538, 20);
             this->btnAsignar->Name = L"btnAsignar";
             this->btnAsignar->Size = System::Drawing::Size(100, 30);
             this->btnAsignar->TabIndex = 2;
@@ -93,7 +103,7 @@ namespace GUIApp {
             // 
             // btnLiberar
             // 
-            this->btnLiberar->Location = System::Drawing::Point(351, 60);
+            this->btnLiberar->Location = System::Drawing::Point(538, 60);
             this->btnLiberar->Name = L"btnLiberar";
             this->btnLiberar->Size = System::Drawing::Size(100, 30);
             this->btnLiberar->TabIndex = 3;
@@ -103,7 +113,7 @@ namespace GUIApp {
             // 
             // btnSalir
             // 
-            this->btnSalir->Location = System::Drawing::Point(351, 100);
+            this->btnSalir->Location = System::Drawing::Point(538, 100);
             this->btnSalir->Name = L"btnSalir";
             this->btnSalir->Size = System::Drawing::Size(100, 30);
             this->btnSalir->TabIndex = 4;
@@ -122,7 +132,7 @@ namespace GUIApp {
             this->dgvAsignaciones->Name = L"dgvAsignaciones";
             this->dgvAsignaciones->RowHeadersVisible = false;
             this->dgvAsignaciones->RowHeadersWidth = 51;
-            this->dgvAsignaciones->Size = System::Drawing::Size(600, 200);
+            this->dgvAsignaciones->Size = System::Drawing::Size(618, 200);
             this->dgvAsignaciones->TabIndex = 5;
             // 
             // label1
@@ -152,12 +162,29 @@ namespace GUIApp {
             this->label3->TabIndex = 8;
             this->label3->Text = L"Asignaciones Actuales:";
             // 
+            // txtDescripcion
+            // 
+            this->txtDescripcion->Location = System::Drawing::Point(359, 24);
+            this->txtDescripcion->Multiline = true;
+            this->txtDescripcion->Name = L"txtDescripcion";
+            this->txtDescripcion->Size = System::Drawing::Size(173, 106);
+            this->txtDescripcion->TabIndex = 9;
+            // 
+            // label4
+            // 
+            this->label4->AutoSize = true;
+            this->label4->Location = System::Drawing::Point(356, 5);
+            this->label4->Name = L"label4";
+            this->label4->Size = System::Drawing::Size(82, 16);
+            this->label4->TabIndex = 10;
+            this->label4->Text = L"Descripción:";
+            // 
             // RobotID
             // 
             this->RobotID->HeaderText = L"ID";
             this->RobotID->MinimumWidth = 6;
             this->RobotID->Name = L"RobotID";
-            this->RobotID->Width = 125;
+            this->RobotID->Width = 25;
             // 
             // RobotNombre
             // 
@@ -192,6 +219,8 @@ namespace GUIApp {
             this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
             this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
             this->ClientSize = System::Drawing::Size(650, 370);
+            this->Controls->Add(this->label4);
+            this->Controls->Add(this->txtDescripcion);
             this->Controls->Add(this->label3);
             this->Controls->Add(this->label2);
             this->Controls->Add(this->label1);
@@ -250,7 +279,7 @@ namespace GUIApp {
 
                     if (!yaAsignada)
                     {
-                        String^ infoAlerta = alerta->TipoAlerta + " - ID: " + alerta->id + " - " + alerta->Description;
+                        String^ infoAlerta = alerta->TipoAlerta + " - ID: " + alerta->id;
                         cmbAlertasPendientes->Items->Add(infoAlerta);
                     }
                 }
@@ -299,6 +328,9 @@ namespace GUIApp {
                     if (asignado) {
                         MessageBox::Show("Alerta asignada al robot exitosamente", "Éxito", MessageBoxButtons::OK);
                         CargarDatos(); // Recargar la lista
+                        cmbAlertasPendientes->SelectedIndex = -1;
+                        cmbRobots->SelectedIndex = -1;
+                        txtDescripcion->Clear();
                     }
                 }
                 catch (Exception^ ex)
@@ -324,6 +356,9 @@ namespace GUIApp {
                     if (liberado) {
                         MessageBox::Show("Robot liberado exitosamente", "Éxito", MessageBoxButtons::OK);
                         CargarDatos(); // Recargar la lista
+                        cmbAlertasPendientes->SelectedIndex = -1;
+                        cmbRobots->SelectedIndex = -1;
+                        txtDescripcion->Clear();
                     }
                 }
                 catch (Exception^ ex)
@@ -370,5 +405,29 @@ namespace GUIApp {
         private: System::Void AsignarAlertaRobotForm_Load(System::Object^ sender, System::EventArgs^ e) {
             CargarDatos();
         }
-    };
+        private: System::Void cmbAlertasPendientes_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+            if (cmbAlertasPendientes->SelectedIndex != -1)
+            {
+                try
+                {
+                    int alertaID = ExtraerID(cmbAlertasPendientes->SelectedItem->ToString());
+                    Alert^ alertaSeleccionada = Service::buscarAlerta(alertaID);
+
+                    if (alertaSeleccionada != nullptr)
+                    {
+                        // MOSTRAR LA DESCRIPCIÓN EN EL TEXTBOX
+                        txtDescripcion->Text = alertaSeleccionada->Description;
+                    }
+                }
+                catch (Exception^ ex)
+                {
+                    txtDescripcion->Text = "Error al cargar descripción: " + ex->Message;
+                }
+            }
+            else
+            {
+                txtDescripcion->Clear();
+            }
+        }
+};
 }

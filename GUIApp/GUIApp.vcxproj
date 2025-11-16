@@ -265,6 +265,12 @@
     <EmbeddedResource Include="AsignarAlertaRobotForm.resx">
       <DependentUpon>AsignarAlertaRobotForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GraficsAdminForm.resx">
+      <DependentUpon>GraficsAdminForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraficsUsersForm.resx">
+      <DependentUpon>GraficsUsersForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TasksRobotsForm.resx">
       <DependentUpon>TasksRobotsForm.h</DependentUpon>
     </EmbeddedResource>
