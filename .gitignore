@@ -361,12 +361,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-
-/vcpkg_installed/
-/buildtrees/
-/packages/
-/downloads/
-/x64/
-/Debug/
-/Release/
-/.vs/
