@@ -3,6 +3,7 @@
 using namespace System;
 using namespace BotModel;
 using namespace System::Collections::Generic;
+using namespace System::Data::SqlClient;
 
 namespace BotPersistance {
 	public ref class Persistance {
@@ -99,5 +100,23 @@ namespace BotPersistance {
 		static bool LiberarRobot(int robotID);
 		static List<Alert^>^ GetAlertasPendientes();
 		static bool MarcarAlertaSolucionada(int alertaID);
+
+		//SQL Service
+	private:
+		static SqlConnection^ objConexion = gcnew SqlConnection();
+	public:
+		static SqlConnection^ getObjConexion();
+		static void abrirConexion();
+		static int insertSql(String^ sSql);
+		static bool executeSql(String^ sSql);
+		static void cerrarConexion();
+
+		//Funciones de ejecutar procedimientos
+		static int executeStoredProcedure(String^ procedureName, array<SqlParameter^>^ parameters);
+		static SqlDataReader^ executeStoredProcedureReader(String^ procedureName, array<SqlParameter^>^ parameters);
+		static bool executeStoredProcedureNonQuery(String^ procedureName, array<SqlParameter^>^ parameters);
+
+
+
 	};
 }

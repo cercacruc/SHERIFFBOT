@@ -740,6 +740,141 @@ bool BotPersistance::Persistance::MarcarAlertaSolucionada(int alertaID)
     return false;
 }
 
+SqlConnection^ BotPersistance::Persistance::getObjConexion()
+{
+    return objConexion;
+}
+
+void BotPersistance::Persistance::abrirConexion()
+{
+    try {
+        // Verificar si objConexion es null y crear nueva instancia
+        if (objConexion == nullptr) {
+            objConexion = gcnew SqlConnection();
+        }
+
+        // Si ya está abierta, no hacer nada
+        if (objConexion->State == System::Data::ConnectionState::Open) {
+            return;
+        }
+        objConexion->ConnectionString = "Server=200.16.7.140;DataBase='BDDeUnHijitoBueno';User id='UsuarioDeUnHijitoBueno';Password='w2RzV77V'SuClave'";
+
+        objConexion->Open();
+    }
+    catch (Exception^ ex) {
+        throw gcnew Exception("Error al abrir conexión: " + ex->Message);
+    }
+}
+
+int BotPersistance::Persistance::insertSql(String^ sSql)
+{
+    try {
+        abrirConexion();
+        SqlCommand^ comando = gcnew SqlCommand(sSql, getObjConexion());
+        int idPK = Convert::ToInt32(comando->ExecuteScalar());
+        cerrarConexion();
+        return idPK;
+    }
+    catch (Exception^ ex) {
+        throw ex;
+        return 0;
+    }
+}
+
+bool BotPersistance::Persistance::executeSql(String^ sSql)
+{
+    try {
+        abrirConexion();
+        SqlCommand^ comando = gcnew SqlCommand(sSql, getObjConexion());
+        comando->ExecuteNonQuery();
+        cerrarConexion();
+        return true;
+    }
+    catch (Exception^ ex) {
+        throw ex;
+        return false;
+    }
+}
+
+void BotPersistance::Persistance::cerrarConexion()
+{
+    try {
+        if (objConexion != nullptr && objConexion->State == System::Data::ConnectionState::Open) {
+            objConexion->Close();
+        }
+    }
+    catch (Exception^ ex) {
+        throw ex;
+    }
+}
+
+int BotPersistance::Persistance::executeStoredProcedure(String^ procedureName, array<SqlParameter^>^ parameters)
+{
+    try {
+        abrirConexion();
+        SqlCommand^ comando = gcnew SqlCommand(procedureName, getObjConexion());
+        comando->CommandType = System::Data::CommandType::StoredProcedure;
+
+        if (parameters != nullptr) {
+            for each (SqlParameter ^ param in parameters) {
+                comando->Parameters->Add(param);
+            }
+        }
+
+        int result = Convert::ToInt32(comando->ExecuteScalar());
+        cerrarConexion();
+        return result;
+    }
+    catch (Exception^ ex) {
+        cerrarConexion();
+        throw ex;
+    }
+}
+
+SqlDataReader^ BotPersistance::Persistance::executeStoredProcedureReader(String^ procedureName, array<SqlParameter^>^ parameters)
+{
+    try {
+        abrirConexion();
+        SqlCommand^ comando = gcnew SqlCommand(procedureName, getObjConexion());
+        comando->CommandType = System::Data::CommandType::StoredProcedure;
+
+        if (parameters != nullptr) {
+            for each (SqlParameter ^ param in parameters) {
+                comando->Parameters->Add(param);
+            }
+        }
+
+        return comando->ExecuteReader();
+    }
+    catch (Exception^ ex) {
+        cerrarConexion();
+        throw ex;
+    }
+}
+
+bool BotPersistance::Persistance::executeStoredProcedureNonQuery(String^ procedureName, array<SqlParameter^>^ parameters)
+{
+    try {
+        abrirConexion();
+        SqlCommand^ comando = gcnew SqlCommand(procedureName, getObjConexion());
+        comando->CommandType = System::Data::CommandType::StoredProcedure;
+
+        if (parameters != nullptr) {
+            for each (SqlParameter ^ param in parameters) {
+                comando->Parameters->Add(param);
+            }
+        }
+
+        comando->ExecuteNonQuery();
+
+        return true;
+    }
+    catch (Exception^ ex) {
+        cerrarConexion();
+        throw ex;
+    }
+}
+
 List<Alert^>^ BotPersistance::Persistance::ShowAlertas()
 {
     listaReportesAlertas = (List<Alert^>^)LoadBinaryFile(fileBinAlertReport);
