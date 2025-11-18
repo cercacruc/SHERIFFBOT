@@ -334,12 +334,14 @@ namespace GUIApp {
 		}
 		private: System::Void btnAdelante_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Encender LED cuando se presiona el botón
-			Service::ComandoLED(1, true);
+			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+				Service::ComandoLED(1, true);
 		}
 
 		private: System::Void btnAdelante_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Apagar LED cuando se suelta el botón
-			Service::ComandoLED(1, false);
+			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+				Service::ComandoLED(1, false);
 		}
 		private: System::Void btnAdelante_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
 			// Apagar LED si el mouse sale del botón mientras está presionado
@@ -349,11 +351,13 @@ namespace GUIApp {
 		}
 		private: System::Void btnAtras_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Encender LED cuando se presiona el botón
-			Service::ComandoLED(2, true);
+			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+				Service::ComandoLED(2, true);
 		}
 		private: System::Void btnAtras_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Apagar LED cuando se suelta el botón
-			Service::ComandoLED(2, false);
+			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+				Service::ComandoLED(2, false);
 		}
 		private: System::Void btnAtras_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
 			// Apagar LED si el mouse sale del botón mientras está presionado
@@ -363,11 +367,13 @@ namespace GUIApp {
 		}
 		private: System::Void btnRight_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Encender LED cuando se presiona el botón
-			Service::ComandoLED(3, true);
+			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+				Service::ComandoLED(3, true);
 		}
 		private: System::Void btnRight_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Apagar LED cuando se suelta el botón
-			Service::ComandoLED(3, false);
+			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+				Service::ComandoLED(3, false);
 		}
 		private: System::Void btnRight_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
 			// Apagar LED si el mouse sale del botón mientras está presionado
@@ -377,11 +383,13 @@ namespace GUIApp {
 		}
 		private: System::Void btnLeft_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Encender LED cuando se presiona el botón
-			Service::ComandoLED(4, true);
+			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+				Service::ComandoLED(4, true);
 		}
 		private: System::Void btnLeft_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Apagar LED cuando se suelta el botón
-			Service::ComandoLED(4, false);
+			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+				Service::ComandoLED(4, false);
 		}
 		private: System::Void btnLeft_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
 			// Apagar LED si el mouse sale del botón mientras está presionado
@@ -391,11 +399,13 @@ namespace GUIApp {
 		}
 		private: System::Void giroDerecha_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Encender LED cuando se presiona el botón
-			Service::ComandoLED(5, true);
+			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+				Service::ComandoLED(5, true);
 		}
 		private: System::Void giroDerecha_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Apagar LED cuando se suelta el botón
-			Service::ComandoLED(5, false);
+			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+				Service::ComandoLED(5, false);
 		}
 		private: System::Void giroDerecha_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
 			// Apagar LED si el mouse sale del botón mientras está presionado
@@ -405,11 +415,13 @@ namespace GUIApp {
 		}
 		private: System::Void giroIzquierda_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Encender LED cuando se presiona el botón
-			Service::ComandoLED(6, true);
+			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+				Service::ComandoLED(6, true);
 		}
 		private: System::Void giroIzquierda_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Apagar LED cuando se suelta el botón
-			Service::ComandoLED(6, false);
+			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+				Service::ComandoLED(6, false);
 		}
 		private: System::Void giroIzquierda_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
 			// Apagar LED si el mouse sale del botón mientras está presionado
@@ -498,6 +510,7 @@ namespace GUIApp {
 		}
 		private: System::Void ControlRobotForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
 			this->DesactivarCamara();
+			Service::DesconectarArduino();
 		}
 		private: System::Void DesactivarCamara() {
 			this->isClosing = true;
