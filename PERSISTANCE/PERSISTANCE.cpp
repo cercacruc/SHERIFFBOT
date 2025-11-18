@@ -12,6 +12,26 @@ void BotPersistance::Persistance::registrarRobot(Robot^ robot) {
     listaRobots->Add(robot);
     //PersistTextFileRobots(fileRobotName, listaRobots);
     PersistBinaryFile(fileBinRobots, listaRobots);
+
+    /* SQL
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^>
+        {
+            gcnew SqlParameter("@Nombre", robot->Nombre),
+            gcnew SqlParameter("@Zona", robot->Zona),
+            gcnew SqlParameter("@Bateria", robot->Bateria),
+            gcnew SqlParameter("@PosicionX", robot->PosicionRobot->x),
+            gcnew SqlParameter("@PosicionY", robot->PosicionRobot->y)
+        };
+
+        executeStoredProcedure("usp_AddRobot", params);
+    }
+    catch (Exception^ ex)
+    {
+        throw gcnew Exception("Error registrando robot: " + ex->Message);
+    }
+    */
 }
 Robot^ BotPersistance::Persistance::buscarRobotID(int id) {
     for each (Robot ^ robot in listaRobots) {
@@ -39,6 +59,22 @@ bool BotPersistance::Persistance::borrarRobotID(int id) {
         }
     }
     return false;
+
+    /* SQL
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^>
+        {
+            gcnew SqlParameter("@ID", id)
+        };
+
+        return executeStoredProcedureNonQuery("usp_DeleteRobot", params);
+    }
+    catch (Exception^ ex)
+    {
+        throw gcnew Exception("Error eliminando robot: " + ex->Message);
+    }
+    */
 }
 bool BotPersistance::Persistance::borrarRobotNombre(String^ nombre) {
     for (int i = 0; i < listaRobots->Count; i++) {
@@ -61,6 +97,27 @@ int BotPersistance::Persistance::modificarRobotID(Robot^ robot) {
         }
     }
     return 0;
+
+    /* SQL
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^>
+        {
+            gcnew SqlParameter("@ID", robot->ID),
+            gcnew SqlParameter("@Nombre", robot->Nombre),
+            gcnew SqlParameter("@Zona", robot->Zona),
+            gcnew SqlParameter("@Bateria", robot->Bateria),
+            gcnew SqlParameter("@PosicionX", robot->PosicionRobot->x),
+            gcnew SqlParameter("@PosicionY", robot->PosicionRobot->y)
+        };
+
+        return executeStoredProcedure("usp_UpdateRobot", params);
+    }
+    catch (Exception^ ex)
+    {
+        throw gcnew Exception("Error modificando robot: " + ex->Message);
+    }
+    */
 }
 List <Robot^>^ BotPersistance::Persistance::GetRobots() {
     Object^ res = LoadBinaryFile(fileBinRobots);
@@ -69,9 +126,43 @@ List <Robot^>^ BotPersistance::Persistance::GetRobots() {
         listaRobots = (List<Robot^>^)res;
     }
     return listaRobots;
+
+    /* SQL
+    List<Robot^>^ lista = gcnew List<Robot^>();
+
+    try
+    {
+        SqlDataReader^ reader = executeStoredProcedureReader("usp_GetAllRobots", nullptr);
+
+        while (reader->Read())
+        {
+            Robot^ r = gcnew Robot();
+
+            r->ID = reader->GetInt32(0);
+            r->Nombre = reader->GetString(1);
+            r->Zona = reader->GetString(2);
+            r->Bateria = reader->GetInt32(3);
+
+            double px = reader->GetDouble(4);
+            double py = reader->GetDouble(5);
+
+            r->PosicionRobot = gcnew Point(px, py, r->Zona);
+
+            lista->Add(r);
+        }
+
+        reader->Close();
+        cerrarConexion();
+
+        return lista;
+    }
+    catch (Exception^ ex)
+    {
+        cerrarConexion();
+        throw gcnew Exception("Error obteniendo robots: " + ex->Message);
+    }
+    */
 }
-
-
 
 //funciones de usuario en persistance
 void BotPersistance::Persistance::registrarUsuario(DatosUsuario^ user) {
@@ -88,6 +179,21 @@ void BotPersistance::Persistance::registrarUsuario(DatosUsuario^ user) {
 
     //PersistTextFileUsers(fileUsersName, todosUsuarios);
     PersistBinaryFile(fileBinUsers, todosUsuarios);
+
+    /* SQL
+    array<SqlParameter^>^ params = {
+        gcnew SqlParameter("@Nombre", user->Nombre),
+        gcnew SqlParameter("@Contra", user->Contra),
+        gcnew SqlParameter("@Cargo", user->Cargo),
+        gcnew SqlParameter("@Cant1", user->cant_alertas[0]),
+        gcnew SqlParameter("@Cant2", user->cant_alertas[1]),
+        gcnew SqlParameter("@Cant3", user->cant_alertas[2])
+    };
+
+    int newID = executeStoredProcedure("usp_RegistrarUsuario", params);
+
+    user->ID = newID;  // Guardamos el ID generado por SQL
+    */
 }
 int BotPersistance::Persistance::generarAutoID(String^ cargo) {
     String^ prefijo = nullptr;
@@ -159,6 +265,48 @@ DatosUsuario^ BotPersistance::Persistance::buscarUsuarioCredenciales(String^ nom
         }
     }
     return nullptr;
+
+    /* Reemplazar para leer usuarios desde SQL
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^>
+        {
+            gcnew SqlParameter("@Nombre", nombre),
+            gcnew SqlParameter("@Contra", contra)
+        };
+
+        SqlDataReader^ reader = executeStoredProcedureReader("usp_LoginUser", params);
+
+        if (reader->Read())
+        {
+            DatosUsuario^ u = gcnew DatosUsuario();
+
+            u->ID = reader->GetInt32(0);
+            u->Nombre = reader->GetString(1);
+            u->Contra = reader->GetString(2);
+            u->Cargo = reader->GetString(3);
+
+            array<int>^ alertas = gcnew array<int>(3);
+            alertas[0] = reader->GetInt32(4); // Perdidas
+            alertas[1] = reader->GetInt32(5); // Altercados
+            alertas[2] = reader->GetInt32(6); // Reportes_dti
+            u->cant_alertas = alertas;
+
+            reader->Close();
+            cerrarConexion();
+            return u;
+        }
+
+        reader->Close();
+        cerrarConexion();
+        return nullptr;
+    }
+    catch (Exception^ ex)
+    {
+        cerrarConexion();
+        throw gcnew Exception("Error buscando credenciales: " + ex->Message);
+    }
+    */
 }
 bool BotPersistance::Persistance::borrarUsuarioID(int id) {
     for (int i = 0; i < listaUsuarios->Count; i++) {
@@ -170,6 +318,14 @@ bool BotPersistance::Persistance::borrarUsuarioID(int id) {
         }
     }
     return false;
+
+    /* SQL
+    array<SqlParameter^>^ params = {
+        gcnew SqlParameter("@ID", id)
+    };
+
+    return executeStoredProcedureNonQuery("usp_BorrarUsuario", params);
+    */
 }
 bool BotPersistance::Persistance::borrarUsuarioNombre(String^ nombre) {
     for (int i = 0; i < listaUsuarios->Count; i++) {
@@ -215,6 +371,22 @@ int BotPersistance::Persistance::modificarUsuarioID(DatosUsuario^ usuario) {
         }
     }
     return 0;
+
+    /* SQL
+    array<SqlParameter^>^ params = {
+        gcnew SqlParameter("@ID", usuario->ID),
+        gcnew SqlParameter("@Nombre", usuario->Nombre),
+        gcnew SqlParameter("@Contra", usuario->Contra),
+        gcnew SqlParameter("@Cargo", usuario->Cargo),
+        gcnew SqlParameter("@Cant1", usuario->cant_alertas[0]),
+        gcnew SqlParameter("@Cant2", usuario->cant_alertas[1]),
+        gcnew SqlParameter("@Cant3", usuario->cant_alertas[2])
+    };
+
+    // ExecuteNonQuery no devuelve filas, así que devolvemos 1 si fue exitoso
+    executeStoredProcedureNonQuery("usp_ModificarUsuario", params);
+    return 1;
+    */
 }
 List <DatosUsuario^>^ BotPersistance::Persistance::GetUsuarios() {
     if (listaUsuarios->Count == 0) {
@@ -225,6 +397,35 @@ List <DatosUsuario^>^ BotPersistance::Persistance::GetUsuarios() {
         }
     }
     return listaUsuarios;
+
+    /* SQL
+    List<DatosUsuario^>^ lista = gcnew List<DatosUsuario^>();
+
+    SqlDataReader^ dr = executeStoredProcedureReader("usp_QueryAllUsers", nullptr);
+
+    while (dr->Read()) {
+
+        DatosUsuario^ u = gcnew DatosUsuario();
+
+        u->ID = dr->GetInt32(0);
+        u->Nombre = dr->GetString(1);
+        u->Contra = dr->GetString(2);
+        u->Cargo = dr->GetString(3);
+
+        // Cantidades de alertas
+        u->cant_alertas = gcnew array<int>(3);
+        u->cant_alertas[0] = dr->GetInt32(4); // Perdidas
+        u->cant_alertas[1] = dr->GetInt32(5); // Altercados
+        u->cant_alertas[2] = dr->GetInt32(6); // Reportes DTI
+
+        lista->Add(u);
+    }
+
+    dr->Close();
+    cerrarConexion();
+
+    return lista;
+    */
 }
 
 

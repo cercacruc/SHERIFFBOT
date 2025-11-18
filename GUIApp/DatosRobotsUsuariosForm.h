@@ -703,6 +703,32 @@ namespace GUIApp {
 
 		}
 #pragma endregion
+		void cargarTablaRobots()
+		{
+			try
+			{
+				dgvRobot->Rows->Clear();
+
+				List<Robot^>^ lista = Service::GetRobots();
+
+				for each (Robot ^ r in lista)
+				{
+					dgvRobot->Rows->Add(
+						r->ID,
+						r->Nombre,
+						r->Zona,
+						r->Bateria,
+						r->PosicionRobot->x,
+						r->PosicionRobot->y
+					);
+				}
+			}
+			catch (Exception^ ex)
+			{
+				MessageBox::Show("Error cargando robots: " + ex->Message);
+			}
+		}
+
 	private: System::Void btnAddRobot_Click(System::Object^ sender, System::EventArgs^ e) {
 		try {
 			if (String::IsNullOrEmpty(IDRobot->Text) || String::IsNullOrEmpty(NombreRobot->Text)) {
@@ -753,6 +779,31 @@ namespace GUIApp {
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al agregar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
+
+		/* SQL
+		try
+		{
+			Robot^ r = gcnew Robot();
+
+			r->Nombre = NombreRobot->Text;
+			r->Zona = ZonaRobot->Text;
+			r->Bateria = Convert::ToInt32(BateriaRobot->Text);
+
+			double px = Convert::ToDouble(XRobot->Text);
+			double py = Convert::ToDouble(YRobot->Text);
+
+			r->PosicionRobot = gcnew BotModel::Point(px, py, r->Zona);
+
+			Service::registrarRobot(r);
+
+			MessageBox::Show("Robot agregado correctamente.");
+			cargarTablaRobots();
+		}
+		catch (Exception^ ex)
+		{
+			MessageBox::Show("Error al agregar robot: " + ex->Message);
+		}
+		*/
 	}
 	private: System::Void btnModifyRobot_Click(System::Object^ sender, System::EventArgs^ e) {
 		try {
@@ -804,6 +855,32 @@ namespace GUIApp {
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al modificar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
+
+		/* SQL
+		try
+		{
+			Robot^ r = gcnew Robot();
+
+			r->ID = Convert::ToInt32(IDRobot->Text);
+			r->Nombre = NombreRobot->Text;
+			r->Zona = ZonaRobot->Text;
+			r->Bateria = Convert::ToInt32(BateriaRobot->Text);
+
+			double px = Convert::ToDouble(XRobot->Text);
+			double py = Convert::ToDouble(YRobot->Text);
+
+			r->PosicionRobot = gcnew BotModel::Point(px, py, r->Zona);
+
+			Service::modificarRobotID(r);
+
+			MessageBox::Show("Robot modificado correctamente.");
+			cargarTablaRobots();
+		}
+		catch (Exception^ ex)
+		{
+			MessageBox::Show("Error al modificar robot: " + ex->Message);
+		}
+		*/
 	}
 	private: System::Void btnDeleteRobot_Click(System::Object^ sender, System::EventArgs^ e) {
 		String^ robotID = IDRobot->Text->Trim();
@@ -829,6 +906,22 @@ namespace GUIApp {
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al eliminar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
+
+		/* SQL
+		try
+		{
+			int id = Convert::ToInt32(IDRobot->Text);
+
+			Service::borrarRobotID(id);
+
+			MessageBox::Show("Robot eliminado correctamente.");
+			cargarTablaRobots();
+		}
+		catch (Exception^ ex)
+		{
+			MessageBox::Show("Error al eliminar robot: " + ex->Message);
+		}
+		*/
 	}
 	private: System::Void pbPhoto_Click(System::Object^ sender, System::EventArgs^ e) {
 		SearchAndPutImagenOn(pbPhotoRobot);
@@ -910,6 +1003,26 @@ namespace GUIApp {
 			rbtnDisponibilidadNo->Checked = false;
 
 		}
+	private: void actualizarTablaUsuarios() {
+		List<DatosUsuario^>^ lista = BotService::Service::GetUsuarios();
+
+		dgvUser->Rows->Clear();
+
+		for each (DatosUsuario ^ u in lista) {
+
+			dgvUser->Rows->Add(
+				u->ID,
+				u->Nombre,
+				u->Contra,
+				u->Cargo,
+
+				// Mostrar cantidades directamente desde cant_alertas
+				u->cant_alertas[0],
+				u->cant_alertas[1],
+				u->cant_alertas[2]
+			);
+		}
+	}
 	private: System::Void btnAddUser_Click(System::Object^ sender, System::EventArgs^ e) {
 		try {
 			if (String::IsNullOrEmpty(IDUser->Text) || String::IsNullOrEmpty(NombreUser->Text) ||
@@ -945,6 +1058,30 @@ namespace GUIApp {
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al agregar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
+
+		/* SQL
+		try
+		{
+			DatosUsuario^ user = gcnew DatosUsuario();
+
+			user->Nombre = NombreUser->Text;
+			user->Contra = PasswordUser->Text;
+			user->Cargo = CargoUser->Text;
+
+			// Cantidades INICIALES en 0
+			user->cant_alertas = gcnew array<int>(3) { 0, 0, 0 };
+
+			Service::registrarUsuario(user);
+
+			MessageBox::Show("Usuario registrado correctamente.");
+
+			actualizarTablaUsuarios();
+		}
+		catch (Exception^ ex)
+		{
+			MessageBox::Show("Error al registrar usuario: " + ex->Message);
+		}
+		*/
 	}
 	private: System::Void btnModifyUser_Click(System::Object^ sender, System::EventArgs^ e) {
 		try {
@@ -971,6 +1108,39 @@ namespace GUIApp {
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al modificar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
+
+		/* SQL
+		try
+		{
+			int id = Convert::ToInt32(IDUser->Text);
+
+			DatosUsuario^ userActual = Service::buscarUsuarioID(id);
+			if (userActual == nullptr)
+			{
+				MessageBox::Show("Usuario no encontrado.");
+				return;
+			}
+
+			DatosUsuario^ user = gcnew DatosUsuario();
+			user->ID = id;
+			user->Nombre = NombreUser->Text;
+			user->Contra = PasswordUser->Text;
+			user->Cargo = CargoUser->Text;
+
+			// Mantener las cantidades existentes
+			user->cant_alertas = userActual->cant_alertas;
+
+			Service::modificarUsuarioID(user);
+
+			MessageBox::Show("Usuario modificado correctamente.");
+
+			actualizarTablaUsuarios();
+		}
+		catch (Exception^ ex)
+		{
+			MessageBox::Show("Error al modificar usuario: " + ex->Message);
+		}
+		*/
 	}
 	private: System::Void btnDeleteUser_Click(System::Object^ sender, System::EventArgs^ e) {
 		String^ UsuarioName = NombreUser->Text->Trim();
@@ -998,6 +1168,26 @@ namespace GUIApp {
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al eliminar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
+
+		/* SQL
+		try
+		{
+			int id = Convert::ToInt32(IDUser->Text);
+
+			bool eliminado = Service::borrarUsuarioID(id);
+
+			if (eliminado)
+				MessageBox::Show("Usuario eliminado correctamente.");
+			else
+				MessageBox::Show("No se pudo eliminar el usuario.");
+
+			actualizarTablaUsuarios();
+		}
+		catch (Exception^ ex)
+		{
+			MessageBox::Show("Error al eliminar usuario: " + ex->Message);
+		}
+		*/
 	}
 	private: System::Void dgvUser_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
 		int usuarioID = Int32::Parse(dgvUser->Rows[dgvUser->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
