@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 
 #include "SERVICE.h"
 
@@ -144,7 +144,243 @@ List<Alert^>^ BotService::Service::GetAlertasPendientes() {
 	return Persistance::GetAlertasPendientes();
 }
 
-//Cosas para la conexi�n con el carro
+// Conexión con Arduino
+bool BotService::Service::ConectarArduino()
+{
+	int intentos = 0;
+	const int maxIntentos = 3;
+
+	while (intentos < maxIntentos) {
+		try {
+			intentos++;
+			Console::WriteLine("🔄 Intento de conexión " + intentos + "/" + maxIntentos);
+
+			// Si ya está conectado, retornar true
+			if (ArduinoPort != nullptr && ArduinoPort->IsOpen) {
+				Console::WriteLine("✅ Arduino ya está conectado en " + ArduinoPort->PortName);
+				return true;
+			}
+
+			// Cerrar puerto si existe pero está cerrado
+			if (ArduinoPort != nullptr) {
+				delete ArduinoPort;
+				ArduinoPort = nullptr;
+				System::Threading::Thread::Sleep(500); // Pequeña pausa
+			}
+
+			// Intentar conexión en COM3
+			String^ puertoDeseado = "COM3";
+			Console::WriteLine("🎯 Intentando conectar en: " + puertoDeseado);
+
+			ArduinoPort = gcnew SerialPort();
+			ArduinoPort->PortName = puertoDeseado;
+			ArduinoPort->BaudRate = 9600;
+			ArduinoPort->Parity = Parity::None;
+			ArduinoPort->DataBits = 8;
+			ArduinoPort->StopBits = StopBits::One;
+			ArduinoPort->Handshake = Handshake::None;
+			ArduinoPort->ReadTimeout = 2000;
+			ArduinoPort->WriteTimeout = 2000;
+
+			// Intentar abrir el puerto
+			ArduinoPort->Open();
+
+			Console::WriteLine("✅ Puerto " + puertoDeseado + " abierto exitosamente");
+
+			// Esperar para inicialización del Arduino
+			System::Threading::Thread::Sleep(3000);
+
+			// Limpiar buffers
+			ArduinoPort->DiscardInBuffer();
+			ArduinoPort->DiscardOutBuffer();
+
+			// Probar comunicación
+			ArduinoPort->WriteLine("TEST");
+			System::Threading::Thread::Sleep(1000);
+
+			// Intentar leer respuesta
+			if (ArduinoPort->BytesToRead > 0) {
+				String^ respuesta = ArduinoPort->ReadLine();
+				Console::WriteLine("✅ Arduino responde: " + respuesta);
+			}
+			else {
+				Console::WriteLine("⚠️  Arduino conectado pero no responde (continuando...)");
+			}
+
+			Console::WriteLine("🎉 Conexión con Arduino establecida exitosamente");
+			return true;
+		}
+		catch (Exception^ ex) {
+			Console::WriteLine("❌ Error en intento " + intentos + ": " + ex->Message);
+
+			// Cerrar puerto si está abierto
+			if (ArduinoPort != nullptr) {
+				try {
+					if (ArduinoPort->IsOpen) {
+						ArduinoPort->Close();
+					}
+					delete ArduinoPort;
+					ArduinoPort = nullptr;
+				}
+				catch (...) {
+					// Ignorar errores al limpiar
+				}
+			}
+
+			// Si es error de acceso denegado, esperar y reintentar
+			if (ex->Message->Contains("denegado") || ex->Message->Contains("acceso")) {
+				Console::WriteLine("💡 Puerto ocupado, reintentando en 2 segundos...");
+				System::Threading::Thread::Sleep(2000);
+			}
+			else {
+				// Otro tipo de error, no reintentar
+				break;
+			}
+		}
+	}
+
+	Console::WriteLine("❌ No se pudo conectar después de " + maxIntentos + " intentos");
+	return false;
+}
+
+bool BotService::Service::DesconectarArduino()
+{
+    try {
+        if (ArduinoPort != nullptr && ArduinoPort->IsOpen) {
+            ArduinoPort->Close();
+            Console::WriteLine("Desconectado de Arduino");
+        }
+        return true;
+    }
+    catch (Exception^ ex) {
+        Console::WriteLine("Error desconectando Arduino: " + ex->Message);
+        return false;
+    }
+}
+
+bool BotService::Service::EnviarComandoArduino(String^ comando)
+{
+    try {
+        if (ArduinoPort == nullptr || !ArduinoPort->IsOpen) {
+            if (!ConectarArduino()) {
+                return false;
+            }
+        }
+
+        // Enviar comando con terminación de nueva línea
+        ArduinoPort->WriteLine(comando);
+        Console::WriteLine("Comando enviado a Arduino: " + comando);
+
+        // Opcional: Leer respuesta de Arduino
+        System::Threading::Thread::Sleep(100); // Pequeña pausa para que Arduino procese
+        
+        if (ArduinoPort->BytesToRead > 0) {
+            String^ respuesta = ArduinoPort->ReadLine();
+            Console::WriteLine("Arduino responde: " + respuesta);
+        }
+
+        return true;
+    }
+    catch (Exception^ ex) {
+        Console::WriteLine("Error enviando comando a Arduino: " + ex->Message);
+        return false;
+    }
+}
+
+bool BotService::Service::EncenderLED()
+{
+    return EnviarComandoArduino("LED_ON");
+}
+
+bool BotService::Service::ApagarLED()
+{
+    return EnviarComandoArduino("LED_OFF");
+}
+
+bool BotService::Service::IsArduinoConectado()
+{
+    return (ArduinoPort != nullptr && ArduinoPort->IsOpen);
+}
+
+bool BotService::Service::LiberarPuertoCOM3()
+{
+	try {
+		// Cerrar conexión actual si existe
+		if (ArduinoPort != nullptr) {
+			if (ArduinoPort->IsOpen) {
+				ArduinoPort->Close();
+				Console::WriteLine("✅ Puerto COM3 cerrado");
+			}
+			delete ArduinoPort;
+			ArduinoPort = nullptr;
+		}
+
+		// Pequeña pausa para que el sistema libere el puerto
+		System::Threading::Thread::Sleep(1000);
+		return true;
+	}
+	catch (Exception^ ex) {
+		Console::WriteLine("❌ Error liberando puerto: " + ex->Message);
+		return false;
+	}
+}
+bool BotService::Service::EnviarComandoDirecto(String^ comando)
+{
+	try {
+		if (ArduinoPort == nullptr || !ArduinoPort->IsOpen) {
+			if (!ConectarArduino()) {
+				Console::WriteLine("❌ No se pudo conectar al Arduino para enviar comando: " + comando);
+				return false;
+			}
+		}
+
+		// Enviar comando directo
+		ArduinoPort->WriteLine(comando);
+		Console::WriteLine("📤 Comando enviado: " + comando);
+
+		// Pequeña pausa para procesamiento
+		System::Threading::Thread::Sleep(100);
+
+		// Leer respuesta si hay
+		if (ArduinoPort->BytesToRead > 0) {
+			String^ respuesta = ArduinoPort->ReadLine();
+			Console::WriteLine("📥 Arduino responde: " + respuesta);
+		}
+
+		return true;
+	}
+	catch (Exception^ ex) {
+		Console::WriteLine("❌ Error enviando comando '" + comando + "': " + ex->Message);
+		return false;
+	}
+}
+
+// Comando específico para LEDs
+bool BotService::Service::ComandoLED(int numero, bool encender)
+{
+	if (numero < 1 || numero > 6) {
+		Console::WriteLine("❌ Número de LED debe ser entre 1 y 6");
+		return false;
+	}
+
+	String^ comando = String::Format("LED{0}_{1}", numero, encender ? "ON" : "OFF");
+	return EnviarComandoDirecto(comando);
+}
+
+// Comando para todos los LEDs
+bool BotService::Service::ComandoTodosLEDs(bool encender)
+{
+	String^ comando = encender ? "ALL_ON" : "ALL_OFF";
+	return EnviarComandoDirecto(comando);
+}
+
+// Comando de prueba
+bool BotService::Service::ComandoTest()
+{
+	return EnviarComandoDirecto("TEST");
+}
+
+//Cosas para la conexión con el carro
 BotService::MQTTClient::MQTTClient() {
 	brokerUrl = "ws://broker.hivemq.com:8884/mqtt";
 	conectado = false;
@@ -174,7 +410,7 @@ bool BotService::MQTTClient::Conectar()
 		}
 		else
 		{
-			Console::WriteLine("Error: Timeout en la conexi�n");
+			Console::WriteLine("Error: Timeout en la conexión");
 		}
 
 		return false;
@@ -320,13 +556,13 @@ void BotService::MQTTClient::Desconectar()
 	{
 		if (webSocket != nullptr && webSocket->State == WebSocketState::Open)
 		{
-			auto closeTask = webSocket->CloseAsync(WebSocketCloseStatus::NormalClosure, "Desconexi�n", CancellationToken::None);
+			auto closeTask = webSocket->CloseAsync(WebSocketCloseStatus::NormalClosure, "Desconexión", CancellationToken::None);
 			closeTask->Wait(2000);
 		}
 	}
 	catch (Exception^ ex)
 	{
-		// Ignorar errores en desconexi�n
+		// Ignorar errores en desconexión
 	}
 	finally
 	{

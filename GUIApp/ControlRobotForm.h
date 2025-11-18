@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "MapaForm.h"
 
 namespace GUIApp {
@@ -31,7 +31,7 @@ namespace GUIApp {
 		{
 			InitializeComponent();
 			//
-			//TODO: agregar c�digo de constructor aqu�
+			//TODO: agregar código de constructor aquí
 			//
 			robotEncontrado = robot;
 
@@ -39,7 +39,7 @@ namespace GUIApp {
 
 	protected:
 		/// <summary>
-		/// Limpiar los recursos que se est�n usando.
+		/// Limpiar los recursos que se estén usando.
 		/// </summary>
 		~ControlRobotForm()
 		{
@@ -57,7 +57,7 @@ namespace GUIApp {
 
 	private:
 		/// <summary>
-		/// Variable del dise�ador necesaria.
+		/// Variable del diseñador necesaria.
 		/// </summary>
 		System::ComponentModel::Container^ components;
 	private: System::Windows::Forms::PictureBox^ pbCamara;
@@ -87,13 +87,14 @@ namespace GUIApp {
 	private: System::Windows::Forms::Button^ btnSalir;
 
 	private: System::Windows::Forms::Button^ btnVerMapa;
+	private: System::Windows::Forms::Button^ btnReconectar;
 
 		   bool isClosing = false;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// M�todo necesario para admitir el Dise�ador. No se puede modificar
-		/// el contenido de este m�todo con el editor de c�digo.
+		/// Método necesario para admitir el Diseñador. No se puede modificar
+		/// el contenido de este método con el editor de código.
 		/// </summary>
 
 		void InitializeComponent(void)
@@ -111,6 +112,7 @@ namespace GUIApp {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->btnSalir = (gcnew System::Windows::Forms::Button());
 			this->btnVerMapa = (gcnew System::Windows::Forms::Button());
+			this->btnReconectar = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbCamara))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroIzquierda))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroDerecha))->BeginInit();
@@ -147,7 +149,9 @@ namespace GUIApp {
 			this->giroIzquierda->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->giroIzquierda->TabIndex = 33;
 			this->giroIzquierda->TabStop = false;
-			this->giroIzquierda->Click += gcnew System::EventHandler(this, &ControlRobotForm::giroIzquierda_Click_1);
+			this->giroIzquierda->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::giroIzquierda_MouseDown);
+			this->giroIzquierda->MouseLeave += gcnew System::EventHandler(this, &ControlRobotForm::giroIzquierda_MouseLeave);
+			this->giroIzquierda->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::giroIzquierda_MouseUp);
 			// 
 			// giroDerecha
 			// 
@@ -158,7 +162,9 @@ namespace GUIApp {
 			this->giroDerecha->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->giroDerecha->TabIndex = 32;
 			this->giroDerecha->TabStop = false;
-			this->giroDerecha->Click += gcnew System::EventHandler(this, &ControlRobotForm::giroDerecha_Click_1);
+			this->giroDerecha->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::giroDerecha_MouseDown);
+			this->giroDerecha->MouseLeave += gcnew System::EventHandler(this, &ControlRobotForm::giroDerecha_MouseLeave);
+			this->giroDerecha->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::giroDerecha_MouseUp);
 			// 
 			// btnAtras
 			// 
@@ -169,7 +175,9 @@ namespace GUIApp {
 			this->btnAtras->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->btnAtras->TabIndex = 31;
 			this->btnAtras->TabStop = false;
-			this->btnAtras->Click += gcnew System::EventHandler(this, &ControlRobotForm::btnAtras_Click);
+			this->btnAtras->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnAtras_MouseDown);
+			this->btnAtras->MouseLeave += gcnew System::EventHandler(this, &ControlRobotForm::btnAtras_MouseLeave);
+			this->btnAtras->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnAtras_MouseUp);
 			// 
 			// btnAdelante
 			// 
@@ -180,7 +188,9 @@ namespace GUIApp {
 			this->btnAdelante->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->btnAdelante->TabIndex = 30;
 			this->btnAdelante->TabStop = false;
-			this->btnAdelante->Click += gcnew System::EventHandler(this, &ControlRobotForm::btnAdelante_Click);
+			this->btnAdelante->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnAdelante_MouseDown);
+			this->btnAdelante->MouseLeave += gcnew System::EventHandler(this, &ControlRobotForm::btnAdelante_MouseLeave);
+			this->btnAdelante->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnAdelante_MouseUp);
 			// 
 			// btnRight
 			// 
@@ -191,7 +201,9 @@ namespace GUIApp {
 			this->btnRight->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->btnRight->TabIndex = 29;
 			this->btnRight->TabStop = false;
-			this->btnRight->Click += gcnew System::EventHandler(this, &ControlRobotForm::btnRight_Click);
+			this->btnRight->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnRight_MouseDown);
+			this->btnRight->MouseLeave += gcnew System::EventHandler(this, &ControlRobotForm::btnRight_MouseLeave);
+			this->btnRight->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnRight_MouseUp);
 			// 
 			// btnLeft
 			// 
@@ -202,7 +214,9 @@ namespace GUIApp {
 			this->btnLeft->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->btnLeft->TabIndex = 28;
 			this->btnLeft->TabStop = false;
-			this->btnLeft->Click += gcnew System::EventHandler(this, &ControlRobotForm::btnLeft_Click_1);
+			this->btnLeft->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnLeft_MouseDown);
+			this->btnLeft->MouseLeave += gcnew System::EventHandler(this, &ControlRobotForm::btnLeft_MouseLeave);
+			this->btnLeft->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnLeft_MouseUp);
 			// 
 			// label3
 			// 
@@ -212,7 +226,7 @@ namespace GUIApp {
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(205, 29);
 			this->label3->TabIndex = 27;
-			this->label3->Text = L"C�mara del robot:";
+			this->label3->Text = L"Cámara del robot:";
 			// 
 			// label1
 			// 
@@ -248,11 +262,24 @@ namespace GUIApp {
 			this->btnVerMapa->UseVisualStyleBackColor = true;
 			this->btnVerMapa->Click += gcnew System::EventHandler(this, &ControlRobotForm::btnVerMapa_Click);
 			// 
+			// btnReconectar
+			// 
+			this->btnReconectar->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 10.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnReconectar->Location = System::Drawing::Point(12, 649);
+			this->btnReconectar->Name = L"btnReconectar";
+			this->btnReconectar->Size = System::Drawing::Size(140, 39);
+			this->btnReconectar->TabIndex = 38;
+			this->btnReconectar->Text = L"RECONECTAR";
+			this->btnReconectar->UseVisualStyleBackColor = true;
+			this->btnReconectar->Click += gcnew System::EventHandler(this, &ControlRobotForm::btnReconectar_Click);
+			// 
 			// ControlRobotForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(741, 697);
+			this->Controls->Add(this->btnReconectar);
 			this->Controls->Add(this->btnVerMapa);
 			this->Controls->Add(this->btnSalir);
 			this->Controls->Add(this->pbCamara);
@@ -280,49 +307,115 @@ namespace GUIApp {
 			this->PerformLayout();
 
 		}
-#pragma endregion
+		#pragma endregion
 		private: System::Void ControlRobotForm_Load(System::Object^ sender, System::EventArgs^ e) {
 			txtRobot->Enabled = false;
 			if (robotEncontrado != nullptr) {
 				txtRobot->Text = robotEncontrado->Nombre;
 			}
+			// Conectar con Arduino al cargar el formulario
+			if (!Service::ConectarArduino()) {
+				MessageBox::Show("No se pudo conectar con Arduino", "Advertencia", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			}
+
 			try {
 				if (!this->InicializarCamara()) {
-					MessageBox::Show("No se pudo acceder a la c�mara");
+					MessageBox::Show("No se pudo acceder a la cámara");
 					this->Close();
 				}
 			}
 			catch (Exception^ ex) {
-				MessageBox::Show("Error inicializando c�mara: " + ex->Message);
+				MessageBox::Show("Error inicializando cámara: " + ex->Message);
 				this->Close();
 			}
 		}
 		private: void Bitmap_Disposed(System::Object^ sender, System::EventArgs^ e) {
 		
 		}
-		private: System::Void btnAdelante_Click(System::Object^ sender, System::EventArgs^ e) {
-			MessageBox::Show("Avanzo", "Exito", MessageBoxButtons::OK);
-			MQTTClient::Adelante();
+		private: System::Void btnAdelante_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+			// Encender LED cuando se presiona el botón
+			Service::ComandoLED(1, true);
 		}
-		private: System::Void btnAtras_Click(System::Object^ sender, System::EventArgs^ e) {
-			MessageBox::Show("Retrocedo", "Exito", MessageBoxButtons::OK);
-			MQTTClient::Atras();
+
+		private: System::Void btnAdelante_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+			// Apagar LED cuando se suelta el botón
+			Service::ComandoLED(1, false);
 		}
-		private: System::Void btnRight_Click(System::Object^ sender, System::EventArgs^ e) {
-			MessageBox::Show("Avanzo hacia la derecha", "Exito", MessageBoxButtons::OK);
-			MQTTClient::Derecha();
+		private: System::Void btnAdelante_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+			// Apagar LED si el mouse sale del botón mientras está presionado
+			if (Control::MouseButtons == System::Windows::Forms::MouseButtons::Left) {
+				Service::ComandoLED(1, false);
+			}
 		}
-		private: System::Void btnLeft_Click_1(System::Object^ sender, System::EventArgs^ e) {
-			MessageBox::Show("Avanzo hacia la izquierda", "Exito", MessageBoxButtons::OK);
-			MQTTClient::Izquierda();
+		private: System::Void btnAtras_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+			// Encender LED cuando se presiona el botón
+			Service::ComandoLED(2, true);
 		}
-		private: System::Void giroDerecha_Click_1(System::Object^ sender, System::EventArgs^ e) {
-			MessageBox::Show("Giro hacia la derecha", "Exito", MessageBoxButtons::OK);
-			MQTTClient::RotarDerecha();
+		private: System::Void btnAtras_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+			// Apagar LED cuando se suelta el botón
+			Service::ComandoLED(2, false);
 		}
-		private: System::Void giroIzquierda_Click_1(System::Object^ sender, System::EventArgs^ e) {
-			MessageBox::Show("Giro hacia la izquierda", "Exito", MessageBoxButtons::OK);
-			MQTTClient::RotarIzquierda();
+		private: System::Void btnAtras_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+			// Apagar LED si el mouse sale del botón mientras está presionado
+			if (Control::MouseButtons == System::Windows::Forms::MouseButtons::Left) {
+				Service::ComandoLED(2, false);
+			}
+		}
+		private: System::Void btnRight_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+			// Encender LED cuando se presiona el botón
+			Service::ComandoLED(3, true);
+		}
+		private: System::Void btnRight_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+			// Apagar LED cuando se suelta el botón
+			Service::ComandoLED(3, false);
+		}
+		private: System::Void btnRight_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+			// Apagar LED si el mouse sale del botón mientras está presionado
+			if (Control::MouseButtons == System::Windows::Forms::MouseButtons::Left) {
+				Service::ComandoLED(3, false);
+			}
+		}
+		private: System::Void btnLeft_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+			// Encender LED cuando se presiona el botón
+			Service::ComandoLED(4, true);
+		}
+		private: System::Void btnLeft_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+			// Apagar LED cuando se suelta el botón
+			Service::ComandoLED(4, false);
+		}
+		private: System::Void btnLeft_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+			// Apagar LED si el mouse sale del botón mientras está presionado
+			if (Control::MouseButtons == System::Windows::Forms::MouseButtons::Left) {
+				Service::ComandoLED(4, false);
+			}
+		}
+		private: System::Void giroDerecha_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+			// Encender LED cuando se presiona el botón
+			Service::ComandoLED(5, true);
+		}
+		private: System::Void giroDerecha_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+			// Apagar LED cuando se suelta el botón
+			Service::ComandoLED(5, false);
+		}
+		private: System::Void giroDerecha_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+			// Apagar LED si el mouse sale del botón mientras está presionado
+			if (Control::MouseButtons == System::Windows::Forms::MouseButtons::Left) {
+				Service::ComandoLED(5, false);
+			}
+		}
+		private: System::Void giroIzquierda_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+			// Encender LED cuando se presiona el botón
+			Service::ComandoLED(6, true);
+		}
+		private: System::Void giroIzquierda_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+			// Apagar LED cuando se suelta el botón
+			Service::ComandoLED(6, false);
+		}
+		private: System::Void giroIzquierda_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
+			// Apagar LED si el mouse sale del botón mientras está presionado
+			if (Control::MouseButtons == System::Windows::Forms::MouseButtons::Left) {
+				Service::ComandoLED(6, false);
+			}
 		}
 		private: System::Boolean InicializarCamara() {
 			try {
@@ -387,7 +480,7 @@ namespace GUIApp {
 		}
 		private: System::Void ActualizarPictureBox(Bitmap^ frame) {
 			if (this->isClosing) {
-				delete frame; // Importante: liberar frame si no se usar�
+				delete frame; // Importante: liberar frame si no se usará
 				return;
 			}
 
@@ -438,6 +531,18 @@ namespace GUIApp {
 			this->Hide();
 			form->ShowDialog();
 			this->Show();
+		}
+		private: System::Void btnReconectar_Click(System::Object^ sender, System::EventArgs^ e) {
+			Service::LiberarPuertoCOM3();
+
+			System::Threading::Thread::Sleep(1000);
+
+			if (Service::ConectarArduino()) {
+				MessageBox::Show("✅ Reconectado exitosamente", "Éxito");
+			}
+			else {
+				MessageBox::Show("❌ No se pudo reconectar", "Error");
+			}
 		}
 	};
 }

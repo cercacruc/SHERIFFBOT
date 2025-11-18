@@ -8,10 +8,19 @@ using namespace System::Collections::Generic;
 using namespace System::Net::WebSockets;
 using namespace System::Threading;
 using namespace System::Text;
-using namespace System::Collections::Generic;
+
+//Conexion con ARDUINO
+using namespace System::IO;
+using namespace System::IO::Ports;
 
 namespace BotService {
+	public enum class Protocol {
+		UART,
+		NMEA
+	};
 	public ref class Service {
+	private:
+		static SerialPort^ ArduinoPort;
 	public:
 		//CRUD Usuarios
 		static void registrarUsuario(DatosUsuario^ usuario);
@@ -66,6 +75,25 @@ namespace BotService {
 		static bool LiberarRobot(int robotID);
 		static List<Alert^>^ GetAlertasPendientes();
 
+		//Diccionario con los protocolos de comunicación UART y NMEA
+		static Dictionary<String^, Protocol>^ protocolDictionary = gcnew Dictionary<String^, Protocol>();
+		static Service() {
+			protocolDictionary->Add("UART", Protocol::UART);
+			protocolDictionary->Add("NMEA", Protocol::NMEA);
+		}
+
+		static bool ConectarArduino();
+		static bool DesconectarArduino();
+		static bool EncenderLED();
+		static bool ApagarLED();
+		static bool EnviarComandoArduino(String^ comando);
+		static bool IsArduinoConectado();
+		static bool LiberarPuertoCOM3();
+
+		static bool EnviarComandoDirecto(String^ comando);
+		static bool ComandoLED(int numero, bool encender);
+		static bool ComandoTodosLEDs(bool encender);
+		static bool ComandoTest();
 	};
 	public ref class MQTTClient {
 	private:
