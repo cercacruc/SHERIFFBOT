@@ -786,13 +786,18 @@ namespace GUIApp {
 			Robot^ r = gcnew Robot();
 
 			r->Nombre = NombreRobot->Text;
-			r->Zona = ZonaRobot->Text;
+			
+			double x = Convert::ToDouble(XRobot->Text);
+			double y = Convert::ToDouble(YRobot->Text);
+			r->Zona = Service::delimitarZonaTrabajo(x, y);
+
 			r->Bateria = Convert::ToInt32(BateriaRobot->Text);
 
 			double px = Convert::ToDouble(XRobot->Text);
 			double py = Convert::ToDouble(YRobot->Text);
 
-			r->PosicionRobot = gcnew BotModel::Point(px, py, r->Zona);
+			r->PosicionRobot->x = px;
+			r->PosicionRobot->y = py;
 
 			Service::registrarRobot(r);
 
@@ -804,6 +809,7 @@ namespace GUIApp {
 			MessageBox::Show("Error al agregar robot: " + ex->Message);
 		}
 		*/
+		
 	}
 	private: System::Void btnModifyRobot_Click(System::Object^ sender, System::EventArgs^ e) {
 		try {
@@ -815,7 +821,7 @@ namespace GUIApp {
 
 			robot->ID = Convert::ToInt32(IDRobot->Text);
 			robot->Nombre = NombreRobot->Text;
-			robot->Bateria = Convert::ToInt32(BateriaRobot->Text);//ver luego su función que de eso
+			robot->Bateria = Convert::ToInt32(BateriaRobot->Text);
 
 			double x = Convert::ToDouble(XRobot->Text);
 			double y = Convert::ToDouble(YRobot->Text);
@@ -863,13 +869,18 @@ namespace GUIApp {
 
 			r->ID = Convert::ToInt32(IDRobot->Text);
 			r->Nombre = NombreRobot->Text;
-			r->Zona = ZonaRobot->Text;
+
+			double x = Convert::ToDouble(XRobot->Text);
+			double y = Convert::ToDouble(YRobot->Text);
+			r->Zona = Service::delimitarZonaTrabajo(x, y);
+
 			r->Bateria = Convert::ToInt32(BateriaRobot->Text);
 
 			double px = Convert::ToDouble(XRobot->Text);
 			double py = Convert::ToDouble(YRobot->Text);
 
-			r->PosicionRobot = gcnew BotModel::Point(px, py, r->Zona);
+			r->PosicionRobot->x = px;
+			r->PosicionRobot->y = py;
 
 			Service::modificarRobotID(r);
 
