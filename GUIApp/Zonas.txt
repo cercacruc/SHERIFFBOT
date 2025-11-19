@@ -1,4 +1,12 @@
 1|0|62|0|223|Criadero
 2|0|62|223|285|DIGI
-3|0|63|285|379|Pabellón V
+3|0|62|285|379|Pabellón V
 4|-1|0|-1|0|BASE
+5|0|37|379|465|Mecatrónica
+6|37|62|379|465|Industrial
+7|62|99|0|465|Huaca
+8|99|165|0|58|CEPREPUCP
+9|99|189|58|149|FACI
+10|99|151|149|201|Laboratorios de ingeniería
+11|99|151|201|232|Patio Hormigon Armado
+12|99|169|232|308|Mecánica
