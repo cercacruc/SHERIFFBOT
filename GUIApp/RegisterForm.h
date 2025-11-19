@@ -179,6 +179,7 @@ namespace GUIApp {
 		}
 #pragma endregion
 	private: System::Void btnRegister2_Click(System::Object^ sender, System::EventArgs^ e) {
+		/*
 		try {
 			if (String::IsNullOrEmpty(textUsername->Text) || String::IsNullOrEmpty(textPassword->Text) || String::IsNullOrEmpty(textRole->Text)) {
 				MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -208,6 +209,45 @@ namespace GUIApp {
 		}
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al agregar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+		*/
+		try
+		{
+			// Validación
+			if (String::IsNullOrEmpty(textUsername->Text) ||
+				String::IsNullOrEmpty(textPassword->Text) ||
+				String::IsNullOrEmpty(textRole->Text))
+			{
+				MessageBox::Show("Por favor, complete todos los campos",
+					"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			// Crear el usuario
+			DatosUsuario^ usuario = gcnew DatosUsuario();
+
+			usuario->Nombre = textUsername->Text;
+			usuario->Contra = textPassword->Text;
+			usuario->Cargo = textRole->Text;
+
+			// Las alertas empiezan en 0
+			usuario->cant_alertas = gcnew array<int>(3);
+			usuario->cant_alertas[0] = 0;  // Perdidas
+			usuario->cant_alertas[1] = 0;  // Altercados
+			usuario->cant_alertas[2] = 0;  // Reportes DTI
+
+			// REGISTRAR EN SQL A TRAVÉS DEL SERVICE
+			Service::registrarUsuario(usuario);
+
+			MessageBox::Show("¡Registro exitoso!", "Éxito",
+				MessageBoxButtons::OK, MessageBoxIcon::Information);
+
+			this->Close();
+		}
+		catch (Exception^ ex)
+		{
+			MessageBox::Show("Error al registrar usuario: " + ex->Message,
+				"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 	}
 	};

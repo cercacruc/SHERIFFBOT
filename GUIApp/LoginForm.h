@@ -12,6 +12,7 @@ namespace GUIApp {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Data::SqlClient;
 
 	using namespace BotModel;
 	using namespace BotService;
@@ -167,6 +168,7 @@ namespace GUIApp {
 		}
 #pragma endregion
 	private: System::Void btnLogin2_Click(System::Object^ sender, System::EventArgs^ e) {
+		/*
 		try {
 			if (String::IsNullOrEmpty(Username->Text) || String::IsNullOrEmpty(Password->Text)) {
 				MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -213,6 +215,79 @@ namespace GUIApp {
 		}
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al iniciar sesión: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+		*/
+		try
+		{
+			// Validación de campos
+			if (String::IsNullOrEmpty(Username->Text) ||
+				String::IsNullOrEmpty(Password->Text))
+			{
+				MessageBox::Show("Por favor, complete todos los campos",
+					"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			String^ username = Username->Text;
+			String^ password = Password->Text;
+
+			// Buscar en SQL usando Service ? Persistence ? executeStoredProcedureReader()
+			DatosUsuario^ usuarioEncontrado = Service::buscarUsuarioCredenciales(username, password);
+
+			if (usuarioEncontrado != nullptr)
+			{
+				int userID = usuarioEncontrado->ID;
+				String^ strID = userID.ToString();
+
+				if (strID->Length >= 2)
+				{
+					String^ primerosDigitos = strID->Substring(0, 2);
+
+					// ADMIN
+					if (primerosDigitos == "99")
+					{
+						AdminForm^ adminForm = gcnew AdminForm(usuarioEncontrado);
+						this->Hide();
+						adminForm->ShowDialog();
+						this->Show();
+					}
+					// SHERIFF
+					else if (primerosDigitos == "11")
+					{
+						SheriffForm^ sheriffForm = gcnew SheriffForm(usuarioEncontrado);
+						this->Hide();
+						sheriffForm->ShowDialog();
+						this->Show();
+					}
+					// USUARIO GENERAL
+					else if (primerosDigitos == "22" ||
+						primerosDigitos == "33" ||
+						primerosDigitos == "44")
+					{
+						UsuarioPromedioForm^ usuarioForm = gcnew UsuarioPromedioForm(usuarioEncontrado);
+						this->Hide();
+						usuarioForm->ShowDialog();
+						this->Show();
+					}
+				}
+			}
+			else
+			{
+				MessageBox::Show("Nombre de usuario o contraseña incorrectos",
+					"Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			}
+
+			ClearFields();
+		}
+		catch (SqlException^ sqlEx)
+		{
+			MessageBox::Show("Error SQL: " + sqlEx->Message,
+				"Error en base de datos", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+		catch (Exception^ ex)
+		{
+			MessageBox::Show("Error al iniciar sesión: " + ex->Message,
+				"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 	}
 	private: void LoginForm::ClearFields() {

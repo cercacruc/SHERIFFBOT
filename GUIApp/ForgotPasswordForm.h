@@ -188,6 +188,7 @@ namespace GUIApp {
 		}
 #pragma endregion
 	private: System::Void btnSendPassword_Click(System::Object^ sender, System::EventArgs^ e) {
+		/*
 		try {
 			if (String::IsNullOrEmpty(UserName->Text) || String::IsNullOrEmpty(NewPassword1->Text) || String::IsNullOrEmpty(NewPassword2->Text)) {
 				MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -213,6 +214,55 @@ namespace GUIApp {
 		}
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al restablecer contraseña: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+		*/
+		try {
+			// Validación de campos vacíos
+			if (String::IsNullOrEmpty(UserName->Text) ||
+				String::IsNullOrEmpty(NewPassword1->Text) ||
+				String::IsNullOrEmpty(NewPassword2->Text))
+			{
+				MessageBox::Show("Por favor, complete todos los campos",
+					"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			// Validación de contraseñas iguales
+			if (NewPassword1->Text != NewPassword2->Text)
+			{
+				MessageBox::Show("Las contraseñas no coinciden",
+					"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+				NewPassword1->Text = "";
+				NewPassword2->Text = "";
+				NewPassword1->Focus();
+				return;
+			}
+
+			// Llamada al SERVICE (que llama Persistance -> SP SQL)
+			int resultado = Service::restablecerUsuario(
+				UserName->Text,
+				NewPassword1->Text,
+				NewPassword2->Text
+			);
+
+			if (resultado == 1)
+			{
+				MessageBox::Show("Contraseña restablecida exitosamente",
+					"Éxito", MessageBoxButtons::OK, MessageBoxIcon::Information);
+
+				this->Close();
+			}
+			else
+			{
+				MessageBox::Show("El usuario no existe.",
+					"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		catch (Exception^ ex)
+		{
+			MessageBox::Show("Error al restablecer contraseña: " + ex->Message,
+				"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 	}
 	private: System::Void btnReturnPassword_Click(System::Object^ sender, System::EventArgs^ e) {
