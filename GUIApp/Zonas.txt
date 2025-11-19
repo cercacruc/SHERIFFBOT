@@ -42,3 +42,15 @@
 42|425|492|272|424|Pabellón Z
 43|528|598|0|58|Puerta Principal
 44|528|598|58|185|Jardin Principal
+45|492|602|195|272|Facultad de Humanidades
+46|492|602|272|424|Facultad de Psicología/Comunicaciones
+47|598|670|0|135|Mac Gregor
+48|598|670|135|185|Tinkuy
+49|602|679|195|424|Estudios Generales Letras
+50|670|779|0|185|Facultad de Educación/Artes
+51|679|779|195|342|Coliseo
+52|679|779|342|465|Estacionamiento Letras
+53|779|935|0|58|Facultad de Artes Escénicas
+54|779|935|58|342|Canchas Deportivas
+55|779|935|342|465|INRAS
+
