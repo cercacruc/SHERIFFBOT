@@ -19,6 +19,14 @@
 19|254|287|90|149|El puesto
 20|151|229|149|232|CIA
 21|229|287|149|185|Gelarti
-22|229|680|185|195|Tontodromo
-
-
+22|229|779|185|195|Tontodromo
+23|229|258|195|233|Facultad de Física
+24|169|258|232|324|Facultad de Arquitectura
+25|169|236|324|424|Facultad de Civil
+26|236|266|324|424|Facultad de Matemática
+27|258|298|195|325|Biblioteca de Sociales
+28|266|335|324|424|Comedor Central
+29|287|330|0|58|Entrada Generales Ciencias
+30|287|367|58|185|Estudios Generales Ciencias
+31|298|335|195|325|Facultad de economía
+32|330|528|0|58|Estacionamiento Estudios generales Ciencias
