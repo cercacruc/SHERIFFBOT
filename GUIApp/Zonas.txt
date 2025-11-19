@@ -11,8 +11,8 @@
 11|99|151|201|232|Patio Hormigón Armado
 12|99|169|232|308|Facultad de Mecánica
 13|99|169|308|346|Facultad de Minas
-14|99|169|346|386|Cancha de Minas
-15|99|679|386|465|Estacionamiento Riva Agüero
+14|99|169|346|424|Cancha de Minas
+15|99|679|424|465|Estacionamiento Riva Agüero
 16|165|287|0|58|Estacionamiento CEPREPUCP
 17|189|254|58|149|Facultad de Química
 18|254|287|58|90|FAD
@@ -30,3 +30,15 @@
 30|287|367|58|185|Estudios Generales Ciencias
 31|298|335|195|325|Facultad de economía
 32|330|528|0|58|Estacionamiento Estudios generales Ciencias
+33|367|459|58|143|Facultad de Artes Viejas
+34|367|459|143|185|Comedor de Artes Viejas
+35|335|425|195|303|CAPU
+36|335|400|303|380|Derecho
+37|400|425|303|346|Facultad de Teología
+38|400|425|346|380|Facultad de Gestión y Alta Dirección
+39|335|425|380|424|Faculta de Letras
+40|459|528|58|185|Tópico
+41|425|492|195|272|Biblioteca Central
+42|425|492|272|424|Pabellón Z
+43|528|598|0|58|Puerta Principal
+44|528|598|58|185|Jardin Principal
