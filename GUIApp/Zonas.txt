@@ -2,11 +2,23 @@
 2|0|62|223|285|DIGI
 3|0|62|285|379|Pabellón V
 4|-1|0|-1|0|BASE
-5|0|37|379|465|Mecatrónica
+5|0|37|379|465|Facultad de Mecatrónica
 6|37|62|379|465|Industrial
 7|62|99|0|465|Huaca
 8|99|165|0|58|CEPREPUCP
 9|99|189|58|149|FACI
 10|99|151|149|201|Laboratorios de ingeniería
-11|99|151|201|232|Patio Hormigon Armado
-12|99|169|232|308|Mecánica
+11|99|151|201|232|Patio Hormigón Armado
+12|99|169|232|308|Facultad de Mecánica
+13|99|169|308|346|Facultad de Minas
+14|99|169|346|386|Cancha de Minas
+15|99|679|386|465|Estacionamiento Riva Agüero
+16|165|287|0|58|Estacionamiento CEPREPUCP
+17|189|254|58|149|Facultad de Química
+18|254|287|58|90|FAD
+19|254|287|90|149|El puesto
+20|151|229|149|232|CIA
+21|229|287|149|185|Gelarti
+22|229|680|185|195|Tontodromo
+
+
