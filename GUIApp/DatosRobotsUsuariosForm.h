@@ -530,7 +530,6 @@ namespace GUIApp {
 			this->tabPage1->TabIndex = 0;
 			this->tabPage1->Text = L"Administrar Usuarios";
 			this->tabPage1->UseVisualStyleBackColor = true;
-			this->tabPage1->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::tabPage1_Click);
 			// 
 			// CargoUser
 			// 
@@ -736,7 +735,7 @@ namespace GUIApp {
 		}
 
 	private: System::Void btnAddRobot_Click(System::Object^ sender, System::EventArgs^ e) {
-		/*
+		
 		try {
 			if (String::IsNullOrEmpty(IDRobot->Text) || String::IsNullOrEmpty(NombreRobot->Text)) {
 				MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -786,8 +785,8 @@ namespace GUIApp {
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al agregar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
-		*/
-
+		
+		/*
 		try
 		{
 			Robot^ r = gcnew Robot();
@@ -815,10 +814,11 @@ namespace GUIApp {
 		{
 			MessageBox::Show("Error al agregar robot: " + ex->Message);
 		}
+		*/
 		
 	}
 	private: System::Void btnModifyRobot_Click(System::Object^ sender, System::EventArgs^ e) {
-		/*
+		
 		try {
 			if (String::IsNullOrEmpty(NombreRobot->Text)) {
 				MessageBox::Show("Ingrese un nombre de robot a modificar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -868,7 +868,7 @@ namespace GUIApp {
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al modificar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
-		*/
+		/*
 		try
 		{
 			Robot^ r = gcnew Robot();
@@ -897,9 +897,10 @@ namespace GUIApp {
 		{
 			MessageBox::Show("Error al modificar robot: " + ex->Message);
 		}
+		*/
 	}
 	private: System::Void btnDeleteRobot_Click(System::Object^ sender, System::EventArgs^ e) {
-		/*
+		
 		String^ robotID = IDRobot->Text->Trim();
 		if (robotID->Equals("")) {
 			MessageBox::Show("Debe seleccionar un robot");
@@ -923,8 +924,8 @@ namespace GUIApp {
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al eliminar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
-		*/
-
+		
+		/*
 		try
 		{
 			int id = Convert::ToInt32(IDRobot->Text);
@@ -938,6 +939,7 @@ namespace GUIApp {
 		{
 			MessageBox::Show("Error al eliminar robot: " + ex->Message);
 		}
+		*/
 	}
 	private: System::Void pbPhoto_Click(System::Object^ sender, System::EventArgs^ e) {
 		SearchAndPutImagenOn(pbPhotoRobot);
@@ -1040,7 +1042,7 @@ namespace GUIApp {
 		}
 	}
 	private: System::Void btnAddUser_Click(System::Object^ sender, System::EventArgs^ e) {
-		/*
+		
 		try {
 			if (String::IsNullOrEmpty(IDUser->Text) || String::IsNullOrEmpty(NombreUser->Text) ||
 				String::IsNullOrEmpty(CargoUser->Text) || String::IsNullOrEmpty(PasswordUser->Text)) {
@@ -1075,8 +1077,8 @@ namespace GUIApp {
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al agregar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
-		*/
-
+		
+		/*
 		try
 		{
 			DatosUsuario^ user = gcnew DatosUsuario();
@@ -1099,9 +1101,10 @@ namespace GUIApp {
 			MessageBox::Show("Error al registrar usuario: " + ex->Message,
 				"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
+		*/
 	}
 	private: System::Void btnModifyUser_Click(System::Object^ sender, System::EventArgs^ e) {
-		/*
+		
 		try {
 			if (String::IsNullOrEmpty(IDUser->Text)) {
 				MessageBox::Show("Ingrese el nombre de usuario para modificar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -1126,8 +1129,8 @@ namespace GUIApp {
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al modificar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
-		*/
-
+		
+		/*
 		try
 		{
 			int id = Convert::ToInt32(IDUser->Text);
@@ -1158,9 +1161,10 @@ namespace GUIApp {
 		{
 			MessageBox::Show("Error al modificar usuario: " + ex->Message);
 		}
+		*/
 	}
 	private: System::Void btnDeleteUser_Click(System::Object^ sender, System::EventArgs^ e) {
-		/*
+		
 		String^ UsuarioName = NombreUser->Text->Trim();
 		if (UsuarioName == "") {
 			MessageBox::Show("Debe seleccionar un usuario");
@@ -1186,8 +1190,8 @@ namespace GUIApp {
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al eliminar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
-		*/
-
+		
+		/*
 		try
 		{
 			int id = Convert::ToInt32(IDUser->Text);
@@ -1205,6 +1209,7 @@ namespace GUIApp {
 		{
 			MessageBox::Show("Error al eliminar usuario: " + ex->Message);
 		}
+		*/
 	}
 	private: System::Void dgvUser_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
 		int usuarioID = Int32::Parse(dgvUser->Rows[dgvUser->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
@@ -1290,7 +1295,6 @@ namespace GUIApp {
 	}
 	private: System::Void IDUser_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
-private: System::Void tabPage1_Click(System::Object^ sender, System::EventArgs^ e) {
-}
+
 };
 }

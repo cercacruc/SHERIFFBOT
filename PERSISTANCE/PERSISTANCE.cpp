@@ -34,20 +34,108 @@ void BotPersistance::Persistance::registrarRobot(Robot^ robot) {
     }
 }
 Robot^ BotPersistance::Persistance::buscarRobotID(int id) {
+    /*
     for each (Robot ^ robot in listaRobots) {
         if (robot->ID == id) {
             return robot;
         }
     }
     return nullptr;
+    */
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^> {
+            gcnew SqlParameter("@ID", id)
+        };
+
+        SqlDataReader^ reader = executeStoredProcedureReader("usp_BuscarRobotPorID", params);
+
+        if (reader != nullptr && reader->Read())
+        {
+            Robot^ robot = gcnew Robot();
+
+            robot->ID = reader->GetInt32(reader->GetOrdinal("ID_Robot"));
+            robot->Nombre = reader["Nombre_robot"]->ToString();
+            robot->Zona = reader["Zona_asignada"]->ToString();
+            robot->Bateria = reader->GetInt32(reader->GetOrdinal("Bateria"));
+
+            double posX = reader->GetDouble(reader->GetOrdinal("Posicion_X"));
+            double posY = reader->GetDouble(reader->GetOrdinal("Posicion_Y"));
+            robot->PosicionRobot = gcnew Point(posX, posY, robot->Zona);
+
+            robot->Disponibilidad = reader->GetBoolean(reader->GetOrdinal("Disponibilidad"));
+            robot->Caracteristicas = reader["Caracteristicas"]->ToString();
+            robot->AlertaAsignadaID = reader->GetInt32(reader->GetOrdinal("Alerta_asignada_ID"));
+            robot->TipoMision = reader["Tipo_mision"]->ToString();
+
+            reader->Close();
+            cerrarConexion();
+            return robot;
+        }
+
+        if (reader != nullptr) {
+            reader->Close();
+            cerrarConexion();
+        }
+        return nullptr;
+    }
+    catch (Exception^ ex)
+    {
+        cerrarConexion();
+        throw gcnew Exception("Error buscando robot por ID: " + ex->Message);
+    }
 }
 Robot^ BotPersistance::Persistance::buscarRobotNombre(String^ nombre) {
+    /*
     for each (Robot ^ r in listaRobots) {
         if (r->Nombre->Equals(nombre)) {
             return r;
         }
     }
     return nullptr;
+    */
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^> {
+            gcnew SqlParameter("@Nombre", nombre)
+        };
+
+        SqlDataReader^ reader = executeStoredProcedureReader("usp_BuscarRobotPorNombre", params);
+
+        if (reader != nullptr && reader->Read())
+        {
+            Robot^ robot = gcnew Robot();
+
+            robot->ID = reader->GetInt32(reader->GetOrdinal("ID_Robot"));
+            robot->Nombre = reader["Nombre_robot"]->ToString();
+            robot->Zona = reader["Zona_asignada"]->ToString();
+            robot->Bateria = reader->GetInt32(reader->GetOrdinal("Bateria"));
+
+            double posX = reader->GetDouble(reader->GetOrdinal("Posicion_X"));
+            double posY = reader->GetDouble(reader->GetOrdinal("Posicion_Y"));
+            robot->PosicionRobot = gcnew Point(posX, posY, robot->Zona);
+
+            robot->Disponibilidad = reader->GetBoolean(reader->GetOrdinal("Disponibilidad"));
+            robot->Caracteristicas = reader["Caracteristicas"]->ToString();
+            robot->AlertaAsignadaID = reader->GetInt32(reader->GetOrdinal("Alerta_asignada_ID"));
+            robot->TipoMision = reader["Tipo_mision"]->ToString();
+
+            reader->Close();
+            cerrarConexion();
+            return robot;
+        }
+
+        if (reader != nullptr) {
+            reader->Close();
+            cerrarConexion();
+        }
+        return nullptr;
+    }
+    catch (Exception^ ex)
+    {
+        cerrarConexion();
+        throw gcnew Exception("Error buscando robot por nombre: " + ex->Message);
+    }
 }
 bool BotPersistance::Persistance::borrarRobotID(int id) {
     /*
@@ -76,6 +164,7 @@ bool BotPersistance::Persistance::borrarRobotID(int id) {
     }
 }
 bool BotPersistance::Persistance::borrarRobotNombre(String^ nombre) {
+    /*
     for (int i = 0; i < listaRobots->Count; i++) {
         if (listaRobots[i]->Nombre->Equals(nombre)) {
             listaRobots->RemoveAt(i);
@@ -85,6 +174,20 @@ bool BotPersistance::Persistance::borrarRobotNombre(String^ nombre) {
         }
     }
     return false;
+    */
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^>
+        {
+            gcnew SqlParameter("@Nombre", nombre)
+        };
+
+        return executeStoredProcedureNonQuery("usp_BorrarRobotPorNombre", params);
+    }
+    catch (Exception^ ex)
+    {
+        throw gcnew Exception("Error eliminando robot por nombre: " + ex->Message);
+    }
 }
 int BotPersistance::Persistance::modificarRobotID(Robot^ robot) {
     /*
@@ -211,7 +314,7 @@ void BotPersistance::Persistance::registrarUsuario(DatosUsuario^ user) {
         throw gcnew Exception("Error al registrar usuario en SQL: " + ex->Message);
     }
 }
-int BotPersistance::Persistance::generarAutoID(String^ cargo) {
+int BotPersistance::Persistance::generarAutoID(String^ cargo) {//el mismo SQL lo genera
     String^ prefijo = nullptr;
     if (cargo->ToLower()->Equals("sheriff")) {
         prefijo = "11";
@@ -258,20 +361,100 @@ int BotPersistance::Persistance::generarAutoID(String^ cargo) {
     return nuevoID;
 }
 DatosUsuario^ BotPersistance::Persistance::buscarUsuarioID(int id) {
+    /*
     for each (DatosUsuario ^ usuario in listaUsuarios) {
         if (usuario->ID == id) {
             return usuario;
         }
     }
     return nullptr;
+    */
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^> {
+            gcnew SqlParameter("@ID", id)
+        };
+
+        SqlDataReader^ reader = executeStoredProcedureReader("usp_BuscarUsuarioPorID", params);
+
+        if (reader != nullptr && reader->Read())
+        {
+            DatosUsuario^ usuario = gcnew DatosUsuario();
+
+            usuario->ID = reader->GetInt32(reader->GetOrdinal("ID_Usuario"));
+            usuario->Nombre = reader["Nombre_de_usuario"]->ToString();
+            usuario->Contra = reader["Contrasena"]->ToString();
+            usuario->Cargo = reader["Cargo"]->ToString();
+
+            usuario->cant_alertas = gcnew array<int>(3);
+            usuario->cant_alertas[0] = Convert::ToInt32(reader["Perdidas"]);
+            usuario->cant_alertas[1] = Convert::ToInt32(reader["Altercados"]);
+            usuario->cant_alertas[2] = Convert::ToInt32(reader["Reportes_dti"]);
+
+            reader->Close();
+            cerrarConexion();
+            return usuario;
+        }
+
+        if (reader != nullptr) {
+            reader->Close();
+            cerrarConexion();
+        }
+        return nullptr;
+    }
+    catch (Exception^ ex)
+    {
+        cerrarConexion();
+        throw gcnew Exception("Error buscando usuario por ID: " + ex->Message);
+    }
 }
 DatosUsuario^ BotPersistance::Persistance::buscarUsuarioNombre(String^ nombre) {
+    /*
     for each (DatosUsuario ^ usuario in listaUsuarios) {
         if (usuario->Nombre->Equals(nombre)) {
             return usuario;
         }
     }
     return nullptr;
+    */
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^> {
+            gcnew SqlParameter("@Nombre", nombre)
+        };
+
+        SqlDataReader^ reader = executeStoredProcedureReader("usp_BuscarUsuarioPorNombre", params);
+
+        if (reader != nullptr && reader->Read())
+        {
+            DatosUsuario^ usuario = gcnew DatosUsuario();
+
+            usuario->ID = reader->GetInt32(reader->GetOrdinal("ID_Usuario"));
+            usuario->Nombre = reader["Nombre_de_usuario"]->ToString();
+            usuario->Contra = reader["Contrasena"]->ToString();
+            usuario->Cargo = reader["Cargo"]->ToString();
+
+            usuario->cant_alertas = gcnew array<int>(3);
+            usuario->cant_alertas[0] = Convert::ToInt32(reader["Perdidas"]);
+            usuario->cant_alertas[1] = Convert::ToInt32(reader["Altercados"]);
+            usuario->cant_alertas[2] = Convert::ToInt32(reader["Reportes_dti"]);
+
+            reader->Close();
+            cerrarConexion();
+            return usuario;
+        }
+
+        if (reader != nullptr) {
+            reader->Close();
+            cerrarConexion();
+        }
+        return nullptr;
+    }
+    catch (Exception^ ex)
+    {
+        cerrarConexion();
+        throw gcnew Exception("Error buscando usuario por nombre: " + ex->Message);
+    }
 }
 DatosUsuario^ BotPersistance::Persistance::buscarUsuarioCredenciales(String^ nombre, String^ contra) {
    /*
@@ -336,6 +519,7 @@ bool BotPersistance::Persistance::borrarUsuarioID(int id) {
     return executeStoredProcedureNonQuery("usp_BorrarUsuario", params);
 }
 bool BotPersistance::Persistance::borrarUsuarioNombre(String^ nombre) {
+    /*
     for (int i = 0; i < listaUsuarios->Count; i++) {
         if (listaUsuarios[i]->Nombre->Equals(nombre)) {
             listaUsuarios->RemoveAt(i);
@@ -345,6 +529,20 @@ bool BotPersistance::Persistance::borrarUsuarioNombre(String^ nombre) {
         }
     }
     return false;
+    */
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^>
+        {
+            gcnew SqlParameter("@Nombre", nombre)
+        };
+
+        return executeStoredProcedureNonQuery("usp_BorrarUsuarioPorNombre", params);
+    }
+    catch (Exception^ ex)
+    {
+        throw gcnew Exception("Error eliminando usuario por nombre: " + ex->Message);
+    }
 }
 int BotPersistance::Persistance::restablecerUsuario(String^ usuario, String^ nuevaContra, String^ confirmarContra) {
     /*
@@ -743,6 +941,7 @@ Object^ BotPersistance::Persistance::LoadPointsFormTxtFile(String^ fileName)
 
 //Funcion de zonas
 String^ BotPersistance::Persistance::delimitarZonaTrabajo(double x, double y) {
+    /*
     String^ Ubicacion = "nullptr";
     for each (ZonaTrabajo ^ z in listaZonas) {
         if (x >= z->x_min && x <= z->x_max && y >= z->y_min && y <= z->y_max) {
@@ -756,16 +955,79 @@ String^ BotPersistance::Persistance::delimitarZonaTrabajo(double x, double y) {
     }
 
     return Ubicacion;
+    */
+    try
+    {
+        List<ZonaTrabajo^>^ zonas = GetZonas();
+        String^ Ubicacion = "nullptr";
+
+        for each (ZonaTrabajo ^ z in zonas) {
+            if (x >= z->x_min && x <= z->x_max && y >= z->y_min && y <= z->y_max) {
+                Ubicacion = z->zona;
+
+                // Guardar punto en SQL
+                array<SqlParameter^>^ params = gcnew array<SqlParameter^>
+                {
+                    gcnew SqlParameter("@X", x),
+                        gcnew SqlParameter("@Y", y),
+                        gcnew SqlParameter("@Ubicacion", Ubicacion)
+                };
+
+                executeStoredProcedureNonQuery("usp_AddPunto", params);
+                return Ubicacion;
+            }
+        }
+        return Ubicacion;
+    }
+    catch (Exception^ ex)
+    {
+        throw gcnew Exception("Error delimitando zona: " + ex->Message);
+    }
 }
 
 Point^ BotPersistance::Persistance::getPoint(double x, double y)
 {
+    /*
     for each (Point ^ p in listPoints) {
         if (p->x == x && p->y == y) {
             return p;
         }
     }
     return nullptr;
+    */
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^> {
+            gcnew SqlParameter("@X", x),
+                gcnew SqlParameter("@Y", y)
+        };
+
+        SqlDataReader^ reader = executeStoredProcedureReader("usp_GetPunto", params);
+
+        if (reader != nullptr && reader->Read())
+        {
+            Point^ punto = gcnew Point();
+
+            punto->x = reader->GetDouble(reader->GetOrdinal("Coordenada_X"));
+            punto->y = reader->GetDouble(reader->GetOrdinal("Coordenada_Y"));
+            punto->Ubicacion = reader["Ubicacion"]->ToString();
+
+            reader->Close();
+            cerrarConexion();
+            return punto;
+        }
+
+        if (reader != nullptr) {
+            reader->Close();
+            cerrarConexion();
+        }
+        return nullptr;
+    }
+    catch (Exception^ ex)
+    {
+        cerrarConexion();
+        throw gcnew Exception("Error obteniendo punto: " + ex->Message);
+    }
 }
 
 //Lista Robot Disponible
@@ -784,7 +1046,7 @@ List<Robot^>^ BotPersistance::Persistance::listaRobotsDisponibles()
 
 //Registro de alertas
 void BotPersistance::Persistance::registrarAlerta(Alert^ alerta) {
-
+    /*
     List<Alert^>^ alertasExistentes = ShowAlertas();
 
     int maxId = 0;
@@ -811,6 +1073,37 @@ void BotPersistance::Persistance::registrarAlerta(Alert^ alerta) {
 
     listaReportesAlertas->Add(alerta);
     PersistBinaryFile(fileBinAlertReport, listaReportesAlertas);
+    */
+    try
+    {
+        // Determinar tipo de alerta
+        if (dynamic_cast<DTIReport^>(alerta) != nullptr) {
+            alerta->TipoAlerta = "DTI Reporte";
+        }
+        else if (dynamic_cast<Altercado^>(alerta) != nullptr) {
+            alerta->TipoAlerta = "Altercado";
+        }
+        else if (dynamic_cast<ObjPerdido^>(alerta) != nullptr) {
+            alerta->TipoAlerta = "Objeto Perdido";
+        }
+        else {
+            alerta->TipoAlerta = "General";
+        }
+
+        // Guardar en SQL
+        int alertaID = AddAlerta(alerta);
+        alerta->id = alertaID;
+
+        // Actualizar contador del usuario
+        if (alerta->UsuarioID > 0)
+        {
+            UpdateUserAlertCounts(alerta->UsuarioID, alerta->TipoAlerta);
+        }
+    }
+    catch (Exception^ ex)
+    {
+        throw gcnew Exception("Error registrando alerta en SQL: " + ex->Message);
+    }
 }
 void BotPersistance::Persistance::registrarObjPerdido(ObjPerdido^ objeto) {
     registrarAlerta(objeto);
@@ -823,12 +1116,32 @@ void BotPersistance::Persistance::registrarAltercado(Altercado^ altercado) {
 }
 void BotPersistance::Persistance::registrarZona(ZonaTrabajo^ zona)
 {
+    /*
     listaZonas->Add(zona);
     PersistTxtFileZonas(fileZonaTrabajo, listaZonas);
+    */
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^>
+        {
+            gcnew SqlParameter("@Nombre", zona->zona),
+                gcnew SqlParameter("@X_min", zona->x_min),
+                gcnew SqlParameter("@X_max", zona->x_max),
+                gcnew SqlParameter("@Y_min", zona->y_min),
+                gcnew SqlParameter("@Y_max", zona->y_max)
+        };
+
+        executeStoredProcedureNonQuery("usp_AddZona", params);
+    }
+    catch (Exception^ ex)
+    {
+        throw gcnew Exception("Error registrando zona: " + ex->Message);
+    }
 }
 
 int BotPersistance::Persistance::modificarZona(ZonaTrabajo^ zona)
 {
+    /*
     for (int i = 0; i < listaZonas->Count; i++) {
         if (listaZonas[i]->ID == zona->ID) {
             listaZonas[i] = zona;
@@ -837,10 +1150,30 @@ int BotPersistance::Persistance::modificarZona(ZonaTrabajo^ zona)
         }
     }
     return 0;
+    */
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^>
+        {
+            gcnew SqlParameter("@ID", zona->ID),
+                gcnew SqlParameter("@Nombre", zona->zona),
+                gcnew SqlParameter("@X_min", zona->x_min),
+                gcnew SqlParameter("@X_max", zona->x_max),
+                gcnew SqlParameter("@Y_min", zona->y_min),
+                gcnew SqlParameter("@Y_max", zona->y_max)
+        };
+
+        return executeStoredProcedure("usp_UpdateZona", params);
+    }
+    catch (Exception^ ex)
+    {
+        throw gcnew Exception("Error modificando zona: " + ex->Message);
+    }
 }
 
 bool BotPersistance::Persistance::eliminarZona(int id)
 {
+    /*
     for (int i = 0; i < listaZonas->Count; i++) {
         if (listaZonas[i]->ID == id) {
             listaZonas->RemoveAt(i);
@@ -849,20 +1182,55 @@ bool BotPersistance::Persistance::eliminarZona(int id)
         }
     }
     return false;
+    */
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^>
+        {
+            gcnew SqlParameter("@ID", id)
+        };
+
+        return executeStoredProcedureNonQuery("usp_DeleteZona", params);
+    }
+    catch (Exception^ ex)
+    {
+        throw gcnew Exception("Error eliminando zona: " + ex->Message);
+    }
 }
 
 bool BotPersistance::Persistance::buscarZonaID(int id)
 {
+    /*
     for (int i = 0; i < listaZonas->Count; i++) {
         if (listaZonas[i]->ID == id) {
             return true;
         }
     }
     return false;
+    */
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^> {
+            gcnew SqlParameter("@ID", id)
+        };
+
+        SqlDataReader^ reader = executeStoredProcedureReader("usp_BuscarZonaPorID", params);
+        bool existe = reader->Read();
+
+        reader->Close();
+        cerrarConexion();
+        return existe;
+    }
+    catch (Exception^ ex)
+    {
+        cerrarConexion();
+        throw gcnew Exception("Error buscando zona por ID: " + ex->Message);
+    }
 }
 
 ZonaTrabajo^ BotPersistance::Persistance::buscarReturnZonaId(int id)
 {
+    /*
     ZonaTrabajo^ zonaEncontrada = nullptr;
     for (int i = 0; i < listaZonas->Count; i++) {
         if (listaZonas[i]->ID == id) {
@@ -871,10 +1239,47 @@ ZonaTrabajo^ BotPersistance::Persistance::buscarReturnZonaId(int id)
         }
     }
     return zonaEncontrada;
+    */
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^> {
+            gcnew SqlParameter("@ID", id)
+        };
+
+        SqlDataReader^ reader = executeStoredProcedureReader("usp_BuscarZonaPorID", params);
+
+        if (reader != nullptr && reader->Read())
+        {
+            ZonaTrabajo^ zona = gcnew ZonaTrabajo();
+
+            zona->ID = reader->GetInt32(reader->GetOrdinal("ID_Zona"));
+            zona->zona = reader["Nombre_zona"]->ToString();
+            zona->x_min = reader->GetDouble(reader->GetOrdinal("X_min"));
+            zona->x_max = reader->GetDouble(reader->GetOrdinal("X_max"));
+            zona->y_min = reader->GetDouble(reader->GetOrdinal("Y_min"));
+            zona->y_max = reader->GetDouble(reader->GetOrdinal("Y_max"));
+
+            reader->Close();
+            cerrarConexion();
+            return zona;
+        }
+
+        if (reader != nullptr) {
+            reader->Close();
+            cerrarConexion();
+        }
+        return nullptr;
+    }
+    catch (Exception^ ex)
+    {
+        cerrarConexion();
+        throw gcnew Exception("Error buscando zona por ID: " + ex->Message);
+    }
 }
 
 List<ZonaTrabajo^>^ BotPersistance::Persistance::GetZonas()
 {
+    /*
     if (listaZonas->Count == 0) {
         Object^ res = LoadZonasFormTxtFile(fileZonaTrabajo);
         if (res != nullptr) {
@@ -882,6 +1287,36 @@ List<ZonaTrabajo^>^ BotPersistance::Persistance::GetZonas()
         }
     }
     return listaZonas;
+    */
+    List<ZonaTrabajo^>^ lista = gcnew List<ZonaTrabajo^>();
+
+    try
+    {
+        SqlDataReader^ reader = executeStoredProcedureReader("usp_GetAllZonas", nullptr);
+
+        while (reader->Read())
+        {
+            ZonaTrabajo^ zona = gcnew ZonaTrabajo();
+
+            zona->ID = reader->GetInt32(reader->GetOrdinal("ID_Zona"));
+            zona->zona = reader["Nombre_zona"]->ToString();
+            zona->x_min = reader->GetDouble(reader->GetOrdinal("X_min"));
+            zona->x_max = reader->GetDouble(reader->GetOrdinal("X_max"));
+            zona->y_min = reader->GetDouble(reader->GetOrdinal("Y_min"));
+            zona->y_max = reader->GetDouble(reader->GetOrdinal("Y_max"));
+
+            lista->Add(zona);
+        }
+
+        reader->Close();
+        cerrarConexion();
+        return lista;
+    }
+    catch (Exception^ ex)
+    {
+        cerrarConexion();
+        throw gcnew Exception("Error obteniendo zonas: " + ex->Message);
+    }
 }
 
 List<Robot^>^ BotPersistance::Persistance::GetRobotsConAlertas()
@@ -972,6 +1407,112 @@ bool BotPersistance::Persistance::MarcarAlertaSolucionada(int alertaID)
     return false;
 }
 
+int BotPersistance::Persistance::AddAlerta(Alert^ alerta)
+{
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^>
+        {
+            gcnew SqlParameter("@TipoAlerta", alerta->TipoAlerta),
+                gcnew SqlParameter("@Fecha", alerta->Fecha),
+                gcnew SqlParameter("@Descripcion", alerta->Description),
+                gcnew SqlParameter("@Lugar", alerta->Lugar),
+                gcnew SqlParameter("@UsuarioID", alerta->UsuarioID),
+                gcnew SqlParameter("@UsuarioNombre", alerta->UsuarioNombre),
+                gcnew SqlParameter("@ObjetoEncontrado",
+                    dynamic_cast<ObjPerdido^>(alerta) != nullptr ?
+                    dynamic_cast<ObjPerdido^>(alerta)->ObjetoEncontrado : ""),
+                gcnew SqlParameter("@TipoReporte",
+                    dynamic_cast<DTIReport^>(alerta) != nullptr ?
+                    dynamic_cast<DTIReport^>(alerta)->tipoReporte : "")
+        };
+
+        return executeStoredProcedure("usp_AddAlerta", params);
+    }
+    catch (Exception^ ex)
+    {
+        throw gcnew Exception("Error agregando alerta: " + ex->Message);
+    }
+}
+
+List<Alert^>^ BotPersistance::Persistance::GetAllAlertas()
+{
+    List<Alert^>^ lista = gcnew List<Alert^>();
+
+    try
+    {
+        SqlDataReader^ reader = executeStoredProcedureReader("usp_GetAllAlertas", nullptr);
+
+        while (reader->Read())
+        {
+            String^ tipoAlerta = reader->GetString(reader->GetOrdinal("Tipo_alerta"));
+            Alert^ alerta;
+
+            if (tipoAlerta == "Objeto Perdido")
+            {
+                ObjPerdido^ obj = gcnew ObjPerdido();
+                obj->ObjetoEncontrado = reader["Objeto_encontrado"]->ToString();
+                alerta = obj;
+            }
+            else if (tipoAlerta == "DTI Reporte")
+            {
+                DTIReport^ dti = gcnew DTIReport();
+                dti->tipoReporte = reader["Tipo_reporte"]->ToString();
+                alerta = dti;
+            }
+            else if (tipoAlerta == "Altercado")
+            {
+                alerta = gcnew Altercado();
+            }
+            else
+            {
+                alerta = gcnew Alert();
+            }
+
+            alerta->id = reader->GetInt32(reader->GetOrdinal("ID_Alerta"));
+            alerta->TipoAlerta = tipoAlerta;
+            alerta->Fecha = reader->GetDateTime(reader->GetOrdinal("Fecha_alerta"));
+            alerta->Description = reader["Descripcion"]->ToString();
+            alerta->Lugar = reader["Lugar"]->ToString();
+            alerta->Solucionado = reader->GetBoolean(reader->GetOrdinal("Solucionado"));
+            alerta->UsuarioID = reader->GetInt32(reader->GetOrdinal("Usuario_ID"));
+            alerta->UsuarioNombre = reader["Usuario_nombre"]->ToString();
+
+            lista->Add(alerta);
+        }
+
+        reader->Close();
+        cerrarConexion();
+        return lista;
+    }
+    catch (Exception^ ex)
+    {
+        cerrarConexion();
+        throw gcnew Exception("Error obteniendo alertas: " + ex->Message);
+    }
+}
+
+void BotPersistance::Persistance::UpdateUserAlertCounts(int usuarioID, String^ tipoAlerta)
+{
+    try
+    {
+        String^ campo = "";
+        if (tipoAlerta == "Objeto Perdido") campo = "Perdidas";
+        else if (tipoAlerta == "Altercado") campo = "Altercados";
+        else if (tipoAlerta == "DTI Reporte") campo = "Reportes_dti";
+
+        if (!String::IsNullOrEmpty(campo))
+        {
+            String^ sql = String::Format("UPDATE Usuarios SET {0} = {0} + 1 WHERE ID_Usuario = {1}", campo, usuarioID);
+            executeSql(sql);
+        }
+    }
+    catch (Exception^ ex)
+    {
+        throw gcnew Exception("Error actualizando contador de alertas: " + ex->Message);
+    }
+}
+
 SqlConnection^ BotPersistance::Persistance::getObjConexion()
 {
     return objConexion;
@@ -989,7 +1530,20 @@ void BotPersistance::Persistance::abrirConexion()
         if (objConexion->State == System::Data::ConnectionState::Open) {
             return;
         }
-        objConexion->ConnectionString = "Server=200.16.7.140;DataBase='a20230612';User id='a20230612';Password='Yz2j7Mdt'";
+
+        //Conexión de Boris
+        //objConexion->ConnectionString = "Server=200.16.7.140;DataBase='a20230612';User id='a20230612';Password='Yz2j7Mdt'";
+
+        //Conexion de Rodrigo
+        objConexion->ConnectionString = "Server=200.16.7.140;DataBase=a20230319;User id=a20230319;Password=w2RzV77V";
+
+        //Conexión con AWS
+        /*objConexion->ConnectionString =
+            "Server=idb1inf53.cpquwiptrqup.us-east-1.rds.amazonaws.com,1433;" +
+            "Database=BotSecurityDB;" +
+            "User Id=Sherifflogin;" +
+            "Password=Sheriffbot;" +
+            "TrustServerCertificate=true;";*/
 
         objConexion->Open();
     }
@@ -1066,7 +1620,12 @@ int BotPersistance::Persistance::executeStoredProcedure(String^ procedureName, a
 SqlDataReader^ BotPersistance::Persistance::executeStoredProcedureReader(String^ procedureName, array<SqlParameter^>^ parameters)
 {
     try {
-        abrirConexion();
+        //abrirConexion();
+
+        if (objConexion == nullptr || objConexion->State != System::Data::ConnectionState::Open) {
+            abrirConexion();
+        }
+
         SqlCommand^ comando = gcnew SqlCommand(procedureName, getObjConexion());
         comando->CommandType = System::Data::CommandType::StoredProcedure;
 
@@ -1076,11 +1635,11 @@ SqlDataReader^ BotPersistance::Persistance::executeStoredProcedureReader(String^
             }
         }
 
-        return comando->ExecuteReader();
+        return comando->ExecuteReader(System::Data::CommandBehavior::CloseConnection);
     }
     catch (Exception^ ex) {
         cerrarConexion();
-        throw ex;
+        throw gcnew Exception("Error en stored procedure reader " + procedureName + ": " + ex->Message);
     }
 }
 
@@ -1132,11 +1691,14 @@ bool BotPersistance::Persistance::executeStoredProcedureNonQuery(String^ procedu
 
 List<Alert^>^ BotPersistance::Persistance::ShowAlertas()
 {
+    /*
     listaReportesAlertas = (List<Alert^>^)LoadBinaryFile(fileBinAlertReport);
     if (listaReportesAlertas == nullptr) {
         listaReportesAlertas = gcnew List<Alert^>();
     }
     return listaReportesAlertas;
+    */
+    return GetAllAlertas();
 }
 
 List<ObjPerdido^>^ BotPersistance::Persistance::ShowObjetosPerdidos()
@@ -1177,40 +1739,77 @@ List<DTIReport^>^ BotPersistance::Persistance::ShowDTIReport()
 
 Alert^ BotPersistance::Persistance::buscarAlerta(int id)
 {
+    /*
     for each (Alert ^ alerta in listaReportesAlertas) {
         if (alerta->id == id) {
             return alerta;
         }
     }
     return nullptr;
+    */
+    try
+    {
+        // Obtener todas las alertas y buscar por ID
+        List<Alert^>^ todasAlertas = GetAllAlertas();
+
+        for each (Alert ^ alerta in todasAlertas) {
+            if (alerta->id == id) {
+                return alerta;
+            }
+        }
+        return nullptr;
+    }
+    catch (Exception^ ex)
+    {
+        throw gcnew Exception("Error buscando alerta por ID: " + ex->Message);
+    }
 }
 
 ObjPerdido^ BotPersistance::Persistance::buscarObjetoPerdido(int id)
 {
+    /*
     Alert^ objeto = buscarAlerta(id);
     if (objeto->GetType() == ObjPerdido::typeid)
         return (ObjPerdido^)objeto;
+    return nullptr;
+    */
+    Alert^ alerta = buscarAlerta(id);
+    if (alerta != nullptr && alerta->TipoAlerta == "Objeto Perdido")
+        return (ObjPerdido^)alerta;
     return nullptr;
 }
 
 Altercado^ BotPersistance::Persistance::buscarAltercado(int id)
 {
+    /*
     Alert^ altercado = buscarAlerta(id);
     if (altercado->GetType() == Altercado::typeid)
         return (Altercado^)altercado;
+    return nullptr;
+    */
+    Alert^ alerta = buscarAlerta(id);
+    if (alerta != nullptr && alerta->TipoAlerta == "Altercado")
+        return (Altercado^)alerta;
     return nullptr;
 }
 
 DTIReport^ BotPersistance::Persistance::buscarDTIReport(int id)
 {
+    /*
     Alert^ reporte = buscarAlerta(id);
     if (reporte->GetType() == DTIReport::typeid)
         return (DTIReport^)reporte;
+    return nullptr;
+    */
+    Alert^ alerta = buscarAlerta(id);
+    if (alerta != nullptr && alerta->TipoAlerta == "DTI Reporte")
+        return (DTIReport^)alerta;
     return nullptr;
 }
 
 int BotPersistance::Persistance::modificarAlerta(Alert^ alerta)
 {
+    /*
     for (int i = 0; i < listaReportesAlertas->Count; i++) {
         if (listaReportesAlertas[i]->id == alerta->id) {
             listaReportesAlertas[i] = alerta;
@@ -1219,10 +1818,35 @@ int BotPersistance::Persistance::modificarAlerta(Alert^ alerta)
         }
     }
     return 0;
+    */
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^>
+        {
+            gcnew SqlParameter("@ID_Alerta", alerta->id),
+                gcnew SqlParameter("@TipoAlerta", alerta->TipoAlerta),
+                gcnew SqlParameter("@Descripcion", alerta->Description),
+                gcnew SqlParameter("@Lugar", alerta->Lugar),
+                gcnew SqlParameter("@Solucionado", alerta->Solucionado),
+                gcnew SqlParameter("@ObjetoEncontrado",
+                    dynamic_cast<ObjPerdido^>(alerta) != nullptr ?
+                    dynamic_cast<ObjPerdido^>(alerta)->ObjetoEncontrado : ""),
+                gcnew SqlParameter("@TipoReporte",
+                    dynamic_cast<DTIReport^>(alerta) != nullptr ?
+                    dynamic_cast<DTIReport^>(alerta)->tipoReporte : "")
+        };
+
+        return executeStoredProcedure("usp_UpdateAlerta", params);
+    }
+    catch (Exception^ ex)
+    {
+        throw gcnew Exception("Error modificando alerta: " + ex->Message);
+    }
 }
 
 bool BotPersistance::Persistance::eliminarAlerta(int id)
 {
+    /*
     for (int i = 0; i < listaReportesAlertas->Count; i++) {
         if (listaReportesAlertas[i]->id == id) {
             listaReportesAlertas->RemoveAt(i);
@@ -1231,16 +1855,91 @@ bool BotPersistance::Persistance::eliminarAlerta(int id)
         }
     }
     return false;
+    */
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^>
+        {
+            gcnew SqlParameter("@ID_Alerta", id)
+        };
+
+        return executeStoredProcedureNonQuery("usp_DeleteAlerta", params);
+    }
+    catch (Exception^ ex)
+    {
+        throw gcnew Exception("Error eliminando alerta: " + ex->Message);
+    }
 }
 
 Alert^ BotPersistance::Persistance::buscarAlertaDescrip(String^ descrip)
 {
+    /*
     for each (Alert ^ alerta in listaReportesAlertas) {
         if (alerta->Description == descrip) {
             return alerta;
         }
     }
     return nullptr;
+    */
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^> {
+            gcnew SqlParameter("@Descripcion", descrip)
+        };
+
+        SqlDataReader^ reader = executeStoredProcedureReader("usp_BuscarAlertaPorDescripcion", params);
+
+        if (reader != nullptr && reader->Read())
+        {
+            String^ tipoAlerta = reader->GetString(reader->GetOrdinal("Tipo_alerta"));
+            Alert^ alerta;
+
+            if (tipoAlerta == "Objeto Perdido")
+            {
+                ObjPerdido^ obj = gcnew ObjPerdido();
+                obj->ObjetoEncontrado = reader["Objeto_encontrado"]->ToString();
+                alerta = obj;
+            }
+            else if (tipoAlerta == "DTI Reporte")
+            {
+                DTIReport^ dti = gcnew DTIReport();
+                dti->tipoReporte = reader["Tipo_reporte"]->ToString();
+                alerta = dti;
+            }
+            else if (tipoAlerta == "Altercado")
+            {
+                alerta = gcnew Altercado();
+            }
+            else
+            {
+                alerta = gcnew Alert();
+            }
+
+            alerta->id = reader->GetInt32(reader->GetOrdinal("ID_Alerta"));
+            alerta->TipoAlerta = tipoAlerta;
+            alerta->Fecha = reader->GetDateTime(reader->GetOrdinal("Fecha_alerta"));
+            alerta->Description = reader["Descripcion"]->ToString();
+            alerta->Lugar = reader["Lugar"]->ToString();
+            alerta->Solucionado = reader->GetBoolean(reader->GetOrdinal("Solucionado"));
+            alerta->UsuarioID = reader->GetInt32(reader->GetOrdinal("Usuario_ID"));
+            alerta->UsuarioNombre = reader["Usuario_nombre"]->ToString();
+
+            reader->Close();
+            cerrarConexion();
+            return alerta;
+        }
+
+        if (reader != nullptr) {
+            reader->Close();
+            cerrarConexion();
+        }
+        return nullptr;
+    }
+    catch (Exception^ ex)
+    {
+        cerrarConexion();
+        throw gcnew Exception("Error buscando alerta por descripción: " + ex->Message);
+    }
 }
 
 List<Alert^>^ BotPersistance::Persistance::GetAlertasPorUsuario(int usuarioID)

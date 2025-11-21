@@ -101,6 +101,10 @@ namespace BotPersistance {
 		static List<Alert^>^ GetAlertasPendientes();
 		static bool MarcarAlertaSolucionada(int alertaID);
 
+		static int AddAlerta(Alert^ alerta);
+		static List<Alert^>^ GetAllAlertas();
+		static void UpdateUserAlertCounts(int usuarioID, String^ tipoAlerta);
+
 		//SQL Service
 	private:
 		static SqlConnection^ objConexion = gcnew SqlConnection();
