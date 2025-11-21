@@ -23,7 +23,10 @@ void BotPersistance::Persistance::registrarRobot(Robot^ robot) {
             gcnew SqlParameter("@Zona", robot->Zona),
             gcnew SqlParameter("@Bateria", robot->Bateria),
             gcnew SqlParameter("@PosicionX", robot->PosicionRobot->x),
-            gcnew SqlParameter("@PosicionY", robot->PosicionRobot->y)
+            gcnew SqlParameter("@PosicionY", robot->PosicionRobot->y),
+            gcnew SqlParameter("@Caracteristicas",
+                String::IsNullOrEmpty(robot->Caracteristicas) ?
+                DBNull::Value : (Object^)robot->Caracteristicas)
         };
 
         executeStoredProcedure("usp_AddRobot", params);
@@ -42,6 +45,7 @@ Robot^ BotPersistance::Persistance::buscarRobotID(int id) {
     }
     return nullptr;
     */
+    /*
     try
     {
         array<SqlParameter^>^ params = gcnew array<SqlParameter^> {
@@ -66,6 +70,57 @@ Robot^ BotPersistance::Persistance::buscarRobotID(int id) {
             robot->Disponibilidad = reader->GetBoolean(reader->GetOrdinal("Disponibilidad"));
             robot->Caracteristicas = reader["Caracteristicas"]->ToString();
             robot->AlertaAsignadaID = reader->GetInt32(reader->GetOrdinal("Alerta_asignada_ID"));
+            robot->TipoMision = reader["Tipo_mision"]->ToString();
+
+            reader->Close();
+            cerrarConexion();
+            return robot;
+        }
+
+        if (reader != nullptr) {
+            reader->Close();
+            cerrarConexion();
+        }
+        return nullptr;
+    }
+    catch (Exception^ ex)
+    {
+        cerrarConexion();
+        throw gcnew Exception("Error buscando robot por ID: " + ex->Message);
+    }
+    */
+    try
+    {
+        array<SqlParameter^>^ params = gcnew array<SqlParameter^>{
+            gcnew SqlParameter("@ID", id)
+        };
+
+        SqlDataReader^ reader = executeStoredProcedureReader("usp_BuscarRobotPorID", params);
+
+        if (reader != nullptr && reader->Read() && !reader->IsDBNull(0))
+        {
+            Robot^ robot = gcnew Robot();
+
+            robot->ID = reader->GetInt32(reader->GetOrdinal("ID_Robot"));
+            robot->Nombre = reader["Nombre_robot"]->ToString();
+            robot->Zona = reader["Zona_asignada"]->ToString();
+            robot->Bateria = reader->GetInt32(reader->GetOrdinal("Bateria"));
+
+            double posX = reader->GetDouble(reader->GetOrdinal("Posicion_X"));
+            double posY = reader->GetDouble(reader->GetOrdinal("Posicion_Y"));
+            robot->PosicionRobot = gcnew Point(posX, posY, robot->Zona);
+
+            robot->Disponibilidad = reader->GetBoolean(reader->GetOrdinal("Disponibilidad"));
+            robot->Caracteristicas = reader["Caracteristicas"]->ToString();
+
+            // Verificar si la columna existe antes de leerla
+            if (!reader->IsDBNull(reader->GetOrdinal("Alerta_asignada_ID"))) {
+                robot->AlertaAsignadaID = reader->GetInt32(reader->GetOrdinal("Alerta_asignada_ID"));
+            }
+            else {
+                robot->AlertaAsignadaID = 0;
+            }
+
             robot->TipoMision = reader["Tipo_mision"]->ToString();
 
             reader->Close();
@@ -210,7 +265,11 @@ int BotPersistance::Persistance::modificarRobotID(Robot^ robot) {
             gcnew SqlParameter("@Zona", robot->Zona),
             gcnew SqlParameter("@Bateria", robot->Bateria),
             gcnew SqlParameter("@PosicionX", robot->PosicionRobot->x),
-            gcnew SqlParameter("@PosicionY", robot->PosicionRobot->y)
+            gcnew SqlParameter("@PosicionY", robot->PosicionRobot->y),
+            gcnew SqlParameter("@Caracteristicas",
+                String::IsNullOrEmpty(robot->Caracteristicas) ?
+                DBNull::Value : (Object^)robot->Caracteristicas),
+            gcnew SqlParameter("@Disponibilidad", robot->Disponibilidad)
         };
 
         return executeStoredProcedure("usp_UpdateRobot", params);
@@ -466,7 +525,7 @@ DatosUsuario^ BotPersistance::Persistance::buscarUsuarioCredenciales(String^ nom
     }
     return nullptr;
     */
-
+    /*
     try
     {
         array<SqlParameter^>^ params = {
@@ -498,6 +557,57 @@ DatosUsuario^ BotPersistance::Persistance::buscarUsuarioCredenciales(String^ nom
     catch (Exception^ ex)
     {
         throw gcnew Exception("Error al buscar usuario en SQL: " + ex->Message);
+        cerrarConexion();
+    }
+    */
+    SqlDataReader^ reader = nullptr;
+    try
+    {
+        array<SqlParameter^>^ params = {
+            gcnew SqlParameter("@Nombre", nombre),
+            gcnew SqlParameter("@Contra", contra)
+        };
+
+        reader = executeStoredProcedureReader("usp_LoginUser", params);
+
+        if (reader != nullptr && reader->Read())
+        {
+            DatosUsuario^ u = gcnew DatosUsuario();
+
+            u->ID = reader->GetInt32(reader->GetOrdinal("ID_Usuario"));
+            u->Nombre = reader["Nombre_de_usuario"]->ToString();
+            u->Contra = reader["Contrasena"]->ToString();
+            u->Cargo = reader["Cargo"]->ToString();
+
+            u->cant_alertas = gcnew array<int>(3);
+            u->cant_alertas[0] = Convert::ToInt32(reader["Perdidas"]);
+            u->cant_alertas[1] = Convert::ToInt32(reader["Altercados"]);
+            u->cant_alertas[2] = Convert::ToInt32(reader["Reportes_dti"]);
+
+            // Cerrar el reader antes de retornar
+            reader->Close();
+            cerrarConexion();
+            return u;
+        }
+
+        return nullptr;
+    }
+    catch (Exception^ ex)
+    {
+        // Asegurarse de cerrar el reader y la conexión en caso de error
+        if (reader != nullptr) {
+            reader->Close();
+            cerrarConexion();
+        }
+        throw gcnew Exception("Error al buscar usuario en SQL: " + ex->Message);
+    }
+    finally
+    {
+        // Garantizar que el reader se cierre incluso si hay excepción
+        if (reader != nullptr && !reader->IsClosed) {
+            reader->Close();
+            cerrarConexion();
+        }
     }
 }
 bool BotPersistance::Persistance::borrarUsuarioID(int id) {
@@ -577,14 +687,20 @@ int BotPersistance::Persistance::restablecerUsuario(String^ usuario, String^ nue
 
     try
     {
+        // Primero verificar si el usuario existe
+        DatosUsuario^ usuarioExistente = buscarUsuarioNombre(usuario);
+        if (usuarioExistente == nullptr) {
+            return 0; // Usuario no existe
+        }
+
+        // Luego actualizar la contraseña usando executeStoredProcedureNonQuery
         array<SqlParameter^>^ params = {
             gcnew SqlParameter("@Nombre", usuario),
             gcnew SqlParameter("@NuevaContra", nuevaContra)
         };
 
-        int result = executeStoredProcedure("usp_ResetPassword", params);
-
-        return result;  // 1 = actualizado, 0 = usuario no existe
+        bool result = executeStoredProcedureNonQuery("usp_ResetPassword", params);
+        return result ? 1 : 0;
     }
     catch (Exception^ ex)
     {

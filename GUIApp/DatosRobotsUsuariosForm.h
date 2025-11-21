@@ -820,13 +820,23 @@ namespace GUIApp {
 	private: System::Void btnModifyRobot_Click(System::Object^ sender, System::EventArgs^ e) {
 		
 		try {
-			if (String::IsNullOrEmpty(NombreRobot->Text)) {
-				MessageBox::Show("Ingrese un nombre de robot a modificar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			if (String::IsNullOrEmpty(IDRobot->Text)) {
+				MessageBox::Show("Ingrese un ID de robot válido", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 				return;
 			}
-			Robot^ robot = gcnew Robot();
 
-			robot->ID = Convert::ToInt32(IDRobot->Text);
+			// PRIMERO VERIFICAR SI EL ROBOT EXISTE
+			int idRobot = Convert::ToInt32(IDRobot->Text);
+			Robot^ robotExistente = Service::buscarRobotID(idRobot);
+
+			if (robotExistente == nullptr) {
+				MessageBox::Show("No se encontró el robot con ID: " + idRobot, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			// SI EXISTE, ENTONCES MODIFICAR
+			Robot^ robot = gcnew Robot();
+			robot->ID = idRobot;
 			robot->Nombre = NombreRobot->Text;
 			robot->Bateria = Convert::ToInt32(BateriaRobot->Text);
 
@@ -834,14 +844,14 @@ namespace GUIApp {
 			double y = Convert::ToDouble(YRobot->Text);
 			robot->Zona = Service::delimitarZonaTrabajo(x, y);
 
-			robot->PosicionRobot->x = Convert::ToDouble(XRobot->Text);
-			robot->PosicionRobot->y = Convert::ToDouble(YRobot->Text);
+			robot->PosicionRobot->x = x;
+			robot->PosicionRobot->y = y;
 
 			if (Service::delimitarZonaTrabajo(x, y) == "BASE") {
 				robot->Disponibilidad = true;
 			}
 			else {
-				robot->Disponibilidad = !rbtnDisponibilidadYes->Checked;
+				robot->Disponibilidad = rbtnDisponibilidadYes->Checked;
 			}
 
 			if (pbPhotoRobot != nullptr && pbPhotoRobot->Image != nullptr) {
@@ -852,14 +862,22 @@ namespace GUIApp {
 
 			robot->Caracteristicas = txtCaracteristicas->Text;
 
-			int robotModificar = Service::modificarRobotID(robot);
-			if (robotModificar != 0) {
+			// AHORA INTENTAR MODIFICAR - MANEJAR AMBOS CASOS
+			int resultado = Service::modificarRobotID(robot);
+
+			// PROBABLEMENTE LA FUNCIÓN ESTÁ INVERTIDA:
+			// - Retorna 0 si se modificó correctamente
+			// - Retorna > 0 si hubo error
+			if (resultado == 0) {
+				// ÉXITO - se modificó correctamente
 				ShowRobots();
 				ClearFieldsR();
-				MessageBox::Show("Robot modificado exitosamente", "Exito", MessageBoxButtons::OK);
+				MessageBox::Show("Robot modificado exitosamente", "Éxito", MessageBoxButtons::OK, MessageBoxIcon::Information);
 			}
 			else {
-				MessageBox::Show("No se encontró el robot", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				// ERROR - no se pudo modificar
+				MessageBox::Show("No se pudo modificar el robot. Código de error: " + resultado,
+					"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 		}
 		catch (System::FormatException^) {
@@ -868,36 +886,6 @@ namespace GUIApp {
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al modificar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
-		/*
-		try
-		{
-			Robot^ r = gcnew Robot();
-
-			r->ID = Convert::ToInt32(IDRobot->Text);
-			r->Nombre = NombreRobot->Text;
-
-			double x = Convert::ToDouble(XRobot->Text);
-			double y = Convert::ToDouble(YRobot->Text);
-			r->Zona = Service::delimitarZonaTrabajo(x, y);
-
-			r->Bateria = Convert::ToInt32(BateriaRobot->Text);
-
-			double px = Convert::ToDouble(XRobot->Text);
-			double py = Convert::ToDouble(YRobot->Text);
-
-			r->PosicionRobot->x = px;
-			r->PosicionRobot->y = py;
-
-			Service::modificarRobotID(r);
-
-			MessageBox::Show("Robot modificado correctamente.");
-			cargarTablaRobots();
-		}
-		catch (Exception^ ex)
-		{
-			MessageBox::Show("Error al modificar robot: " + ex->Message);
-		}
-		*/
 	}
 	private: System::Void btnDeleteRobot_Click(System::Object^ sender, System::EventArgs^ e) {
 		
@@ -946,6 +934,44 @@ namespace GUIApp {
 		//MessageBox::Show("Imagen agregada exitosamente", "Exito", MessageBoxButtons::OK);
 	}
 	private: System::Void dgvRobot_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+		if (e->RowIndex < 0) return; // Evitar clics en headers
+
+		try {
+			String^ robotIDStr = dgvRobot->Rows[e->RowIndex]->Cells[0]->Value->ToString();
+			if (!String::IsNullOrEmpty(robotIDStr)) {
+				int robotID = Int32::Parse(robotIDStr);
+				Robot^ robot = Service::buscarRobotID(robotID);
+
+				if (robot != nullptr && robot->ID > 0) {
+					IDRobot->Text = Convert::ToString(robot->ID);
+					NombreRobot->Text = robot->Nombre;
+					BateriaRobot->Text = Convert::ToString(robot->Bateria);
+					XRobot->Text = Convert::ToString(robot->PosicionRobot->x);
+					YRobot->Text = Convert::ToString(robot->PosicionRobot->y);
+
+					rbtnDisponibilidadYes->Checked = robot->Disponibilidad;
+					rbtnDisponibilidadNo->Checked = !robot->Disponibilidad;
+
+					txtCaracteristicas->Text = robot->Caracteristicas;
+
+					if (robot->Photo != nullptr && robot->Photo->Length > 0) {
+						System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(robot->Photo);
+						pbPhotoRobot->Image = Image::FromStream(ms);
+					}
+					else {
+						pbPhotoRobot->Image = nullptr;
+						pbPhotoRobot->Invalidate();
+					}
+				}
+				else {
+					MessageBox::Show("No se pudo cargar la información del robot seleccionado", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				}
+			}
+		}
+		catch (Exception^ ex) {
+			MessageBox::Show("Error al cargar datos del robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+		/*
 		int robotID = Int32::Parse(dgvRobot->Rows[dgvRobot->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
 		Robot^ robot = (Robot^)Service::buscarRobotID(robotID);
 		if (robot != nullptr) {
@@ -971,8 +997,9 @@ namespace GUIApp {
 				pbPhotoRobot->Invalidate();
 			}
 
-
+		
 		}
+		*/
 	}
 	private: System::Void btnUpdatePhotoRobot_Click(System::Object^ sender, System::EventArgs^ e) {
 		SearchAndPutImagenOn(pbPhotoRobot);

@@ -188,7 +188,6 @@ namespace GUIApp {
 		}
 #pragma endregion
 	private: System::Void btnSendPassword_Click(System::Object^ sender, System::EventArgs^ e) {
-		/*
 		try {
 			if (String::IsNullOrEmpty(UserName->Text) || String::IsNullOrEmpty(NewPassword1->Text) || String::IsNullOrEmpty(NewPassword2->Text)) {
 				MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -215,7 +214,7 @@ namespace GUIApp {
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al restablecer contraseña: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
-		*/
+		/*
 		try {
 			// Validación de campos vacíos
 			if (String::IsNullOrEmpty(UserName->Text) ||
@@ -264,6 +263,7 @@ namespace GUIApp {
 			MessageBox::Show("Error al restablecer contraseña: " + ex->Message,
 				"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
+		*/
 	}
 	private: System::Void btnReturnPassword_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
