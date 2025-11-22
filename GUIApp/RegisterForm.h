@@ -65,6 +65,7 @@ namespace GUIApp {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(RegisterForm::typeid));
 			this->btnRegister2 = (gcnew System::Windows::Forms::Button());
 			this->textRole = (gcnew System::Windows::Forms::ComboBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
@@ -158,7 +159,7 @@ namespace GUIApp {
 			this->label1->Text = L"Registro";
 			this->label1->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
-			// RegisteForm
+			// RegisterForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
@@ -171,7 +172,8 @@ namespace GUIApp {
 			this->Controls->Add(this->textUsername);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
-			this->Name = L"RegisteForm";
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->Name = L"RegisterForm";
 			this->Text = L"RegisteForm";
 			this->ResumeLayout(false);
 			this->PerformLayout();

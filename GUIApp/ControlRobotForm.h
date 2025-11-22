@@ -297,6 +297,7 @@ namespace GUIApp {
 			this->Controls->Add(this->btnLeft);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"ControlRobotForm";
 			this->Text = L"ControlRobotForm";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &ControlRobotForm::ControlRobotForm_FormClosing);
@@ -627,7 +628,7 @@ namespace GUIApp {
 		private: System::Void btnSalir_Click(System::Object^ sender, System::EventArgs^ e) {
 			this->Close();
 		}
-		private: System::Void btnVerMapa_Click(System::Object^ sender, System::EventArgs^ e) {
+		private: System::Void btnVerMapa_Click(System::Object^ sender, System::EventArgs^ e) {//ver si se puede trabajar las dos ventanas a la vez
 			MapaForm^ form = gcnew MapaForm(robotEncontrado);
 			this->Hide();
 			form->ShowDialog();
@@ -730,10 +731,10 @@ namespace GUIApp {
 			System::Threading::Thread::Sleep(1000);
 
 			if (Service::ConectarArduino()) {
-				MessageBox::Show("✅ Reconectado exitosamente", "Éxito");
+				MessageBox::Show("Reconectado exitosamente", "Éxito");
 			}
 			else {
-				MessageBox::Show("❌ No se pudo reconectar", "Error");
+				MessageBox::Show("No se pudo reconectar", "Error");
 			}
 		}
 	};

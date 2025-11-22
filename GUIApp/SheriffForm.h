@@ -186,6 +186,7 @@ namespace GUIApp {
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->btnInfo);
 			this->Controls->Add(this->btnRobots);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"SheriffForm";
 			this->Text = L"SheriffForm";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->EndInit();

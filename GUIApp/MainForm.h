@@ -116,6 +116,7 @@ namespace GUIApp {
 			this->Controls->Add(this->btnLogin);
 			this->Controls->Add(this->btnRegister);
 			this->Controls->Add(this->label1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"MainForm";
 			this->Text = L"MainForm";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();

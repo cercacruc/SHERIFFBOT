@@ -124,6 +124,7 @@ namespace GUIApp {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(DatosRobotsUsuariosForm::typeid));
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
 			this->label6 = (gcnew System::Windows::Forms::Label());
@@ -156,6 +157,8 @@ namespace GUIApp {
 			this->ResourcePosX = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourcePosY = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
+			this->IDUser = (gcnew System::Windows::Forms::TextBox());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->CargoUser = (gcnew System::Windows::Forms::TextBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->PasswordUser = (gcnew System::Windows::Forms::TextBox());
@@ -170,8 +173,6 @@ namespace GUIApp {
 			this->ResourceUserName = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourcePassword = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->ResourceRole = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->IDUser = (gcnew System::Windows::Forms::TextBox());
-			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->tabControl1->SuspendLayout();
 			this->tabPage2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbPhotoRobot))->BeginInit();
@@ -185,11 +186,10 @@ namespace GUIApp {
 			// 
 			this->tabControl1->Controls->Add(this->tabPage2);
 			this->tabControl1->Controls->Add(this->tabPage1);
-			this->tabControl1->Location = System::Drawing::Point(14, 15);
-			this->tabControl1->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->tabControl1->Location = System::Drawing::Point(12, 12);
 			this->tabControl1->Name = L"tabControl1";
 			this->tabControl1->SelectedIndex = 0;
-			this->tabControl1->Size = System::Drawing::Size(1101, 822);
+			this->tabControl1->Size = System::Drawing::Size(979, 658);
 			this->tabControl1->TabIndex = 1;
 			// 
 			// tabPage2
@@ -215,10 +215,9 @@ namespace GUIApp {
 			this->tabPage2->Controls->Add(this->btnModifyRobot);
 			this->tabPage2->Controls->Add(this->btnAddRobot);
 			this->tabPage2->Controls->Add(this->dgvRobot);
-			this->tabPage2->Location = System::Drawing::Point(4, 29);
-			this->tabPage2->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->tabPage2->Location = System::Drawing::Point(4, 25);
 			this->tabPage2->Name = L"tabPage2";
-			this->tabPage2->Size = System::Drawing::Size(1093, 789);
+			this->tabPage2->Size = System::Drawing::Size(971, 629);
 			this->tabPage2->TabIndex = 0;
 			this->tabPage2->Text = L"Administrar Robots";
 			this->tabPage2->UseVisualStyleBackColor = true;
@@ -227,27 +226,26 @@ namespace GUIApp {
 			// 
 			this->label6->AutoSize = true;
 			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label6->Location = System::Drawing::Point(453, 85);
+			this->label6->Location = System::Drawing::Point(403, 68);
 			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(171, 29);
+			this->label6->Size = System::Drawing::Size(141, 25);
 			this->label6->TabIndex = 43;
 			this->label6->Text = L"Características";
 			// 
 			// txtCaracteristicas
 			// 
-			this->txtCaracteristicas->Location = System::Drawing::Point(446, 135);
-			this->txtCaracteristicas->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->txtCaracteristicas->Location = System::Drawing::Point(396, 108);
 			this->txtCaracteristicas->Multiline = true;
 			this->txtCaracteristicas->Name = L"txtCaracteristicas";
-			this->txtCaracteristicas->Size = System::Drawing::Size(338, 134);
+			this->txtCaracteristicas->Size = System::Drawing::Size(301, 108);
 			this->txtCaracteristicas->TabIndex = 42;
 			// 
 			// btnUpdatePhotoRobot
 			// 
-			this->btnUpdatePhotoRobot->Location = System::Drawing::Point(808, 236);
+			this->btnUpdatePhotoRobot->Location = System::Drawing::Point(718, 189);
 			this->btnUpdatePhotoRobot->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->btnUpdatePhotoRobot->Name = L"btnUpdatePhotoRobot";
-			this->btnUpdatePhotoRobot->Size = System::Drawing::Size(249, 34);
+			this->btnUpdatePhotoRobot->Size = System::Drawing::Size(221, 27);
 			this->btnUpdatePhotoRobot->TabIndex = 41;
 			this->btnUpdatePhotoRobot->Text = L"Actualizar foto";
 			this->btnUpdatePhotoRobot->UseVisualStyleBackColor = true;
@@ -256,10 +254,10 @@ namespace GUIApp {
 			// pbPhotoRobot
 			// 
 			this->pbPhotoRobot->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->pbPhotoRobot->Location = System::Drawing::Point(808, 28);
+			this->pbPhotoRobot->Location = System::Drawing::Point(718, 22);
 			this->pbPhotoRobot->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->pbPhotoRobot->Name = L"pbPhotoRobot";
-			this->pbPhotoRobot->Size = System::Drawing::Size(250, 205);
+			this->pbPhotoRobot->Size = System::Drawing::Size(223, 165);
 			this->pbPhotoRobot->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pbPhotoRobot->TabIndex = 40;
 			this->pbPhotoRobot->TabStop = false;
@@ -269,9 +267,9 @@ namespace GUIApp {
 			// 
 			this->label5->AutoSize = true;
 			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label5->Location = System::Drawing::Point(440, 302);
+			this->label5->Location = System::Drawing::Point(391, 242);
 			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(168, 29);
+			this->label5->Size = System::Drawing::Size(133, 25);
 			this->label5->TabIndex = 39;
 			this->label5->Text = L"Disponibilidad";
 			// 
@@ -279,21 +277,21 @@ namespace GUIApp {
 			// 
 			this->groupBox1->Controls->Add(this->rbtnDisponibilidadNo);
 			this->groupBox1->Controls->Add(this->rbtnDisponibilidadYes);
-			this->groupBox1->Location = System::Drawing::Point(446, 346);
+			this->groupBox1->Location = System::Drawing::Point(396, 277);
 			this->groupBox1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->groupBox1->Name = L"groupBox1";
 			this->groupBox1->Padding = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->groupBox1->Size = System::Drawing::Size(150, 58);
+			this->groupBox1->Size = System::Drawing::Size(133, 46);
 			this->groupBox1->TabIndex = 36;
 			this->groupBox1->TabStop = false;
 			// 
 			// rbtnDisponibilidadNo
 			// 
 			this->rbtnDisponibilidadNo->AutoSize = true;
-			this->rbtnDisponibilidadNo->Location = System::Drawing::Point(76, 25);
+			this->rbtnDisponibilidadNo->Location = System::Drawing::Point(68, 20);
 			this->rbtnDisponibilidadNo->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->rbtnDisponibilidadNo->Name = L"rbtnDisponibilidadNo";
-			this->rbtnDisponibilidadNo->Size = System::Drawing::Size(54, 24);
+			this->rbtnDisponibilidadNo->Size = System::Drawing::Size(46, 20);
 			this->rbtnDisponibilidadNo->TabIndex = 1;
 			this->rbtnDisponibilidadNo->Text = L"No";
 			this->rbtnDisponibilidadNo->UseVisualStyleBackColor = true;
@@ -302,10 +300,10 @@ namespace GUIApp {
 			// 
 			this->rbtnDisponibilidadYes->AutoSize = true;
 			this->rbtnDisponibilidadYes->Checked = true;
-			this->rbtnDisponibilidadYes->Location = System::Drawing::Point(14, 25);
+			this->rbtnDisponibilidadYes->Location = System::Drawing::Point(12, 20);
 			this->rbtnDisponibilidadYes->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->rbtnDisponibilidadYes->Name = L"rbtnDisponibilidadYes";
-			this->rbtnDisponibilidadYes->Size = System::Drawing::Size(48, 24);
+			this->rbtnDisponibilidadYes->Size = System::Drawing::Size(40, 20);
 			this->rbtnDisponibilidadYes->TabIndex = 0;
 			this->rbtnDisponibilidadYes->TabStop = true;
 			this->rbtnDisponibilidadYes->Text = L"Sí";
@@ -313,101 +311,95 @@ namespace GUIApp {
 			// 
 			// YRobot
 			// 
-			this->YRobot->Location = System::Drawing::Point(171, 347);
-			this->YRobot->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->YRobot->Location = System::Drawing::Point(152, 278);
 			this->YRobot->Name = L"YRobot";
-			this->YRobot->Size = System::Drawing::Size(239, 26);
+			this->YRobot->Size = System::Drawing::Size(213, 22);
 			this->YRobot->TabIndex = 35;
 			// 
 			// label7
 			// 
 			this->label7->AutoSize = true;
 			this->label7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label7->Location = System::Drawing::Point(17, 342);
+			this->label7->Location = System::Drawing::Point(15, 274);
 			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(128, 29);
+			this->label7->Size = System::Drawing::Size(104, 25);
 			this->label7->TabIndex = 34;
 			this->label7->Text = L"Posición Y";
 			// 
 			// XRobot
 			// 
-			this->XRobot->Location = System::Drawing::Point(171, 275);
-			this->XRobot->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->XRobot->Location = System::Drawing::Point(152, 220);
 			this->XRobot->Name = L"XRobot";
-			this->XRobot->Size = System::Drawing::Size(239, 26);
+			this->XRobot->Size = System::Drawing::Size(213, 22);
 			this->XRobot->TabIndex = 33;
 			// 
 			// label8
 			// 
 			this->label8->AutoSize = true;
 			this->label8->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label8->Location = System::Drawing::Point(17, 270);
+			this->label8->Location = System::Drawing::Point(15, 216);
 			this->label8->Name = L"label8";
-			this->label8->Size = System::Drawing::Size(129, 29);
+			this->label8->Size = System::Drawing::Size(105, 25);
 			this->label8->TabIndex = 32;
 			this->label8->Text = L"Posición X";
 			// 
 			// NombreRobot
 			// 
-			this->NombreRobot->Location = System::Drawing::Point(171, 206);
-			this->NombreRobot->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->NombreRobot->Location = System::Drawing::Point(152, 165);
 			this->NombreRobot->Name = L"NombreRobot";
-			this->NombreRobot->Size = System::Drawing::Size(239, 26);
+			this->NombreRobot->Size = System::Drawing::Size(213, 22);
 			this->NombreRobot->TabIndex = 29;
 			// 
 			// label10
 			// 
 			this->label10->AutoSize = true;
 			this->label10->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label10->Location = System::Drawing::Point(17, 201);
+			this->label10->Location = System::Drawing::Point(15, 161);
 			this->label10->Name = L"label10";
-			this->label10->Size = System::Drawing::Size(101, 29);
+			this->label10->Size = System::Drawing::Size(81, 25);
 			this->label10->TabIndex = 28;
 			this->label10->Text = L"Nombre";
 			// 
 			// BateriaRobot
 			// 
-			this->BateriaRobot->Location = System::Drawing::Point(171, 135);
-			this->BateriaRobot->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->BateriaRobot->Location = System::Drawing::Point(152, 108);
 			this->BateriaRobot->Name = L"BateriaRobot";
-			this->BateriaRobot->Size = System::Drawing::Size(239, 26);
+			this->BateriaRobot->Size = System::Drawing::Size(213, 22);
 			this->BateriaRobot->TabIndex = 27;
 			// 
 			// label11
 			// 
 			this->label11->AutoSize = true;
 			this->label11->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label11->Location = System::Drawing::Point(17, 130);
+			this->label11->Location = System::Drawing::Point(15, 104);
 			this->label11->Name = L"label11";
-			this->label11->Size = System::Drawing::Size(89, 29);
+			this->label11->Size = System::Drawing::Size(73, 25);
 			this->label11->TabIndex = 26;
 			this->label11->Text = L"Batería";
 			// 
 			// IDRobot
 			// 
-			this->IDRobot->Location = System::Drawing::Point(171, 64);
-			this->IDRobot->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->IDRobot->Location = System::Drawing::Point(152, 51);
 			this->IDRobot->Name = L"IDRobot";
-			this->IDRobot->Size = System::Drawing::Size(239, 26);
+			this->IDRobot->Size = System::Drawing::Size(213, 22);
 			this->IDRobot->TabIndex = 25;
 			// 
 			// label12
 			// 
 			this->label12->AutoSize = true;
 			this->label12->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label12->Location = System::Drawing::Point(17, 59);
+			this->label12->Location = System::Drawing::Point(15, 47);
 			this->label12->Name = L"label12";
-			this->label12->Size = System::Drawing::Size(107, 29);
+			this->label12->Size = System::Drawing::Size(87, 25);
 			this->label12->TabIndex = 24;
 			this->label12->Text = L"ID Robot";
 			// 
 			// btnControlRobot
 			// 
 			this->btnControlRobot->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnControlRobot->Location = System::Drawing::Point(849, 371);
-			this->btnControlRobot->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->btnControlRobot->Location = System::Drawing::Point(755, 297);
 			this->btnControlRobot->Name = L"btnControlRobot";
-			this->btnControlRobot->Size = System::Drawing::Size(207, 61);
+			this->btnControlRobot->Size = System::Drawing::Size(184, 49);
 			this->btnControlRobot->TabIndex = 23;
 			this->btnControlRobot->Text = L"Controlar";
 			this->btnControlRobot->UseVisualStyleBackColor = true;
@@ -416,10 +408,9 @@ namespace GUIApp {
 			// btnDeleteRobot
 			// 
 			this->btnDeleteRobot->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnDeleteRobot->Location = System::Drawing::Point(636, 371);
-			this->btnDeleteRobot->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->btnDeleteRobot->Location = System::Drawing::Point(565, 297);
 			this->btnDeleteRobot->Name = L"btnDeleteRobot";
-			this->btnDeleteRobot->Size = System::Drawing::Size(207, 61);
+			this->btnDeleteRobot->Size = System::Drawing::Size(184, 49);
 			this->btnDeleteRobot->TabIndex = 22;
 			this->btnDeleteRobot->Text = L"Eliminar";
 			this->btnDeleteRobot->UseVisualStyleBackColor = true;
@@ -428,10 +419,9 @@ namespace GUIApp {
 			// btnModifyRobot
 			// 
 			this->btnModifyRobot->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnModifyRobot->Location = System::Drawing::Point(849, 302);
-			this->btnModifyRobot->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->btnModifyRobot->Location = System::Drawing::Point(755, 242);
 			this->btnModifyRobot->Name = L"btnModifyRobot";
-			this->btnModifyRobot->Size = System::Drawing::Size(207, 61);
+			this->btnModifyRobot->Size = System::Drawing::Size(184, 49);
 			this->btnModifyRobot->TabIndex = 21;
 			this->btnModifyRobot->Text = L"Modificar";
 			this->btnModifyRobot->UseVisualStyleBackColor = true;
@@ -440,10 +430,9 @@ namespace GUIApp {
 			// btnAddRobot
 			// 
 			this->btnAddRobot->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnAddRobot->Location = System::Drawing::Point(636, 302);
-			this->btnAddRobot->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->btnAddRobot->Location = System::Drawing::Point(565, 242);
 			this->btnAddRobot->Name = L"btnAddRobot";
-			this->btnAddRobot->Size = System::Drawing::Size(207, 61);
+			this->btnAddRobot->Size = System::Drawing::Size(184, 49);
 			this->btnAddRobot->TabIndex = 19;
 			this->btnAddRobot->Text = L"Agregar";
 			this->btnAddRobot->UseVisualStyleBackColor = true;
@@ -456,13 +445,12 @@ namespace GUIApp {
 				this->ResourceRobotD,
 					this->ResourceBattery, this->ResourceRobotName, this->ResourceWorkArea, this->ResourcePosX, this->ResourcePosY
 			});
-			this->dgvRobot->Location = System::Drawing::Point(22, 456);
-			this->dgvRobot->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->dgvRobot->Location = System::Drawing::Point(20, 365);
 			this->dgvRobot->Name = L"dgvRobot";
 			this->dgvRobot->RowHeadersVisible = false;
 			this->dgvRobot->RowHeadersWidth = 51;
 			this->dgvRobot->RowTemplate->Height = 24;
-			this->dgvRobot->Size = System::Drawing::Size(1043, 311);
+			this->dgvRobot->Size = System::Drawing::Size(927, 249);
 			this->dgvRobot->TabIndex = 18;
 			this->dgvRobot->UseWaitCursor = true;
 			this->dgvRobot->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &DatosRobotsUsuariosForm::dgvRobot_CellClick);
@@ -523,75 +511,87 @@ namespace GUIApp {
 			this->tabPage1->Controls->Add(this->btnModifyUser);
 			this->tabPage1->Controls->Add(this->btnAddUser);
 			this->tabPage1->Controls->Add(this->dgvUser);
-			this->tabPage1->Location = System::Drawing::Point(4, 29);
-			this->tabPage1->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->tabPage1->Location = System::Drawing::Point(4, 25);
 			this->tabPage1->Name = L"tabPage1";
-			this->tabPage1->Size = System::Drawing::Size(1093, 789);
+			this->tabPage1->Size = System::Drawing::Size(971, 629);
 			this->tabPage1->TabIndex = 0;
 			this->tabPage1->Text = L"Administrar Usuarios";
 			this->tabPage1->UseVisualStyleBackColor = true;
 			// 
+			// IDUser
+			// 
+			this->IDUser->Location = System::Drawing::Point(216, 36);
+			this->IDUser->Name = L"IDUser";
+			this->IDUser->Size = System::Drawing::Size(213, 22);
+			this->IDUser->TabIndex = 15;
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->label1->Location = System::Drawing::Point(15, 32);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(31, 25);
+			this->label1->TabIndex = 14;
+			this->label1->Text = L"ID";
+			// 
 			// CargoUser
 			// 
-			this->CargoUser->Location = System::Drawing::Point(243, 254);
-			this->CargoUser->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->CargoUser->Location = System::Drawing::Point(216, 203);
 			this->CargoUser->Name = L"CargoUser";
-			this->CargoUser->Size = System::Drawing::Size(239, 26);
+			this->CargoUser->Size = System::Drawing::Size(213, 22);
 			this->CargoUser->TabIndex = 13;
 			// 
 			// label4
 			// 
 			this->label4->AutoSize = true;
 			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label4->Location = System::Drawing::Point(17, 249);
+			this->label4->Location = System::Drawing::Point(15, 199);
 			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(79, 29);
+			this->label4->Size = System::Drawing::Size(66, 25);
 			this->label4->TabIndex = 12;
 			this->label4->Text = L"Cargo";
 			// 
 			// PasswordUser
 			// 
-			this->PasswordUser->Location = System::Drawing::Point(243, 179);
-			this->PasswordUser->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->PasswordUser->Location = System::Drawing::Point(216, 143);
 			this->PasswordUser->Name = L"PasswordUser";
-			this->PasswordUser->Size = System::Drawing::Size(239, 26);
+			this->PasswordUser->Size = System::Drawing::Size(213, 22);
 			this->PasswordUser->TabIndex = 11;
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
 			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label3->Location = System::Drawing::Point(17, 174);
+			this->label3->Location = System::Drawing::Point(15, 139);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(136, 29);
+			this->label3->Size = System::Drawing::Size(114, 25);
 			this->label3->TabIndex = 10;
 			this->label3->Text = L"Contraseña";
 			// 
 			// NombreUser
 			// 
-			this->NombreUser->Location = System::Drawing::Point(243, 108);
-			this->NombreUser->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->NombreUser->Location = System::Drawing::Point(216, 86);
 			this->NombreUser->Name = L"NombreUser";
-			this->NombreUser->Size = System::Drawing::Size(239, 26);
+			this->NombreUser->Size = System::Drawing::Size(213, 22);
 			this->NombreUser->TabIndex = 9;
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
 			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label2->Location = System::Drawing::Point(17, 103);
+			this->label2->Location = System::Drawing::Point(15, 82);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(220, 29);
+			this->label2->Size = System::Drawing::Size(177, 25);
 			this->label2->TabIndex = 8;
 			this->label2->Text = L"Nombre de usuario";
 			// 
 			// btnDeleteUser
 			// 
 			this->btnDeleteUser->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnDeleteUser->Location = System::Drawing::Point(606, 215);
-			this->btnDeleteUser->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->btnDeleteUser->Location = System::Drawing::Point(539, 172);
 			this->btnDeleteUser->Name = L"btnDeleteUser";
-			this->btnDeleteUser->Size = System::Drawing::Size(199, 61);
+			this->btnDeleteUser->Size = System::Drawing::Size(177, 49);
 			this->btnDeleteUser->TabIndex = 4;
 			this->btnDeleteUser->Text = L"Eliminar";
 			this->btnDeleteUser->UseVisualStyleBackColor = true;
@@ -600,10 +600,9 @@ namespace GUIApp {
 			// btnModifyUser
 			// 
 			this->btnModifyUser->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnModifyUser->Location = System::Drawing::Point(606, 131);
-			this->btnModifyUser->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->btnModifyUser->Location = System::Drawing::Point(539, 105);
 			this->btnModifyUser->Name = L"btnModifyUser";
-			this->btnModifyUser->Size = System::Drawing::Size(199, 61);
+			this->btnModifyUser->Size = System::Drawing::Size(177, 49);
 			this->btnModifyUser->TabIndex = 3;
 			this->btnModifyUser->Text = L"Modificar";
 			this->btnModifyUser->UseVisualStyleBackColor = true;
@@ -612,10 +611,9 @@ namespace GUIApp {
 			// btnAddUser
 			// 
 			this->btnAddUser->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnAddUser->Location = System::Drawing::Point(606, 40);
-			this->btnAddUser->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->btnAddUser->Location = System::Drawing::Point(539, 32);
 			this->btnAddUser->Name = L"btnAddUser";
-			this->btnAddUser->Size = System::Drawing::Size(199, 61);
+			this->btnAddUser->Size = System::Drawing::Size(177, 49);
 			this->btnAddUser->TabIndex = 1;
 			this->btnAddUser->Text = L"Agregar";
 			this->btnAddUser->UseVisualStyleBackColor = true;
@@ -628,13 +626,12 @@ namespace GUIApp {
 				this->ResourceUserID,
 					this->ResourceUserName, this->ResourcePassword, this->ResourceRole
 			});
-			this->dgvUser->Location = System::Drawing::Point(22, 368);
-			this->dgvUser->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->dgvUser->Location = System::Drawing::Point(20, 294);
 			this->dgvUser->Name = L"dgvUser";
 			this->dgvUser->RowHeadersVisible = false;
 			this->dgvUser->RowHeadersWidth = 51;
 			this->dgvUser->RowTemplate->Height = 24;
-			this->dgvUser->Size = System::Drawing::Size(1017, 376);
+			this->dgvUser->Size = System::Drawing::Size(904, 301);
 			this->dgvUser->TabIndex = 0;
 			this->dgvUser->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &DatosRobotsUsuariosForm::dgvUser_CellClick);
 			// 
@@ -666,31 +663,13 @@ namespace GUIApp {
 			this->ResourceRole->Name = L"ResourceRole";
 			this->ResourceRole->Width = 125;
 			// 
-			// IDUser
-			// 
-			this->IDUser->Location = System::Drawing::Point(243, 45);
-			this->IDUser->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
-			this->IDUser->Name = L"IDUser";
-			this->IDUser->Size = System::Drawing::Size(239, 26);
-			this->IDUser->TabIndex = 15;
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label1->Location = System::Drawing::Point(17, 40);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(36, 29);
-			this->label1->TabIndex = 14;
-			this->label1->Text = L"ID";
-			// 
 			// DatosRobotsUsuariosForm
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(9, 20);
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1128, 844);
+			this->ClientSize = System::Drawing::Size(1003, 675);
 			this->Controls->Add(this->tabControl1);
-			this->Margin = System::Windows::Forms::Padding(3, 4, 3, 4);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"DatosRobotsUsuariosForm";
 			this->Text = L"DatosRobotsUsuariosForm";
 			this->Load += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::DatosRobotsUsuariosForm_Load);

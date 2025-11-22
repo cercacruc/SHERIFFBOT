@@ -62,6 +62,7 @@ namespace GUIApp {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(InformationRequestForm::typeid));
 			this->btnReturnInfoRequest = (gcnew System::Windows::Forms::Button());
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
@@ -228,6 +229,7 @@ namespace GUIApp {
 			this->Controls->Add(this->btnReturnInfoRequest);
 			this->Controls->Add(this->tabControl1);
 			this->Controls->Add(this->label1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"InformationRequestForm";
 			this->Text = L"InformationRequestForm";
 			this->tabControl1->ResumeLayout(false);

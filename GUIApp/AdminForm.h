@@ -222,6 +222,7 @@ namespace GUIApp {
 			this->Controls->Add(this->btnZonasT);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->btnRobots);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"AdminForm";
 			this->Text = L"AdminForm";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->EndInit();

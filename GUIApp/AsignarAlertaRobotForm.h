@@ -55,22 +55,23 @@ namespace GUIApp {
 
         void InitializeComponent(void)
         {
+            System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(AsignarAlertaRobotForm::typeid));
             this->cmbRobots = (gcnew System::Windows::Forms::ComboBox());
             this->cmbAlertasPendientes = (gcnew System::Windows::Forms::ComboBox());
             this->btnAsignar = (gcnew System::Windows::Forms::Button());
             this->btnLiberar = (gcnew System::Windows::Forms::Button());
             this->btnSalir = (gcnew System::Windows::Forms::Button());
             this->dgvAsignaciones = (gcnew System::Windows::Forms::DataGridView());
-            this->label1 = (gcnew System::Windows::Forms::Label());
-            this->label2 = (gcnew System::Windows::Forms::Label());
-            this->label3 = (gcnew System::Windows::Forms::Label());
-            this->txtDescripcion = (gcnew System::Windows::Forms::TextBox());
-            this->label4 = (gcnew System::Windows::Forms::Label());
             this->RobotID = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
             this->RobotNombre = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
             this->AlertaAsignadaID = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
             this->TipoAlerta = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
             this->TipoMision = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+            this->label1 = (gcnew System::Windows::Forms::Label());
+            this->label2 = (gcnew System::Windows::Forms::Label());
+            this->label3 = (gcnew System::Windows::Forms::Label());
+            this->txtDescripcion = (gcnew System::Windows::Forms::TextBox());
+            this->label4 = (gcnew System::Windows::Forms::Label());
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvAsignaciones))->BeginInit();
             this->SuspendLayout();
             // 
@@ -135,6 +136,41 @@ namespace GUIApp {
             this->dgvAsignaciones->Size = System::Drawing::Size(618, 200);
             this->dgvAsignaciones->TabIndex = 5;
             // 
+            // RobotID
+            // 
+            this->RobotID->HeaderText = L"ID";
+            this->RobotID->MinimumWidth = 6;
+            this->RobotID->Name = L"RobotID";
+            this->RobotID->Width = 25;
+            // 
+            // RobotNombre
+            // 
+            this->RobotNombre->HeaderText = L"Nombre";
+            this->RobotNombre->MinimumWidth = 6;
+            this->RobotNombre->Name = L"RobotNombre";
+            this->RobotNombre->Width = 125;
+            // 
+            // AlertaAsignadaID
+            // 
+            this->AlertaAsignadaID->HeaderText = L"ID Alerta";
+            this->AlertaAsignadaID->MinimumWidth = 6;
+            this->AlertaAsignadaID->Name = L"AlertaAsignadaID";
+            this->AlertaAsignadaID->Width = 125;
+            // 
+            // TipoAlerta
+            // 
+            this->TipoAlerta->HeaderText = L"Tipo de Alerta";
+            this->TipoAlerta->MinimumWidth = 6;
+            this->TipoAlerta->Name = L"TipoAlerta";
+            this->TipoAlerta->Width = 125;
+            // 
+            // TipoMision
+            // 
+            this->TipoMision->HeaderText = L"Tipo de Misión";
+            this->TipoMision->MinimumWidth = 6;
+            this->TipoMision->Name = L"TipoMision";
+            this->TipoMision->Width = 125;
+            // 
             // label1
             // 
             this->label1->AutoSize = true;
@@ -179,41 +215,6 @@ namespace GUIApp {
             this->label4->TabIndex = 10;
             this->label4->Text = L"Descripción:";
             // 
-            // RobotID
-            // 
-            this->RobotID->HeaderText = L"ID";
-            this->RobotID->MinimumWidth = 6;
-            this->RobotID->Name = L"RobotID";
-            this->RobotID->Width = 25;
-            // 
-            // RobotNombre
-            // 
-            this->RobotNombre->HeaderText = L"Nombre";
-            this->RobotNombre->MinimumWidth = 6;
-            this->RobotNombre->Name = L"RobotNombre";
-            this->RobotNombre->Width = 125;
-            // 
-            // AlertaAsignadaID
-            // 
-            this->AlertaAsignadaID->HeaderText = L"ID Alerta";
-            this->AlertaAsignadaID->MinimumWidth = 6;
-            this->AlertaAsignadaID->Name = L"AlertaAsignadaID";
-            this->AlertaAsignadaID->Width = 125;
-            // 
-            // TipoAlerta
-            // 
-            this->TipoAlerta->HeaderText = L"Tipo de Alerta";
-            this->TipoAlerta->MinimumWidth = 6;
-            this->TipoAlerta->Name = L"TipoAlerta";
-            this->TipoAlerta->Width = 125;
-            // 
-            // TipoMision
-            // 
-            this->TipoMision->HeaderText = L"Tipo de Misión";
-            this->TipoMision->MinimumWidth = 6;
-            this->TipoMision->Name = L"TipoMision";
-            this->TipoMision->Width = 125;
-            // 
             // AsignarAlertaRobotForm
             // 
             this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -230,6 +231,7 @@ namespace GUIApp {
             this->Controls->Add(this->btnAsignar);
             this->Controls->Add(this->cmbAlertasPendientes);
             this->Controls->Add(this->cmbRobots);
+            this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
             this->Name = L"AsignarAlertaRobotForm";
             this->Text = L"Asignar Alertas a Robots";
             this->Load += gcnew System::EventHandler(this, &AsignarAlertaRobotForm::AsignarAlertaRobotForm_Load);
@@ -249,12 +251,40 @@ namespace GUIApp {
 
             void CargarRobotsDisponibles()
             {
+                /*
                 cmbRobots->Items->Clear();
                 List<Robot^>^ robotsDisponibles = Service::listaRobotsDisponibles();
 
                 for each (Robot ^ robot in robotsDisponibles)
                 {
                     cmbRobots->Items->Add(robot->Nombre + " (ID: " + robot->ID + ")");
+                }
+                */
+                cmbRobots->Items->Clear();
+
+                // Obtener TODOS los robots, no solo los "disponibles"
+                List<Robot^>^ todosLosRobots = Service::GetRobots();
+
+                for each (Robot ^ robot in todosLosRobots)
+                {
+                    // Incluir robots que estén en BASE (aunque tengan Disponibilidad = false)
+                    // Y robots que estén disponibles
+                    if (robot->Disponibilidad || robot->Zona->ToUpper() == "BASE")
+                    {
+                        String^ estado = robot->Disponibilidad ? " (Disponible)" : " (En BASE)";
+                        cmbRobots->Items->Add(robot->Nombre + estado + " - ID: " + robot->ID);
+                    }
+                }
+
+                // Si no hay robots, mostrar mensaje
+                if (cmbRobots->Items->Count == 0)
+                {
+                    cmbRobots->Items->Add("No hay robots disponibles");
+                    cmbRobots->Enabled = false;
+                }
+                else
+                {
+                    cmbRobots->Enabled = true;
                 }
             }
 
@@ -287,6 +317,7 @@ namespace GUIApp {
 
             void CargarAsignacionesActuales()
             {
+                /*
                 dgvAsignaciones->Rows->Clear();
                 List<Robot^>^ robots = Service::GetRobotsConAlertas();
 
@@ -307,11 +338,98 @@ namespace GUIApp {
                         }
                     }
                 }
+                */
+                /*
+                dgvAsignaciones->Rows->Clear();
+
+                // Obtener TODOS los robots y filtrar los que tienen alerta asignada
+                List<Robot^>^ todosRobots = Service::GetRobots();
+
+                for each (Robot ^ robot in todosRobots)
+                {
+                    if (robot->AlertaAsignadaID > 0)
+                    {
+                        Alert^ alerta = Service::buscarAlerta(robot->AlertaAsignadaID);
+                        if (alerta != nullptr)
+                        {
+                            dgvAsignaciones->Rows->Add(
+                                robot->ID,
+                                robot->Nombre,
+                                robot->AlertaAsignadaID,
+                                alerta->TipoAlerta,
+                                robot->TipoMision
+                            );
+                        }
+                        else
+                        {
+                            // Si no se encuentra la alerta, mostrar igualmente el robot con la alerta asignada
+                            dgvAsignaciones->Rows->Add(
+                                robot->ID,
+                                robot->Nombre,
+                                robot->AlertaAsignadaID,
+                                "Alerta no encontrada",
+                                robot->TipoMision
+                            );
+                        }
+                    }
+                }
+
+                // Mostrar mensaje si no hay asignaciones
+                if (dgvAsignaciones->Rows->Count == 0)
+                {
+                    MessageBox::Show("No hay asignaciones actuales", "Info", MessageBoxButtons::OK, MessageBoxIcon::Information);
+                }
+                */
+                dgvAsignaciones->Rows->Clear();
+
+                try
+                {
+                    // Obtener TODOS los robots y filtrar los que tienen alerta asignada
+                    List<Robot^>^ todosRobots = Service::GetRobots();
+
+                    for each (Robot ^ robot in todosRobots)
+                    {
+                        if (robot->AlertaAsignadaID > 0)
+                        {
+                            Alert^ alerta = Service::buscarAlerta(robot->AlertaAsignadaID);
+                            if (alerta != nullptr)
+                            {
+                                dgvAsignaciones->Rows->Add(
+                                    robot->ID,
+                                    robot->Nombre,
+                                    robot->AlertaAsignadaID,
+                                    alerta->TipoAlerta,
+                                    robot->TipoMision
+                                );
+                            }
+                            else
+                            {
+                                // Si no se encuentra la alerta, mostrar igualmente el robot con la alerta asignada
+                                dgvAsignaciones->Rows->Add(
+                                    robot->ID,
+                                    robot->Nombre,
+                                    robot->AlertaAsignadaID,
+                                    "Alerta no encontrada",
+                                    robot->TipoMision
+                                );
+                            }
+                        }
+                    }
+
+                    // DEBUG: Mostrar cuántas filas se cargaron
+                    System::Diagnostics::Debug::WriteLine("Filas cargadas en DataGridView: " + dgvAsignaciones->Rows->Count);
+                }
+                catch (Exception^ ex)
+                {
+                    MessageBox::Show("Error al cargar asignaciones: " + ex->Message, "Error",
+                        MessageBoxButtons::OK, MessageBoxIcon::Error);
+                }
             }
 
         private:
             System::Void btnAsignar_Click(System::Object^ sender, System::EventArgs^ e)
             {
+                /*
                 if (cmbRobots->SelectedIndex == -1 || cmbAlertasPendientes->SelectedIndex == -1)
                 {
                     MessageBox::Show("Seleccione un robot y una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -336,6 +454,69 @@ namespace GUIApp {
                 catch (Exception^ ex)
                 {
                     MessageBox::Show("Error al asignar alerta: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+                }
+                */
+                if (cmbRobots->SelectedIndex == -1 || cmbAlertasPendientes->SelectedIndex == -1)
+                {
+                    MessageBox::Show("Seleccione un robot y una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+                    return;
+                }
+
+                try
+                {
+                    // Obtener los textos seleccionados
+                    String^ robotTexto = cmbRobots->SelectedItem->ToString();
+                    String^ alertaTexto = cmbAlertasPendientes->SelectedItem->ToString();
+
+                    
+                    int robotID = ExtraerID(robotTexto);
+                    int alertaID = ExtraerID(alertaTexto);
+
+                   
+
+                    // Verificar que el robot existe
+                    Robot^ robot = Service::buscarRobotID(robotID);
+                    if (robot == nullptr)
+                    {
+                        MessageBox::Show("ERROR: Robot con ID " + robotID + " no encontrado", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+                        return;
+                    }
+
+                    // Verificar que la alerta existe
+                    Alert^ alerta = Service::buscarAlerta(alertaID);
+                    if (alerta == nullptr)
+                    {
+                        MessageBox::Show("ERROR: Alerta con ID " + alertaID + " no encontrada", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+                        return;
+                    }
+
+                    
+
+                    bool asignado = Service::AsignarAlertaRobot(robotID, alertaID);
+
+                    if (asignado) {
+                        MessageBox::Show("Alerta asignada al robot exitosamente", "Éxito", MessageBoxButtons::OK);
+                        // RESETEAR LAS COMBOBOX ANTES DE RECARGAR DATOS
+                        cmbRobots->SelectedIndex = -1;
+                        cmbAlertasPendientes->SelectedIndex = -1;
+                        txtDescripcion->Clear();
+
+                        // Recargar datos
+                        CargarDatos();
+
+                        // ASEGURARSE DE QUE LAS COMBOBOX QUEDEN EN BLANCO
+                        cmbRobots->Text = "";
+                        cmbAlertasPendientes->Text = "";
+                        
+                    }
+                    else {
+                        MessageBox::Show("Service::AsignarAlertaRobot devolvió FALSE", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+                    }
+                }
+                catch (Exception^ ex)
+                {
+                    MessageBox::Show("Error al asignar alerta: " + ex->Message + "\nStack Trace: " + ex->StackTrace,
+                        "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
                 }
             }
 

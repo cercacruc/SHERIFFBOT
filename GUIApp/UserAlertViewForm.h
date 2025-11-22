@@ -80,6 +80,7 @@ namespace GUIApp {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(UserAlertViewForm::typeid));
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
 			this->button1 = (gcnew System::Windows::Forms::Button());
@@ -198,7 +199,7 @@ namespace GUIApp {
 			this->tabPage2->Location = System::Drawing::Point(4, 25);
 			this->tabPage2->Name = L"tabPage2";
 			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
-			this->tabPage2->Size = System::Drawing::Size(651, 378);
+			this->tabPage2->Size = System::Drawing::Size(633, 410);
 			this->tabPage2->TabIndex = 1;
 			this->tabPage2->Text = L"Altercado";
 			this->tabPage2->UseVisualStyleBackColor = true;
@@ -263,7 +264,7 @@ namespace GUIApp {
 			this->tabPage3->Controls->Add(this->listView3);
 			this->tabPage3->Location = System::Drawing::Point(4, 25);
 			this->tabPage3->Name = L"tabPage3";
-			this->tabPage3->Size = System::Drawing::Size(651, 378);
+			this->tabPage3->Size = System::Drawing::Size(633, 410);
 			this->tabPage3->TabIndex = 2;
 			this->tabPage3->Text = L"Reporte DTI";
 			this->tabPage3->UseVisualStyleBackColor = true;
@@ -328,6 +329,7 @@ namespace GUIApp {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(658, 463);
 			this->Controls->Add(this->tabControl1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"UserAlertViewForm";
 			this->Text = L"UserAlertViewForm";
 			this->tabControl1->ResumeLayout(false);

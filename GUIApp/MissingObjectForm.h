@@ -78,6 +78,7 @@ namespace GUIApp {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MissingObjectForm::typeid));
 			this->btnEnviar = (gcnew System::Windows::Forms::Button());
 			this->btnVolver = (gcnew System::Windows::Forms::Button());
 			this->txtDescripcion = (gcnew System::Windows::Forms::TextBox());
@@ -223,6 +224,7 @@ namespace GUIApp {
 			this->Controls->Add(this->txtDescripcion);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"MissingObjectForm";
 			this->Text = L"MissingObjectForm";
 			this->Load += gcnew System::EventHandler(this, &MissingObjectForm::MissingObjectForm_Load);

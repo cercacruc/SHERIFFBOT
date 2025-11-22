@@ -187,6 +187,7 @@ namespace GUIApp {
 			this->Controls->Add(this->btnEstadisticas);
 			this->Controls->Add(this->btnAlert);
 			this->Controls->Add(this->btnInfo);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"UsuarioPromedioForm";
 			this->Text = L"UsuarioPromedioForm";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->EndInit();

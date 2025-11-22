@@ -188,6 +188,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(AlertManagementForm::typeid));
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
 			this->label16 = (gcnew System::Windows::Forms::Label());
@@ -622,6 +623,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(757, 545);
 			this->Controls->Add(this->tabControl1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"AlertManagementForm";
 			this->Text = L"AlertManagementForm";
 			this->Load += gcnew System::EventHandler(this, &AlertManagementForm::AlertManagementForm_Load);

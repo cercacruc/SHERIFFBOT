@@ -26,7 +26,9 @@ void BotPersistance::Persistance::registrarRobot(Robot^ robot) {
             gcnew SqlParameter("@PosicionY", robot->PosicionRobot->y),
             gcnew SqlParameter("@Caracteristicas",
                 String::IsNullOrEmpty(robot->Caracteristicas) ?
-                DBNull::Value : (Object^)robot->Caracteristicas)
+                DBNull::Value : (Object^)robot->Caracteristicas),
+                gcnew SqlParameter("@Foto",
+                    robot->Photo != nullptr ? (Object^)robot->Photo : DBNull::Value)
         };
 
         executeStoredProcedure("usp_AddRobot", params);
@@ -44,50 +46,6 @@ Robot^ BotPersistance::Persistance::buscarRobotID(int id) {
         }
     }
     return nullptr;
-    */
-    /*
-    try
-    {
-        array<SqlParameter^>^ params = gcnew array<SqlParameter^> {
-            gcnew SqlParameter("@ID", id)
-        };
-
-        SqlDataReader^ reader = executeStoredProcedureReader("usp_BuscarRobotPorID", params);
-
-        if (reader != nullptr && reader->Read())
-        {
-            Robot^ robot = gcnew Robot();
-
-            robot->ID = reader->GetInt32(reader->GetOrdinal("ID_Robot"));
-            robot->Nombre = reader["Nombre_robot"]->ToString();
-            robot->Zona = reader["Zona_asignada"]->ToString();
-            robot->Bateria = reader->GetInt32(reader->GetOrdinal("Bateria"));
-
-            double posX = reader->GetDouble(reader->GetOrdinal("Posicion_X"));
-            double posY = reader->GetDouble(reader->GetOrdinal("Posicion_Y"));
-            robot->PosicionRobot = gcnew Point(posX, posY, robot->Zona);
-
-            robot->Disponibilidad = reader->GetBoolean(reader->GetOrdinal("Disponibilidad"));
-            robot->Caracteristicas = reader["Caracteristicas"]->ToString();
-            robot->AlertaAsignadaID = reader->GetInt32(reader->GetOrdinal("Alerta_asignada_ID"));
-            robot->TipoMision = reader["Tipo_mision"]->ToString();
-
-            reader->Close();
-            cerrarConexion();
-            return robot;
-        }
-
-        if (reader != nullptr) {
-            reader->Close();
-            cerrarConexion();
-        }
-        return nullptr;
-    }
-    catch (Exception^ ex)
-    {
-        cerrarConexion();
-        throw gcnew Exception("Error buscando robot por ID: " + ex->Message);
-    }
     */
     try
     {
@@ -112,6 +70,14 @@ Robot^ BotPersistance::Persistance::buscarRobotID(int id) {
 
             robot->Disponibilidad = reader->GetBoolean(reader->GetOrdinal("Disponibilidad"));
             robot->Caracteristicas = reader["Caracteristicas"]->ToString();
+
+            if (!reader->IsDBNull(reader->GetOrdinal("Foto"))) {
+                int fotoIndex = reader->GetOrdinal("Foto");
+                robot->Photo = safe_cast<array<Byte>^>(reader[fotoIndex]);
+            }
+            else {
+                robot->Photo = nullptr; // Asegurar que sea null si no hay foto
+            }
 
             // Verificar si la columna existe antes de leerla
             if (!reader->IsDBNull(reader->GetOrdinal("Alerta_asignada_ID"))) {
@@ -172,7 +138,33 @@ Robot^ BotPersistance::Persistance::buscarRobotNombre(String^ nombre) {
 
             robot->Disponibilidad = reader->GetBoolean(reader->GetOrdinal("Disponibilidad"));
             robot->Caracteristicas = reader["Caracteristicas"]->ToString();
-            robot->AlertaAsignadaID = reader->GetInt32(reader->GetOrdinal("Alerta_asignada_ID"));
+
+            // Verificar si la columna existe antes de leerla
+            if (!reader->IsDBNull(reader->GetOrdinal("Alerta_asignada_ID"))) {
+                robot->AlertaAsignadaID = reader->GetInt32(reader->GetOrdinal("Alerta_asignada_ID"));
+            }
+            else {
+                robot->AlertaAsignadaID = 0;
+            }
+
+            
+
+            if (!reader->IsDBNull(reader->GetOrdinal("Foto"))) {
+                try {
+                    int fotoIndex = reader->GetOrdinal("Foto");
+                    // Leer como array de bytes de forma segura
+                    robot->Photo = safe_cast<array<Byte>^>(reader[fotoIndex]);
+                }
+                catch (Exception^ ex) {
+                    // Si hay error al leer la foto, establecer como null y continuar
+                    robot->Photo = nullptr;
+                    System::Diagnostics::Debug::WriteLine("Advertencia: Error leyendo foto del robot: " + ex->Message);
+                }
+            }
+            else {
+                robot->Photo = nullptr;
+            }
+
             robot->TipoMision = reader["Tipo_mision"]->ToString();
 
             reader->Close();
@@ -269,7 +261,9 @@ int BotPersistance::Persistance::modificarRobotID(Robot^ robot) {
             gcnew SqlParameter("@Caracteristicas",
                 String::IsNullOrEmpty(robot->Caracteristicas) ?
                 DBNull::Value : (Object^)robot->Caracteristicas),
-            gcnew SqlParameter("@Disponibilidad", robot->Disponibilidad)
+            gcnew SqlParameter("@Disponibilidad", robot->Disponibilidad),
+            gcnew SqlParameter("@Foto",
+                    robot->Photo != nullptr ? (Object^)robot->Photo : DBNull::Value)
         };
 
         return executeStoredProcedure("usp_UpdateRobot", params);
@@ -307,6 +301,33 @@ List <Robot^>^ BotPersistance::Persistance::GetRobots() {
             double py = reader->GetDouble(5);
 
             r->PosicionRobot = gcnew Point(px, py, r->Zona);
+
+            // Campos críticos que faltaban
+            r->Disponibilidad = reader->GetBoolean(reader->GetOrdinal("Disponibilidad"));
+
+            // Recuperar Alerta_asignada_ID (puede ser NULL)
+            if (!reader->IsDBNull(reader->GetOrdinal("Alerta_asignada_ID"))) {
+                r->AlertaAsignadaID = reader->GetInt32(reader->GetOrdinal("Alerta_asignada_ID"));
+            }
+            else {
+                r->AlertaAsignadaID = 0;
+            }
+
+            // Recuperar Tipo_mision (puede ser NULL o vacío)
+            if (!reader->IsDBNull(reader->GetOrdinal("Tipo_mision"))) {
+                r->TipoMision = reader->GetString(reader->GetOrdinal("Tipo_mision"));
+            }
+            else {
+                r->TipoMision = "";
+            }
+
+            // Opcional: recuperar otros campos si existen
+            if (!reader->IsDBNull(reader->GetOrdinal("Caracteristicas"))) {
+                r->Caracteristicas = reader->GetString(reader->GetOrdinal("Caracteristicas"));
+            }
+            else {
+                r->Caracteristicas = "";
+            }
 
             lista->Add(r);
         }
@@ -1209,12 +1230,6 @@ void BotPersistance::Persistance::registrarAlerta(Alert^ alerta) {
         // Guardar en SQL
         int alertaID = AddAlerta(alerta);
         alerta->id = alertaID;
-
-        // Actualizar contador del usuario
-        if (alerta->UsuarioID > 0)
-        {
-            UpdateUserAlertCounts(alerta->UsuarioID, alerta->TipoAlerta);
-        }
     }
     catch (Exception^ ex)
     {
@@ -1452,45 +1467,372 @@ List<Robot^>^ BotPersistance::Persistance::GetRobotsConAlertas()
 
 bool BotPersistance::Persistance::AsignarAlertaRobot(int robotID, int alertaID)
 {
-    Robot^ robot = buscarRobotID(robotID);
-    Alert^ alerta = buscarAlerta(alertaID);
+    /*
+    SqlConnection^ connection = nullptr;
+    SqlTransaction^ transaction = nullptr;
 
-    if (robot != nullptr && alerta != nullptr && robot->Disponibilidad)
+    try
     {
-        robot->AlertaAsignadaID = alertaID;
-        robot->TipoMision = "ALERTA";
-        robot->Disponibilidad = false;
-        robot->Zona = alerta->Lugar;
+        abrirConexion();
+        connection = getObjConexion();
 
-        return modificarRobotID(robot) == 1;
+        // Verificar que la conexión esté abierta
+        if (connection->State != ConnectionState::Open)
+        {
+            throw gcnew Exception("La conexión a la base de datos no está disponible");
+        }
+
+        // Iniciar transacción
+        transaction = connection->BeginTransaction();
+
+        // 1. Verificar que la alerta existe y obtener su tipo
+        String^ sqlVerificarAlerta =
+            "SELECT Tipo_alerta FROM Alertas WHERE ID_Alerta = @AlertaID AND Solucionado = 0";
+        SqlCommand^ cmdVerificar = gcnew SqlCommand(sqlVerificarAlerta, connection, transaction);
+        cmdVerificar->Parameters->AddWithValue("@AlertaID", alertaID);
+
+        Object^ tipoAlertaObj = cmdVerificar->ExecuteScalar();
+        if (tipoAlertaObj == nullptr || tipoAlertaObj == DBNull::Value)
+        {
+            throw gcnew Exception("La alerta no existe o ya está solucionada");
+        }
+        String^ tipoMision = tipoAlertaObj->ToString();
+
+        // 2. Verificar que el robot existe y está disponible
+        String^ sqlVerificarRobot =
+            "SELECT COUNT(*) FROM Robots WHERE ID_Robot = @RobotID AND (Disponibilidad = 1 OR Zona_asignada = 'BASE')";
+        SqlCommand^ cmdRobot = gcnew SqlCommand(sqlVerificarRobot, connection, transaction);
+        cmdRobot->Parameters->AddWithValue("@RobotID", robotID);
+
+        int robotExiste = Convert::ToInt32(cmdRobot->ExecuteScalar());
+        if (robotExiste == 0)
+        {
+            throw gcnew Exception("El robot no existe o no está disponible");
+        }
+
+        // 3. Verificar que la alerta no esté ya asignada a otro robot
+        String^ sqlAlertaAsignada =
+            "SELECT COUNT(*) FROM Robots WHERE Alerta_asignada_ID = @AlertaID AND ID_Robot != @RobotID";
+        SqlCommand^ cmdAlertaAsignada = gcnew SqlCommand(sqlAlertaAsignada, connection, transaction);
+        cmdAlertaAsignada->Parameters->AddWithValue("@AlertaID", alertaID);
+        cmdAlertaAsignada->Parameters->AddWithValue("@RobotID", robotID);
+
+        int alertaYaAsignada = Convert::ToInt32(cmdAlertaAsignada->ExecuteScalar());
+        if (alertaYaAsignada > 0)
+        {
+            throw gcnew Exception("La alerta ya está asignada a otro robot");
+        }
+
+        // 4. Asignar la alerta al robot
+        String^ sqlAsignar =
+            "UPDATE Robots SET Alerta_asignada_ID = @AlertaID, Tipo_mision = @TipoMision, Disponibilidad = 0 WHERE ID_Robot = @RobotID";
+        SqlCommand^ command = gcnew SqlCommand(sqlAsignar, connection, transaction);
+        command->Parameters->AddWithValue("@AlertaID", alertaID);
+        command->Parameters->AddWithValue("@RobotID", robotID);
+        command->Parameters->AddWithValue("@TipoMision", tipoMision);
+
+        int rowsAffected = command->ExecuteNonQuery();
+
+        if (rowsAffected > 0)
+        {
+            // Confirmar la transacción
+            transaction->Commit();
+            return true;
+        }
+        else
+        {
+            throw gcnew Exception("No se pudo asignar la alerta al robot");
+        }
     }
-    return false;
+    catch (Exception^ ex)
+    {
+        // Revertir la transacción en caso de error
+        if (transaction != nullptr)
+        {
+            transaction->Rollback();
+        }
+        throw gcnew Exception("Error al asignar alerta al robot: " + ex->Message);
+    }
+    finally
+    {
+        // Limpiar recursos
+        if (transaction != nullptr)
+            delete transaction;
+
+        if (connection != nullptr && connection->State == ConnectionState::Open)
+        {
+            connection->Close();
+        }
+    }
+    */
+    SqlConnection^ connection = nullptr;
+    SqlTransaction^ transaction = nullptr;
+
+    try
+    {
+        abrirConexion();
+        connection = getObjConexion();
+
+        // Verificar que la conexión esté abierta
+        if (connection->State != ConnectionState::Open)
+        {
+            throw gcnew Exception("La conexión a la base de datos no está disponible");
+        }
+
+        // Iniciar transacción
+        transaction = connection->BeginTransaction();
+
+        // 1. Verificar que la alerta existe y obtener su tipo Y LUGAR
+        String^ sqlVerificarAlerta =
+            "SELECT Tipo_alerta, Lugar FROM Alertas WHERE ID_Alerta = @AlertaID AND Solucionado = 0";
+        SqlCommand^ cmdVerificar = gcnew SqlCommand(sqlVerificarAlerta, connection, transaction);
+        cmdVerificar->Parameters->AddWithValue("@AlertaID", alertaID);
+
+        SqlDataReader^ alertaReader = cmdVerificar->ExecuteReader();
+        String^ tipoMision = "Investigación"; // Valor por defecto
+        String^ lugarAlerta = "";
+
+        if (alertaReader->Read())
+        {
+            tipoMision = alertaReader->GetString(0); // Tipo_alerta
+            lugarAlerta = alertaReader->GetString(1); // Lugar
+        }
+        else
+        {
+            alertaReader->Close();
+            throw gcnew Exception("La alerta no existe o ya está solucionada");
+        }
+        alertaReader->Close();
+
+        // 2. Verificar que el robot existe y está disponible
+        String^ sqlVerificarRobot =
+            "SELECT COUNT(*) FROM Robots WHERE ID_Robot = @RobotID AND (Disponibilidad = 1 OR Zona_asignada = 'BASE')";
+        SqlCommand^ cmdRobot = gcnew SqlCommand(sqlVerificarRobot, connection, transaction);
+        cmdRobot->Parameters->AddWithValue("@RobotID", robotID);
+
+        int robotExiste = Convert::ToInt32(cmdRobot->ExecuteScalar());
+        if (robotExiste == 0)
+        {
+            throw gcnew Exception("El robot no existe o no está disponible");
+        }
+
+        // 3. Verificar que la alerta no esté ya asignada a otro robot
+        String^ sqlAlertaAsignada =
+            "SELECT COUNT(*) FROM Robots WHERE Alerta_asignada_ID = @AlertaID AND ID_Robot != @RobotID";
+        SqlCommand^ cmdAlertaAsignada = gcnew SqlCommand(sqlAlertaAsignada, connection, transaction);
+        cmdAlertaAsignada->Parameters->AddWithValue("@AlertaID", alertaID);
+        cmdAlertaAsignada->Parameters->AddWithValue("@RobotID", robotID);
+
+        int alertaYaAsignada = Convert::ToInt32(cmdAlertaAsignada->ExecuteScalar());
+        if (alertaYaAsignada > 0)
+        {
+            throw gcnew Exception("La alerta ya está asignada a otro robot");
+        }
+
+        // 4. Asignar la alerta al robot - ACTUALIZADO PARA INCLUIR LA ZONA
+        String^ sqlAsignar =
+            "UPDATE Robots SET Alerta_asignada_ID = @AlertaID, Tipo_mision = @TipoMision, "
+            "Disponibilidad = 0, Zona_asignada = @ZonaAlerta WHERE ID_Robot = @RobotID";
+
+        SqlCommand^ command = gcnew SqlCommand(sqlAsignar, connection, transaction);
+        command->Parameters->AddWithValue("@AlertaID", alertaID);
+        command->Parameters->AddWithValue("@RobotID", robotID);
+        command->Parameters->AddWithValue("@TipoMision", tipoMision);
+        command->Parameters->AddWithValue("@ZonaAlerta", lugarAlerta);
+
+        int rowsAffected = command->ExecuteNonQuery();
+
+        if (rowsAffected > 0)
+        {
+            // Confirmar la transacción
+            transaction->Commit();
+            return true;
+        }
+        else
+        {
+            throw gcnew Exception("No se pudo asignar la alerta al robot");
+        }
+    }
+    catch (Exception^ ex)
+    {
+        // Revertir la transacción en caso de error
+        if (transaction != nullptr)
+        {
+            transaction->Rollback();
+        }
+        throw gcnew Exception("Error al asignar alerta al robot: " + ex->Message);
+    }
+    finally
+    {
+        // Limpiar recursos
+        if (transaction != nullptr)
+            delete transaction;
+
+        if (connection != nullptr && connection->State == ConnectionState::Open)
+        {
+            connection->Close();
+        }
+    }
 }
 
 bool BotPersistance::Persistance::LiberarRobot(int robotID)
 {
-    Robot^ robot = buscarRobotID(robotID);
+    /*
+    SqlConnection^ connection = nullptr;
+    SqlTransaction^ transaction = nullptr;
 
-    if (robot != nullptr) {
-        int alertaID = robot->AlertaAsignadaID;
+    try
+    {
+        abrirConexion();
+        connection = getObjConexion();
 
-        robot->AlertaAsignadaID = 0;
-        robot->TipoMision = "";
-        robot->Disponibilidad = true;
-        robot->Zona = "BASE";
-
-        // Actualizar el robot en la base de datos
-        bool robotActualizado = modificarRobotID(robot) == 1;
-
-        // Si el robot tenía una alerta asignada, marcarla como solucionada
-        if (robotActualizado && alertaID > 0) {
-            // Necesitarás una función para marcar la alerta como solucionada
-            return MarcarAlertaSolucionada(alertaID);
+        if (connection->State != ConnectionState::Open)
+        {
+            throw gcnew Exception("La conexión a la base de datos no está disponible");
         }
 
-        return robotActualizado;
+        // Iniciar transacción
+        transaction = connection->BeginTransaction();
+
+        // 1. Obtener la alerta asignada al robot
+        String^ sqlObtenerAlerta =
+            "SELECT Alerta_asignada_ID FROM Robots WHERE ID_Robot = @RobotID";
+        SqlCommand^ cmdObtener = gcnew SqlCommand(sqlObtenerAlerta, connection, transaction);
+        cmdObtener->Parameters->AddWithValue("@RobotID", robotID);
+
+        Object^ alertaIDObj = cmdObtener->ExecuteScalar();
+        int alertaID = 0;
+        if (alertaIDObj != nullptr && alertaIDObj != DBNull::Value)
+        {
+            alertaID = Convert::ToInt32(alertaIDObj);
+        }
+
+        // 2. Liberar el robot
+        String^ sqlLiberar =
+            "UPDATE Robots SET Alerta_asignada_ID = 0, Tipo_mision = '', Disponibilidad = 1, Zona_asignada = 'BASE' WHERE ID_Robot = @RobotID";
+        SqlCommand^ command = gcnew SqlCommand(sqlLiberar, connection, transaction);
+        command->Parameters->AddWithValue("@RobotID", robotID);
+
+        int rowsAffected = command->ExecuteNonQuery();
+
+        if (rowsAffected > 0)
+        {
+            // 3. Si tenía una alerta asignada, marcarla como solucionada
+            if (alertaID > 0)
+            {
+                String^ sqlMarcarAlerta =
+                    "UPDATE Alertas SET Solucionado = 1 WHERE ID_Alerta = @AlertaID";
+                SqlCommand^ cmdMarcar = gcnew SqlCommand(sqlMarcarAlerta, connection, transaction);
+                cmdMarcar->Parameters->AddWithValue("@AlertaID", alertaID);
+                cmdMarcar->ExecuteNonQuery();
+            }
+
+            // Confirmar transacción
+            transaction->Commit();
+            return true;
+        }
+
+        return false;
     }
-    return false;
+    catch (Exception^ ex)
+    {
+        // Revertir transacción en caso de error
+        if (transaction != nullptr)
+        {
+            transaction->Rollback();
+        }
+        throw gcnew Exception("Error al liberar robot: " + ex->Message);
+    }
+    finally
+    {
+        // Limpiar recursos
+        if (transaction != nullptr)
+            delete transaction;
+
+        if (connection != nullptr && connection->State == ConnectionState::Open)
+        {
+            connection->Close();
+        }
+    }
+    */
+    SqlConnection^ connection = nullptr;
+    SqlTransaction^ transaction = nullptr;
+
+    try
+    {
+        abrirConexion();
+        connection = getObjConexion();
+
+        if (connection->State != ConnectionState::Open)
+        {
+            throw gcnew Exception("La conexión a la base de datos no está disponible");
+        }
+
+        // Iniciar transacción
+        transaction = connection->BeginTransaction();
+
+        // 1. Obtener la alerta asignada al robot
+        String^ sqlObtenerAlerta =
+            "SELECT Alerta_asignada_ID FROM Robots WHERE ID_Robot = @RobotID";
+        SqlCommand^ cmdObtener = gcnew SqlCommand(sqlObtenerAlerta, connection, transaction);
+        cmdObtener->Parameters->AddWithValue("@RobotID", robotID);
+
+        Object^ alertaIDObj = cmdObtener->ExecuteScalar();
+        int alertaID = 0;
+        if (alertaIDObj != nullptr && alertaIDObj != DBNull::Value)
+        {
+            alertaID = Convert::ToInt32(alertaIDObj);
+        }
+
+        // 2. Liberar el robot - ACTUALIZADO PARA PONER ZONA EN BASE
+        String^ sqlLiberar =
+            "UPDATE Robots SET Alerta_asignada_ID = 0, Tipo_mision = '', "
+            "Disponibilidad = 1, Zona_asignada = 'BASE' WHERE ID_Robot = @RobotID";
+
+        SqlCommand^ command = gcnew SqlCommand(sqlLiberar, connection, transaction);
+        command->Parameters->AddWithValue("@RobotID", robotID);
+
+        int rowsAffected = command->ExecuteNonQuery();
+
+        if (rowsAffected > 0)
+        {
+            // 3. Si tenía una alerta asignada, marcarla como solucionada
+            if (alertaID > 0)
+            {
+                String^ sqlMarcarAlerta =
+                    "UPDATE Alertas SET Solucionado = 1 WHERE ID_Alerta = @AlertaID";
+                SqlCommand^ cmdMarcar = gcnew SqlCommand(sqlMarcarAlerta, connection, transaction);
+                cmdMarcar->Parameters->AddWithValue("@AlertaID", alertaID);
+                cmdMarcar->ExecuteNonQuery();
+            }
+
+            // Confirmar transacción
+            transaction->Commit();
+            return true;
+        }
+
+        return false;
+    }
+    catch (Exception^ ex)
+    {
+        // Revertir transacción en caso de error
+        if (transaction != nullptr)
+        {
+            transaction->Rollback();
+        }
+        throw gcnew Exception("Error al liberar robot: " + ex->Message);
+    }
+    finally
+    {
+        // Limpiar recursos
+        if (transaction != nullptr)
+            delete transaction;
+
+        if (connection != nullptr && connection->State == ConnectionState::Open)
+        {
+            connection->Close();
+        }
+    }
 }
 
 List<Alert^>^ BotPersistance::Persistance::GetAlertasPendientes()
@@ -1538,7 +1880,7 @@ int BotPersistance::Persistance::AddAlerta(Alert^ alerta)
                 gcnew SqlParameter("@ObjetoEncontrado",
                     dynamic_cast<ObjPerdido^>(alerta) != nullptr ?
                     dynamic_cast<ObjPerdido^>(alerta)->ObjetoEncontrado : ""),
-                gcnew SqlParameter("@TipoReporte",
+                gcnew SqlParameter("@Tipo_reporte",
                     dynamic_cast<DTIReport^>(alerta) != nullptr ?
                     dynamic_cast<DTIReport^>(alerta)->tipoReporte : "")
         };

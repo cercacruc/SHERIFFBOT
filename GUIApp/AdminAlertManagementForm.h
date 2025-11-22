@@ -173,6 +173,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(AdminAlertManagementForm::typeid));
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
 			this->btnEliminarObjPerd = (gcnew System::Windows::Forms::Button());
@@ -215,6 +216,12 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			this->txtIDAltercado = (gcnew System::Windows::Forms::TextBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->dgvAltercado = (gcnew System::Windows::Forms::DataGridView());
+			this->dataGridViewTextBoxColumn1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->dataGridViewTextBoxColumn3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->dataGridViewTextBoxColumn4 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->dataGridViewTextBoxColumn5 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->ResourceUsuarioALT = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->ResourceRobotAsignadoALT = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
 			this->btnEliminarDTI = (gcnew System::Windows::Forms::Button());
 			this->label6 = (gcnew System::Windows::Forms::Label());
@@ -231,12 +238,6 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			this->txtIDDTI = (gcnew System::Windows::Forms::TextBox());
 			this->label15 = (gcnew System::Windows::Forms::Label());
 			this->dgvDTI = (gcnew System::Windows::Forms::DataGridView());
-			this->dataGridViewTextBoxColumn1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->dataGridViewTextBoxColumn3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->dataGridViewTextBoxColumn4 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->dataGridViewTextBoxColumn5 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->ResourceUsuarioALT = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->ResourceRobotAsignadoALT = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn6 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn7 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->dataGridViewTextBoxColumn8 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
@@ -691,6 +692,52 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			this->dgvAltercado->TabIndex = 34;
 			this->dgvAltercado->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &AdminAlertManagementForm::dgvAltercado_CellClick);
 			// 
+			// dataGridViewTextBoxColumn1
+			// 
+			this->dataGridViewTextBoxColumn1->DataPropertyName = L"ResourceAlertIDALT";
+			this->dataGridViewTextBoxColumn1->HeaderText = L"ID Alerta";
+			this->dataGridViewTextBoxColumn1->MinimumWidth = 6;
+			this->dataGridViewTextBoxColumn1->Name = L"dataGridViewTextBoxColumn1";
+			this->dataGridViewTextBoxColumn1->Width = 125;
+			// 
+			// dataGridViewTextBoxColumn3
+			// 
+			this->dataGridViewTextBoxColumn3->DataPropertyName = L"ResourceDateALT";
+			this->dataGridViewTextBoxColumn3->HeaderText = L"Fecha";
+			this->dataGridViewTextBoxColumn3->MinimumWidth = 6;
+			this->dataGridViewTextBoxColumn3->Name = L"dataGridViewTextBoxColumn3";
+			this->dataGridViewTextBoxColumn3->Width = 125;
+			// 
+			// dataGridViewTextBoxColumn4
+			// 
+			this->dataGridViewTextBoxColumn4->DataPropertyName = L"ResourceTimeALT";
+			this->dataGridViewTextBoxColumn4->HeaderText = L"Hora";
+			this->dataGridViewTextBoxColumn4->MinimumWidth = 6;
+			this->dataGridViewTextBoxColumn4->Name = L"dataGridViewTextBoxColumn4";
+			this->dataGridViewTextBoxColumn4->Width = 125;
+			// 
+			// dataGridViewTextBoxColumn5
+			// 
+			this->dataGridViewTextBoxColumn5->DataPropertyName = L"ResourceStatusALT";
+			this->dataGridViewTextBoxColumn5->HeaderText = L"Estado";
+			this->dataGridViewTextBoxColumn5->MinimumWidth = 6;
+			this->dataGridViewTextBoxColumn5->Name = L"dataGridViewTextBoxColumn5";
+			this->dataGridViewTextBoxColumn5->Width = 125;
+			// 
+			// ResourceUsuarioALT
+			// 
+			this->ResourceUsuarioALT->HeaderText = L"Usuario";
+			this->ResourceUsuarioALT->MinimumWidth = 6;
+			this->ResourceUsuarioALT->Name = L"ResourceUsuarioALT";
+			this->ResourceUsuarioALT->Width = 125;
+			// 
+			// ResourceRobotAsignadoALT
+			// 
+			this->ResourceRobotAsignadoALT->HeaderText = L"Robot Asignado";
+			this->ResourceRobotAsignadoALT->MinimumWidth = 6;
+			this->ResourceRobotAsignadoALT->Name = L"ResourceRobotAsignadoALT";
+			this->ResourceRobotAsignadoALT->Width = 125;
+			// 
 			// tabPage3
 			// 
 			this->tabPage3->Controls->Add(this->btnEliminarDTI);
@@ -872,52 +919,6 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			this->dgvDTI->TabIndex = 34;
 			this->dgvDTI->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &AdminAlertManagementForm::dgvDTI_CellClick);
 			// 
-			// dataGridViewTextBoxColumn1
-			// 
-			this->dataGridViewTextBoxColumn1->DataPropertyName = L"ResourceAlertIDALT";
-			this->dataGridViewTextBoxColumn1->HeaderText = L"ID Alerta";
-			this->dataGridViewTextBoxColumn1->MinimumWidth = 6;
-			this->dataGridViewTextBoxColumn1->Name = L"dataGridViewTextBoxColumn1";
-			this->dataGridViewTextBoxColumn1->Width = 125;
-			// 
-			// dataGridViewTextBoxColumn3
-			// 
-			this->dataGridViewTextBoxColumn3->DataPropertyName = L"ResourceDateALT";
-			this->dataGridViewTextBoxColumn3->HeaderText = L"Fecha";
-			this->dataGridViewTextBoxColumn3->MinimumWidth = 6;
-			this->dataGridViewTextBoxColumn3->Name = L"dataGridViewTextBoxColumn3";
-			this->dataGridViewTextBoxColumn3->Width = 125;
-			// 
-			// dataGridViewTextBoxColumn4
-			// 
-			this->dataGridViewTextBoxColumn4->DataPropertyName = L"ResourceTimeALT";
-			this->dataGridViewTextBoxColumn4->HeaderText = L"Hora";
-			this->dataGridViewTextBoxColumn4->MinimumWidth = 6;
-			this->dataGridViewTextBoxColumn4->Name = L"dataGridViewTextBoxColumn4";
-			this->dataGridViewTextBoxColumn4->Width = 125;
-			// 
-			// dataGridViewTextBoxColumn5
-			// 
-			this->dataGridViewTextBoxColumn5->DataPropertyName = L"ResourceStatusALT";
-			this->dataGridViewTextBoxColumn5->HeaderText = L"Estado";
-			this->dataGridViewTextBoxColumn5->MinimumWidth = 6;
-			this->dataGridViewTextBoxColumn5->Name = L"dataGridViewTextBoxColumn5";
-			this->dataGridViewTextBoxColumn5->Width = 125;
-			// 
-			// ResourceUsuarioALT
-			// 
-			this->ResourceUsuarioALT->HeaderText = L"Usuario";
-			this->ResourceUsuarioALT->MinimumWidth = 6;
-			this->ResourceUsuarioALT->Name = L"ResourceUsuarioALT";
-			this->ResourceUsuarioALT->Width = 125;
-			// 
-			// ResourceRobotAsignadoALT
-			// 
-			this->ResourceRobotAsignadoALT->HeaderText = L"Robot Asignado";
-			this->ResourceRobotAsignadoALT->MinimumWidth = 6;
-			this->ResourceRobotAsignadoALT->Name = L"ResourceRobotAsignadoALT";
-			this->ResourceRobotAsignadoALT->Width = 125;
-			// 
 			// dataGridViewTextBoxColumn6
 			// 
 			this->dataGridViewTextBoxColumn6->DataPropertyName = L"ResourceAlertIDDTI";
@@ -978,6 +979,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(929, 556);
 			this->Controls->Add(this->tabControl1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"AdminAlertManagementForm";
 			this->Text = L"AdminAlertManagementForm";
 			this->Load += gcnew System::EventHandler(this, &AdminAlertManagementForm::AdminAlertManagementForm_Load);

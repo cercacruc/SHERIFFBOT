@@ -147,6 +147,7 @@ namespace GUIApp {
 			this->Controls->Add(this->textUsuario);
 			this->Controls->Add(this->btnReturnPassword);
 			this->Controls->Add(this->label1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"AccountForm";
 			this->Text = L"AccountForm";
 			this->Load += gcnew System::EventHandler(this, &AccountForm::AccountForm_Load);

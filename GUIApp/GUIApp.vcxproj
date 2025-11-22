@@ -259,8 +259,17 @@
     <EmbeddedResource Include="AdminForm.resx">
       <DependentUpon>AdminForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AlertForm.resx">
+      <DependentUpon>AlertForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AlertHistForm.resx">
+      <DependentUpon>AlertHistForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AlertManagementForm.resx">
       <DependentUpon>AlertManagementForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AltercationReportForm.resx">
+      <DependentUpon>AltercationReportForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AsignarAlertaRobotForm.resx">
       <DependentUpon>AsignarAlertaRobotForm.h</DependentUpon>
@@ -268,11 +277,32 @@
     <EmbeddedResource Include="DatosRobotsUsuariosForm.resx">
       <DependentUpon>DatosRobotsUsuariosForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DelimitarZonasTrabajoAdmin.resx">
+      <DependentUpon>DelimitarZonasTrabajoAdmin.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DTIReportForm.resx">
+      <DependentUpon>DTIReportForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ForgotPasswordForm.resx">
+      <DependentUpon>ForgotPasswordForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GraficsAdminForm.resx">
       <DependentUpon>GraficsAdminForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GraficsUsersForm.resx">
       <DependentUpon>GraficsUsersForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InformationRequestForm.resx">
+      <DependentUpon>InformationRequestForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MissingObjectForm.resx">
+      <DependentUpon>MissingObjectForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RegisterForm.resx">
+      <DependentUpon>RegisterForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TasksRobotsForm.resx">
       <DependentUpon>TasksRobotsForm.h</DependentUpon>

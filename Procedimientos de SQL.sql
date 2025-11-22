@@ -1,7 +1,7 @@
 ﻿-- Eliminar tablas si existen
 IF OBJECT_ID('Puntos', 'U') IS NOT NULL DROP TABLE Puntos;
 IF OBJECT_ID('Alertas', 'U') IS NOT NULL DROP TABLE Alertas;
-IF OBJECT_ID('Robots', 'U') IS NOT NULL DROP TABLE Robots;
+
 IF OBJECT_ID('ZonasTrabajo', 'U') IS NOT NULL DROP TABLE ZonasTrabajo;
 IF OBJECT_ID('Usuarios', 'U') IS NOT NULL DROP TABLE Usuarios;
 GO
@@ -31,6 +31,7 @@ CREATE TABLE ZonasTrabajo (
 GO
 
 -- Tabla de Robots
+IF OBJECT_ID('Robots', 'U') IS NOT NULL DROP TABLE Robots;
 CREATE TABLE Robots (
     ID_Robot INT PRIMARY KEY IDENTITY(1,1),
     Nombre_robot NVARCHAR(100) NOT NULL UNIQUE,
@@ -41,7 +42,8 @@ CREATE TABLE Robots (
     Disponibilidad BIT DEFAULT 1,
     Caracteristicas NVARCHAR(MAX),
     Alerta_asignada_ID INT DEFAULT 0,
-    Tipo_mision NVARCHAR(50)
+    Tipo_mision NVARCHAR(50),
+    Foto VARBINARY(MAX)
 );
 GO
 
@@ -85,7 +87,6 @@ IF OBJECT_ID('usp_ResetPassword', 'P') IS NOT NULL DROP PROCEDURE usp_ResetPassw
 IF OBJECT_ID('usp_UpdateRobot', 'P') IS NOT NULL DROP PROCEDURE usp_UpdateRobot;
 IF OBJECT_ID('usp_DeleteRobot', 'P') IS NOT NULL DROP PROCEDURE usp_DeleteRobot;
 IF OBJECT_ID('usp_GetAllRobots', 'P') IS NOT NULL DROP PROCEDURE usp_GetAllRobots;
-IF OBJECT_ID('usp_AddAlerta', 'P') IS NOT NULL DROP PROCEDURE usp_AddAlerta;
 IF OBJECT_ID('usp_GetAlertasPorUsuario', 'P') IS NOT NULL DROP PROCEDURE usp_GetAlertasPorUsuario;
 IF OBJECT_ID('usp_GetAllAlertas', 'P') IS NOT NULL DROP PROCEDURE usp_GetAllAlertas;
 IF OBJECT_ID('usp_AddZona', 'P') IS NOT NULL DROP PROCEDURE usp_AddZona;
@@ -212,14 +213,12 @@ GO
 
 -- Procedimientos para Robots
 -- Eliminar procedimientos existentes si existen
+
+
+
 IF OBJECT_ID('usp_AddRobot', 'P') IS NOT NULL 
     DROP PROCEDURE usp_AddRobot;
 GO
-
-IF OBJECT_ID('usp_UpdateRobot', 'P') IS NOT NULL 
-    DROP PROCEDURE usp_UpdateRobot;
-GO
-
 -- Crear procedimiento usp_AddRobot actualizado
 CREATE PROCEDURE usp_AddRobot
     @Nombre NVARCHAR(100),
@@ -227,17 +226,22 @@ CREATE PROCEDURE usp_AddRobot
     @Bateria INT,
     @PosicionX FLOAT,
     @PosicionY FLOAT,
-    @Caracteristicas NVARCHAR(MAX) = NULL
+    @Caracteristicas NVARCHAR(MAX) = NULL,
+    @Foto VARBINARY(MAX) = NULL
 AS
 BEGIN
-    INSERT INTO Robots (Nombre_robot, Zona_asignada, Bateria, Posicion_X, Posicion_Y, Caracteristicas, Disponibilidad)
-    VALUES (@Nombre, @Zona, @Bateria, @PosicionX, @PosicionY, @Caracteristicas, 1);
+    INSERT INTO Robots (Nombre_robot, Zona_asignada, Bateria, Posicion_X, Posicion_Y, Caracteristicas, Foto, Disponibilidad)
+    VALUES (@Nombre, @Zona, @Bateria, @PosicionX, @PosicionY, @Caracteristicas, @Foto, 1);
     
     RETURN SCOPE_IDENTITY();
 END
 GO
 
+
 -- Crear procedimiento usp_UpdateRobot actualizado
+IF OBJECT_ID('usp_UpdateRobot', 'P') IS NOT NULL 
+    DROP PROCEDURE usp_UpdateRobot;
+GO
 CREATE PROCEDURE usp_UpdateRobot
     @ID INT,
     @Nombre NVARCHAR(100),
@@ -246,7 +250,10 @@ CREATE PROCEDURE usp_UpdateRobot
     @PosicionX FLOAT,
     @PosicionY FLOAT,
     @Caracteristicas NVARCHAR(MAX) = NULL,
-    @Disponibilidad BIT = 1
+    @Foto VARBINARY(MAX) = NULL,
+    @Disponibilidad BIT = 1,
+    @AlertaAsignadaID INT = 0,
+    @TipoMision NVARCHAR(50) = NULL
 AS
 BEGIN
     UPDATE Robots 
@@ -256,7 +263,10 @@ BEGIN
         Posicion_X = @PosicionX,
         Posicion_Y = @PosicionY,
         Caracteristicas = @Caracteristicas,
-        Disponibilidad = @Disponibilidad
+        Foto = ISNULL(@Foto, Foto),
+        Disponibilidad = @Disponibilidad,
+        Alerta_asignada_ID = @AlertaAsignadaID,
+        Tipo_mision = @TipoMision
     WHERE ID_Robot = @ID;
     
     RETURN @@ROWCOUNT;
@@ -282,6 +292,9 @@ END
 GO
 
 -- Procedimientos para Alertas
+IF OBJECT_ID('usp_AddAlerta', 'P') IS NOT NULL 
+    DROP PROCEDURE usp_AddAlerta;
+GO
 CREATE PROCEDURE usp_AddAlerta
     @TipoAlerta NVARCHAR(50),
     @Fecha DATETIME,
@@ -290,11 +303,11 @@ CREATE PROCEDURE usp_AddAlerta
     @UsuarioID INT,
     @UsuarioNombre NVARCHAR(100),
     @ObjetoEncontrado NVARCHAR(200) = NULL,
-    @TipoReporte NVARCHAR(100) = NULL
+    @Tipo_reporte  NVARCHAR(100) = NULL
 AS
 BEGIN
     INSERT INTO Alertas (Tipo_alerta, Fecha_alerta, Descripcion, Lugar, Usuario_ID, Usuario_nombre, Objeto_encontrado, Tipo_reporte)
-    VALUES (@TipoAlerta, @Fecha, @Descripcion, @Lugar, @UsuarioID, @UsuarioNombre, @ObjetoEncontrado, @TipoReporte);
+    VALUES (@TipoAlerta, @Fecha, @Descripcion, @Lugar, @UsuarioID, @UsuarioNombre, @ObjetoEncontrado, @Tipo_reporte );
     
     RETURN SCOPE_IDENTITY();
 END
@@ -321,6 +334,9 @@ END
 GO
 
 -- Procedimiento para modificar alerta
+IF OBJECT_ID('usp_UpdateAlerta', 'P') IS NOT NULL 
+    DROP PROCEDURE usp_UpdateAlerta;
+GO
 CREATE PROCEDURE usp_UpdateAlerta
     @ID_Alerta INT,
     @TipoAlerta NVARCHAR(50),
@@ -328,7 +344,7 @@ CREATE PROCEDURE usp_UpdateAlerta
     @Lugar NVARCHAR(200),
     @Solucionado BIT,
     @ObjetoEncontrado NVARCHAR(200) = NULL,
-    @TipoReporte NVARCHAR(100) = NULL
+    @Tipo_reporte  NVARCHAR(100) = NULL
 AS
 BEGIN
     UPDATE Alertas 
@@ -337,7 +353,7 @@ BEGIN
         Lugar = @Lugar,
         Solucionado = @Solucionado,
         Objeto_encontrado = @ObjetoEncontrado,
-        Tipo_reporte = @TipoReporte
+        Tipo_reporte = @Tipo_reporte 
     WHERE ID_Alerta = @ID_Alerta;
     
     RETURN @@ROWCOUNT;
@@ -415,24 +431,30 @@ END
 GO
 
 -- Buscar robot por ID
+IF OBJECT_ID('usp_BuscarRobotPorID', 'P') IS NOT NULL 
+    DROP PROCEDURE usp_BuscarRobotPorID;
+GO
 CREATE PROCEDURE usp_BuscarRobotPorID
     @ID INT
 AS
 BEGIN
     SELECT ID_Robot, Nombre_robot, Zona_asignada, Bateria, Posicion_X, Posicion_Y,
-           Disponibilidad, Caracteristicas, Alerta_asignada_ID, Tipo_mision
+           Disponibilidad, Caracteristicas, Alerta_asignada_ID, Tipo_mision, Foto
     FROM Robots 
     WHERE ID_Robot = @ID;
 END
 GO
 
 -- Buscar robot por Nombre
+IF OBJECT_ID('usp_BuscarRobotPorNombre', 'P') IS NOT NULL 
+    DROP PROCEDURE usp_BuscarRobotPorNombre;
+GO
 CREATE PROCEDURE usp_BuscarRobotPorNombre
     @Nombre NVARCHAR(100)
 AS
 BEGIN
     SELECT ID_Robot, Nombre_robot, Zona_asignada, Bateria, Posicion_X, Posicion_Y,
-           Disponibilidad, Caracteristicas, Alerta_asignada_ID, Tipo_mision
+           Disponibilidad, Caracteristicas, Alerta_asignada_ID, Tipo_mision, Foto
     FROM Robots 
     WHERE Nombre_robot = @Nombre;
 END
@@ -556,3 +578,19 @@ SELECT * FROM Usuarios;
 SELECT * FROM Alertas;
 
 SELECT * FROM Robots;
+
+SELECT * FROM ZonasTrabajo;
+
+UPDATE Usuarios 
+SET Perdidas = 0, Altercados = 0, Reportes_dti = 0 
+WHERE ID_Usuario = 221;
+
+
+TRUNCATE TABLE Robots;
+TRUNCATE TABLE Usuarios;
+TRUNCATE TABLE Alertas;
+
+UPDATE Robots 
+SET Alerta_asignada_ID = 0
+WHERE ID_Robot = 1;
+

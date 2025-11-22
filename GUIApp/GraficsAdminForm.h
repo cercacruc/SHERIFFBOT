@@ -57,6 +57,7 @@ namespace GUIApp {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(GraficsAdminForm::typeid));
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->btnSalir = (gcnew System::Windows::Forms::Button());
@@ -103,6 +104,7 @@ namespace GUIApp {
 			this->Controls->Add(this->btnSalir);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->pictureBox1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"GraficsAdminForm";
 			this->Text = L"Gráfico de Barras - Registros en Sistema";
 			this->Load += gcnew System::EventHandler(this, &GraficsAdminForm::GraficsAdminForm_Load);

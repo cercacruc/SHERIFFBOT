@@ -62,6 +62,7 @@ namespace GUIApp {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(ForgotPasswordForm::typeid));
 			this->btnSendPassword = (gcnew System::Windows::Forms::Button());
 			this->btnReturnPassword = (gcnew System::Windows::Forms::Button());
 			this->NewPassword2 = (gcnew System::Windows::Forms::TextBox());
@@ -179,6 +180,7 @@ namespace GUIApp {
 			this->Controls->Add(this->UserName);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"ForgotPasswordForm";
 			this->Text = L"ForgotPasswordForm";
 			this->Load += gcnew System::EventHandler(this, &ForgotPasswordForm::ForgotPasswordForm_Load);

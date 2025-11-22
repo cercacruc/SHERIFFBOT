@@ -77,6 +77,7 @@ namespace GUIApp {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(AltercationReportForm::typeid));
 			this->btnEnviar = (gcnew System::Windows::Forms::Button());
 			this->btnVolver = (gcnew System::Windows::Forms::Button());
 			this->label4 = (gcnew System::Windows::Forms::Label());
@@ -201,6 +202,7 @@ namespace GUIApp {
 			this->Controls->Add(this->txtDescription);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"AltercationReportForm";
 			this->Text = L"AltercationReportForm";
 			this->Load += gcnew System::EventHandler(this, &AltercationReportForm::AltercationReportForm_Load);

@@ -74,6 +74,7 @@ namespace GUIApp {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(DTIReportForm::typeid));
 			this->cbTipoAlerta = (gcnew System::Windows::Forms::ComboBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->btnLlamar = (gcnew System::Windows::Forms::Button());
@@ -198,6 +199,7 @@ namespace GUIApp {
 			this->Controls->Add(this->txtDescription);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"DTIReportForm";
 			this->Text = L"DTIReportForm";
 			this->ResumeLayout(false);
@@ -213,6 +215,8 @@ namespace GUIApp {
 		reporte->Description = txtDescription->Text;
 		reporte->Fecha = dtpFecha->Value;
 		reporte->tipoReporte = cbTipoAlerta->Text;
+
+		reporte->Lugar = txtLugar->Text;
 
 		//vincula con usuario
 		reporte->UsuarioID = Usuario->ID;

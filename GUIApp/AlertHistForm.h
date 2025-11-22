@@ -79,6 +79,7 @@ namespace GUIApp {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(AlertHistForm::typeid));
 			this->dgvAlertHist = (gcnew System::Windows::Forms::DataGridView());
 			this->ID1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->X1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
@@ -144,6 +145,7 @@ namespace GUIApp {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(629, 370);
 			this->Controls->Add(this->dgvAlertHist);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->Name = L"AlertHistForm";
 			this->Text = L"Historial de Alertas";

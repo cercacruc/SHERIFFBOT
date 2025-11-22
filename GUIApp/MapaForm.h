@@ -68,10 +68,10 @@ namespace GUIApp {
 			// 
 			this->btnSalir->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->btnSalir->Location = System::Drawing::Point(501, 10);
-			this->btnSalir->Margin = System::Windows::Forms::Padding(2);
+			this->btnSalir->Location = System::Drawing::Point(668, 12);
+			this->btnSalir->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->btnSalir->Name = L"btnSalir";
-			this->btnSalir->Size = System::Drawing::Size(107, 49);
+			this->btnSalir->Size = System::Drawing::Size(143, 60);
 			this->btnSalir->TabIndex = 37;
 			this->btnSalir->Text = L"SALIR";
 			this->btnSalir->UseVisualStyleBackColor = true;
@@ -80,10 +80,10 @@ namespace GUIApp {
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(30, 71);
-			this->pictureBox1->Margin = System::Windows::Forms::Padding(2);
+			this->pictureBox1->Location = System::Drawing::Point(40, 87);
+			this->pictureBox1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(554, 397);
+			this->pictureBox1->Size = System::Drawing::Size(739, 489);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox1->TabIndex = 38;
 			this->pictureBox1->TabStop = false;
@@ -91,12 +91,13 @@ namespace GUIApp {
 			// 
 			// MapaForm
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(617, 570);
+			this->ClientSize = System::Drawing::Size(823, 702);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->btnSalir);
-			this->Margin = System::Windows::Forms::Padding(2);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->Name = L"MapaForm";
 			this->Text = L"MapaForm";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
