@@ -42,7 +42,7 @@ namespace GUIApp {
 	private: System::Windows::Forms::Button^ btnRegister;
 	protected:
 
-	private: System::Windows::Forms::Label^ label1;
+
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 
 
@@ -62,7 +62,6 @@ namespace GUIApp {
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
 			this->btnLogin = (gcnew System::Windows::Forms::Button());
 			this->btnRegister = (gcnew System::Windows::Forms::Button());
-			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
@@ -71,7 +70,7 @@ namespace GUIApp {
 			// 
 			this->btnLogin->Location = System::Drawing::Point(73, 395);
 			this->btnLogin->Name = L"btnLogin";
-			this->btnLogin->Size = System::Drawing::Size(218, 53);
+			this->btnLogin->Size = System::Drawing::Size(220, 53);
 			this->btnLogin->TabIndex = 7;
 			this->btnLogin->Text = L"Iniciar sesión";
 			this->btnLogin->UseVisualStyleBackColor = true;
@@ -81,28 +80,18 @@ namespace GUIApp {
 			// 
 			this->btnRegister->Location = System::Drawing::Point(72, 322);
 			this->btnRegister->Name = L"btnRegister";
-			this->btnRegister->Size = System::Drawing::Size(220, 49);
+			this->btnRegister->Size = System::Drawing::Size(221, 49);
 			this->btnRegister->TabIndex = 6;
 			this->btnRegister->Text = L"Registrarse";
 			this->btnRegister->UseVisualStyleBackColor = true;
 			this->btnRegister->Click += gcnew System::EventHandler(this, &MainForm::btnRegister_Click);
 			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label1->Location = System::Drawing::Point(78, 56);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(230, 25);
-			this->label1->TabIndex = 5;
-			this->label1->Text = L"PUCPTA (pucp te alerta)";
-			// 
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(83, 93);
+			this->pictureBox1->Location = System::Drawing::Point(48, 42);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(210, 193);
+			this->pictureBox1->Size = System::Drawing::Size(269, 255);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox1->TabIndex = 8;
 			this->pictureBox1->TabStop = false;
@@ -115,13 +104,11 @@ namespace GUIApp {
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->btnLogin);
 			this->Controls->Add(this->btnRegister);
-			this->Controls->Add(this->label1);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"MainForm";
 			this->Text = L"MainForm";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
-			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -140,5 +127,6 @@ namespace GUIApp {
 		loginForm->ShowDialog();
 		this->Show();
 	}
+
 	};
 }

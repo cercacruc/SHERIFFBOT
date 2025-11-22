@@ -1185,8 +1185,8 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 				pbPhotoObj->Image = Image::FromStream(ms);
 			}
 			else {
-				pbPhotoObj->Image = nullptr;
-				pbPhotoObj->Invalidate();
+				pbPhotoAltercado->Image = nullptr;
+				pbPhotoAltercado->Invalidate();
 			}
 
 			if (altercado->Fecha != nullptr)
@@ -1211,8 +1211,8 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 				}
 			}
 
-			rbtnSolucionAltercadoYes->Checked = reporte->Solucionado;
-			rbtnSolucionAltercadoNo->Checked = !reporte->Solucionado;
+			rbtnSolucionDTIYes->Checked = reporte->Solucionado;
+			rbtnSolucionDTINo->Checked = !reporte->Solucionado;
 
 			if (reporte->Fecha != nullptr)
 				dtpDTI->Value = *(reporte->Fecha);
@@ -1286,6 +1286,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 	private: System::Void btnSolucionObj_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (String::IsNullOrEmpty(txtIDObjPerdido->Text)) {
 			MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return; 
 		}
 		try {
 			int id = Convert::ToInt32(txtIDObjPerdido->Text);
@@ -1307,6 +1308,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 	private: System::Void btnSolucionAltercado_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (String::IsNullOrEmpty(txtIDAltercado->Text)) {
 			MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
 		}
 		try {
 			int id = Convert::ToInt32(txtIDAltercado->Text);
@@ -1328,6 +1330,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 	private: System::Void btnSolucionDTI_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (String::IsNullOrEmpty(txtIDDTI->Text)) {
 			MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
 		}
 		try {
 			int id = Convert::ToInt32(txtIDDTI->Text);

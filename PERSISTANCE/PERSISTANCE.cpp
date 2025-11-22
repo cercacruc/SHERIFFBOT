@@ -1882,7 +1882,9 @@ int BotPersistance::Persistance::AddAlerta(Alert^ alerta)
                     dynamic_cast<ObjPerdido^>(alerta)->ObjetoEncontrado : ""),
                 gcnew SqlParameter("@Tipo_reporte",
                     dynamic_cast<DTIReport^>(alerta) != nullptr ?
-                    dynamic_cast<DTIReport^>(alerta)->tipoReporte : "")
+                    dynamic_cast<DTIReport^>(alerta)->tipoReporte : ""),
+                gcnew SqlParameter("@Foto",  
+                    alerta->Photo != nullptr ? (Object^)alerta->Photo : DBNull::Value)
         };
 
         return executeStoredProcedure("usp_AddAlerta", params);
@@ -1909,13 +1911,17 @@ List<Alert^>^ BotPersistance::Persistance::GetAllAlertas()
             if (tipoAlerta == "Objeto Perdido")
             {
                 ObjPerdido^ obj = gcnew ObjPerdido();
-                obj->ObjetoEncontrado = reader["Objeto_encontrado"]->ToString();
+                if (!reader->IsDBNull(reader->GetOrdinal("Objeto_encontrado"))) {
+                    obj->ObjetoEncontrado = reader["Objeto_encontrado"]->ToString();
+                }
                 alerta = obj;
             }
             else if (tipoAlerta == "DTI Reporte")
             {
                 DTIReport^ dti = gcnew DTIReport();
-                dti->tipoReporte = reader["Tipo_reporte"]->ToString();
+                if (!reader->IsDBNull(reader->GetOrdinal("Tipo_reporte"))) {
+                    dti->tipoReporte = reader["Tipo_reporte"]->ToString();
+                }
                 alerta = dti;
             }
             else if (tipoAlerta == "Altercado")
@@ -1935,6 +1941,33 @@ List<Alert^>^ BotPersistance::Persistance::GetAllAlertas()
             alerta->Solucionado = reader->GetBoolean(reader->GetOrdinal("Solucionado"));
             alerta->UsuarioID = reader->GetInt32(reader->GetOrdinal("Usuario_ID"));
             alerta->UsuarioNombre = reader["Usuario_nombre"]->ToString();
+
+            // MANEJO MEJORADO DE LA FOTO
+            if (!reader->IsDBNull(reader->GetOrdinal("Foto"))) {
+                try {
+                    int fotoIndex = reader->GetOrdinal("Foto");
+
+                    // Verificar si realmente es un array de bytes
+                    if (reader[fotoIndex] != nullptr && reader[fotoIndex]->GetType() == array<Byte>::typeid) {
+                        alerta->Photo = safe_cast<array<Byte>^>(reader[fotoIndex]);
+                    }
+                    else {
+                        alerta->Photo = nullptr;
+                        System::Diagnostics::Debug::WriteLine("Advertencia: El campo Foto no es un array de bytes válido");
+                    }
+                }
+                catch (InvalidCastException^ icex) {
+                    alerta->Photo = nullptr;
+                    System::Diagnostics::Debug::WriteLine("Advertencia: Error de casteo en foto: " + icex->Message);
+                }
+                catch (Exception^ ex) {
+                    alerta->Photo = nullptr;
+                    System::Diagnostics::Debug::WriteLine("Advertencia: Error leyendo foto de alerta: " + ex->Message);
+                }
+            }
+            else {
+                alerta->Photo = nullptr;
+            }
 
             lista->Add(alerta);
         }
@@ -2289,9 +2322,11 @@ int BotPersistance::Persistance::modificarAlerta(Alert^ alerta)
                 gcnew SqlParameter("@ObjetoEncontrado",
                     dynamic_cast<ObjPerdido^>(alerta) != nullptr ?
                     dynamic_cast<ObjPerdido^>(alerta)->ObjetoEncontrado : ""),
-                gcnew SqlParameter("@TipoReporte",
+                gcnew SqlParameter("@Tipo_reporte",
                     dynamic_cast<DTIReport^>(alerta) != nullptr ?
-                    dynamic_cast<DTIReport^>(alerta)->tipoReporte : "")
+                    dynamic_cast<DTIReport^>(alerta)->tipoReporte : ""),
+                gcnew SqlParameter("@Foto",
+                    alerta->Photo != nullptr ? (Object^)alerta->Photo : DBNull::Value)
         };
 
         return executeStoredProcedure("usp_UpdateAlerta", params);

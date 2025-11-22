@@ -46,6 +46,7 @@ Robot::Robot(int ID, String^ nombre, String^ zona, Point^ ubicacion, String^ car
 Alert::Alert() {
 	this->UsuarioID = 0;
 	this->UsuarioNombre = String::Empty;
+	this->Photo = nullptr;
 
 }
 Alert::Alert(int id, DateTime^ fecha, String^ description, String^ lugar, bool solucionado, String^ tipoAlerta) {
@@ -58,6 +59,7 @@ Alert::Alert(int id, DateTime^ fecha, String^ description, String^ lugar, bool s
 
 	this->UsuarioID = 0;
 	this->UsuarioNombre = String::Empty;
+	this->Photo = nullptr;
 }
 
 ZonaTrabajo::ZonaTrabajo() {
