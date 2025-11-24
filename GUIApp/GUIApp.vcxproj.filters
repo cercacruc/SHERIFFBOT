@@ -36,9 +36,6 @@
     <ClCompile Include="AltercationReportForm.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="TasksRobotsForm.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="ControlRobotForm.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -81,16 +78,19 @@
     <ClCompile Include="SheriffForm.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="UserAlertViewForm.cpp">
+    <ClCompile Include="MapaForm.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="AsignarAlertaRobotForm.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="UsuarioPromedioForm.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="MapaForm.cpp">
+    <ClCompile Include="GraficosUserForm.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="AsignarAlertaRobotForm.cpp">
+    <ClCompile Include="GraficAlertUserSolForm.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -114,9 +114,6 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="AltercationReportForm.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="TasksRobotsForm.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="ComboBoxItem.h">
@@ -164,16 +161,19 @@
     <ClInclude Include="SheriffForm.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="UserAlertViewForm.h">
+    <ClInclude Include="MapaForm.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="AsignarAlertaRobotForm.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="UsuarioPromedioForm.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="MapaForm.h">
+    <ClInclude Include="GraficosUserForm.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="AsignarAlertaRobotForm.h">
+    <ClInclude Include="GraficAlertUserSolForm.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

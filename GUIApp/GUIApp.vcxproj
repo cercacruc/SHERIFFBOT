@@ -141,12 +141,13 @@
     <ClCompile Include="AlertManagementForm.cpp" />
     <ClCompile Include="AltercationReportForm.cpp" />
     <ClCompile Include="AsignarAlertaRobotForm.cpp" />
-    <ClCompile Include="TasksRobotsForm.cpp" />
     <ClCompile Include="ControlRobotForm.cpp" />
     <ClCompile Include="DatosRobotsUsuariosForm.cpp" />
     <ClCompile Include="DelimitarZonasTrabajoAdmin.cpp" />
     <ClCompile Include="DTIReportForm.cpp" />
     <ClCompile Include="ForgotPasswordForm.cpp" />
+    <ClCompile Include="GraficAlertUserSolForm.cpp" />
+    <ClCompile Include="GraficosUserForm.cpp" />
     <ClCompile Include="GraficsAdminForm.cpp" />
     <ClCompile Include="GraficsUsersForm.cpp" />
     <ClCompile Include="InformationRequestForm.cpp" />
@@ -157,7 +158,6 @@
     <ClCompile Include="RegisterForm.cpp" />
     <ClCompile Include="RobotsSheriffForm.cpp" />
     <ClCompile Include="SheriffForm.cpp" />
-    <ClCompile Include="UserAlertViewForm.cpp" />
     <ClCompile Include="UsuarioPromedioForm.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -185,9 +185,6 @@
     <ClInclude Include="AsignarAlertaRobotForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="TasksRobotsForm.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
     <ClInclude Include="ComboBoxItem.h" />
     <ClInclude Include="ControlRobotForm.h">
       <FileType>CppForm</FileType>
@@ -202,6 +199,12 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="ForgotPasswordForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="GraficAlertUserSolForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="GraficosUserForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="GraficsAdminForm.h">
@@ -232,9 +235,6 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="SheriffForm.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
-    <ClInclude Include="UserAlertViewForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="UsuarioPromedioForm.h">
@@ -286,6 +286,12 @@
     <EmbeddedResource Include="ForgotPasswordForm.resx">
       <DependentUpon>ForgotPasswordForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GraficAlertUserSolForm.resx">
+      <DependentUpon>GraficAlertUserSolForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraficosUserForm.resx">
+      <DependentUpon>GraficosUserForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GraficsAdminForm.resx">
       <DependentUpon>GraficsAdminForm.h</DependentUpon>
     </EmbeddedResource>
@@ -304,9 +310,6 @@
     <EmbeddedResource Include="RegisterForm.resx">
       <DependentUpon>RegisterForm.h</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TasksRobotsForm.resx">
-      <DependentUpon>TasksRobotsForm.h</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ControlRobotForm.resx">
       <DependentUpon>ControlRobotForm.h</DependentUpon>
     </EmbeddedResource>
@@ -321,9 +324,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SheriffForm.resx">
       <DependentUpon>SheriffForm.h</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserAlertViewForm.resx">
-      <DependentUpon>UserAlertViewForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UsuarioPromedioForm.resx">
       <DependentUpon>UsuarioPromedioForm.h</DependentUpon>

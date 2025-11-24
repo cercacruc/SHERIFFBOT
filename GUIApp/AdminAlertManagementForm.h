@@ -1114,6 +1114,18 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 		CargarTablaAltercado();
 		CargarTablaDTIReport();
 		CargarTablaObjetoPerdido();
+
+		txtDescriptionAltercado->Enabled = false;
+		txtDescriptionDTI->Enabled = false;
+		txtDescriptionObj->Enabled = false;
+		txtIDAltercado->Enabled = false;
+		txtIDDTI->Enabled = false;
+		txtIDObjPerdido->Enabled = false;
+		txtObjetoPerdido->Enabled = false;
+		dtpAltercado->Enabled = false;
+		dtpDTI->Enabled = false;
+		dtpObjetoPerdido->Enabled = false;
+		cmbTipoAlertaDTI->Enabled = false;
 	}
 	private: void ClearFields() {
 		txtDescriptionObj->Clear();

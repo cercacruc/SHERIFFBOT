@@ -522,7 +522,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			// 
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->label1->Location = System::Drawing::Point(5, 34);
+			this->label1->Location = System::Drawing::Point(3, 34);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(114, 25);
 			this->label1->TabIndex = 64;
@@ -530,7 +530,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			// 
 			// txtDescriptionDTI
 			// 
-			this->txtDescriptionDTI->Location = System::Drawing::Point(5, 62);
+			this->txtDescriptionDTI->Location = System::Drawing::Point(3, 62);
 			this->txtDescriptionDTI->Multiline = true;
 			this->txtDescriptionDTI->Name = L"txtDescriptionDTI";
 			this->txtDescriptionDTI->Size = System::Drawing::Size(374, 170);
@@ -609,7 +609,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			// btnAtendidoDTI
 			// 
 			this->btnAtendidoDTI->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnAtendidoDTI->Location = System::Drawing::Point(410, 62);
+			this->btnAtendidoDTI->Location = System::Drawing::Point(484, 104);
 			this->btnAtendidoDTI->Name = L"btnAtendidoDTI";
 			this->btnAtendidoDTI->Size = System::Drawing::Size(174, 74);
 			this->btnAtendidoDTI->TabIndex = 8;
@@ -771,6 +771,10 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 		CargarTablaObjetoPerdido();
 		CargarTablaAltercado();
 		CargarTablaDTIReport();
+
+		txtDescriptionAltercado->Enabled = false;
+		txtDescriptionDTI->Enabled = false;
+		txtDescriptionObj->Enabled = false;
 	}
 	private: System::Void dgvOjbPerdido_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
 		if (e->RowIndex >= 0) {

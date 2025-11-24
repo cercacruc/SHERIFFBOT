@@ -4,6 +4,7 @@
 #include "AdminAlertManagementForm.h"
 #include "DelimitarZonasTrabajoAdmin.h"
 #include "GraficsAdminForm.h"
+#include "GraficosUserForm.h"
 //faltan añadir demas ventanas
 
 namespace GUIApp {
@@ -253,10 +254,12 @@ namespace GUIApp {
 			this->Show();
 		}
 		private: System::Void btnEstadistica_Click(System::Object^ sender, System::EventArgs^ e) {
-			GraficsAdminForm^ form = gcnew GraficsAdminForm();
+			
+			GraficosUserForm^ form = gcnew GraficosUserForm();
 			this->Hide();
 			form->ShowDialog();
 			this->Show();
+			
 		}
 		private: System::Void btnCerrarSesion_Click(System::Object^ sender, System::EventArgs^ e) {
 			this->Close();

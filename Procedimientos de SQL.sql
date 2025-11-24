@@ -303,11 +303,12 @@ CREATE PROCEDURE usp_AddAlerta
     @UsuarioID INT,
     @UsuarioNombre NVARCHAR(100),
     @ObjetoEncontrado NVARCHAR(200) = NULL,
-    @Tipo_reporte  NVARCHAR(100) = NULL
+    @Tipo_reporte  NVARCHAR(100) = NULL,
+    @Foto VARBINARY(MAX) = NULL
 AS
 BEGIN
-    INSERT INTO Alertas (Tipo_alerta, Fecha_alerta, Descripcion, Lugar, Usuario_ID, Usuario_nombre, Objeto_encontrado, Tipo_reporte)
-    VALUES (@TipoAlerta, @Fecha, @Descripcion, @Lugar, @UsuarioID, @UsuarioNombre, @ObjetoEncontrado, @Tipo_reporte );
+    INSERT INTO Alertas (Tipo_alerta, Fecha_alerta, Descripcion, Lugar, Usuario_ID, Usuario_nombre, Objeto_encontrado, Tipo_reporte, Foto)
+    VALUES (@TipoAlerta, @Fecha, @Descripcion, @Lugar, @UsuarioID, @UsuarioNombre, @ObjetoEncontrado, @Tipo_reporte, @Foto );
     
     RETURN SCOPE_IDENTITY();
 END
@@ -324,11 +325,16 @@ BEGIN
 END
 GO
 
+IF OBJECT_ID('usp_GetAllAlertas', 'P') IS NOT NULL 
+    DROP PROCEDURE usp_GetAllAlertas;
+GO
+
+-- Crear el procedimiento actualizado
 CREATE PROCEDURE usp_GetAllAlertas
 AS
 BEGIN
     SELECT ID_Alerta, Tipo_alerta, Fecha_alerta, Descripcion, Lugar, Solucionado, 
-           Usuario_ID, Usuario_nombre, Objeto_encontrado, Tipo_reporte
+           Usuario_ID, Usuario_nombre, Objeto_encontrado, Tipo_reporte, Foto
     FROM Alertas;
 END
 GO
@@ -344,7 +350,8 @@ CREATE PROCEDURE usp_UpdateAlerta
     @Lugar NVARCHAR(200),
     @Solucionado BIT,
     @ObjetoEncontrado NVARCHAR(200) = NULL,
-    @Tipo_reporte  NVARCHAR(100) = NULL
+    @Tipo_reporte  NVARCHAR(100) = NULL,
+    @Foto VARBINARY(MAX) = NULL
 AS
 BEGIN
     UPDATE Alertas 
@@ -353,7 +360,8 @@ BEGIN
         Lugar = @Lugar,
         Solucionado = @Solucionado,
         Objeto_encontrado = @ObjetoEncontrado,
-        Tipo_reporte = @Tipo_reporte 
+        Tipo_reporte = @Tipo_reporte ,
+        Foto = ISNULL(@Foto, Foto)
     WHERE ID_Alerta = @ID_Alerta;
     
     RETURN @@ROWCOUNT;
@@ -371,24 +379,30 @@ END
 GO
 
 -- Procedimiento para buscar alerta por ID
+IF OBJECT_ID('usp_BuscarAlertaPorID', 'P') IS NOT NULL 
+    DROP PROCEDURE usp_BuscarAlertaPorID;
+GO
 CREATE PROCEDURE usp_BuscarAlertaPorID
     @ID_Alerta INT
 AS
 BEGIN
     SELECT ID_Alerta, Tipo_alerta, Fecha_alerta, Descripcion, Lugar, Solucionado, 
-           Usuario_ID, Usuario_nombre, Objeto_encontrado, Tipo_reporte
+           Usuario_ID, Usuario_nombre, Objeto_encontrado, Tipo_reporte, Foto
     FROM Alertas
     WHERE ID_Alerta = @ID_Alerta;
 END
 GO
 
 -- Procedimiento para buscar alerta por descripción
+IF OBJECT_ID('usp_BuscarAlertaPorDescripcion', 'P') IS NOT NULL 
+    DROP PROCEDURE usp_BuscarAlertaPorDescripcion;
+GO
 CREATE PROCEDURE usp_BuscarAlertaPorDescripcion
     @Descripcion NVARCHAR(MAX)
 AS
 BEGIN
     SELECT ID_Alerta, Tipo_alerta, Fecha_alerta, Descripcion, Lugar, Solucionado, 
-           Usuario_ID, Usuario_nombre, Objeto_encontrado, Tipo_reporte
+           Usuario_ID, Usuario_nombre, Objeto_encontrado, Tipo_reporte, Foto
     FROM Alertas
     WHERE Descripcion LIKE '%' + @Descripcion + '%';
 END

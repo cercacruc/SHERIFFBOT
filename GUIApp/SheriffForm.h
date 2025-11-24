@@ -1,9 +1,10 @@
 #pragma once
-#include "TasksRobotsForm.h"
 #include "AccountForm.h"
 #include "RobotsSheriffForm.h"
 #include "AlertManagementForm.h"
 #include "AsignarAlertaRobotForm.h"
+#include "GraficosUserForm.h"
+#include "GraficAlertUserSolForm.h"
 
 namespace GUIApp {
 
@@ -54,6 +55,8 @@ namespace GUIApp {
 	private: System::Windows::Forms::PictureBox^ pictureBox3;
 	private: System::Windows::Forms::PictureBox^ pictureBox2;
 	private: System::Windows::Forms::Button^ btnCerrarSesion;
+	private: System::Windows::Forms::PictureBox^ pictureBox4;
+	private: System::Windows::Forms::Button^ btnEstadistica;
 
 	private:
 		/// <summary>
@@ -77,10 +80,13 @@ namespace GUIApp {
 			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->btnCerrarSesion = (gcnew System::Windows::Forms::Button());
+			this->pictureBox4 = (gcnew System::Windows::Forms::PictureBox());
+			this->btnEstadistica = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btnInfo
@@ -173,11 +179,36 @@ namespace GUIApp {
 			this->btnCerrarSesion->UseVisualStyleBackColor = true;
 			this->btnCerrarSesion->Click += gcnew System::EventHandler(this, &SheriffForm::btnCerrarSesion_Click);
 			// 
+			// pictureBox4
+			// 
+			this->pictureBox4->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox4.Image")));
+			this->pictureBox4->Location = System::Drawing::Point(199, 338);
+			this->pictureBox4->Name = L"pictureBox4";
+			this->pictureBox4->Size = System::Drawing::Size(159, 148);
+			this->pictureBox4->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox4->TabIndex = 33;
+			this->pictureBox4->TabStop = false;
+			// 
+			// btnEstadistica
+			// 
+			this->btnEstadistica->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnEstadistica->Location = System::Drawing::Point(199, 491);
+			this->btnEstadistica->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->btnEstadistica->Name = L"btnEstadistica";
+			this->btnEstadistica->Size = System::Drawing::Size(157, 36);
+			this->btnEstadistica->TabIndex = 32;
+			this->btnEstadistica->Text = L"Estadisticas";
+			this->btnEstadistica->UseVisualStyleBackColor = true;
+			this->btnEstadistica->Click += gcnew System::EventHandler(this, &SheriffForm::btnEstadistica_Click);
+			// 
 			// SheriffForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(377, 556);
+			this->Controls->Add(this->pictureBox4);
+			this->Controls->Add(this->btnEstadistica);
 			this->Controls->Add(this->btnCerrarSesion);
 			this->Controls->Add(this->pictureBox2);
 			this->Controls->Add(this->pictureBox3);
@@ -193,6 +224,7 @@ namespace GUIApp {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->EndInit();
 			this->ResumeLayout(false);
 
 		}
@@ -220,6 +252,12 @@ namespace GUIApp {
 		}
 		private: System::Void btnAccount_Click_1(System::Object^ sender, System::EventArgs^ e) {
 			AccountForm^ form = gcnew AccountForm(Usuario);
+			this->Hide();
+			form->ShowDialog();
+			this->Show();
+		}
+		private: System::Void btnEstadistica_Click(System::Object^ sender, System::EventArgs^ e) {
+			GraficAlertUserSolForm^ form = gcnew GraficAlertUserSolForm();
 			this->Hide();
 			form->ShowDialog();
 			this->Show();

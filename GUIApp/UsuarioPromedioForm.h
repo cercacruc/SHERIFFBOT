@@ -3,6 +3,7 @@
 #include "AlertForm.h"
 #include "AccountForm.h"
 #include "GraficsUsersForm.h"
+#include "GraficosUserForm.h"
 
 namespace GUIApp {
 
@@ -47,11 +48,15 @@ namespace GUIApp {
 	private: System::Windows::Forms::Button^ btnInfo;
 
 	private: System::Windows::Forms::Button^ btnEstadisticas;
-	private: System::Windows::Forms::PictureBox^ btnAccount;
+
+
+
+
+	private: System::Windows::Forms::Button^ btnCerrarSesion;
 	private: System::Windows::Forms::PictureBox^ pictureBox2;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::PictureBox^ pictureBox3;
-	private: System::Windows::Forms::Button^ btnCerrarSesion;
+	private: System::Windows::Forms::PictureBox^ pictureBox4;
 
 
 
@@ -72,15 +77,15 @@ namespace GUIApp {
 			this->btnAlert = (gcnew System::Windows::Forms::Button());
 			this->btnInfo = (gcnew System::Windows::Forms::Button());
 			this->btnEstadisticas = (gcnew System::Windows::Forms::Button());
-			this->btnAccount = (gcnew System::Windows::Forms::PictureBox());
+			this->btnCerrarSesion = (gcnew System::Windows::Forms::Button());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
-			this->btnCerrarSesion = (gcnew System::Windows::Forms::Button());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->BeginInit();
+			this->pictureBox4 = (gcnew System::Windows::Forms::PictureBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btnAlert
@@ -116,51 +121,6 @@ namespace GUIApp {
 			this->btnEstadisticas->UseVisualStyleBackColor = true;
 			this->btnEstadisticas->Click += gcnew System::EventHandler(this, &UsuarioPromedioForm::btnEstadisticas_Click);
 			// 
-			// btnAccount
-			// 
-			this->btnAccount->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnAccount.Image")));
-			this->btnAccount->Location = System::Drawing::Point(12, 11);
-			this->btnAccount->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->btnAccount->Name = L"btnAccount";
-			this->btnAccount->Size = System::Drawing::Size(59, 59);
-			this->btnAccount->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-			this->btnAccount->TabIndex = 21;
-			this->btnAccount->TabStop = false;
-			this->btnAccount->Click += gcnew System::EventHandler(this, &UsuarioPromedioForm::btnAccount_Click_1);
-			// 
-			// pictureBox2
-			// 
-			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
-			this->pictureBox2->Location = System::Drawing::Point(12, 89);
-			this->pictureBox2->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->pictureBox2->Name = L"pictureBox2";
-			this->pictureBox2->Size = System::Drawing::Size(161, 148);
-			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-			this->pictureBox2->TabIndex = 22;
-			this->pictureBox2->TabStop = false;
-			// 
-			// pictureBox1
-			// 
-			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(252, 89);
-			this->pictureBox1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(161, 148);
-			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-			this->pictureBox1->TabIndex = 23;
-			this->pictureBox1->TabStop = false;
-			// 
-			// pictureBox3
-			// 
-			this->pictureBox3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox3.Image")));
-			this->pictureBox3->Location = System::Drawing::Point(128, 314);
-			this->pictureBox3->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
-			this->pictureBox3->Name = L"pictureBox3";
-			this->pictureBox3->Size = System::Drawing::Size(161, 148);
-			this->pictureBox3->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-			this->pictureBox3->TabIndex = 24;
-			this->pictureBox3->TabStop = false;
-			// 
 			// btnCerrarSesion
 			// 
 			this->btnCerrarSesion->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -174,56 +134,100 @@ namespace GUIApp {
 			this->btnCerrarSesion->UseVisualStyleBackColor = true;
 			this->btnCerrarSesion->Click += gcnew System::EventHandler(this, &UsuarioPromedioForm::btnCerrarSesion_Click);
 			// 
+			// pictureBox2
+			// 
+			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
+			this->pictureBox2->Location = System::Drawing::Point(12, 96);
+			this->pictureBox2->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->pictureBox2->Name = L"pictureBox2";
+			this->pictureBox2->Size = System::Drawing::Size(161, 148);
+			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox2->TabIndex = 33;
+			this->pictureBox2->TabStop = false;
+			// 
+			// pictureBox1
+			// 
+			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
+			this->pictureBox1->Location = System::Drawing::Point(252, 96);
+			this->pictureBox1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->pictureBox1->Name = L"pictureBox1";
+			this->pictureBox1->Size = System::Drawing::Size(161, 148);
+			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox1->TabIndex = 34;
+			this->pictureBox1->TabStop = false;
+			// 
+			// pictureBox3
+			// 
+			this->pictureBox3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox3.Image")));
+			this->pictureBox3->Location = System::Drawing::Point(128, 323);
+			this->pictureBox3->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->pictureBox3->Name = L"pictureBox3";
+			this->pictureBox3->Size = System::Drawing::Size(161, 148);
+			this->pictureBox3->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox3->TabIndex = 35;
+			this->pictureBox3->TabStop = false;
+			// 
+			// pictureBox4
+			// 
+			this->pictureBox4->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox4.Image")));
+			this->pictureBox4->Location = System::Drawing::Point(12, 11);
+			this->pictureBox4->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->pictureBox4->Name = L"pictureBox4";
+			this->pictureBox4->Size = System::Drawing::Size(59, 59);
+			this->pictureBox4->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			this->pictureBox4->TabIndex = 36;
+			this->pictureBox4->TabStop = false;
+			this->pictureBox4->Click += gcnew System::EventHandler(this, &UsuarioPromedioForm::pictureBox4_Click);
+			// 
 			// UsuarioPromedioForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(430, 536);
-			this->Controls->Add(this->btnCerrarSesion);
+			this->Controls->Add(this->pictureBox4);
 			this->Controls->Add(this->pictureBox3);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->pictureBox2);
-			this->Controls->Add(this->btnAccount);
+			this->Controls->Add(this->btnCerrarSesion);
 			this->Controls->Add(this->btnEstadisticas);
 			this->Controls->Add(this->btnAlert);
 			this->Controls->Add(this->btnInfo);
-			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"UsuarioPromedioForm";
 			this->Text = L"UsuarioPromedioForm";
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnAccount))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->EndInit();
 			this->ResumeLayout(false);
 
 		}
-		#pragma endregion
-		private: System::Void btnInfo_Click(System::Object^ sender, System::EventArgs^ e) {
-			InformationRequestForm^ Informationform = gcnew InformationRequestForm();
-			this->Hide();
-			Informationform->ShowDialog();
-			this->Show();
-		}
-		private: System::Void btnAlert_Click(System::Object^ sender, System::EventArgs^ e) {
-			AlertForm^ form = gcnew AlertForm(Usuario);
-			this->Hide();
-			form->ShowDialog();
-			this->Show();
-		}
-		private: System::Void btnEstadisticas_Click(System::Object^ sender, System::EventArgs^ e) {
-			GraficsUsersForm^ form = gcnew GraficsUsersForm(Usuario);
-			this->Hide();
-			form->ShowDialog();
-			this->Show();
-		}
-		private: System::Void btnAccount_Click_1(System::Object^ sender, System::EventArgs^ e) {
-			AccountForm^ form = gcnew AccountForm(Usuario);
-			this->Hide();
-			form->ShowDialog();
-			this->Show();
-		}
-		private: System::Void btnCerrarSesion_Click(System::Object^ sender, System::EventArgs^ e) {
-			this->Close();
-		}
-	};
+#pragma endregion
+	private: System::Void btnInfo_Click(System::Object^ sender, System::EventArgs^ e) {
+		InformationRequestForm^ Informationform = gcnew InformationRequestForm();
+		this->Hide();
+		Informationform->ShowDialog();
+		this->Show();
+	}
+	private: System::Void btnAlert_Click(System::Object^ sender, System::EventArgs^ e) {
+		AlertForm^ form = gcnew AlertForm(Usuario);
+		this->Hide();
+		form->ShowDialog();
+		this->Show();
+	}
+	private: System::Void btnEstadisticas_Click(System::Object^ sender, System::EventArgs^ e) {
+		GraficsUsersForm^ form = gcnew GraficsUsersForm(Usuario);
+		this->Hide();
+		form->ShowDialog();
+		this->Show();
+	}
+	private: System::Void btnCerrarSesion_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->Close();
+	}
+	private: System::Void pictureBox4_Click(System::Object^ sender, System::EventArgs^ e) {
+		AccountForm^ form = gcnew AccountForm(Usuario);
+		this->Hide();
+		form->ShowDialog();
+		this->Show();
+	}
+};
 }

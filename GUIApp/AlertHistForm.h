@@ -189,9 +189,6 @@ namespace GUIApp {
 					estado
 				);
 			}
-
-			MessageBox::Show("Alertas cargadas correctamente.", "Información",
-				MessageBoxButtons::OK, MessageBoxIcon::Information);
 		}
 		catch (Exception^ ex) {
 			MessageBox::Show("Error al cargar alertas: " + ex->Message,

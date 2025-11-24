@@ -52,6 +52,8 @@ namespace GUIApp {
 	private: System::Windows::Forms::TextBox^ textID;
 	private: System::Windows::Forms::TextBox^ textCargo;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
+	private: System::Windows::Forms::Label^ label2;
+	private: System::Windows::Forms::Label^ label3;
 
 
 
@@ -78,6 +80,8 @@ namespace GUIApp {
 			this->textID = (gcnew System::Windows::Forms::TextBox());
 			this->textCargo = (gcnew System::Windows::Forms::TextBox());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -96,7 +100,7 @@ namespace GUIApp {
 			// 
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16));
-			this->label1->Location = System::Drawing::Point(82, 168);
+			this->label1->Location = System::Drawing::Point(82, 178);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(108, 31);
 			this->label1->TabIndex = 26;
@@ -136,11 +140,33 @@ namespace GUIApp {
 			this->pictureBox1->TabIndex = 35;
 			this->pictureBox1->TabStop = false;
 			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16));
+			this->label2->Location = System::Drawing::Point(118, 247);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(42, 31);
+			this->label2->TabIndex = 36;
+			this->label2->Text = L"ID";
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16));
+			this->label3->Location = System::Drawing::Point(92, 321);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(88, 31);
+			this->label3->TabIndex = 37;
+			this->label3->Text = L"Cargo";
+			// 
 			// AccountForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(275, 518);
+			this->Controls->Add(this->label3);
+			this->Controls->Add(this->label2);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->textCargo);
 			this->Controls->Add(this->textID);
@@ -159,6 +185,9 @@ namespace GUIApp {
 #pragma endregion
 	private: System::Void AccountForm_Load(System::Object^ sender, System::EventArgs^ e) {
 		CargarDatosUsuario(Usuario->Nombre);
+		textUsuario->Enabled = false;
+		textID->Enabled = false;
+		textCargo->Enabled = false;
 	}
 	private: void CargarDatosUsuario(String^ username) {
 		DatosUsuario^ encontrado = Service::buscarUsuarioNombre(username);
@@ -176,5 +205,5 @@ namespace GUIApp {
 		form->ShowDialog();
 		this->Close();*/
 	}
-	};
+};
 }
