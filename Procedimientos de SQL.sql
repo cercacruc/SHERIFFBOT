@@ -1,4 +1,7 @@
-﻿-- Eliminar tablas si existen
+﻿--USE DBSheriffbot;
+--GO
+
+-- Eliminar tablas si existen
 IF OBJECT_ID('Puntos', 'U') IS NOT NULL DROP TABLE Puntos;
 IF OBJECT_ID('Alertas', 'U') IS NOT NULL DROP TABLE Alertas;
 
@@ -566,6 +569,9 @@ PRINT '✅ Todos los procedimientos almacenados creados correctamente.';
 GO
 
 -- Procedimiento para borrar usuario por nombre
+IF OBJECT_ID('usp_BorrarUsuarioPorNombre', 'P') IS NOT NULL 
+    DROP PROCEDURE usp_BorrarUsuarioPorNombre;
+GO
 CREATE PROCEDURE usp_BorrarUsuarioPorNombre
     @Nombre NVARCHAR(100)
 AS
@@ -576,6 +582,9 @@ END
 GO
 
 -- Procedimiento para borrar robot por nombre
+IF OBJECT_ID('usp_BorrarRobotPorNombre', 'P') IS NOT NULL 
+    DROP PROCEDURE usp_BorrarRobotPorNombre;
+GO
 CREATE PROCEDURE usp_BorrarRobotPorNombre
     @Nombre NVARCHAR(100)
 AS
@@ -603,6 +612,7 @@ WHERE ID_Usuario = 221;
 TRUNCATE TABLE Robots;
 TRUNCATE TABLE Usuarios;
 TRUNCATE TABLE Alertas;
+TRUNCATE TABLE ZonasTrabajo;
 
 UPDATE Robots 
 SET Alerta_asignada_ID = 0

@@ -2026,15 +2026,11 @@ void BotPersistance::Persistance::abrirConexion()
         //objConexion->ConnectionString = "Server=200.16.7.140;DataBase='a20230612';User id='a20230612';Password='Yz2j7Mdt'";
 
         //Conexion de Rodrigo
-        objConexion->ConnectionString = "Server=200.16.7.140;DataBase=a20230319;User id=a20230319;Password=w2RzV77V";
+        //objConexion->ConnectionString = "Server=200.16.7.140;DataBase=a20230319;User id=a20230319;Password=w2RzV77V";
 
         //Conexión con AWS
-        /*objConexion->ConnectionString =
-            "Server=idb1inf53.cpquwiptrqup.us-east-1.rds.amazonaws.com,1433;" +
-            "Database=BotSecurityDB;" +
-            "User Id=Sherifflogin;" +
-            "Password=Sheriffbot;" +
-            "TrustServerCertificate=true;";*/
+        objConexion->ConnectionString = "Server=idb1inf53.cpquwiptrqup.us-east-1.rds.amazonaws.com;DataBase=DBSheriffbot;User id=Sherifflogin;Password=Sheriffbot";
+
 
         objConexion->Open();
     }
