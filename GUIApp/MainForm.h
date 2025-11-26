@@ -68,9 +68,9 @@ namespace GUIApp {
 			// 
 			// btnLogin
 			// 
-			this->btnLogin->Location = System::Drawing::Point(73, 395);
+			this->btnLogin->Location = System::Drawing::Point(78, 432);
 			this->btnLogin->Name = L"btnLogin";
-			this->btnLogin->Size = System::Drawing::Size(220, 53);
+			this->btnLogin->Size = System::Drawing::Size(249, 66);
 			this->btnLogin->TabIndex = 7;
 			this->btnLogin->Text = L"Iniciar sesión";
 			this->btnLogin->UseVisualStyleBackColor = true;
@@ -78,9 +78,9 @@ namespace GUIApp {
 			// 
 			// btnRegister
 			// 
-			this->btnRegister->Location = System::Drawing::Point(72, 322);
+			this->btnRegister->Location = System::Drawing::Point(78, 346);
 			this->btnRegister->Name = L"btnRegister";
-			this->btnRegister->Size = System::Drawing::Size(221, 49);
+			this->btnRegister->Size = System::Drawing::Size(249, 62);
 			this->btnRegister->TabIndex = 6;
 			this->btnRegister->Text = L"Registrarse";
 			this->btnRegister->UseVisualStyleBackColor = true;
@@ -89,9 +89,9 @@ namespace GUIApp {
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(48, 42);
+			this->pictureBox1->Location = System::Drawing::Point(24, 67);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(269, 255);
+			this->pictureBox1->Size = System::Drawing::Size(367, 255);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pictureBox1->TabIndex = 8;
 			this->pictureBox1->TabStop = false;
@@ -100,33 +100,55 @@ namespace GUIApp {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(370, 494);
+			this->ClientSize = System::Drawing::Size(419, 528);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->btnLogin);
 			this->Controls->Add(this->btnRegister);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"MainForm";
 			this->Text = L"MainForm";
+			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
 
-	private: System::Void btnRegister_Click(System::Object^ sender, System::EventArgs^ e) {
-		RegisterForm^ registerform = gcnew RegisterForm();
-		registerform->Owner = this;
-		this->Hide();
-		registerform->ShowDialog();
-		this->Show();
-	}
-	private: System::Void btnLogin_Click(System::Object^ sender, System::EventArgs^ e) {
-		LoginForm^ loginForm = gcnew LoginForm();
-		loginForm->Owner = this;
-		this->Hide();
-		loginForm->ShowDialog();
-		this->Show();
-	}
-
+		private: System::Void btnRegister_Click(System::Object^ sender, System::EventArgs^ e) {
+			RegisterForm^ registerform = gcnew RegisterForm();
+			registerform->Owner = this;
+			this->Hide();
+			registerform->ShowDialog();
+			this->Show();
+		}
+		private: System::Void btnLogin_Click(System::Object^ sender, System::EventArgs^ e) {
+			LoginForm^ loginForm = gcnew LoginForm();
+			loginForm->Owner = this;
+			this->Hide();
+			loginForm->ShowDialog();
+			this->Show();
+		}
+		Thread^ myThread;
+		delegate void MyDelegate(String^);
+		private: System::Void MainForm_Load(System::Object^ sender, System::EventArgs^ e) {
+			myThread = gcnew Thread(gcnew ThreadStart(this, &MainForm::CargarHoraRealTime));
+			myThread->Start();
+		}
+		private: void CargarHoraRealTime() {
+			String^ title = " ";
+			while (true)
+			{
+				try {
+					myThread->Sleep(1000);
+					Invoke(gcnew MyDelegate(this, &MainForm::UpdateTitle), title + DateTime::Now);
+				}
+				catch (Exception^ ex) {
+					return;
+				}
+			}
+		}
+		private: void UpdateTitle(String^ newTitle) {
+			this->Text = newTitle;
+		}
 	};
 }
