@@ -237,6 +237,7 @@
     <ClInclude Include="SheriffForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="UIStyles.h" />
     <ClInclude Include="UsuarioPromedioForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>

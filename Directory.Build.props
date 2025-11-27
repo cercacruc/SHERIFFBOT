@@ -1,7 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <VcpkgEnableManifest>true</VcpkgEnableManifest>
-    <VcpkgTriplet>x64-windows</VcpkgTriplet>
-    <VcpkgRoot>$(MSBuildThisFileDirectory)external\vcpkg</VcpkgRoot>
-  </PropertyGroup>
-</Project>
