@@ -728,7 +728,7 @@ namespace GUIApp {
 		private: System::Void btnReconectar_Click(System::Object^ sender, System::EventArgs^ e) {
 			Service::LiberarPuertoCOM3();
 
-			System::Threading::Thread::Sleep(1000);
+			Thread::Sleep(1000);
 
 			if (Service::ConectarArduino()) {
 				MessageBox::Show("Reconectado exitosamente", "Éxito");

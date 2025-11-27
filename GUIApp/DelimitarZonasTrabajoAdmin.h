@@ -8,6 +8,8 @@ namespace GUIApp {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+
+	using namespace System::Threading;
 	using namespace BotModel;
 	using namespace BotService;
 	using namespace System::Collections::Generic;
@@ -36,6 +38,7 @@ namespace GUIApp {
 			{
 				delete components;
 			}
+			StopTimer();
 		}
 	private: System::Windows::Forms::Label^ label1;
 	protected:
@@ -322,142 +325,281 @@ namespace GUIApp {
 			this->PerformLayout();
 
 		}
-#pragma endregion
+		#pragma endregion
 
-	private: System::Void btnAddZona_Click(System::Object^ sender, System::EventArgs^ e) {
-		try {
-			if (String::IsNullOrEmpty(idZona->Text) || String::IsNullOrEmpty(textX1->Text) || String::IsNullOrEmpty(textX2->Text)
-				|| String::IsNullOrEmpty(textY1->Text) || String::IsNullOrEmpty(textY2->Text) || String::IsNullOrEmpty(textZona->Text)) {
-				MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				return;
-			}
-			ZonaTrabajo^ zonaT = gcnew ZonaTrabajo();
+		private: System::Void btnAddZona_Click(System::Object^ sender, System::EventArgs^ e) {
+			try {
+				if (String::IsNullOrEmpty(idZona->Text) || String::IsNullOrEmpty(textX1->Text) || String::IsNullOrEmpty(textX2->Text)
+					|| String::IsNullOrEmpty(textY1->Text) || String::IsNullOrEmpty(textY2->Text) || String::IsNullOrEmpty(textZona->Text)) {
+					MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				ZonaTrabajo^ zonaT = gcnew ZonaTrabajo();
 
-			zonaT->ID = Convert::ToInt32(idZona->Text);
-			zonaT->x_min = Convert::ToDouble(textX1->Text);
-			zonaT->x_max = Convert::ToDouble(textX2->Text);//ver luego su función que de eso
+				zonaT->ID = Convert::ToInt32(idZona->Text);
+				zonaT->x_min = Convert::ToDouble(textX1->Text);
+				zonaT->x_max = Convert::ToDouble(textX2->Text);//ver luego su función que de eso
 
-			zonaT->y_min = Convert::ToDouble(textY1->Text);
-			zonaT->y_max = Convert::ToDouble(textY2->Text);
+				zonaT->y_min = Convert::ToDouble(textY1->Text);
+				zonaT->y_max = Convert::ToDouble(textY2->Text);
 
-			zonaT->zona = textZona->Text;
+				zonaT->zona = textZona->Text;
 
-			int id = Convert::ToInt32(idZona->Text);
-			if (Service::buscarZonaID(id)) {
-				MessageBox::Show("La zona ya existe.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				return;
-			}
-			Service::registrarZona(zonaT);
-			MessageBox::Show("Zona agregada exitosamente", "Exito", MessageBoxButtons::OK);
+				int id = Convert::ToInt32(idZona->Text);
+				if (Service::buscarZonaID(id)) {
+					MessageBox::Show("La zona ya existe.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				Service::registrarZona(zonaT);
+				MessageBox::Show("Zona agregada exitosamente", "Exito", MessageBoxButtons::OK);
 
-			ShowZonas();
-			ClearFieldsZona();
-		}
-		catch (Exception^ ex) {
-			MessageBox::Show("Error al agregar Zona: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-	}
-
-	private: System::Void btnModificarZona_Click(System::Object^ sender, System::EventArgs^ e) {
-		try {
-			if (String::IsNullOrEmpty(idZona->Text)) {
-				MessageBox::Show("Ingrese el id de la zona a modificar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				return;
-			}
-			ZonaTrabajo^ zonaT = gcnew ZonaTrabajo();
-
-			zonaT->ID = Convert::ToInt32(idZona->Text);
-			zonaT->x_min = Convert::ToDouble(textX1->Text);
-			zonaT->x_max = Convert::ToDouble(textX2->Text);//ver luego su función que de eso
-
-			zonaT->y_min = Convert::ToDouble(textY1->Text);
-			zonaT->y_max = Convert::ToDouble(textY2->Text);
-
-			zonaT->zona = textZona->Text;
-
-			int zonModificar = Service::modificarZona(zonaT);
-			if (zonModificar != 0) {
 				ShowZonas();
 				ClearFieldsZona();
-				MessageBox::Show("Zona modificada exitosamente", "Exito", MessageBoxButtons::OK);
 			}
-			else {
-				MessageBox::Show("No se encontró la zona", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al agregar Zona: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 		}
-		catch (System::FormatException^) {
-			MessageBox::Show("Por favor, ingrese valores válidos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-		catch (Exception^ ex) {
-			MessageBox::Show("Error al modificar la zona: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-	}
 
-	private: System::Void btnEliminarZona_Click(System::Object^ sender, System::EventArgs^ e) {
-		String^ zonaId = idZona->Text->Trim();
-		if (idZona->Equals("")) {
-			MessageBox::Show("Debe seleccionar una zona");
-			return;
-		}
-		try {
-			System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar la zona?",
-				"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
+		private: System::Void btnModificarZona_Click(System::Object^ sender, System::EventArgs^ e) {
+			try {
+				if (String::IsNullOrEmpty(idZona->Text)) {
+					MessageBox::Show("Ingrese el id de la zona a modificar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				ZonaTrabajo^ zonaT = gcnew ZonaTrabajo();
 
-			if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
-				bool eliminado = Service::eliminarZona(Convert::ToInt32(zonaId));
-				if (eliminado) {
+				zonaT->ID = Convert::ToInt32(idZona->Text);
+				zonaT->x_min = Convert::ToDouble(textX1->Text);
+				zonaT->x_max = Convert::ToDouble(textX2->Text);//ver luego su función que de eso
+
+				zonaT->y_min = Convert::ToDouble(textY1->Text);
+				zonaT->y_max = Convert::ToDouble(textY2->Text);
+
+				zonaT->zona = textZona->Text;
+
+				int zonModificar = Service::modificarZona(zonaT);
+				if (zonModificar != 0) {
 					ShowZonas();
 					ClearFieldsZona();
-					MessageBox::Show("Zona eliminada exitosamente", "Exito", MessageBoxButtons::OK);
+					MessageBox::Show("Zona modificada exitosamente", "Exito", MessageBoxButtons::OK);
+				}
+				else {
+					MessageBox::Show("No se encontró la zona", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+			}
+			catch (System::FormatException^) {
+				MessageBox::Show("Por favor, ingrese valores válidos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al modificar la zona: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+
+		private: System::Void btnEliminarZona_Click(System::Object^ sender, System::EventArgs^ e) {
+			String^ zonaId = idZona->Text->Trim();
+			if (idZona->Equals("")) {
+				MessageBox::Show("Debe seleccionar una zona");
+				return;
+			}
+			try {
+				System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar la zona?",
+					"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
+
+				if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
+					bool eliminado = Service::eliminarZona(Convert::ToInt32(zonaId));
+					if (eliminado) {
+						ShowZonas();
+						ClearFieldsZona();
+						MessageBox::Show("Zona eliminada exitosamente", "Exito", MessageBoxButtons::OK);
+					}
+				}
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al eliminar la zona: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+
+		private: System::Void dgvZona_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+			int ZonaId = Int32::Parse(dgvZona->Rows[dgvZona->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
+			ZonaTrabajo^ ZonaT = Service::buscarReturnZonaId(ZonaId);
+			if (ZonaT != nullptr) {
+				idZona->Text = Convert::ToString(ZonaT->ID);
+				textX1->Text = Convert::ToString(ZonaT->x_min);
+				textX2->Text = Convert::ToString(ZonaT->x_max);
+				textY1->Text = Convert::ToString(ZonaT->y_min);
+				textY2->Text = Convert::ToString(ZonaT->y_max);
+				textZona->Text = Convert::ToString(ZonaT->zona);
+			}
+		}
+		private: void ShowZonas() {
+			List<ZonaTrabajo^>^ zonaT = Service::GetZonas();
+			if (zonaT != nullptr) {
+				dgvZona->Rows->Clear();
+				for (int i = 0; i < zonaT->Count; i++) {
+					dgvZona->Rows->Add(gcnew array<String^>{
+						Convert::ToString(zonaT[i]->ID),
+							Convert::ToString(zonaT[i]->x_min),
+							Convert::ToString(zonaT[i]->x_max),
+							Convert::ToString(zonaT[i]->y_min),
+							Convert::ToString(zonaT[i]->y_max),
+							zonaT[i]->zona
+					});
 				}
 			}
 		}
-		catch (Exception^ ex) {
-			MessageBox::Show("Error al eliminar la zona: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		private:
+			void ClearFieldsZona() {
+				idZona->Text = "";
+				textX1->Text = "";
+				textX2->Text = "";
+				textY1->Text = "";
+				textY2->Text = "";
+				textZona->Text = "";
+			}
+		private: System::Void DelimitarZonasTrabajoAdmin_Load(System::Object^ sender, System::EventArgs^ e) {
+			ShowZonas();
+			ClearFieldsZona();
+			InitializateTimer();
+			StartTimer();
 		}
-	}
 
-	private: System::Void dgvZona_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-		int ZonaId = Int32::Parse(dgvZona->Rows[dgvZona->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
-		ZonaTrabajo^ ZonaT = Service::buscarReturnZonaId(ZonaId);
-		if (ZonaT != nullptr) {
-			idZona->Text = Convert::ToString(ZonaT->ID);
-			textX1->Text = Convert::ToString(ZonaT->x_min);
-			textX2->Text = Convert::ToString(ZonaT->x_max);
-			textY1->Text = Convert::ToString(ZonaT->y_min);
-			textY2->Text = Convert::ToString(ZonaT->y_max);
-			textZona->Text = Convert::ToString(ZonaT->zona);
+		private:
+			   Thread ^ timer;
+			   bool timerRunning;
+			   int currentInterval;
+			   int elapsedTime;
+			   Object^ lockObject;
+
+			   delegate void UpdateTimerDelegate(String^ text);
+			   delegate void UpdateDataDelegate();
+		private: void InitializateTimer() {
+			lockObject = gcnew Object();
+			timerRunning = false;
+			currentInterval = 0;
+			elapsedTime = 0;
 		}
-	}
-	private: void ShowZonas() {
-		List<ZonaTrabajo^>^ zonaT = Service::GetZonas();
-		if (zonaT != nullptr) {
-			dgvZona->Rows->Clear();
-			for (int i = 0; i < zonaT->Count; i++) {
-				dgvZona->Rows->Add(gcnew array<String^>{
-					Convert::ToString(zonaT[i]->ID),
-						Convert::ToString(zonaT[i]->x_min),
-						Convert::ToString(zonaT[i]->x_max),
-						Convert::ToString(zonaT[i]->y_min),
-						Convert::ToString(zonaT[i]->y_max),
-						zonaT[i]->zona
-				});
+		private: void StartTimer() {
+			StopTimer();
+
+			Monitor::Enter(lockObject);
+			try {
+				timerRunning = true;
+
+				currentInterval = 10 * 1000;
+				elapsedTime = 0;
+			}
+			finally {
+				Monitor::Exit(lockObject);
+			}
+
+			timer = gcnew Thread(gcnew ThreadStart(this, &DelimitarZonasTrabajoAdmin::TimerMethod));
+			timer->IsBackground = true;
+			timer->Start();
+		}
+		private: void StopTimer() {
+			Monitor::Enter(lockObject);
+			try {
+				timerRunning = false;
+			}
+			finally {
+				Monitor::Exit(lockObject);
+			}
+			if (timer != nullptr && timer->IsAlive) {
+				if (!timer->Join(500)) {
+					try {
+						timer->Abort();
+					}
+					catch (ThreadAbortException^) {
+						Thread::ResetAbort();
+					}
+					timer = nullptr;
+				}
 			}
 		}
-	}
-	private:
-		void ClearFieldsZona() {
-			idZona->Text = "";
-			textX1->Text = "";
-			textX2->Text = "";
-			textY1->Text = "";
-			textY2->Text = "";
-			textZona->Text = "";
-		}
+		private: void TimerMethod() {
+			int updateInterval = 100;
 
-	private: System::Void DelimitarZonasTrabajoAdmin_Load(System::Object^ sender, System::EventArgs^ e) {
-		ShowZonas();
-		ClearFieldsZona();
-	}
+			try {
+				while (true)
+				{
+					Monitor::Enter(lockObject);
+					bool shouldStop = !timerRunning;
+					bool timerCompleted = (elapsedTime >= currentInterval);
+					Monitor::Exit(lockObject);
+
+					if (shouldStop) break;
+					if (timerCompleted) break;
+
+					Thread::Sleep(updateInterval);
+
+					Monitor::Enter(lockObject);
+					try {
+						if (timerRunning) {
+							elapsedTime += updateInterval;
+							int remainingTime = currentInterval - elapsedTime;
+						}
+					}
+					finally {
+						Monitor::Exit(lockObject);
+					}
+				}
+
+				bool shouldRefresh = false;
+				Monitor::Enter(lockObject);
+				try {
+					shouldRefresh = timerRunning && (elapsedTime >= currentInterval);
+				}
+				finally {
+					Monitor::Exit(lockObject);
+				}
+				if (shouldRefresh) {
+					RefreshData();
+				}
+			}
+			catch (ThreadAbortException^) {
+				Thread::ResetAbort();
+			}
+			catch (Exception^ ex) {
+				System::Diagnostics::Debug::WriteLine("Error en Timer: " + ex->Message);
+			}
+		}
+		private: void RefreshData() {
+			if (this->IsDisposed || !this->IsHandleCreated) {
+				return;
+			}
+
+			if (this->InvokeRequired) {
+				try {
+					this->BeginInvoke(gcnew UpdateDataDelegate(this, &DelimitarZonasTrabajoAdmin::RefreshData));
+				}
+				catch (ObjectDisposedException^) {
+					return;
+				}
+				catch (InvalidOperationException^) {
+					return;
+				}
+				return;
+			}
+
+			if (this->IsDisposed) return;
+
+			ShowZonas();
+
+			bool shouldRestart = false;
+			Monitor::Enter(lockObject);
+			try {
+				shouldRestart = timerRunning && !this->IsDisposed;
+			}
+			finally {
+				Monitor::Exit(lockObject);
+			}
+
+			if (shouldRestart) {
+				StartTimer();
+			}
+		}
+		
+
 	};
 }

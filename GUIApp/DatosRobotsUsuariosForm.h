@@ -13,6 +13,7 @@ namespace GUIApp {
 	using namespace BotModel;
 	using namespace BotService;
 	using namespace System::Collections::Generic;
+	using namespace System::Threading;
 
 	/// <summary>
 	/// Resumen de DatosRobotsUsuariosForm
@@ -40,6 +41,7 @@ namespace GUIApp {
 			{
 				delete components;
 			}
+			StopTimer();
 		}
 	private: System::Windows::Forms::TabControl^ tabControl1;
 	protected:
@@ -686,621 +688,602 @@ namespace GUIApp {
 			this->ResumeLayout(false);
 
 		}
-#pragma endregion
-		void cargarTablaRobots()
-		{
-			try
+		#pragma endregion
+			void cargarTablaRobots()
 			{
-				dgvRobot->Rows->Clear();
-
-				List<Robot^>^ lista = Service::GetRobots();
-
-				for each (Robot ^ r in lista)
+				try
 				{
-					dgvRobot->Rows->Add(
-						r->ID,
-						r->Nombre,
-						r->Zona,
-						r->Bateria,
-						r->PosicionRobot->x,
-						r->PosicionRobot->y
-					);
+					dgvRobot->Rows->Clear();
+
+					List<Robot^>^ lista = Service::GetRobots();
+
+					for each (Robot ^ r in lista)
+					{
+						dgvRobot->Rows->Add(
+							r->ID,
+							r->Nombre,
+							r->Zona,
+							r->Bateria,
+							r->PosicionRobot->x,
+							r->PosicionRobot->y
+						);
+					}
+				}
+				catch (Exception^ ex)
+				{
+					MessageBox::Show("Error cargando robots: " + ex->Message);
 				}
 			}
-			catch (Exception^ ex)
-			{
-				MessageBox::Show("Error cargando robots: " + ex->Message);
-			}
-		}
 
-	private: System::Void btnAddRobot_Click(System::Object^ sender, System::EventArgs^ e) {
+		private: System::Void btnAddRobot_Click(System::Object^ sender, System::EventArgs^ e) {
 		
-		try {
-			if (String::IsNullOrEmpty(IDRobot->Text) || String::IsNullOrEmpty(NombreRobot->Text)) {
-				MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				return;
-			}
-			Robot^ robot = gcnew Robot();
+			try {
+				if (String::IsNullOrEmpty(IDRobot->Text) || String::IsNullOrEmpty(NombreRobot->Text)) {
+					MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				Robot^ robot = gcnew Robot();
 
-			robot->ID = Convert::ToInt32(IDRobot->Text);
-			robot->Nombre = NombreRobot->Text;
-			robot->Bateria = Convert::ToInt32(BateriaRobot->Text);//ver luego su función que de eso
+				robot->ID = Convert::ToInt32(IDRobot->Text);
+				robot->Nombre = NombreRobot->Text;
+				robot->Bateria = Convert::ToInt32(BateriaRobot->Text);//ver luego su función que de eso
 
-			double x = Convert::ToDouble(XRobot->Text);
-			double y = Convert::ToDouble(YRobot->Text);
-			robot->Zona = Service::delimitarZonaTrabajo(x, y);
+				double x = Convert::ToDouble(XRobot->Text);
+				double y = Convert::ToDouble(YRobot->Text);
+				robot->Zona = Service::delimitarZonaTrabajo(x, y);
 
 
-			if (Service::delimitarZonaTrabajo(x, y) == "BASE") {
-				robot->Disponibilidad = true;
-			}
-			else {
-				robot->Disponibilidad = rbtnDisponibilidadNo->Checked;
-			}
+				if (Service::delimitarZonaTrabajo(x, y) == "BASE") {
+					robot->Disponibilidad = true;
+				}
+				else {
+					robot->Disponibilidad = rbtnDisponibilidadNo->Checked;
+				}
 
-			robot->PosicionRobot->x = Convert::ToDouble(XRobot->Text);
-			robot->PosicionRobot->y = Convert::ToDouble(YRobot->Text);
+				robot->PosicionRobot->x = Convert::ToDouble(XRobot->Text);
+				robot->PosicionRobot->y = Convert::ToDouble(YRobot->Text);
 
-			robot->Caracteristicas = txtCaracteristicas->Text;
+				robot->Caracteristicas = txtCaracteristicas->Text;
 
-			if (pbPhotoRobot != nullptr && pbPhotoRobot->Image != nullptr) {
-				System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream();
-				pbPhotoRobot->Image->Save(ms, System::Drawing::Imaging::ImageFormat::Jpeg);
-				robot->Photo = ms->ToArray();
-			}
+				if (pbPhotoRobot != nullptr && pbPhotoRobot->Image != nullptr) {
+					System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream();
+					pbPhotoRobot->Image->Save(ms, System::Drawing::Imaging::ImageFormat::Jpeg);
+					robot->Photo = ms->ToArray();
+				}
 
-			int id = Convert::ToInt32(IDRobot->Text);
-			Robot^ robotExistente = Service::buscarRobotID(id);
-			if (robotExistente != nullptr) {
-				MessageBox::Show("El robot ya existe.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				return;
-			}
-			Service::registrarRobot(robot);
-			MessageBox::Show("Robot agregado exitosamente", "Exito", MessageBoxButtons::OK);
+				int id = Convert::ToInt32(IDRobot->Text);
+				Robot^ robotExistente = Service::buscarRobotID(id);
+				if (robotExistente != nullptr) {
+					MessageBox::Show("El robot ya existe.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				Service::registrarRobot(robot);
+				MessageBox::Show("Robot agregado exitosamente", "Exito", MessageBoxButtons::OK);
 
-			ShowRobots();
-			ClearFieldsR();
-		}
-		catch (Exception^ ex) {
-			MessageBox::Show("Error al agregar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-		
-		/*
-		try
-		{
-			Robot^ r = gcnew Robot();
-
-			r->Nombre = NombreRobot->Text;
-			
-			double x = Convert::ToDouble(XRobot->Text);
-			double y = Convert::ToDouble(YRobot->Text);
-			r->Zona = Service::delimitarZonaTrabajo(x, y);
-
-			r->Bateria = Convert::ToInt32(BateriaRobot->Text);
-
-			double px = Convert::ToDouble(XRobot->Text);
-			double py = Convert::ToDouble(YRobot->Text);
-
-			r->PosicionRobot->x = px;
-			r->PosicionRobot->y = py;
-
-			Service::registrarRobot(r);
-
-			MessageBox::Show("Robot agregado correctamente.");
-			cargarTablaRobots();
-		}
-		catch (Exception^ ex)
-		{
-			MessageBox::Show("Error al agregar robot: " + ex->Message);
-		}
-		*/
-		
-	}
-	private: System::Void btnModifyRobot_Click(System::Object^ sender, System::EventArgs^ e) {
-		
-		try {
-			if (String::IsNullOrEmpty(IDRobot->Text)) {
-				MessageBox::Show("Ingrese un ID de robot válido", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				return;
-			}
-
-			// PRIMERO VERIFICAR SI EL ROBOT EXISTE
-			int idRobot = Convert::ToInt32(IDRobot->Text);
-			Robot^ robotExistente = Service::buscarRobotID(idRobot);
-
-			if (robotExistente == nullptr) {
-				MessageBox::Show("No se encontró el robot con ID: " + idRobot, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				return;
-			}
-
-			// SI EXISTE, ENTONCES MODIFICAR
-			Robot^ robot = gcnew Robot();
-			robot->ID = idRobot;
-			robot->Nombre = NombreRobot->Text;
-			robot->Bateria = Convert::ToInt32(BateriaRobot->Text);
-
-			double x = Convert::ToDouble(XRobot->Text);
-			double y = Convert::ToDouble(YRobot->Text);
-			robot->Zona = Service::delimitarZonaTrabajo(x, y);
-
-			robot->PosicionRobot->x = x;
-			robot->PosicionRobot->y = y;
-
-			if (Service::delimitarZonaTrabajo(x, y) == "BASE") {
-				robot->Disponibilidad = true;
-			}
-			else {
-				robot->Disponibilidad = rbtnDisponibilidadYes->Checked;
-			}
-
-			if (pbPhotoRobot != nullptr && pbPhotoRobot->Image != nullptr) {
-				System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream();
-				pbPhotoRobot->Image->Save(ms, System::Drawing::Imaging::ImageFormat::Jpeg);
-				robot->Photo = ms->ToArray();
-			}
-
-			robot->Caracteristicas = txtCaracteristicas->Text;
-
-			// AHORA INTENTAR MODIFICAR - MANEJAR AMBOS CASOS
-			int resultado = Service::modificarRobotID(robot);
-
-			// PROBABLEMENTE LA FUNCIÓN ESTÁ INVERTIDA:
-			// - Retorna 0 si se modificó correctamente
-			// - Retorna > 0 si hubo error
-			if (resultado == 0) {
-				// ÉXITO - se modificó correctamente
 				ShowRobots();
 				ClearFieldsR();
-				MessageBox::Show("Robot modificado exitosamente", "Éxito", MessageBoxButtons::OK, MessageBoxIcon::Information);
 			}
-			else {
-				// ERROR - no se pudo modificar
-				MessageBox::Show("No se pudo modificar el robot. Código de error: " + resultado,
-					"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al agregar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
-		}
-		catch (System::FormatException^) {
-			MessageBox::Show("Por favor, ingrese valores válidos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-		catch (Exception^ ex) {
-			MessageBox::Show("Error al modificar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-	}
-	private: System::Void btnDeleteRobot_Click(System::Object^ sender, System::EventArgs^ e) {
 		
-		String^ robotID = IDRobot->Text->Trim();
-		if (robotID->Equals("")) {
-			MessageBox::Show("Debe seleccionar un robot");
-			return;
 		}
-		try {
-			System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar el robot?",
-				"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
+		private: System::Void btnModifyRobot_Click(System::Object^ sender, System::EventArgs^ e) {
+		
+			try {
+				if (String::IsNullOrEmpty(IDRobot->Text)) {
+					MessageBox::Show("Ingrese un ID de robot válido", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
 
-			if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
-				bool eliminado = Service::borrarRobotID(Convert::ToInt32(robotID));
-				if (eliminado) {
-					pbPhotoRobot->Image = nullptr;
-					pbPhotoRobot->Invalidate();
+				// PRIMERO VERIFICAR SI EL ROBOT EXISTE
+				int idRobot = Convert::ToInt32(IDRobot->Text);
+				Robot^ robotExistente = Service::buscarRobotID(idRobot);
+
+				if (robotExistente == nullptr) {
+					MessageBox::Show("No se encontró el robot con ID: " + idRobot, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+
+				// SI EXISTE, ENTONCES MODIFICAR
+				Robot^ robot = gcnew Robot();
+				robot->ID = idRobot;
+				robot->Nombre = NombreRobot->Text;
+				robot->Bateria = Convert::ToInt32(BateriaRobot->Text);
+
+				double x = Convert::ToDouble(XRobot->Text);
+				double y = Convert::ToDouble(YRobot->Text);
+				robot->Zona = Service::delimitarZonaTrabajo(x, y);
+
+				robot->PosicionRobot->x = x;
+				robot->PosicionRobot->y = y;
+
+				if (Service::delimitarZonaTrabajo(x, y) == "BASE") {
+					robot->Disponibilidad = true;
+				}
+				else {
+					robot->Disponibilidad = rbtnDisponibilidadYes->Checked;
+				}
+
+				if (pbPhotoRobot != nullptr && pbPhotoRobot->Image != nullptr) {
+					System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream();
+					pbPhotoRobot->Image->Save(ms, System::Drawing::Imaging::ImageFormat::Jpeg);
+					robot->Photo = ms->ToArray();
+				}
+
+				robot->Caracteristicas = txtCaracteristicas->Text;
+
+				// AHORA INTENTAR MODIFICAR - MANEJAR AMBOS CASOS
+				int resultado = Service::modificarRobotID(robot);
+
+				// PROBABLEMENTE LA FUNCIÓN ESTÁ INVERTIDA:
+				// - Retorna 0 si se modificó correctamente
+				// - Retorna > 0 si hubo error
+				if (resultado == 0) {
+					// ÉXITO - se modificó correctamente
 					ShowRobots();
 					ClearFieldsR();
-					MessageBox::Show("Robot eliminado exitosamente", "Exito", MessageBoxButtons::OK);
+					MessageBox::Show("Robot modificado exitosamente", "Éxito", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				}
+				else {
+					// ERROR - no se pudo modificar
+					MessageBox::Show("No se pudo modificar el robot. Código de error: " + resultado,
+						"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 				}
 			}
+			catch (System::FormatException^) {
+				MessageBox::Show("Por favor, ingrese valores válidos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al modificar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
 		}
-		catch (Exception^ ex) {
-			MessageBox::Show("Error al eliminar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
+		private: System::Void btnDeleteRobot_Click(System::Object^ sender, System::EventArgs^ e) {
 		
-		/*
-		try
-		{
-			int id = Convert::ToInt32(IDRobot->Text);
+			String^ robotID = IDRobot->Text->Trim();
+			if (robotID->Equals("")) {
+				MessageBox::Show("Debe seleccionar un robot");
+				return;
+			}
+			try {
+				System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar el robot?",
+					"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
 
-			Service::borrarRobotID(id);
-
-			MessageBox::Show("Robot eliminado correctamente.");
-			cargarTablaRobots();
-		}
-		catch (Exception^ ex)
-		{
-			MessageBox::Show("Error al eliminar robot: " + ex->Message);
-		}
-		*/
-	}
-	private: System::Void pbPhoto_Click(System::Object^ sender, System::EventArgs^ e) {
-		SearchAndPutImagenOn(pbPhotoRobot);
-		//MessageBox::Show("Imagen agregada exitosamente", "Exito", MessageBoxButtons::OK);
-	}
-	private: System::Void dgvRobot_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-		if (e->RowIndex < 0) return; // Evitar clics en headers
-
-		try {
-			String^ robotIDStr = dgvRobot->Rows[e->RowIndex]->Cells[0]->Value->ToString();
-			if (!String::IsNullOrEmpty(robotIDStr)) {
-				int robotID = Int32::Parse(robotIDStr);
-				Robot^ robot = Service::buscarRobotID(robotID);
-
-				if (robot != nullptr && robot->ID > 0) {
-					IDRobot->Text = Convert::ToString(robot->ID);
-					NombreRobot->Text = robot->Nombre;
-					BateriaRobot->Text = Convert::ToString(robot->Bateria);
-					XRobot->Text = Convert::ToString(robot->PosicionRobot->x);
-					YRobot->Text = Convert::ToString(robot->PosicionRobot->y);
-
-					rbtnDisponibilidadYes->Checked = robot->Disponibilidad;
-					rbtnDisponibilidadNo->Checked = !robot->Disponibilidad;
-
-					txtCaracteristicas->Text = robot->Caracteristicas;
-
-					if (robot->Photo != nullptr && robot->Photo->Length > 0) {
-						System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(robot->Photo);
-						pbPhotoRobot->Image = Image::FromStream(ms);
-					}
-					else {
+				if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
+					bool eliminado = Service::borrarRobotID(Convert::ToInt32(robotID));
+					if (eliminado) {
 						pbPhotoRobot->Image = nullptr;
 						pbPhotoRobot->Invalidate();
+						ShowRobots();
+						ClearFieldsR();
+						MessageBox::Show("Robot eliminado exitosamente", "Exito", MessageBoxButtons::OK);
 					}
 				}
-				else {
-					MessageBox::Show("No se pudo cargar la información del robot seleccionado", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al eliminar robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		private: System::Void pbPhoto_Click(System::Object^ sender, System::EventArgs^ e) {
+			SearchAndPutImagenOn(pbPhotoRobot);
+			//MessageBox::Show("Imagen agregada exitosamente", "Exito", MessageBoxButtons::OK);
+		}
+		private: System::Void dgvRobot_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+			if (e->RowIndex < 0) return; // Evitar clics en headers
+
+			try {
+				String^ robotIDStr = dgvRobot->Rows[e->RowIndex]->Cells[0]->Value->ToString();
+				if (!String::IsNullOrEmpty(robotIDStr)) {
+					int robotID = Int32::Parse(robotIDStr);
+					Robot^ robot = Service::buscarRobotID(robotID);
+
+					if (robot != nullptr && robot->ID > 0) {
+						IDRobot->Text = Convert::ToString(robot->ID);
+						NombreRobot->Text = robot->Nombre;
+						BateriaRobot->Text = Convert::ToString(robot->Bateria);
+						XRobot->Text = Convert::ToString(robot->PosicionRobot->x);
+						YRobot->Text = Convert::ToString(robot->PosicionRobot->y);
+
+						rbtnDisponibilidadYes->Checked = robot->Disponibilidad;
+						rbtnDisponibilidadNo->Checked = !robot->Disponibilidad;
+
+						txtCaracteristicas->Text = robot->Caracteristicas;
+
+						if (robot->Photo != nullptr && robot->Photo->Length > 0) {
+							System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(robot->Photo);
+							pbPhotoRobot->Image = Image::FromStream(ms);
+						}
+						else {
+							pbPhotoRobot->Image = nullptr;
+							pbPhotoRobot->Invalidate();
+						}
+					}
+					else {
+						MessageBox::Show("No se pudo cargar la información del robot seleccionado", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+					}
 				}
 			}
-		}
-		catch (Exception^ ex) {
-			MessageBox::Show("Error al cargar datos del robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-		/*
-		int robotID = Int32::Parse(dgvRobot->Rows[dgvRobot->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
-		Robot^ robot = (Robot^)Service::buscarRobotID(robotID);
-		if (robot != nullptr) {
-			IDRobot->Text = Convert::ToString(robot->ID);
-			NombreRobot->Text = robot->Nombre;
-			//ZonaRobot->Text = robot->Zona;
-			BateriaRobot->Text = Convert::ToString(robot->Bateria);
-			XRobot->Text = Convert::ToString(robot->PosicionRobot->x);
-			YRobot->Text = Convert::ToString(robot->PosicionRobot->y);
-
-			rbtnDisponibilidadYes->Checked = robot->Disponibilidad;
-			rbtnDisponibilidadNo->Checked = !robot->Disponibilidad;
-
-			txtCaracteristicas->Text = robot->Caracteristicas;
-
-
-			if (robot->Photo != nullptr) {
-				System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(robot->Photo);
-				pbPhotoRobot->Image = Image::FromStream(ms);
-			}
-			else {
-				pbPhotoRobot->Image = nullptr;
-				pbPhotoRobot->Invalidate();
-			}
-
-		
-		}
-		*/
-	}
-	private: System::Void btnUpdatePhotoRobot_Click(System::Object^ sender, System::EventArgs^ e) {
-		SearchAndPutImagenOn(pbPhotoRobot);
-		MessageBox::Show("Imagen agregada exitosamente", "Exito", MessageBoxButtons::OK);
-	}
-	private: void ShowRobots() {
-		List<Robot^>^ robots = Service::GetRobots();
-		if (robots != nullptr) {
-			dgvRobot->Rows->Clear();
-			for (int i = 0; i < robots->Count; i++) {
-				if (robots[i]->GetType() == Robot::typeid) {
-					dgvRobot->Rows->Add(gcnew array<String^>{
-						"" + robots[i]->ID, "" + robots[i]->Bateria, robots[i]->Nombre,
-							robots[i]->Zona, "" + robots[i]->PosicionRobot->x, "" + robots[i]->PosicionRobot->y
-					});
-				}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al cargar datos del robot: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 		}
-	}
-	private:
-		void ClearFieldsR() {
-			IDRobot->Text = "";
-			NombreRobot->Text = "";
-			//ZonaRobot->Text = "";
-			XRobot->Text = "";
-			YRobot->Text = "";
-			BateriaRobot->Text = "";
-			txtCaracteristicas->Text = "";
-
-			rbtnDisponibilidadYes->Checked = true;
-			rbtnDisponibilidadNo->Checked = false;
-
-			if (pbPhotoRobot != nullptr) {
-				pbPhotoRobot->Image = nullptr;
-				pbPhotoRobot->Invalidate();
-			}
+		private: System::Void btnUpdatePhotoRobot_Click(System::Object^ sender, System::EventArgs^ e) {
+			SearchAndPutImagenOn(pbPhotoRobot);
+			MessageBox::Show("Imagen agregada exitosamente", "Exito", MessageBoxButtons::OK);
 		}
-	private:
-		void MostrarDatosRobot(Robot^ robotEncontrado) {
-			IDRobot->Text = Convert::ToString(robotEncontrado->ID);
-			//ZonaRobot->Text = robotEncontrado->Zona;
-			XRobot->Text = Convert::ToString(robotEncontrado->PosicionRobot->x);
-			YRobot->Text = Convert::ToString(robotEncontrado->PosicionRobot->y);
-
-			rbtnDisponibilidadYes->Checked = true;
-			rbtnDisponibilidadNo->Checked = false;
-
-		}
-	private: void actualizarTablaUsuarios() {
-		List<DatosUsuario^>^ lista = BotService::Service::GetUsuarios();
-
-		dgvUser->Rows->Clear();
-
-		for each (DatosUsuario ^ u in lista) {
-
-			dgvUser->Rows->Add(
-				u->ID,
-				u->Nombre,
-				u->Contra,
-				u->Cargo,
-
-				// Mostrar cantidades directamente desde cant_alertas
-				u->cant_alertas[0],
-				u->cant_alertas[1],
-				u->cant_alertas[2]
-			);
-		}
-	}
-	private: System::Void btnAddUser_Click(System::Object^ sender, System::EventArgs^ e) {
-		
-		try {
-			if (String::IsNullOrEmpty(IDUser->Text) || String::IsNullOrEmpty(NombreUser->Text) ||
-				String::IsNullOrEmpty(CargoUser->Text) || String::IsNullOrEmpty(PasswordUser->Text)) {
-				MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				return;
-			}
-			DatosUsuario^ usuario = gcnew DatosUsuario();
-
-
-			usuario->ID = Convert::ToInt32(IDUser->Text);
-			usuario->Nombre = NombreUser->Text;
-			usuario->Cargo = CargoUser->Text;
-			usuario->Contra = PasswordUser->Text;
-
-			int id = Convert::ToInt32(IDUser->Text);
-			DatosUsuario^ usuarioExistente = Service::buscarUsuarioID(id);
-			if (usuarioExistente != nullptr) {
-				MessageBox::Show("El usuario ya existe.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				return;
-			}
-
-			Service::registrarUsuario(usuario);
-			MessageBox::Show("Usuario agregado exitosamente", "Exito", MessageBoxButtons::OK);
-
-			ShowUsuarios();
-			ClearFieldsU();
-
-		}
-		catch (System::FormatException^) {
-			MessageBox::Show("Por favor, ingrese valores válidos en los campos numéricos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-		catch (Exception^ ex) {
-			MessageBox::Show("Error al agregar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-		
-		/*
-		try
-		{
-			DatosUsuario^ user = gcnew DatosUsuario();
-			user->Nombre = NombreUser->Text;
-			user->Contra = PasswordUser->Text;
-			user->Cargo = CargoUser->Text;
-
-			// Cantidades INICIALES en 0
-			user->cant_alertas = gcnew array<int>(3) { 0, 0, 0 };
-
-			// Registrar en SQL (el ID lo genera SQL)
-			Service::registrarUsuario(user);
-
-			MessageBox::Show("Usuario registrado correctamente.", "Éxito");
-
-			actualizarTablaUsuarios();
-		}
-		catch (Exception^ ex)
-		{
-			MessageBox::Show("Error al registrar usuario: " + ex->Message,
-				"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-		*/
-	}
-	private: System::Void btnModifyUser_Click(System::Object^ sender, System::EventArgs^ e) {
-		
-		try {
-			if (String::IsNullOrEmpty(IDUser->Text)) {
-				MessageBox::Show("Ingrese el nombre de usuario para modificar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				return;
-			}
-			DatosUsuario^ usuario = gcnew DatosUsuario();
-			usuario->ID = Convert::ToInt32(IDUser->Text);
-			usuario->Nombre = NombreUser->Text;
-			usuario->Cargo = CargoUser->Text;
-			usuario->Contra = PasswordUser->Text;
-
-
-			Service::modificarUsuarioID(usuario);
-			ShowUsuarios();
-			ClearFieldsU();
-			MessageBox::Show("Usuario modificado exitosamente", "Exito", MessageBoxButtons::OK);
-
-		}
-		catch (System::FormatException^) {
-			MessageBox::Show("Por favor, ingrese valores válidos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-		catch (Exception^ ex) {
-			MessageBox::Show("Error al modificar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-		
-		/*
-		try
-		{
-			int id = Convert::ToInt32(IDUser->Text);
-
-			DatosUsuario^ userActual = Service::buscarUsuarioID(id);
-			if (userActual == nullptr)
-			{
-				MessageBox::Show("Usuario no encontrado.");
-				return;
-			}
-
-			DatosUsuario^ user = gcnew DatosUsuario();
-			user->ID = id;
-			user->Nombre = NombreUser->Text;
-			user->Contra = PasswordUser->Text;
-			user->Cargo = CargoUser->Text;
-
-			// Mantener las cantidades existentes
-			user->cant_alertas = userActual->cant_alertas;
-
-			Service::modificarUsuarioID(user);
-
-			MessageBox::Show("Usuario modificado correctamente.");
-
-			actualizarTablaUsuarios();
-		}
-		catch (Exception^ ex)
-		{
-			MessageBox::Show("Error al modificar usuario: " + ex->Message);
-		}
-		*/
-	}
-	private: System::Void btnDeleteUser_Click(System::Object^ sender, System::EventArgs^ e) {
-		
-		String^ UsuarioName = NombreUser->Text->Trim();
-		if (UsuarioName == "") {
-			MessageBox::Show("Debe seleccionar un usuario");
-			return;
-		}
-
-		try {
-			System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar el usuario?",
-				"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
-
-			if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
-				bool eliminado = Service::borrarUsuarioNombre(UsuarioName);
-				if (eliminado) {
-					ShowUsuarios();
-					ClearFieldsU();
-					MessageBox::Show("Usuario eliminado exitosamente", "Exito", MessageBoxButtons::OK);
-				}
-				else {
-					MessageBox::Show("No se encontró el usuario", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				}
-			}
-		}
-		catch (Exception^ ex) {
-			MessageBox::Show("Error al eliminar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-		
-		/*
-		try
-		{
-			int id = Convert::ToInt32(IDUser->Text);
-
-			bool eliminado = Service::borrarUsuarioID(id);
-
-			if (eliminado)
-				MessageBox::Show("Usuario eliminado correctamente.");
-			else
-				MessageBox::Show("No se pudo eliminar el usuario.");
-
-			actualizarTablaUsuarios();
-		}
-		catch (Exception^ ex)
-		{
-			MessageBox::Show("Error al eliminar usuario: " + ex->Message);
-		}
-		*/
-	}
-	private: System::Void dgvUser_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-		int usuarioID = Int32::Parse(dgvUser->Rows[dgvUser->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
-		DatosUsuario^ usuario = (DatosUsuario^)Service::buscarUsuarioID(usuarioID);
-		if (usuario != nullptr) {
-			IDUser->Text = Convert::ToString(usuario->ID);
-			NombreUser->Text = usuario->Nombre;
-			CargoUser->Text = usuario->Cargo;
-			PasswordUser->Text = usuario->Contra;
-		}
-	}
-	private:
-		void ShowUsuarios() {
-			List<DatosUsuario^>^ usuarioList = Service::GetUsuarios();
-			if (usuarioList != nullptr) {
-				dgvUser->Rows->Clear();
-				for (int i = 0; i < usuarioList->Count; i++) {
-					if (usuarioList[i]->GetType() == DatosUsuario::typeid) {
-						String^ passwordAsterisco = gcnew String(L'*', usuarioList[i]->Contra->Length);
-
-						dgvUser->Rows->Add(gcnew array<String^>{
-							"" + usuarioList[i]->ID, usuarioList[i]->Nombre,
-								passwordAsterisco, usuarioList[i]->Cargo
+		private: void ShowRobots() {
+			List<Robot^>^ robots = Service::GetRobots();
+			if (robots != nullptr) {
+				dgvRobot->Rows->Clear();
+				for (int i = 0; i < robots->Count; i++) {
+					if (robots[i]->GetType() == Robot::typeid) {
+						dgvRobot->Rows->Add(gcnew array<String^>{
+							"" + robots[i]->ID, "" + robots[i]->Bateria, robots[i]->Nombre,
+								robots[i]->Zona, "" + robots[i]->PosicionRobot->x, "" + robots[i]->PosicionRobot->y
 						});
 					}
 				}
 			}
 		}
-	private:
-		void ClearFieldsU() {
-			IDUser->Text = "";
-			NombreUser->Text = "";
-			CargoUser->Text = "";
-			PasswordUser->Text = "";
+		private:
+			void ClearFieldsR() {
+				IDRobot->Text = "";
+				NombreRobot->Text = "";
+				//ZonaRobot->Text = "";
+				XRobot->Text = "";
+				YRobot->Text = "";
+				BateriaRobot->Text = "";
+				txtCaracteristicas->Text = "";
+
+				rbtnDisponibilidadYes->Checked = true;
+				rbtnDisponibilidadNo->Checked = false;
+
+				if (pbPhotoRobot != nullptr) {
+					pbPhotoRobot->Image = nullptr;
+					pbPhotoRobot->Invalidate();
+				}
+			}
+		private:
+			void MostrarDatosRobot(Robot^ robotEncontrado) {
+				IDRobot->Text = Convert::ToString(robotEncontrado->ID);
+				//ZonaRobot->Text = robotEncontrado->Zona;
+				XRobot->Text = Convert::ToString(robotEncontrado->PosicionRobot->x);
+				YRobot->Text = Convert::ToString(robotEncontrado->PosicionRobot->y);
+
+				rbtnDisponibilidadYes->Checked = true;
+				rbtnDisponibilidadNo->Checked = false;
+
+			}
+		private: void actualizarTablaUsuarios() {
+			List<DatosUsuario^>^ lista = BotService::Service::GetUsuarios();
+
+			dgvUser->Rows->Clear();
+
+			for each (DatosUsuario ^ u in lista) {
+
+				dgvUser->Rows->Add(
+					u->ID,
+					u->Nombre,
+					u->Contra,
+					u->Cargo,
+
+					// Mostrar cantidades directamente desde cant_alertas
+					u->cant_alertas[0],
+					u->cant_alertas[1],
+					u->cant_alertas[2]
+				);
+			}
 		}
-	private:
-		void MostrarDatosUsuario(DatosUsuario^ u) {
-			IDUser->Text = Convert::ToString(u->ID);
-			NombreUser->Text = u->Nombre;
-			CargoUser->Text = u->Cargo;
-			PasswordUser->Text = u->Contra;
+		private: System::Void btnAddUser_Click(System::Object^ sender, System::EventArgs^ e) {
+		
+			try {
+				if (String::IsNullOrEmpty(IDUser->Text) || String::IsNullOrEmpty(NombreUser->Text) ||
+					String::IsNullOrEmpty(CargoUser->Text) || String::IsNullOrEmpty(PasswordUser->Text)) {
+					MessageBox::Show("Por favor, complete todos los campos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				DatosUsuario^ usuario = gcnew DatosUsuario();
+
+
+				usuario->ID = Convert::ToInt32(IDUser->Text);
+				usuario->Nombre = NombreUser->Text;
+				usuario->Cargo = CargoUser->Text;
+				usuario->Contra = PasswordUser->Text;
+
+				int id = Convert::ToInt32(IDUser->Text);
+				DatosUsuario^ usuarioExistente = Service::buscarUsuarioID(id);
+				if (usuarioExistente != nullptr) {
+					MessageBox::Show("El usuario ya existe.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+
+				Service::registrarUsuario(usuario);
+				MessageBox::Show("Usuario agregado exitosamente", "Exito", MessageBoxButtons::OK);
+
+				ShowUsuarios();
+				ClearFieldsU();
+
+			}
+			catch (System::FormatException^) {
+				MessageBox::Show("Por favor, ingrese valores válidos en los campos numéricos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al agregar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
 		}
-	private: System::Void btnControlRobot_Click(System::Object^ sender, System::EventArgs^ e) {
-		try {
-			if (String::IsNullOrEmpty(IDRobot->Text)) {
-				MessageBox::Show("Por favor, seleccione el robot a controlar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		private: System::Void btnModifyUser_Click(System::Object^ sender, System::EventArgs^ e) {
+		
+			try {
+				if (String::IsNullOrEmpty(IDUser->Text)) {
+					MessageBox::Show("Ingrese el nombre de usuario para modificar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				DatosUsuario^ usuario = gcnew DatosUsuario();
+				usuario->ID = Convert::ToInt32(IDUser->Text);
+				usuario->Nombre = NombreUser->Text;
+				usuario->Cargo = CargoUser->Text;
+				usuario->Contra = PasswordUser->Text;
+
+
+				Service::modificarUsuarioID(usuario);
+				ShowUsuarios();
+				ClearFieldsU();
+				MessageBox::Show("Usuario modificado exitosamente", "Exito", MessageBoxButtons::OK);
+
+			}
+			catch (System::FormatException^) {
+				MessageBox::Show("Por favor, ingrese valores válidos", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al modificar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		private: System::Void btnDeleteUser_Click(System::Object^ sender, System::EventArgs^ e) {
+		
+			String^ UsuarioName = NombreUser->Text->Trim();
+			if (UsuarioName == "") {
+				MessageBox::Show("Debe seleccionar un usuario");
 				return;
 			}
-			int idRobot = Convert::ToInt32(IDRobot->Text);
-			Robot^ robotEncontrado = (Robot^)Service::buscarRobotID(idRobot);
 
-			if (robotEncontrado != nullptr) {
-				ControlRobotForm^ controlRobot = gcnew ControlRobotForm(robotEncontrado);
-				this->Hide();
-				controlRobot->ShowDialog();
-				this->Show();
-			}
-			else {
-				MessageBox::Show("No se encontró el robot seleccionado", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}
-		}
-		catch (Exception^ ex) {
-			MessageBox::Show("No se ha podido controlar el robot por el siguiente motivo:\n" + ex->Message);
-		}
-	}
-	private: System::Void DatosRobotsUsuariosForm_Load(System::Object^ sender, System::EventArgs^ e) {
-		ShowUsuarios();
-		ShowRobots();
-		ClearFieldsR();
-		ClearFieldsU();
-		ShowZonas();
-		tabControl1->SelectedTab = tabPage2;
-	}
-	private: void SearchAndPutImagenOn(PictureBox^ pb) {//se encarga de poder añadir la foto
-		OpenFileDialog^ opfd = gcnew OpenFileDialog();
-		opfd->Filter = "Image Files (*.jpg;*.jpeg;)|*.jpg;*.jpeg;";
-		if (opfd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-			pb->Image = gcnew Bitmap(opfd->FileName);
-		}
-	}
-	private: void ShowZonas() {
-		List<ZonaTrabajo^>^ listaZonas = Service::GetZonas();
-	}
-	private: System::Void IDUser_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	}
+			try {
+				System::Windows::Forms::DialogResult dlgResult = MessageBox::Show("¿Desea eliminar el usuario?",
+					"Confirmación", MessageBoxButtons::YesNo, MessageBoxIcon::Question);
 
-};
-}
+				if (dlgResult == System::Windows::Forms::DialogResult::Yes) {
+					bool eliminado = Service::borrarUsuarioNombre(UsuarioName);
+					if (eliminado) {
+						ShowUsuarios();
+						ClearFieldsU();
+						MessageBox::Show("Usuario eliminado exitosamente", "Exito", MessageBoxButtons::OK);
+					}
+					else {
+						MessageBox::Show("No se encontró el usuario", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					}
+				}
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("Error al eliminar usuario: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		private: System::Void dgvUser_CellClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+			int usuarioID = Int32::Parse(dgvUser->Rows[dgvUser->SelectedCells[0]->RowIndex]->Cells[0]->Value->ToString());
+			DatosUsuario^ usuario = (DatosUsuario^)Service::buscarUsuarioID(usuarioID);
+			if (usuario != nullptr) {
+				IDUser->Text = Convert::ToString(usuario->ID);
+				NombreUser->Text = usuario->Nombre;
+				CargoUser->Text = usuario->Cargo;
+				PasswordUser->Text = usuario->Contra;
+			}
+		}
+		private:
+			void ShowUsuarios() {
+				List<DatosUsuario^>^ usuarioList = Service::GetUsuarios();
+				if (usuarioList != nullptr) {
+					dgvUser->Rows->Clear();
+					for (int i = 0; i < usuarioList->Count; i++) {
+						if (usuarioList[i]->GetType() == DatosUsuario::typeid) {
+							String^ passwordAsterisco = gcnew String(L'*', usuarioList[i]->Contra->Length);
+
+							dgvUser->Rows->Add(gcnew array<String^>{
+								"" + usuarioList[i]->ID, usuarioList[i]->Nombre,
+									passwordAsterisco, usuarioList[i]->Cargo
+							});
+						}
+					}
+				}
+			}
+		private:
+			void ClearFieldsU() {
+				IDUser->Text = "";
+				NombreUser->Text = "";
+				CargoUser->Text = "";
+				PasswordUser->Text = "";
+			}
+		private:
+			void MostrarDatosUsuario(DatosUsuario^ u) {
+				IDUser->Text = Convert::ToString(u->ID);
+				NombreUser->Text = u->Nombre;
+				CargoUser->Text = u->Cargo;
+				PasswordUser->Text = u->Contra;
+			}
+		private: System::Void btnControlRobot_Click(System::Object^ sender, System::EventArgs^ e) {
+			try {
+				if (String::IsNullOrEmpty(IDRobot->Text)) {
+					MessageBox::Show("Por favor, seleccione el robot a controlar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+					return;
+				}
+				int idRobot = Convert::ToInt32(IDRobot->Text);
+				Robot^ robotEncontrado = (Robot^)Service::buscarRobotID(idRobot);
+
+				if (robotEncontrado != nullptr) {
+					ControlRobotForm^ controlRobot = gcnew ControlRobotForm(robotEncontrado);
+					this->Hide();
+					controlRobot->ShowDialog();
+					this->Show();
+				}
+				else {
+					MessageBox::Show("No se encontró el robot seleccionado", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+			}
+			catch (Exception^ ex) {
+				MessageBox::Show("No se ha podido controlar el robot por el siguiente motivo:\n" + ex->Message);
+			}
+		}
+		private: System::Void DatosRobotsUsuariosForm_Load(System::Object^ sender, System::EventArgs^ e) {
+			InitializateTimer();
+			StartTimer();
+			ShowUsuarios();
+			ShowRobots();
+			ClearFieldsR();
+			ClearFieldsU();
+			ShowZonas();
+			tabControl1->SelectedTab = tabPage2;
+		}
+		private: void SearchAndPutImagenOn(PictureBox^ pb) {//se encarga de poder añadir la foto
+			OpenFileDialog^ opfd = gcnew OpenFileDialog();
+			opfd->Filter = "Image Files (*.jpg;*.jpeg;)|*.jpg;*.jpeg;";
+			if (opfd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				pb->Image = gcnew Bitmap(opfd->FileName);
+			}
+		}
+		private: void ShowZonas() {
+			List<ZonaTrabajo^>^ listaZonas = Service::GetZonas();
+		}
+		private: 
+			Thread^ timer;
+			bool timerRunning;
+			int currentInterval;
+			int elapsedTime;
+			Object^ lockObject;
+
+			delegate void UpdateDataDelegate();
+		private: void InitializateTimer() {
+			lockObject = gcnew Object();
+			timerRunning = false;
+			currentInterval = 0;
+			elapsedTime = 0;
+		}
+		private: void StartTimer() {
+			StopTimer();
+
+			Monitor::Enter(lockObject);
+			try {
+				timerRunning = true;
+
+				currentInterval = 10*1000;
+				elapsedTime = 0;
+			}
+			finally {
+				Monitor::Exit(lockObject);
+			}
+
+			timer = gcnew Thread(gcnew ThreadStart(this, &DatosRobotsUsuariosForm::TimerMethod));
+			timer->IsBackground = true;
+			timer->Start();
+		}
+		private: void StopTimer() {
+			Monitor::Enter(lockObject);
+			try {
+				timerRunning = false;
+			}
+			finally {
+				Monitor::Exit(lockObject);
+			}
+			if (timer != nullptr && timer->IsAlive) {
+				if (!timer->Join(500)) {
+					try {
+						timer->Abort();
+					}
+					catch (ThreadAbortException^) {
+						Thread::ResetAbort();
+					}
+					timer = nullptr;
+				}
+			}
+		}
+		private: void TimerMethod() {
+			int updateInterval = 100;
+
+			try {
+				while (true)
+				{
+					Monitor::Enter(lockObject);
+					bool shouldStop = !timerRunning;
+					bool timerCompleted = (elapsedTime >= currentInterval);
+					Monitor::Exit(lockObject);
+
+					if (shouldStop) break;
+					if (timerCompleted) break;
+
+					Thread::Sleep(updateInterval);
+
+					Monitor::Enter(lockObject);
+					try {
+						if (timerRunning) {
+							elapsedTime += updateInterval;
+							int remainingTime = currentInterval - elapsedTime;
+						}
+					}
+					finally {
+						Monitor::Exit(lockObject);
+					}
+				}
+
+				bool shouldRefresh = false;
+				Monitor::Enter(lockObject);
+				try {
+					shouldRefresh = timerRunning && (elapsedTime >= currentInterval);
+				}
+				finally {
+					Monitor::Exit(lockObject);
+				}
+				if (shouldRefresh) {
+					RefreshData();
+				}
+			}
+			catch (ThreadAbortException^) {
+				Thread::ResetAbort();
+			}
+			catch (Exception^ ex) {
+				System::Diagnostics::Debug::WriteLine("Error en Timer: " + ex->Message);
+			}
+		}
+		private: void RefreshData() {
+			if (this->IsDisposed || !this->IsHandleCreated) {
+				return;
+			}
+
+			if (this->InvokeRequired) {
+				try {
+					this->BeginInvoke(gcnew UpdateDataDelegate(this, &DatosRobotsUsuariosForm::RefreshData));
+				}
+				catch (ObjectDisposedException^) {
+					return;
+				}
+				catch (InvalidOperationException^) {
+					return;
+				}
+				return;
+			}
+
+			if (this->IsDisposed) return;
+
+			ShowRobots();
+			ShowUsuarios();
+
+			bool shouldRestart = false;
+			Monitor::Enter(lockObject);
+			try {
+				shouldRestart = timerRunning && !this->IsDisposed;
+			}
+			finally {
+				Monitor::Exit(lockObject);
+			}
+
+			if (shouldRestart) {
+				StartTimer();
+			}
+		}
+	};
+} 
