@@ -12,6 +12,7 @@ namespace GUIApp {
 
     using namespace BotModel;
     using namespace BotService;
+    using namespace System::Threading;
 
     /// <summary>
     /// Formulario para mostrar gráfica de alertas solucionadas por usuario
@@ -41,6 +42,7 @@ namespace GUIApp {
             {
                 delete components;
             }
+            StopTimer();
         }
 
     private:
@@ -551,8 +553,26 @@ namespace GUIApp {
     private: System::Void btnSalir_Click(System::Object^ sender, System::EventArgs^ e) {
         this->Close();
     }
+           Thread^ myThread;
+           delegate void MyDelegate(String^);
+        private: void CargarHoraRealTime() {
+            String^ title = "Gráficos de Alertas registras - ";
+            while (true)
+            {
+                try {
+                    myThread->Sleep(1000);
+                    Invoke(gcnew MyDelegate(this, &GraficAlertUserSolForm::UpdateTitle), title + DateTime::Now);
+                }
+                catch (Exception^ ex) {
+                    return;
+                }
+            }
+        }
+        private: void UpdateTitle(String^ newTitle) {
+            this->Text = newTitle;
+        }
 
-    private: System::Void GraficAlertUserSolForm_Load(System::Object^ sender, System::EventArgs^ e) {
+    private: void CargarDatos() {
         try {
             // Configurar combo box
             comboBoxTipoGrafico->SelectedIndex = 0;
@@ -565,6 +585,147 @@ namespace GUIApp {
                 "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
         }
     }
+    private:
+        Thread^ timer;
+        bool timerRunning;
+        int currentInterval;
+        int elapsedTime;
+        Object^ lockObject;
+
+        delegate void UpdateDataDelegate();
+        private: void InitializateTimer() {
+            lockObject = gcnew Object();
+            timerRunning = false;
+            currentInterval = 0;
+            elapsedTime = 0;
+        }
+        private: void StartTimer() {
+            StopTimer();
+
+            Monitor::Enter(lockObject);
+            try {
+                timerRunning = true;
+
+                currentInterval = 10 * 1000;
+                elapsedTime = 0;
+            }
+            finally {
+                Monitor::Exit(lockObject);
+            }
+
+            timer = gcnew Thread(gcnew ThreadStart(this, &GraficAlertUserSolForm::TimerMethod));
+            timer->IsBackground = true;
+            timer->Start();
+        }
+        private: void StopTimer() {
+            Monitor::Enter(lockObject);
+            try {
+                timerRunning = false;
+            }
+            finally {
+                Monitor::Exit(lockObject);
+            }
+            if (timer != nullptr && timer->IsAlive) {
+                if (!timer->Join(500)) {
+                    try {
+                        timer->Abort();
+                    }
+                    catch (ThreadAbortException^) {
+                        Thread::ResetAbort();
+                    }
+                    timer = nullptr;
+                }
+            }
+        }
+        private: void TimerMethod() {
+            int updateInterval = 100;
+
+            try {
+                while (true)
+                {
+                    Monitor::Enter(lockObject);
+                    bool shouldStop = !timerRunning;
+                    bool timerCompleted = (elapsedTime >= currentInterval);
+                    Monitor::Exit(lockObject);
+
+                    if (shouldStop) break;
+                    if (timerCompleted) break;
+
+                    Thread::Sleep(updateInterval);
+
+                    Monitor::Enter(lockObject);
+                    try {
+                        if (timerRunning) {
+                            elapsedTime += updateInterval;
+                            int remainingTime = currentInterval - elapsedTime;
+                        }
+                    }
+                    finally {
+                        Monitor::Exit(lockObject);
+                    }
+                }
+
+                bool shouldRefresh = false;
+                Monitor::Enter(lockObject);
+                try {
+                    shouldRefresh = timerRunning && (elapsedTime >= currentInterval);
+                }
+                finally {
+                    Monitor::Exit(lockObject);
+                }
+                if (shouldRefresh) {
+                    RefreshData();
+                }
+            }
+            catch (ThreadAbortException^) {
+                Thread::ResetAbort();
+            }
+            catch (Exception^ ex) {
+                System::Diagnostics::Debug::WriteLine("Error en Timer: " + ex->Message);
+            }
+        }
+        private: void RefreshData() {
+            if (this->IsDisposed || !this->IsHandleCreated) {
+                return;
+            }
+
+            if (this->InvokeRequired) {
+                try {
+                    this->BeginInvoke(gcnew UpdateDataDelegate(this, &GraficAlertUserSolForm::RefreshData));
+                }
+                catch (ObjectDisposedException^) {
+                    return;
+                }
+                catch (InvalidOperationException^) {
+                    return;
+                }
+                return;
+            }
+
+            if (this->IsDisposed) return;
+
+            CargarDatos();
+
+            bool shouldRestart = false;
+            Monitor::Enter(lockObject);
+            try {
+                shouldRestart = timerRunning && !this->IsDisposed;
+            }
+            finally {
+                Monitor::Exit(lockObject);
+            }
+
+            if (shouldRestart) {
+                StartTimer();
+            }
+        }
+    private: System::Void GraficAlertUserSolForm_Load(System::Object^ sender, System::EventArgs^ e) {
+        CargarDatos();
+        myThread = gcnew Thread(gcnew ThreadStart(this, &GraficAlertUserSolForm::CargarHoraRealTime));
+        myThread->Start();
+        InitializateTimer();
+        StartTimer();
+    }
 
     private: System::Void comboBoxTipoGrafico_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
         // Redibujar el gráfico cuando cambia el tipo
@@ -572,5 +733,6 @@ namespace GUIApp {
             pictureBoxGrafico->Invalidate();
         }
     }
+
     };
 }
