@@ -1,4 +1,6 @@
 #pragma once
+#include "Controlador.h"
+#include <msclr/marshal_cppstd.h>
 
 using namespace System;
 using namespace BotModel;
@@ -119,8 +121,57 @@ namespace BotPersistance {
 		static int executeStoredProcedure(String^ procedureName, array<SqlParameter^>^ parameters);
 		static SqlDataReader^ executeStoredProcedureReader(String^ procedureName, array<SqlParameter^>^ parameters);
 		static bool executeStoredProcedureNonQuery(String^ procedureName, array<SqlParameter^>^ parameters);
+	};
 
+	public ref class CarController {
+	private:
+		AutoRobot* nativeController;
+	public:
+		CarController(String^ address, String^ topic) {
+			std::string addr = msclr::interop::marshal_as<std::string>(address);
+			std::string top = msclr::interop::marshal_as<std::string>(topic);
 
+			nativeController = new AutoRobot(addr, top);
+		}
+		~CarController() {
+			this->!CarController();
+		}
+		!CarController() {
+			if (nativeController != nullptr) {
+				delete nativeController;
+				nativeController = nullptr;
+			}
+		}
+		bool Connect() {
+			if (nativeController == nullptr)
+				throw gcnew System::NullReferenceException("nativeController es NULL");
 
+			return nativeController->connect();
+		}
+		void Disconnect() {
+			if (nativeController)
+				nativeController->disconnect();
+		}
+		void Forward() {
+			if (nativeController) nativeController->avanzar();
+		}
+		void Backward() {
+			if (nativeController) nativeController->retroceder();
+		}
+		void Left() {
+			if (nativeController) nativeController->izquierda();
+		}
+		void Right() {
+			if (nativeController) nativeController->derecha();
+		}
+		void Stop() {
+			if (nativeController) nativeController->parar();
+		}
+		void TurnRight() {
+			if (nativeController) nativeController->giroDerecha();
+		}
+		void TurnLeft() {
+			if (nativeController) nativeController->giroIzquierda();
+		}
 	};
 }

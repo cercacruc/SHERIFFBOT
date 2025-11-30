@@ -380,203 +380,35 @@ bool BotService::Service::ComandoTest()
 	return EnviarComandoDirecto("TEST");
 }
 
-//Cosas para la conexión con el carro
-BotService::MQTTClient::MQTTClient() {
-	brokerUrl = "ws://broker.hivemq.com:8884/mqtt";
-	conectado = false;
-}
-
-bool BotService::MQTTClient::Conectar()
-{
-	try {
-		if (conectado) {
-			return true;
-		}
-
-		webSocket = gcnew ClientWebSocket();
-		auto token = CancellationToken::None;
-
-		auto connectTask = webSocket->ConnectAsync(gcnew Uri(brokerUrl), token);
-
-		// Esperar con timeout
-		if (connectTask->Wait(5000)) // 5 segundos timeout
-		{
-			if (webSocket->State == WebSocketState::Open)
-			{
-				conectado = true;
-				Console::WriteLine("Conectado al broker MQTT via WebSockets");
-				return true;
-			}
-		}
-		else
-		{
-			Console::WriteLine("Error: Timeout en la conexión");
-		}
-
-		return false;
+bool BotService::Vehiculo::Connect() {
+	if (carController == nullptr) {
+		// Inicializar con los parámetros correctos
+		carController = gcnew CarController("tcp://broker.hivemq.com:1883", "R08/teleop/cmd");
 	}
-	catch (Exception^ ex) {
-		Console::WriteLine("Error conectando: " + ex->Message);
-		conectado = false;
-		return false;
-	}
+	return carController->Connect();
 }
-
-bool BotService::MQTTClient::EnviarComando(String^ comando)
-{
-	try
-	{
-		if (!conectado && !Conectar())
-		{
-			Console::WriteLine("No conectado, intentando reconectar...");
-			return false;
-		}
-
-		String^ mensaje = String::Format("{{\"cmd\":\"{0}\"}}", comando);
-		array<unsigned char>^ bytes = Encoding::UTF8->GetBytes(mensaje);
-		ArraySegment<unsigned char> segment(bytes);
-
-		auto sendTask = webSocket->SendAsync(segment, WebSocketMessageType::Text, true, CancellationToken::None);
-
-		if (sendTask->Wait(3000))
-		{
-			Console::WriteLine("Comando enviado: " + mensaje);
-			return true;
-		}
-		else
-		{
-			Console::WriteLine("Timeout enviando comando");
-			conectado = false;
-			return false;
-		}
-	}
-	catch (Exception^ ex)
-	{
-		Console::WriteLine("Error enviando comando: " + ex->Message);
-		conectado = false;
-		return false;
-	}
+void BotService::Vehiculo::Disconnect() {
+	if (carController)
+		carController->Disconnect();
 }
-
-bool BotService::MQTTClient::EnviarComandoConVelocidad(String^ comando, int velocidad)
-{
-	try
-	{
-		if (!conectado && !Conectar())
-		{
-			Console::WriteLine("No conectado, intentando reconectar...");
-			return false;
-		}
-
-		// Crear y enviar mensaje directamente
-		String^ mensaje = String::Format("{{\"cmd\":\"{0}\",\"speed\":{1}}}", comando, velocidad);
-		array<unsigned char>^ bytes = Encoding::UTF8->GetBytes(mensaje);
-		ArraySegment<unsigned char> segment(bytes);
-
-		auto sendTask = webSocket->SendAsync(segment, WebSocketMessageType::Text, true, CancellationToken::None);
-
-		if (sendTask->Wait(3000))
-		{
-			Console::WriteLine("Comando con velocidad enviado: " + mensaje);
-			return true;
-		}
-		else
-		{
-			Console::WriteLine("Timeout enviando comando con velocidad");
-			conectado = false;
-			return false;
-		}
-	}
-	catch (Exception^ ex)
-	{
-		Console::WriteLine("Error enviando comando con velocidad: " + ex->Message);
-		conectado = false;
-		return false;
-	}
+void BotService::Vehiculo::Forward() {
+	if (carController) carController->Forward();
 }
-
-bool BotService::MQTTClient::Adelante()
-{
-	return EnviarComando("w");
+void BotService::Vehiculo::Backward() {
+	if (carController) carController->Backward();
 }
-
-bool BotService::MQTTClient::Atras()
-{
-	return EnviarComando("s");
+void BotService::Vehiculo::Left() {
+	if (carController) carController->Left();
 }
-
-bool BotService::MQTTClient::Izquierda()
-{
-	return EnviarComando("a");
+void BotService::Vehiculo::Right() {
+	if (carController) carController->Right();
 }
-
-bool BotService::MQTTClient::Derecha()
-{
-	return EnviarComando("d");
+void BotService::Vehiculo::Stop() {
+	if (carController) carController->Stop();
 }
-
-bool BotService::MQTTClient::RotarIzquierda()
-{
-	return EnviarComando("q");
+void BotService::Vehiculo::TurnRight() {
+	if (carController) carController->TurnRight();
 }
-
-bool BotService::MQTTClient::RotarDerecha()
-{
-	return EnviarComando("e");
+void BotService::Vehiculo::TurnLeft() {
+	if (carController) carController->TurnLeft();
 }
-
-bool BotService::MQTTClient::Detener()
-{
-	return EnviarComando("x");
-}
-
-bool BotService::MQTTClient::AdelanteConVelocidad(int velocidad)
-{
-	return EnviarComandoConVelocidad("w", velocidad);
-}
-
-bool BotService::MQTTClient::AtrasConVelocidad(int velocidad)
-{
-	return EnviarComandoConVelocidad("s", velocidad);
-}
-
-bool BotService::MQTTClient::IzquierdaConVelocidad(int velocidad)
-{
-	return EnviarComandoConVelocidad("a", velocidad);
-}
-
-bool BotService::MQTTClient::DerechaConVelocidad(int velocidad)
-{
-	return EnviarComandoConVelocidad("d", velocidad);
-}
-
-void BotService::MQTTClient::Desconectar()
-{
-	try
-	{
-		if (webSocket != nullptr && webSocket->State == WebSocketState::Open)
-		{
-			auto closeTask = webSocket->CloseAsync(WebSocketCloseStatus::NormalClosure, "Desconexión", CancellationToken::None);
-			closeTask->Wait(2000);
-		}
-	}
-	catch (Exception^ ex)
-	{
-		// Ignorar errores en desconexión
-	}
-	finally
-	{
-		conectado = false;
-		if (webSocket != nullptr)
-		{
-			//webSocket->Dispose();
-			webSocket = nullptr;
-		}
-	}
-}
-
-BotService::MQTTClient::~MQTTClient()
-{
-	Desconectar();
-}
-

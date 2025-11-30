@@ -95,37 +95,19 @@ namespace BotService {
 		static bool ComandoTodosLEDs(bool encender);
 		static bool ComandoTest();
 	};
-	public ref class MQTTClient {
+	public ref class Vehiculo {
 	private:
-		static ClientWebSocket^ webSocket;
-		static String^ brokerUrl;
-		static bool conectado;
+		static CarController^ carController = nullptr;
 
 	public:
-		property bool EstaConectado;
-
-		MQTTClient();
-		static bool Conectar();
-		static bool EnviarComando(String^ comando);
-		static bool EnviarComandoConVelocidad(String^ comando, int velocidad);
-
-		// Métodos específicos para cada movimiento
-		static bool Adelante();
-		static bool Atras();
-		static bool Izquierda();
-		static bool Derecha();
-		static bool RotarIzquierda();
-		static bool RotarDerecha();
-		static bool Detener();
-
-		// Métodos con velocidad
-		static bool AdelanteConVelocidad(int velocidad);
-		static bool AtrasConVelocidad(int velocidad);
-		static bool IzquierdaConVelocidad(int velocidad);
-		static bool DerechaConVelocidad(int velocidad);
-
-		// Métodos para desconectar
-		static void Desconectar();
-		~MQTTClient();
+		static bool Connect();
+		static void Disconnect();
+		static void Forward();
+		static void Backward();
+		static void Left();
+		static void Right();
+		static void Stop();
+		static void TurnRight();
+		static void TurnLeft();
 	};
 }

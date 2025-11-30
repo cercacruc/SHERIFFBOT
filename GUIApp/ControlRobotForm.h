@@ -334,14 +334,18 @@ namespace GUIApp {
 				MessageBox::Show("Error inicializando cámara: " + ex->Message);
 				this->Close();
 			}
+
+			Vehiculo::Connect();
 		}
 		private: void Bitmap_Disposed(System::Object^ sender, System::EventArgs^ e) {
 		
 		}
 		private: System::Void btnAdelante_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Encender LED cuando se presiona el botón
-			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+			if (e->Button == System::Windows::Forms::MouseButtons::Left) {
 				Service::ComandoLED(1, true);
+				Vehiculo::Forward();
+			}		
 		}
 
 		private: System::Void btnAdelante_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
@@ -351,6 +355,8 @@ namespace GUIApp {
 				//Mueve el robot (distancia genérica)
 				String^ mensaje = "avanzar";
 				MoverRobot(mensaje, robotOrientacion);
+
+				Vehiculo::Stop();
 
 				MessageBox::Show("Avanzo. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
 			}
@@ -363,13 +369,18 @@ namespace GUIApp {
 				String^ mensaje = "avanzar";
 				MoverRobot(mensaje, robotOrientacion);
 
+				Vehiculo::Stop();
+
 				MessageBox::Show("Avanzo. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
 			}
 		}
 		private: System::Void btnAtras_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Encender LED cuando se presiona el botón
-			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+			if (e->Button == System::Windows::Forms::MouseButtons::Left) {
 				Service::ComandoLED(2, true);
+				Vehiculo::Backward();
+			}
+				
 		}
 		private: System::Void btnAtras_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Apagar LED cuando se suelta el botón
@@ -378,6 +389,8 @@ namespace GUIApp {
 				//Mueve el robot
 				String^ mensaje = "retorceder";
 				MoverRobot(mensaje, robotOrientacion);
+
+				Vehiculo::Stop();
 
 				MessageBox::Show("Retrocedio. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
 			}
@@ -390,6 +403,8 @@ namespace GUIApp {
 				String^ mensaje = "retorceder";
 				MoverRobot(mensaje, robotOrientacion);
 
+				Vehiculo::Stop();
+
 				MessageBox::Show("Retrocedio. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
 			}
 		}
@@ -397,7 +412,7 @@ namespace GUIApp {
 			// Encender LED cuando se presiona el botón
 			if (e->Button == System::Windows::Forms::MouseButtons::Left) {
 				Service::ComandoLED(3, true);
-
+				Vehiculo::Right();
 			}
 				
 		}
@@ -409,6 +424,8 @@ namespace GUIApp {
 				String^ mensaje = "derecha";
 				MoverRobot(mensaje, robotOrientacion);
 
+				Vehiculo::Stop();
+
 				MessageBox::Show("Avanzo hacia la derecha. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
 			}
 		}
@@ -419,13 +436,18 @@ namespace GUIApp {
 				String^ mensaje = "derecha";
 				MoverRobot(mensaje, robotOrientacion);
 
+				Vehiculo::Stop();
+
 				MessageBox::Show("Avanzo hacia la derecha. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
 			}
 		}
 		private: System::Void btnLeft_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Encender LED cuando se presiona el botón
-			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+			if (e->Button == System::Windows::Forms::MouseButtons::Left) {
 				Service::ComandoLED(4, true);
+				Vehiculo::Left();
+			}
+				
 		}
 		private: System::Void btnLeft_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Apagar LED cuando se suelta el botón
@@ -433,6 +455,7 @@ namespace GUIApp {
 				Service::ComandoLED(4, false);
 				String^ mensaje = "izquierda";
 				MoverRobot(mensaje, robotOrientacion);
+				Vehiculo::Stop();
 				MessageBox::Show("Avanzo hacia la izquierda. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
 			}
 		}
@@ -442,13 +465,17 @@ namespace GUIApp {
 				Service::ComandoLED(4, false);
 				String^ mensaje = "izquierda";
 				MoverRobot(mensaje, robotOrientacion);
+				Vehiculo::Stop();
 				MessageBox::Show("Avanzo hacia la izquierda. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
 			}
 		}
 		private: System::Void giroDerecha_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Encender LED cuando se presiona el botón
-			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+			if (e->Button == System::Windows::Forms::MouseButtons::Left) {
 				Service::ComandoLED(5, true);
+				Vehiculo::TurnRight();
+			}
+				
 		}
 		private: System::Void giroDerecha_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Apagar LED cuando se suelta el botón
@@ -462,6 +489,8 @@ namespace GUIApp {
 
 				String^ mensaje = "Giro hacia la Derecha. Nueva Orientación: ";
 				mensaje += Convert::ToString(robotOrientacion);
+
+				Vehiculo::Stop();
 
 				MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
 			}
@@ -479,13 +508,18 @@ namespace GUIApp {
 				String^ mensaje = "Giro hacia la Derecha. Nueva Orientación: ";
 				mensaje += Convert::ToString(robotOrientacion);
 
+				Vehiculo::Stop();
+
 				MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
 			}
 		}
 		private: System::Void giroIzquierda_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Encender LED cuando se presiona el botón
-			if (e->Button == System::Windows::Forms::MouseButtons::Left)
+			if (e->Button == System::Windows::Forms::MouseButtons::Left) {
 				Service::ComandoLED(6, true);
+				Vehiculo::TurnLeft();
+			}
+				
 		}
 		private: System::Void giroIzquierda_MouseUp(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 			// Apagar LED cuando se suelta el botón
@@ -498,6 +532,8 @@ namespace GUIApp {
 
 				String^ mensaje = "Giro hacia la izquierda. Nueva Orientación: ";
 				mensaje += Convert::ToString(robotOrientacion);
+
+				Vehiculo::Stop();
 
 				MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
 
@@ -514,6 +550,8 @@ namespace GUIApp {
 
 				String^ mensaje = "Giro hacia la izquierda. Nueva Orientación: ";
 				mensaje += Convert::ToString(robotOrientacion);
+
+				Vehiculo::Stop();
 
 				MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
 			}
@@ -600,6 +638,7 @@ namespace GUIApp {
 		private: System::Void ControlRobotForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) {
 			this->DesactivarCamara();
 			Service::DesconectarArduino();
+			Vehiculo::Disconnect();
 		}
 		private: System::Void DesactivarCamara() {
 			this->isClosing = true;
