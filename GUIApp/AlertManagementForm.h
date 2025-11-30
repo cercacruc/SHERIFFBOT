@@ -431,6 +431,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			this->pbPhotoAltercado->Location = System::Drawing::Point(516, 52);
 			this->pbPhotoAltercado->Name = L"pbPhotoAltercado";
 			this->pbPhotoAltercado->Size = System::Drawing::Size(211, 177);
+			this->pbPhotoAltercado->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pbPhotoAltercado->TabIndex = 55;
 			this->pbPhotoAltercado->TabStop = false;
 			// 
@@ -869,11 +870,11 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			txtDescriptionAltercado->Text = altercado->Description;
 			if (altercado->Photo != nullptr) {
 				System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(altercado->Photo);
-				pbPhotoObj->Image = Image::FromStream(ms);
+				pbPhotoAltercado->Image = Image::FromStream(ms);
 			}
 			else {
-				pbPhotoObj->Image = nullptr;
-				pbPhotoObj->Invalidate();
+				pbPhotoAltercado->Image = nullptr;
+				pbPhotoAltercado->Invalidate();
 			}
 		}
 	}

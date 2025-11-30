@@ -1869,22 +1869,47 @@ int BotPersistance::Persistance::AddAlerta(Alert^ alerta)
 {
     try
     {
+        Object^ fotoParam = DBNull::Value;
+
+        if (alerta->Photo != nullptr)
+        {
+            array<Byte>^ photoBytes = dynamic_cast<array<Byte>^>(alerta->Photo);
+            if (photoBytes != nullptr && photoBytes->Length > 0)
+            {
+                fotoParam = photoBytes;
+            }
+            else
+            {
+                fotoParam = DBNull::Value;
+                System::Diagnostics::Debug::WriteLine("Advertencia: Photo no es un array de bytes válido en AddAlerta");
+            }
+        }
+
         array<SqlParameter^>^ params = gcnew array<SqlParameter^>
         {
             gcnew SqlParameter("@TipoAlerta", alerta->TipoAlerta),
                 gcnew SqlParameter("@Fecha", alerta->Fecha),
-                gcnew SqlParameter("@Descripcion", alerta->Description),
-                gcnew SqlParameter("@Lugar", alerta->Lugar),
+                gcnew SqlParameter("@Descripcion",
+                    String::IsNullOrEmpty(alerta->Description) ?
+                    DBNull::Value : (Object^)alerta->Description),
+                gcnew SqlParameter("@Lugar",
+                    String::IsNullOrEmpty(alerta->Lugar) ?
+                    DBNull::Value : (Object^)alerta->Lugar),
                 gcnew SqlParameter("@UsuarioID", alerta->UsuarioID),
-                gcnew SqlParameter("@UsuarioNombre", alerta->UsuarioNombre),
+                gcnew SqlParameter("@UsuarioNombre",
+                    String::IsNullOrEmpty(alerta->UsuarioNombre) ?
+                    DBNull::Value : (Object^)alerta->UsuarioNombre),
                 gcnew SqlParameter("@ObjetoEncontrado",
-                    dynamic_cast<ObjPerdido^>(alerta) != nullptr ?
-                    dynamic_cast<ObjPerdido^>(alerta)->ObjetoEncontrado : ""),
+                    (dynamic_cast<ObjPerdido^>(alerta) != nullptr &&
+                        !String::IsNullOrEmpty(dynamic_cast<ObjPerdido^>(alerta)->ObjetoEncontrado)) ?
+                    dynamic_cast<ObjPerdido^>(alerta)->ObjetoEncontrado :
+                    (Object^)DBNull::Value),
                 gcnew SqlParameter("@Tipo_reporte",
-                    dynamic_cast<DTIReport^>(alerta) != nullptr ?
-                    dynamic_cast<DTIReport^>(alerta)->tipoReporte : ""),
-                gcnew SqlParameter("@Foto",  
-                    alerta->Photo != nullptr ? (Object^)alerta->Photo : DBNull::Value)
+                    (dynamic_cast<DTIReport^>(alerta) != nullptr &&
+                        !String::IsNullOrEmpty(dynamic_cast<DTIReport^>(alerta)->tipoReporte)) ?
+                    dynamic_cast<DTIReport^>(alerta)->tipoReporte :
+                    (Object^)DBNull::Value),
+                gcnew SqlParameter("@Foto", fotoParam)  // Usar el parámetro ya validado
         };
 
         return executeStoredProcedure("usp_AddAlerta", params);
@@ -1894,7 +1919,6 @@ int BotPersistance::Persistance::AddAlerta(Alert^ alerta)
         throw gcnew Exception("Error agregando alerta: " + ex->Message);
     }
 }
-
 List<Alert^>^ BotPersistance::Persistance::GetAllAlertas()
 {
     List<Alert^>^ lista = gcnew List<Alert^>();
@@ -2308,6 +2332,33 @@ int BotPersistance::Persistance::modificarAlerta(Alert^ alerta)
     */
     try
     {
+        Object^ fotoParam = DBNull::Value;
+
+        if (alerta->Photo != nullptr)
+        {
+            // Verificar explícitamente que sea un array de bytes
+            array<Byte>^ photoBytes = dynamic_cast<array<Byte>^>(alerta->Photo);
+            if (photoBytes != nullptr && photoBytes->Length > 0)
+            {
+                fotoParam = photoBytes;
+            }
+            // Si no es válido, mantener DBNull::Value
+        }
+        
+        SqlParameter^ fotoParamSql = gcnew SqlParameter("@Foto", System::Data::SqlDbType::VarBinary, -1);
+        fotoParamSql->Value = fotoParam;
+
+        // Preparar campos opcionales como DBNull cuando estén vacíos
+        Object^ objetoEncontradoParam = (dynamic_cast<ObjPerdido^>(alerta) != nullptr &&
+            !String::IsNullOrEmpty(dynamic_cast<ObjPerdido^>(alerta)->ObjetoEncontrado)) ?
+            (Object^)dynamic_cast<ObjPerdido^>(alerta)->ObjetoEncontrado :
+            (Object^)DBNull::Value;
+
+        Object^ tipoReporteParam = (dynamic_cast<DTIReport^>(alerta) != nullptr &&
+            !String::IsNullOrEmpty(dynamic_cast<DTIReport^>(alerta)->tipoReporte)) ?
+            (Object^)dynamic_cast<DTIReport^>(alerta)->tipoReporte :
+            (Object^)DBNull::Value;
+
         array<SqlParameter^>^ params = gcnew array<SqlParameter^>
         {
             gcnew SqlParameter("@ID_Alerta", alerta->id),
@@ -2321,8 +2372,7 @@ int BotPersistance::Persistance::modificarAlerta(Alert^ alerta)
                 gcnew SqlParameter("@Tipo_reporte",
                     dynamic_cast<DTIReport^>(alerta) != nullptr ?
                     dynamic_cast<DTIReport^>(alerta)->tipoReporte : ""),
-                gcnew SqlParameter("@Foto",
-                    alerta->Photo != nullptr ? (Object^)alerta->Photo : DBNull::Value)
+                fotoParamSql
         };
 
         return executeStoredProcedure("usp_UpdateAlerta", params);
@@ -2398,6 +2448,7 @@ Alert^ BotPersistance::Persistance::buscarAlertaDescrip(String^ descrip)
             else if (tipoAlerta == "Altercado")
             {
                 alerta = gcnew Altercado();
+
             }
             else
             {
