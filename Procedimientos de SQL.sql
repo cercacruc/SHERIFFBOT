@@ -357,15 +357,30 @@ CREATE PROCEDURE usp_UpdateAlerta
     @Foto VARBINARY(MAX) = NULL
 AS
 BEGIN
-    UPDATE Alertas 
-    SET Tipo_alerta = @TipoAlerta,
-        Descripcion = @Descripcion,
-        Lugar = @Lugar,
-        Solucionado = @Solucionado,
-        Objeto_encontrado = @ObjetoEncontrado,
-        Tipo_reporte = @Tipo_reporte ,
-        Foto = ISNULL(@Foto, Foto)
-    WHERE ID_Alerta = @ID_Alerta;
+    -- Actualizar solo si @Foto no es NULL, de lo contrario mantener el valor actual
+    IF @Foto IS NULL
+    BEGIN
+        UPDATE Alertas 
+        SET Tipo_alerta = @TipoAlerta,
+            Descripcion = @Descripcion,
+            Lugar = @Lugar,
+            Solucionado = @Solucionado,
+            Objeto_encontrado = @ObjetoEncontrado,
+            Tipo_reporte = @Tipo_reporte
+        WHERE ID_Alerta = @ID_Alerta;
+    END
+    ELSE
+    BEGIN
+        UPDATE Alertas 
+        SET Tipo_alerta = @TipoAlerta,
+            Descripcion = @Descripcion,
+            Lugar = @Lugar,
+            Solucionado = @Solucionado,
+            Objeto_encontrado = @ObjetoEncontrado,
+            Tipo_reporte = @Tipo_reporte,
+            Foto = @Foto
+        WHERE ID_Alerta = @ID_Alerta;
+    END
     
     RETURN @@ROWCOUNT;
 END
