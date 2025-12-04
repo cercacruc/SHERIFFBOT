@@ -640,6 +640,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			this->pbPhotoAltercado->Location = System::Drawing::Point(690, 51);
 			this->pbPhotoAltercado->Name = L"pbPhotoAltercado";
 			this->pbPhotoAltercado->Size = System::Drawing::Size(211, 177);
+			this->pbPhotoAltercado->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pbPhotoAltercado->TabIndex = 51;
 			this->pbPhotoAltercado->TabStop = false;
 			// 
@@ -1199,7 +1200,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 
 			if (altercado->Photo != nullptr) {
 				System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(altercado->Photo);
-				pbPhotoObj->Image = Image::FromStream(ms);
+				pbPhotoAltercado->Image = Image::FromStream(ms);
 			}
 			else {
 				pbPhotoAltercado->Image = nullptr;
@@ -1311,7 +1312,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			if (alertaEncontrada != nullptr) {
 				alertaEncontrada->Solucionado = true;
 				int alertaModificada = Service::modificarAlerta(alertaEncontrada);
-				if (alertaModificada != 0) {
+				if (alertaModificada == 0) {
 					CargarTablaObjetoPerdido();
 					ClearFields();
 					MessageBox::Show("Alert solucionada manualmente", "Exito", MessageBoxButtons::OK);
@@ -1333,7 +1334,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			if (alertaEncontrada != nullptr) {
 				alertaEncontrada->Solucionado = true;
 				int alertaModificada = Service::modificarAlerta(alertaEncontrada);
-				if (alertaModificada != 0) {
+				if (alertaModificada == 0) {
 					CargarTablaAltercado();
 					ClearFields();
 					MessageBox::Show("Alert solucionada manualmente", "Exito", MessageBoxButtons::OK);
@@ -1355,7 +1356,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			if (alertaEncontrada != nullptr) {
 				alertaEncontrada->Solucionado = true;
 				int alertaModificada = Service::modificarAlerta(alertaEncontrada);
-				if (alertaModificada != 0) {
+				if (alertaModificada == 0) {
 					CargarTablaDTIReport();
 					ClearFields();
 					MessageBox::Show("Alert solucionada manualmente", "Exito", MessageBoxButtons::OK);
