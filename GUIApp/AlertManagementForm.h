@@ -810,7 +810,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			if (alertaEncontrada != nullptr) {
 				alertaEncontrada->Solucionado = true;
 				int alertaModificada = Service::modificarAlerta(alertaEncontrada);
-				if (alertaModificada != 0) {
+				if (alertaModificada == 0) {
 					CargarTablaObjetoPerdido();
 					ClearFields();
 					MessageBox::Show("Alert solucionada", "Exito", MessageBoxButtons::OK);
@@ -831,7 +831,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			if (alertaEncontrada != nullptr) {
 				alertaEncontrada->Solucionado = true;
 				int alertaModificada = Service::modificarAlerta(alertaEncontrada);
-				if (alertaModificada != 0) {
+				if (alertaModificada == 0) {
 					CargarTablaAltercado();
 					ClearFields();
 					MessageBox::Show("Alert solucionada", "Exito", MessageBoxButtons::OK);
@@ -852,7 +852,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			if (alertaEncontrada != nullptr) {
 				alertaEncontrada->Solucionado = true;
 				int alertaModificada = Service::modificarAlerta(alertaEncontrada);
-				if (alertaModificada != 0) {
+				if (alertaModificada == 0) {
 					CargarTablaDTIReport();
 					ClearFields();
 					MessageBox::Show("Alert solucionada", "Exito", MessageBoxButtons::OK);

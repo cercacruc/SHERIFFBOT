@@ -1355,7 +1355,7 @@ namespace GUIApp {
 
 			if (altercado->Photo != nullptr) {
 				System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(altercado->Photo);
-				pbPhotoObj->Image = Image::FromStream(ms);
+				pbPhotoAltercado->Image = Image::FromStream(ms);
 			}
 			else {
 				pbPhotoAltercado->Image = nullptr;
@@ -1467,7 +1467,7 @@ namespace GUIApp {
 			if (alertaEncontrada != nullptr) {
 				alertaEncontrada->Solucionado = true;
 				int alertaModificada = Service::modificarAlerta(alertaEncontrada);
-				if (alertaModificada != 0) {
+				if (alertaModificada == 0) {
 					CargarTablaObjetoPerdido();
 					ClearFields();
 					MessageBox::Show("Alert solucionada manualmente", "Exito", MessageBoxButtons::OK);
@@ -1489,7 +1489,7 @@ namespace GUIApp {
 			if (alertaEncontrada != nullptr) {
 				alertaEncontrada->Solucionado = true;
 				int alertaModificada = Service::modificarAlerta(alertaEncontrada);
-				if (alertaModificada != 0) {
+				if (alertaModificada == 0) {
 					CargarTablaAltercado();
 					ClearFields();
 					MessageBox::Show("Alert solucionada manualmente", "Exito", MessageBoxButtons::OK);
@@ -1511,7 +1511,7 @@ namespace GUIApp {
 			if (alertaEncontrada != nullptr) {
 				alertaEncontrada->Solucionado = true;
 				int alertaModificada = Service::modificarAlerta(alertaEncontrada);
-				if (alertaModificada != 0) {
+				if (alertaModificada == 0) {
 					CargarTablaDTIReport();
 					ClearFields();
 					MessageBox::Show("Alert solucionada manualmente", "Exito", MessageBoxButtons::OK);
