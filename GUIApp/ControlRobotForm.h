@@ -435,6 +435,12 @@ namespace GUIApp {
 				MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		}
 
+		// Conectar con MQTT al carga
+		if (!Vehiculo::Connect()) {
+			MessageBox::Show("No se pudo conectar con MQTT", "Advertencia",
+				MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		}
+
 		try {
 			if (!this->InicializarCamara()) {
 				MessageBox::Show("No se pudo acceder a la cámara");
@@ -445,8 +451,6 @@ namespace GUIApp {
 			MessageBox::Show("Error inicializando cámara: " + ex->Message);
 			this->Close();
 		}
-
-		//Vehiculo::Connect();
 	}
 
 		   // <<< NUEVO: actualiza el estado en el textbox interno
@@ -869,7 +873,7 @@ namespace GUIApp {
 		Service::LiberarPuertoCOM3();
 		Thread::Sleep(1000);
 
-		if (Service::ConectarArduino()) {
+		if (Service::ConectarArduino() || Vehiculo::Connect()) {
 			MessageBox::Show("Reconectado exitosamente", "Éxito");
 		}
 		else {
