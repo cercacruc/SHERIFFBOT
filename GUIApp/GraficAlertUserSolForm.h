@@ -1,4 +1,5 @@
 #pragma once
+#include "UIStyles.h"
 
 namespace GUIApp {
 
@@ -30,6 +31,7 @@ namespace GUIApp {
             usuarios = gcnew List<DatosUsuario^>();
             datosGrafico = gcnew Dictionary<String^, int>();
             debeMostrarGrafico = false;
+            ApplyDarkTheme();
         }
 
     protected:
@@ -148,8 +150,47 @@ namespace GUIApp {
 
            }
 #pragma endregion
+           // ---------- Estilo visual ----------
+    private:
+        void ApplyDarkTheme()
+        {
+            // Form
+            this->BackColor = Color::FromArgb(20, 27, 47);
+            this->ForeColor = Color::FromArgb(226, 232, 240);
+            this->StartPosition = FormStartPosition::CenterScreen;
+            this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+            this->MaximizeBox = false;
+            this->MinimizeBox = false;
+
+            // Área del gráfico
+            this->pictureBoxGrafico->BackColor = Color::White;
+            this->pictureBoxGrafico->BorderStyle = BorderStyle::FixedSingle;
+
+            // Título
+            this->labelTitulo->ForeColor = Color::FromArgb(241, 245, 249);
+            this->labelTitulo->Font = gcnew Drawing::Font("Segoe UI", 12, FontStyle::Bold);
+
+            // Label "Tipo de gráfico"
+            this->labelTipoGrafico->ForeColor = Color::FromArgb(200, 210, 230);
+            this->labelTipoGrafico->Font = gcnew Drawing::Font("Segoe UI", 9, FontStyle::Regular);
+
+            // Combo tipo de gráfico
+            this->comboBoxTipoGrafico->BackColor = Color::FromArgb(10, 16, 32);
+            this->comboBoxTipoGrafico->ForeColor = Color::FromArgb(226, 232, 240);
+            this->comboBoxTipoGrafico->FlatStyle = FlatStyle::Flat;
+            this->comboBoxTipoGrafico->Font = gcnew Drawing::Font("Segoe UI", 9);
+
+            // Botón "Volver/Salir" como PRIMARIO (es el único botón)
+            this->btnSalir->FlatStyle = FlatStyle::Flat;
+            this->btnSalir->FlatAppearance->BorderSize = 0;
+            this->btnSalir->BackColor = Color::FromArgb(0, 140, 255);
+            this->btnSalir->ForeColor = Color::White;
+            this->btnSalir->Font = gcnew Drawing::Font("Segoe UI", 9, FontStyle::Bold);
+            UIHelpers::SetRoundedRegionAuto(this->btnSalir);
+        }
 
     private:
+
         // Método para cargar los datos del gráfico
         void CargarDatosGrafico()
         {
@@ -211,13 +252,16 @@ namespace GUIApp {
 
     private: System::Void pictureBoxGrafico_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
         Graphics^ g = e->Graphics;
-        g->Clear(Color::White);
+
+        Color chartBg = Color::FromArgb(15, 23, 42);
+        Color emptyText = Color::FromArgb(148, 163, 184);
+
+        g->Clear(chartBg);
         g->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::AntiAlias;
 
         if (!debeMostrarGrafico || datosGrafico->Count == 0) {
-            // Mostrar mensaje cuando no hay datos
-            Brush^ textoBrush = gcnew SolidBrush(Color::Gray);
-            System::Drawing::Font^ font = gcnew System::Drawing::Font("Arial", 14, FontStyle::Italic);
+            Brush^ textoBrush = gcnew SolidBrush(emptyText);
+            System::Drawing::Font^ font = gcnew System::Drawing::Font("Segoe UI", 12, FontStyle::Italic);
             String^ mensaje = "No hay datos para mostrar";
             SizeF textSize = g->MeasureString(mensaje, font);
 
@@ -232,7 +276,6 @@ namespace GUIApp {
         }
 
         try {
-            // Determinar qué tipo de gráfico mostrar
             String^ tipoGrafico = comboBoxTipoGrafico->SelectedItem != nullptr ?
                 comboBoxTipoGrafico->SelectedItem->ToString() : "Barras";
 
@@ -241,18 +284,34 @@ namespace GUIApp {
             else if (tipoGrafico == "Torta")
                 DibujarGraficoTorta(g, pictureBoxGrafico->Width, pictureBoxGrafico->Height);
         }
-        catch (Exception^ ex) {
-            Brush^ errorBrush = gcnew SolidBrush(Color::Red);
-            System::Drawing::Font^ errorFont = gcnew System::Drawing::Font("Arial", 10, FontStyle::Bold);
-            g->DrawString("Error al dibujar el gráfico: " + ex->Message,
-                errorFont, errorBrush, 10, 10);
+        catch (Exception^) {
+            Brush^ errorBrush = gcnew SolidBrush(Color::FromArgb(248, 113, 113));
+            System::Drawing::Font^ errorFont = gcnew System::Drawing::Font("Segoe UI", 9, FontStyle::Bold);
+            g->DrawString("Error al dibujar el gráfico", errorFont, errorBrush, 10, 10);
             delete errorBrush;
             delete errorFont;
         }
     }
 
+
     private: void DibujarGraficoBarras(Graphics^ g, int width, int height) {
-        // Configuración del gráfico
+        Color gridColor = Color::FromArgb(55, 65, 81);
+        Color axisColor = Color::FromArgb(148, 163, 184);
+        Color labelColor = Color::FromArgb(226, 232, 240);
+        Color titleColor = Color::FromArgb(248, 250, 252);
+        Color totalColor = Color::FromArgb(52, 211, 153);
+
+        array<Color>^ colores = {
+            Color::FromArgb(59, 130, 246),   // azul
+            Color::FromArgb(172, 138, 230),  // lila
+            Color::FromArgb(52, 211, 153),   // verde
+            Color::FromArgb(251, 191, 36),   // amarillo
+            Color::FromArgb(129, 140, 248),  // indigo
+            Color::FromArgb(45, 212, 191),   // teal
+            Color::FromArgb(244, 114, 182),  // rosa
+            Color::FromArgb(234, 179, 8)
+        };
+
         int margenIzquierdo = 100;
         int margenDerecho = 40;
         int margenSuperior = 60;
@@ -261,66 +320,52 @@ namespace GUIApp {
         int areaGraficoWidth = width - margenIzquierdo - margenDerecho;
         int areaGraficoHeight = height - margenSuperior - margenInferior;
 
-        // Calcular valores máximos para la escala
         int maxCantidad = 1;
         for each (KeyValuePair<String^, int> ^ par in datosGrafico) {
             if (par->Value > maxCantidad)
                 maxCantidad = par->Value;
         }
 
-        // Dibujar título
-        Brush^ tituloBrush = gcnew SolidBrush(Color::DarkBlue);
-        System::Drawing::Font^ tituloFont = gcnew System::Drawing::Font("Arial", 12, FontStyle::Bold);
+        // Título
+        Brush^ tituloBrush = gcnew SolidBrush(titleColor);
+        System::Drawing::Font^ tituloFont = gcnew System::Drawing::Font("Segoe UI", 12, FontStyle::Bold);
         String^ titulo = "Alertas Solucionadas por Usuario - Gráfico de Barras";
         SizeF tituloSize = g->MeasureString(titulo, tituloFont);
         g->DrawString(titulo, tituloFont, tituloBrush, (width - tituloSize.Width) / 2, 10);
         delete tituloBrush;
         delete tituloFont;
 
-        // Dibujar ejes
-        Pen^ ejePen = gcnew Pen(Color::Black, 2);
-        g->DrawLine(ejePen, margenIzquierdo, margenSuperior, margenIzquierdo, margenSuperior + areaGraficoHeight); // Eje Y
+        // Ejes
+        Pen^ ejePen = gcnew Pen(axisColor, 2);
+        g->DrawLine(ejePen, margenIzquierdo, margenSuperior,
+            margenIzquierdo, margenSuperior + areaGraficoHeight);
         g->DrawLine(ejePen, margenIzquierdo, margenSuperior + areaGraficoHeight,
-            margenIzquierdo + areaGraficoWidth, margenSuperior + areaGraficoHeight); // Eje X
+            margenIzquierdo + areaGraficoWidth, margenSuperior + areaGraficoHeight);
 
-        // Configuración de barras
         int numBarras = datosGrafico->Count;
         int anchoBarra = areaGraficoWidth / (numBarras + 2);
         int espacioEntreBarras = anchoBarra / 3;
         int anchoBarraReal = anchoBarra - espacioEntreBarras;
 
-        // Colores para las barras
-        array<Color>^ colores = {
-            Color::Blue, Color::Red, Color::Green, Color::Orange,
-            Color::Purple, Color::Brown, Color::Teal, Color::Magenta,
-            Color::DarkGreen, Color::DarkRed, Color::DarkBlue, Color::Goldenrod
-        };
-
-        // Dibujar barras
         int indice = 0;
         for each (KeyValuePair<String^, int> ^ par in datosGrafico) {
             String^ nombreUsuario = par->Key;
             int cantidad = par->Value;
 
-            // Calcular posición y tamaño de la barra
             int x = margenIzquierdo + (indice * anchoBarra) + espacioEntreBarras;
             int alturaBarra = (int)((cantidad / (double)maxCantidad) * areaGraficoHeight);
             int y = margenSuperior + areaGraficoHeight - alturaBarra;
 
-            // Seleccionar color
             Color colorBarra = colores[indice % colores->Length];
             Brush^ barraBrush = gcnew SolidBrush(colorBarra);
-
-            // Dibujar barra
             g->FillRectangle(barraBrush, x, y, anchoBarraReal, alturaBarra);
 
-            // Borde de la barra
-            Pen^ bordePen = gcnew Pen(Color::Black, 1);
+            Pen^ bordePen = gcnew Pen(Color::FromArgb(15, 23, 42), 1);
             g->DrawRectangle(bordePen, x, y, anchoBarraReal, alturaBarra);
 
-            // Etiqueta con la cantidad
+            // Cantidad
             Brush^ textoBrush = gcnew SolidBrush(Color::White);
-            System::Drawing::Font^ textoFont = gcnew System::Drawing::Font("Arial", 8, FontStyle::Bold);
+            System::Drawing::Font^ textoFont = gcnew System::Drawing::Font("Segoe UI", 8, FontStyle::Bold);
             String^ etiquetaCantidad = cantidad.ToString();
             SizeF textoSize = g->MeasureString(etiquetaCantidad, textoFont);
 
@@ -333,26 +378,23 @@ namespace GUIApp {
             else {
                 textoY = y - textoSize.Height - 2;
                 delete textoBrush;
-                textoBrush = gcnew SolidBrush(Color::Black);
+                textoBrush = gcnew SolidBrush(labelColor);
             }
 
             g->DrawString(etiquetaCantidad, textoFont, textoBrush, textoX, textoY);
 
-            // Etiqueta del nombre del usuario (eje X)
-            Brush^ nombreBrush = gcnew SolidBrush(Color::Black);
-            System::Drawing::Font^ nombreFont = gcnew System::Drawing::Font("Arial", 8);
+            // Nombre usuario
+            Brush^ nombreBrush = gcnew SolidBrush(labelColor);
+            System::Drawing::Font^ nombreFont = gcnew System::Drawing::Font("Segoe UI", 8);
 
-            // Acortar nombre si es muy largo
             String^ nombreMostrar = nombreUsuario;
-            if (nombreMostrar->Length > 10) {
+            if (nombreMostrar->Length > 10)
                 nombreMostrar = nombreMostrar->Substring(0, 8) + "...";
-            }
 
             SizeF nombreSize = g->MeasureString(nombreMostrar, nombreFont);
             float nombreX = x + (anchoBarraReal - nombreSize.Width) / 2;
             float nombreY = margenSuperior + areaGraficoHeight + 5;
 
-            // Rotar texto si hay muchos usuarios
             if (numBarras > 6) {
                 g->TranslateTransform(nombreX + nombreSize.Width / 2, nombreY);
                 g->RotateTransform(-45);
@@ -363,12 +405,11 @@ namespace GUIApp {
                 g->DrawString(nombreMostrar, nombreFont, nombreBrush, nombreX, nombreY);
             }
 
-            // Mostrar nombre completo como tooltip (se puede implementar con ToolTip control)
+            // Si se recortó el nombre, mostrar completo debajo
             if (nombreUsuario != nombreMostrar) {
                 g->DrawString(nombreUsuario, nombreFont, nombreBrush, nombreX, nombreY + 15);
             }
 
-            // Liberar recursos
             delete barraBrush;
             delete bordePen;
             delete textoBrush;
@@ -379,12 +420,12 @@ namespace GUIApp {
             indice++;
         }
 
-        // Dibujar escala del eje Y
+        // Escala Y
         DibujarEscalaEjeY(g, margenIzquierdo, margenSuperior, areaGraficoWidth, areaGraficoHeight, maxCantidad);
 
-        // Etiqueta del eje Y
-        Brush^ escalaBrush = gcnew SolidBrush(Color::Black);
-        System::Drawing::Font^ ejeYFont = gcnew System::Drawing::Font("Arial", 10, FontStyle::Bold);
+        // Ejes X/Y
+        Brush^ escalaBrush = gcnew SolidBrush(axisColor);
+        System::Drawing::Font^ ejeYFont = gcnew System::Drawing::Font("Segoe UI", 10, FontStyle::Bold);
         String^ etiquetaEjeY = "Cantidad de Alertas";
         SizeF ejeYSize = g->MeasureString(etiquetaEjeY, ejeYFont);
         g->TranslateTransform(20, margenSuperior + areaGraficoHeight / 2);
@@ -392,26 +433,23 @@ namespace GUIApp {
         g->DrawString(etiquetaEjeY, ejeYFont, escalaBrush, -ejeYSize.Height / 2, 0);
         g->ResetTransform();
 
-        // Etiqueta del eje X
-        System::Drawing::Font^ ejeXFont = gcnew System::Drawing::Font("Arial", 10, FontStyle::Bold);
+        System::Drawing::Font^ ejeXFont = gcnew System::Drawing::Font("Segoe UI", 10, FontStyle::Bold);
         String^ etiquetaEjeX = "Usuarios";
         SizeF ejeXSize = g->MeasureString(etiquetaEjeX, ejeXFont);
         g->DrawString(etiquetaEjeX, ejeXFont, escalaBrush,
             margenIzquierdo + (areaGraficoWidth - ejeXSize.Width) / 2,
             margenSuperior + areaGraficoHeight + 50);
 
-        // Total de alertas
+        // Total
         int totalAlertas = 0;
-        for each (KeyValuePair<String^, int> ^ par in datosGrafico) {
+        for each (KeyValuePair<String^, int> ^ par in datosGrafico)
             totalAlertas += par->Value;
-        }
 
-        Brush^ totalBrush = gcnew SolidBrush(Color::DarkGreen);
-        System::Drawing::Font^ totalFont = gcnew System::Drawing::Font("Arial", 10, FontStyle::Bold);
+        Brush^ totalBrush = gcnew SolidBrush(totalColor);
+        System::Drawing::Font^ totalFont = gcnew System::Drawing::Font("Segoe UI", 10, FontStyle::Bold);
         String^ totalTexto = String::Format("Total de alertas solucionadas: {0}", totalAlertas);
         g->DrawString(totalTexto, totalFont, totalBrush, margenIzquierdo, 35);
 
-        // Liberar recursos finales
         delete ejePen;
         delete escalaBrush;
         delete ejeYFont;
@@ -420,37 +458,42 @@ namespace GUIApp {
         delete totalFont;
     }
 
+
     private: void DibujarGraficoTorta(Graphics^ g, int width, int height) {
-        // Configuración del gráfico de torta
+        Color labelColor = Color::FromArgb(226, 232, 240);
+        Color titleColor = Color::FromArgb(248, 250, 252);
+        Color lineColor = Color::FromArgb(148, 163, 184);
+        Color totalColor = Color::FromArgb(52, 211, 153);
+
+        array<Color>^ colores = {
+            Color::FromArgb(59, 130, 246),   // azul
+            Color::FromArgb(172, 138, 230),  // lila
+            Color::FromArgb(52, 211, 153),   // verde
+            Color::FromArgb(251, 191, 36),   // amarillo
+            Color::FromArgb(129, 140, 248),  // indigo
+            Color::FromArgb(45, 212, 191),   // teal
+            Color::FromArgb(244, 114, 182),  // rosa
+            Color::FromArgb(234, 179, 8)
+        };
+
         int centroX = width / 2;
         int centroY = height / 2;
         int radio = Math::Min(width, height) / 3;
 
-        // Dibujar título
-        Brush^ tituloBrush = gcnew SolidBrush(Color::DarkBlue);
-        System::Drawing::Font^ tituloFont = gcnew System::Drawing::Font("Arial", 12, FontStyle::Bold);
+        Brush^ tituloBrush = gcnew SolidBrush(titleColor);
+        System::Drawing::Font^ tituloFont = gcnew System::Drawing::Font("Segoe UI", 12, FontStyle::Bold);
         String^ titulo = "Alertas Solucionadas por Usuario - Gráfico de Torta";
         SizeF tituloSize = g->MeasureString(titulo, tituloFont);
         g->DrawString(titulo, tituloFont, tituloBrush, (width - tituloSize.Width) / 2, 10);
         delete tituloBrush;
         delete tituloFont;
 
-        // Calcular total para porcentajes
         int totalAlertas = 0;
-        for each (KeyValuePair<String^, int> ^ par in datosGrafico) {
+        for each (KeyValuePair<String^, int> ^ par in datosGrafico)
             totalAlertas += par->Value;
-        }
 
         if (totalAlertas == 0) return;
 
-        // Colores para los segmentos
-        array<Color>^ colores = {
-            Color::Red, Color::Blue, Color::Green, Color::Orange,
-            Color::Purple, Color::Brown, Color::Teal, Color::Magenta,
-            Color::DarkGreen, Color::DarkRed, Color::DarkBlue, Color::Goldenrod
-        };
-
-        // Dibujar segmentos - CORREGIDO: usando tipos explícitos
         float anguloInicio = 0.0f;
         int indice = 0;
 
@@ -460,52 +503,48 @@ namespace GUIApp {
 
             float anguloBarrido = (cantidad / (float)totalAlertas) * 360.0f;
 
-
             Brush^ segmentoBrush = gcnew SolidBrush(colores[indice % colores->Length]);
 
-            // Usar RectangleF en lugar de valores separados
-            RectangleF rect = RectangleF(centroX - radio, centroY - radio, radio * 2, radio * 2);
-            g->FillPie(segmentoBrush, (float)(centroX - radio), (float)(centroY - radio), (float)(radio * 2), (float)(radio * 2), anguloInicio, anguloBarrido);
+            System::Drawing::Rectangle rect(
+                centroX - radio,
+                centroY - radio,
+                radio * 2,
+                radio * 2
+            );
+            g->FillPie(segmentoBrush, rect, anguloInicio, anguloBarrido);
 
-            // Borde del segmento
-            Pen^ bordePen = gcnew Pen(Color::Black, 1);
+            Pen^ bordePen = gcnew Pen(Color::FromArgb(15, 23, 42), 1);
             g->DrawPie(bordePen, rect, anguloInicio, anguloBarrido);
 
-            // Calcular posición para la etiqueta
             float anguloMedio = anguloInicio + anguloBarrido / 2.0f;
-            float anguloRadianes = anguloMedio * (float)Math::PI / 180.0f;
-            float etiquetaX = centroX + (radio + 20) * (float)Math::Cos(anguloRadianes);
-            float etiquetaY = centroY + (radio + 20) * (float)Math::Sin(anguloRadianes);
+            float angRad = anguloMedio * (float)Math::PI / 180.0f;
+            float etiquetaX = centroX + (radio + 20) * (float)Math::Cos(angRad);
+            float etiquetaY = centroY + (radio + 20) * (float)Math::Sin(angRad);
 
-            // Dibujar línea conectora
-            float lineaX = centroX + (radio - 10) * (float)Math::Cos(anguloRadianes);
-            float lineaY = centroY + (radio - 10) * (float)Math::Sin(anguloRadianes);
-            g->DrawLine(bordePen, lineaX, lineaY, etiquetaX, etiquetaY);
+            float lineaX = centroX + (radio - 10) * (float)Math::Cos(angRad);
+            float lineaY = centroY + (radio - 10) * (float)Math::Sin(angRad);
+            Pen^ lineaPen = gcnew Pen(lineColor, 1);
+            g->DrawLine(lineaPen, lineaX, lineaY, etiquetaX, etiquetaY);
 
-            // Etiqueta con porcentaje y nombre
             float porcentaje = (cantidad / (float)totalAlertas) * 100.0f;
             String^ etiqueta = String::Format("{0}: {1} ({2:F1}%)", nombreUsuario, cantidad, porcentaje);
 
-            Brush^ textoBrush = gcnew SolidBrush(Color::Black);
-            System::Drawing::Font^ textoFont = gcnew System::Drawing::Font("Arial", 8);
+            Brush^ textoBrush = gcnew SolidBrush(labelColor);
+            System::Drawing::Font^ textoFont = gcnew System::Drawing::Font("Segoe UI", 8);
             SizeF textoSize = g->MeasureString(etiqueta, textoFont);
 
-            // Ajustar posición según cuadrante
             float textoX = etiquetaX;
             float textoY = etiquetaY - textoSize.Height / 2;
 
-            if (etiquetaX > centroX) {
-                // Derecha - alinear a la izquierda
-                g->DrawString(etiqueta, textoFont, textoBrush, textoX, textoY);
-            }
-            else {
-                // Izquierda - alinear a la derecha
-                g->DrawString(etiqueta, textoFont, textoBrush, textoX - textoSize.Width, textoY);
+            if (etiquetaX <= centroX) {
+                textoX -= textoSize.Width;
             }
 
-            // Liberar recursos
+            g->DrawString(etiqueta, textoFont, textoBrush, textoX, textoY);
+
             delete segmentoBrush;
             delete bordePen;
+            delete lineaPen;
             delete textoBrush;
             delete textoFont;
 
@@ -514,8 +553,8 @@ namespace GUIApp {
         }
 
         // Total en el centro
-        Brush^ totalBrush = gcnew SolidBrush(Color::DarkRed);
-        System::Drawing::Font^ totalFont = gcnew System::Drawing::Font("Arial", 10, FontStyle::Bold);
+        Brush^ totalBrush = gcnew SolidBrush(totalColor);
+        System::Drawing::Font^ totalFont = gcnew System::Drawing::Font("Segoe UI", 10, FontStyle::Bold);
         String^ totalTexto = String::Format("Total: {0}", totalAlertas);
         SizeF totalSize = g->MeasureString(totalTexto, totalFont);
         g->DrawString(totalTexto, totalFont, totalBrush,
@@ -524,6 +563,7 @@ namespace GUIApp {
         delete totalBrush;
         delete totalFont;
     }
+
 
     private: void DibujarEscalaEjeY(Graphics^ g, int margenIzquierdo, int margenSuperior, int areaGraficoWidth, int areaGraficoHeight, int maxCantidad) {
         Brush^ escalaBrush = gcnew SolidBrush(Color::Black);

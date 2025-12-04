@@ -1,5 +1,6 @@
 #pragma once
 #include "ControlRobotForm.h"
+#include "UIStyles.h"
 
 namespace GUIApp {
 
@@ -15,9 +16,6 @@ namespace GUIApp {
 	using namespace System::Collections::Generic;
 	using namespace System::Threading;
 
-	/// <summary>
-	/// Resumen de DatosRobotsUsuariosForm
-	/// </summary>
 	public ref class DatosRobotsUsuariosForm : public System::Windows::Forms::Form
 	{
 	public:
@@ -25,108 +23,85 @@ namespace GUIApp {
 		{
 			InitializeComponent();
 
+			UpgradeTabControlToDark();
+
 			PasswordUser->PasswordChar = '*';
-			//
-			//TODO: agregar código de constructor aquí
-			//
+
+			ApplyDarkTheme();
+			StyleButtonsAndGrids();
+			StyleTextBoxes();
 		}
 
 	protected:
-		/// <summary>
-		/// Limpiar los recursos que se estén usando.
-		/// </summary>
 		~DatosRobotsUsuariosForm()
 		{
 			if (components)
-			{
 				delete components;
-			}
 			StopTimer();
 		}
-	private: System::Windows::Forms::TabControl^ tabControl1;
-	protected:
-	private: System::Windows::Forms::TabPage^ tabPage2;
-	private: System::Windows::Forms::TextBox^ YRobot;
-	private: System::Windows::Forms::Label^ label7;
-	private: System::Windows::Forms::TextBox^ XRobot;
-	private: System::Windows::Forms::Label^ label8;
-
-
-	private: System::Windows::Forms::TextBox^ NombreRobot;
-	private: System::Windows::Forms::Label^ label10;
-	private: System::Windows::Forms::TextBox^ BateriaRobot;
-	private: System::Windows::Forms::Label^ label11;
-	private: System::Windows::Forms::TextBox^ IDRobot;
-	private: System::Windows::Forms::Label^ label12;
-	private: System::Windows::Forms::Button^ btnControlRobot;
-	private: System::Windows::Forms::Button^ btnDeleteRobot;
-	private: System::Windows::Forms::Button^ btnModifyRobot;
-
-	private: System::Windows::Forms::Button^ btnAddRobot;
-	private: System::Windows::Forms::DataGridView^ dgvRobot;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotD;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceBattery;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotName;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceWorkArea;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourcePosX;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourcePosY;
-	private: System::Windows::Forms::TabPage^ tabPage1;
-	private: System::Windows::Forms::TextBox^ CargoUser;
-	private: System::Windows::Forms::Label^ label4;
-	private: System::Windows::Forms::TextBox^ PasswordUser;
-	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::TextBox^ NombreUser;
-	private: System::Windows::Forms::Label^ label2;
-
-
-	private: System::Windows::Forms::Button^ btnDeleteUser;
-	private: System::Windows::Forms::Button^ btnModifyUser;
-
-	private: System::Windows::Forms::Button^ btnAddUser;
-	private: System::Windows::Forms::DataGridView^ dgvUser;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUserID;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUserName;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourcePassword;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRole;
-	private: System::Windows::Forms::Label^ label5;
-
-
-	private: System::Windows::Forms::GroupBox^ groupBox1;
-	private: System::Windows::Forms::RadioButton^ rbtnDisponibilidadNo;
-	private: System::Windows::Forms::RadioButton^ rbtnDisponibilidadYes;
-	private: System::Windows::Forms::Button^ btnUpdatePhotoRobot;
-
-
-
-
-	private: System::Windows::Forms::PictureBox^ pbPhotoRobot;
-
-
-
-
-
-
-	private: System::Windows::Forms::Label^ label6;
-	private: System::Windows::Forms::TextBox^ txtCaracteristicas;
-	private: System::Windows::Forms::TextBox^ IDUser;
-
-	private: System::Windows::Forms::Label^ label1;
-
 
 	private:
-		/// <summary>
-		/// Variable del diseñador necesaria.
-		/// </summary>
+		System::Windows::Forms::TabControl^ tabControl1;
+		System::Windows::Forms::TabPage^ tabPage2;
+		System::Windows::Forms::TabPage^ tabPage1;
+
+		System::Windows::Forms::TextBox^ YRobot;
+		System::Windows::Forms::Label^ label7;
+		System::Windows::Forms::TextBox^ XRobot;
+		System::Windows::Forms::Label^ label8;
+		System::Windows::Forms::TextBox^ NombreRobot;
+		System::Windows::Forms::Label^ label10;
+		System::Windows::Forms::TextBox^ BateriaRobot;
+		System::Windows::Forms::Label^ label11;
+		System::Windows::Forms::TextBox^ IDRobot;
+		System::Windows::Forms::Label^ label12;
+		System::Windows::Forms::Button^ btnControlRobot;
+		System::Windows::Forms::Button^ btnDeleteRobot;
+		System::Windows::Forms::Button^ btnModifyRobot;
+		System::Windows::Forms::Button^ btnAddRobot;
+		System::Windows::Forms::DataGridView^ dgvRobot;
+
+		System::Windows::Forms::TextBox^ CargoUser;
+		System::Windows::Forms::Label^ label4;
+		System::Windows::Forms::TextBox^ PasswordUser;
+		System::Windows::Forms::Label^ label3;
+		System::Windows::Forms::TextBox^ NombreUser;
+		System::Windows::Forms::Label^ label2;
+		System::Windows::Forms::Button^ btnDeleteUser;
+		System::Windows::Forms::Button^ btnModifyUser;
+		System::Windows::Forms::Button^ btnAddUser;
+		System::Windows::Forms::DataGridView^ dgvUser;
+
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUserID;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUserName;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourcePassword;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRole;
+
+		System::Windows::Forms::Label^ label5;
+		System::Windows::Forms::GroupBox^ groupBox1;
+		System::Windows::Forms::RadioButton^ rbtnDisponibilidadNo;
+		System::Windows::Forms::RadioButton^ rbtnDisponibilidadYes;
+		System::Windows::Forms::Button^ btnUpdatePhotoRobot;
+		System::Windows::Forms::PictureBox^ pbPhotoRobot;
+		System::Windows::Forms::Label^ label6;
+		System::Windows::Forms::TextBox^ txtCaracteristicas;
+		System::Windows::Forms::TextBox^ IDUser;
+		System::Windows::Forms::Label^ label1;
+
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotD;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceBattery;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotName;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceWorkArea;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourcePosX;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourcePosY;
+
 		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Método necesario para admitir el Diseñador. No se puede modificar
-		/// el contenido de este método con el editor de código.
-		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(DatosRobotsUsuariosForm::typeid));
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew
+				System::ComponentModel::ComponentResourceManager(DatosRobotsUsuariosForm::typeid));
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
 			this->label6 = (gcnew System::Windows::Forms::Label());
@@ -193,6 +168,10 @@ namespace GUIApp {
 			this->tabControl1->SelectedIndex = 0;
 			this->tabControl1->Size = System::Drawing::Size(979, 658);
 			this->tabControl1->TabIndex = 1;
+
+
+
+
 			// 
 			// tabPage2
 			// 
@@ -219,10 +198,11 @@ namespace GUIApp {
 			this->tabPage2->Controls->Add(this->dgvRobot);
 			this->tabPage2->Location = System::Drawing::Point(4, 25);
 			this->tabPage2->Name = L"tabPage2";
+			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
 			this->tabPage2->Size = System::Drawing::Size(971, 629);
 			this->tabPage2->TabIndex = 0;
 			this->tabPage2->Text = L"Administrar Robots";
-			this->tabPage2->UseVisualStyleBackColor = true;
+			this->tabPage2->UseVisualStyleBackColor = false;
 			// 
 			// label6
 			// 
@@ -255,7 +235,6 @@ namespace GUIApp {
 			// 
 			// pbPhotoRobot
 			// 
-			this->pbPhotoRobot->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
 			this->pbPhotoRobot->Location = System::Drawing::Point(718, 22);
 			this->pbPhotoRobot->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->pbPhotoRobot->Name = L"pbPhotoRobot";
@@ -264,6 +243,7 @@ namespace GUIApp {
 			this->pbPhotoRobot->TabIndex = 40;
 			this->pbPhotoRobot->TabStop = false;
 			this->pbPhotoRobot->Click += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::pbPhoto_Click);
+			this->pbPhotoRobot->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &DatosRobotsUsuariosForm::pbPhotoRobot_Paint);
 			// 
 			// label5
 			// 
@@ -286,6 +266,7 @@ namespace GUIApp {
 			this->groupBox1->Size = System::Drawing::Size(133, 46);
 			this->groupBox1->TabIndex = 36;
 			this->groupBox1->TabStop = false;
+			this->groupBox1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &DatosRobotsUsuariosForm::groupBox1_Paint);
 			// 
 			// rbtnDisponibilidadNo
 			// 
@@ -454,8 +435,8 @@ namespace GUIApp {
 			this->dgvRobot->RowTemplate->Height = 24;
 			this->dgvRobot->Size = System::Drawing::Size(927, 249);
 			this->dgvRobot->TabIndex = 18;
-			this->dgvRobot->UseWaitCursor = true;
 			this->dgvRobot->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &DatosRobotsUsuariosForm::dgvRobot_CellClick);
+
 			// 
 			// ResourceRobotD
 			// 
@@ -515,10 +496,11 @@ namespace GUIApp {
 			this->tabPage1->Controls->Add(this->dgvUser);
 			this->tabPage1->Location = System::Drawing::Point(4, 25);
 			this->tabPage1->Name = L"tabPage1";
+			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
 			this->tabPage1->Size = System::Drawing::Size(971, 629);
-			this->tabPage1->TabIndex = 0;
+			this->tabPage1->TabIndex = 1;
 			this->tabPage1->Text = L"Administrar Usuarios";
-			this->tabPage1->UseVisualStyleBackColor = true;
+			this->tabPage1->UseVisualStyleBackColor = false;
 			// 
 			// IDUser
 			// 
@@ -669,11 +651,13 @@ namespace GUIApp {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)),
+				static_cast<System::Int32>(static_cast<System::Byte>(64)));
 			this->ClientSize = System::Drawing::Size(1003, 675);
 			this->Controls->Add(this->tabControl1);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"DatosRobotsUsuariosForm";
-			this->Text = L"DatosRobotsUsuariosForm";
+			this->Text = L"Gestión de Usuarios y Robots";
 			this->Load += gcnew System::EventHandler(this, &DatosRobotsUsuariosForm::DatosRobotsUsuariosForm_Load);
 			this->tabControl1->ResumeLayout(false);
 			this->tabPage2->ResumeLayout(false);
@@ -688,6 +672,180 @@ namespace GUIApp {
 			this->ResumeLayout(false);
 
 		}
+#pragma endregion
+
+		// ========= ESTILOS =========
+
+		void ApplyDarkTheme()
+		{
+			// Fondo general del form
+			this->BackColor = Color::FromArgb(20, 27, 47);
+
+			// TabControl
+			this->tabControl1->BackColor = Color::FromArgb(20, 27, 47);
+			this->tabControl1->ForeColor = Color::FromArgb(224, 231, 255);
+
+			// Pestañas
+			this->tabPage2->BackColor = Color::FromArgb(20, 27, 47);
+			this->tabPage2->ForeColor = Color::FromArgb(224, 231, 255);
+
+			this->tabPage1->BackColor = Color::FromArgb(20, 27, 47);
+			this->tabPage1->ForeColor = Color::FromArgb(224, 231, 255);
+		}
+		void StyleButtonsAndGrids()
+		{
+			// Botones primarios
+			array<Button^>^ primaryButtons = gcnew array<Button^> {
+				this->btnAddRobot,
+					this->btnControlRobot,
+					this->btnAddUser
+			};
+
+			for each (Button ^ b in primaryButtons)
+			{
+				b->FlatStyle = FlatStyle::Flat;
+				b->FlatAppearance->BorderSize = 0;
+				b->BackColor = Color::FromArgb(0, 140, 255);
+				b->ForeColor = Color::White;
+				b->Font = gcnew System::Drawing::Font("Segoe UI", 9, FontStyle::Bold);
+				UIHelpers::SetRoundedRegion(b, 18);
+			}
+
+			// Botones secundarios
+			array<Button^>^ secondaryButtons = gcnew array<Button^> {
+				this->btnModifyRobot,
+					this->btnDeleteRobot,
+					this->btnUpdatePhotoRobot,
+					this->btnModifyUser,
+					this->btnDeleteUser
+			};
+
+			for each (Button ^ b in secondaryButtons)
+			{
+				b->FlatStyle = FlatStyle::Flat;
+				b->FlatAppearance->BorderSize = 0;
+				b->BackColor = Color::FromArgb(20, 27, 47);
+				b->ForeColor = Color::FromArgb(224, 231, 255);
+				b->Font = gcnew System::Drawing::Font("Segoe UI", 9, FontStyle::Regular);
+				b->Paint += gcnew PaintEventHandler(&UIHelpers::OutlineButton_Paint);
+				UIHelpers::SetRoundedRegion(b, 18);
+			}
+
+			// Radio pequeño para "Actualizar foto"
+			UIHelpers::SetRoundedRegion(this->btnUpdatePhotoRobot, 8);
+
+			StyleGrid(dgvRobot);
+			StyleGrid(dgvUser);
+		}
+
+		void StyleGrid(DataGridView^ grid)
+		{
+			grid->AutoSizeColumnsMode =
+				System::Windows::Forms::DataGridViewAutoSizeColumnsMode::Fill;
+			grid->AutoSizeRowsMode =
+				System::Windows::Forms::DataGridViewAutoSizeRowsMode::AllCells;
+
+			grid->BackgroundColor = Color::FromArgb(10, 16, 32);
+			grid->EnableHeadersVisualStyles = false;
+			grid->GridColor = Color::FromArgb(30, 41, 59);
+			grid->BorderStyle = BorderStyle::None;
+
+			// Encabezados
+			grid->ColumnHeadersDefaultCellStyle->BackColor =
+				Color::FromArgb(37, 99, 235);
+			grid->ColumnHeadersDefaultCellStyle->ForeColor =
+				Color::FromArgb(241, 245, 249);
+			grid->ColumnHeadersDefaultCellStyle->Font =
+				gcnew System::Drawing::Font("Segoe UI", 9, FontStyle::Bold);
+			grid->ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle::Single;
+
+			// Celdas
+			grid->DefaultCellStyle->BackColor = Color::FromArgb(20, 27, 47);
+			grid->DefaultCellStyle->ForeColor = Color::FromArgb(226, 232, 240);
+			grid->DefaultCellStyle->SelectionBackColor =
+				Color::FromArgb(37, 99, 235);
+			grid->DefaultCellStyle->SelectionForeColor = Color::White;
+
+			grid->RowHeadersVisible = false;
+		}
+
+		void StyleTextBoxes()
+		{
+			Color back = Color::FromArgb(10, 16, 32);
+			Color fore = Color::FromArgb(226, 232, 240);
+
+			array<TextBox^>^ boxes = gcnew array<TextBox^> {
+				this->IDRobot,
+					this->BateriaRobot,
+					this->NombreRobot,
+					this->XRobot,
+					this->YRobot,
+					this->txtCaracteristicas,
+					this->IDUser,
+					this->NombreUser,
+					this->PasswordUser,
+					this->CargoUser
+			};
+
+			for each (TextBox ^ tb in boxes)
+			{
+				tb->BackColor = back;
+				tb->ForeColor = fore;
+				tb->BorderStyle = BorderStyle::FixedSingle;
+			}
+		}
+
+		// Marco celeste del PictureBox (sin BorderStyle blanco)
+		void pbPhotoRobot_Paint(System::Object^ sender, PaintEventArgs^ e)
+		{
+			PictureBox^ pb = safe_cast<PictureBox^>(sender);
+			e->Graphics->SmoothingMode =
+				System::Drawing::Drawing2D::SmoothingMode::AntiAlias;
+
+			Rectangle rect = pb->ClientRectangle;
+			rect.Inflate(-1, -1);
+			Pen^ pen = gcnew Pen(Color::FromArgb(56, 189, 248), 2.0f);
+			e->Graphics->DrawRectangle(pen, rect);
+		}
+
+		// Quitar borde blanco del GroupBox
+		void groupBox1_Paint(System::Object^ sender, PaintEventArgs^ e)
+		{
+			GroupBox^ g = safe_cast<GroupBox^>(sender);
+			Color back = Color::FromArgb(20, 27, 47);
+			e->Graphics->Clear(back);
+		}
+
+		// Sustituye el TabControl estándar por un DarkTabControl en tiempo de ejecución
+		void UpgradeTabControlToDark()
+		{
+			// Crear el DarkTabControl
+			DarkTabControl^ dark = gcnew DarkTabControl();
+
+			// Copiar propiedades básicas de layout
+			dark->Location = this->tabControl1->Location;
+			dark->Size = this->tabControl1->Size;
+			dark->Name = this->tabControl1->Name;
+			dark->Anchor = this->tabControl1->Anchor;
+			dark->Dock = this->tabControl1->Dock;
+			dark->TabIndex = this->tabControl1->TabIndex;
+
+			// Pasar las TabPages existentes al nuevo control
+			while (this->tabControl1->TabPages->Count > 0)
+			{
+				TabPage^ p = this->tabControl1->TabPages[0];
+				this->tabControl1->TabPages->RemoveAt(0);
+				dark->TabPages->Add(p);
+			}
+
+			// Reemplazar en la colección de controles del formulario
+			this->Controls->Remove(this->tabControl1);
+			this->tabControl1 = dark;              // ahora el campo apunta al DarkTabControl
+			this->Controls->Add(this->tabControl1);
+		}
+
+
+		// ========= LÓGICA =========
 		#pragma endregion
 			void cargarTablaRobots()
 			{

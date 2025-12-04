@@ -1,4 +1,5 @@
 #pragma once
+#include "UIStyles.h"
 
 namespace GUIApp {
 
@@ -23,6 +24,7 @@ namespace GUIApp {
 		GraficsAdminForm(void)
 		{
 			InitializeComponent();
+			ApplyDarkTheme();
 			//
 			//TODO: agregar código de constructor aquí
 			//
@@ -116,6 +118,33 @@ namespace GUIApp {
 
 		}
 		#pragma endregion
+	private:
+		void ApplyDarkTheme()
+		{
+			// Form
+			this->BackColor = Color::FromArgb(20, 27, 47);
+			this->ForeColor = Color::FromArgb(226, 232, 240);
+			this->StartPosition = FormStartPosition::CenterScreen;
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
+
+			// Área del gráfico (lienzo blanco)
+			this->pictureBox1->BackColor = Color::White;
+			this->pictureBox1->BorderStyle = BorderStyle::FixedSingle;
+
+			// Título
+			this->label1->ForeColor = Color::FromArgb(241, 245, 249);
+			this->label1->Font = gcnew Drawing::Font("Segoe UI", 12, FontStyle::Bold);
+
+			// Botón "Salir" como PRIMARIO
+			this->btnSalir->FlatStyle = FlatStyle::Flat;
+			this->btnSalir->FlatAppearance->BorderSize = 0;
+			this->btnSalir->BackColor = Color::FromArgb(0, 140, 255);
+			this->btnSalir->ForeColor = Color::White;
+			this->btnSalir->Font = gcnew Drawing::Font("Segoe UI", 9, FontStyle::Bold);
+			UIHelpers::SetRoundedRegionAuto(this->btnSalir);
+		}
 
 		private:
 			bool debeMostrarGrafico = false;
@@ -131,13 +160,16 @@ namespace GUIApp {
 
 		private: System::Void pictureBox1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 			Graphics^ g = e->Graphics;
-			g->Clear(Color::White);
+
+			Color chartBg = Color::FromArgb(15, 23, 42);
+			Color emptyText = Color::FromArgb(148, 163, 184);
+
+			g->Clear(chartBg);
 			g->SmoothingMode = System::Drawing::Drawing2D::SmoothingMode::AntiAlias;
 
 			if (!debeMostrarGrafico || listaUsuarios == nullptr || listaUsuarios->Count == 0) {
-				// Mostrar mensaje cuando no hay datos
-				Brush^ textoBrush = gcnew SolidBrush(Color::Gray);
-				System::Drawing::Font^ font = gcnew System::Drawing::Font("Arial", 14, FontStyle::Italic);
+				Brush^ textoBrush = gcnew SolidBrush(emptyText);
+				System::Drawing::Font^ font = gcnew System::Drawing::Font("Segoe UI", 12, FontStyle::Italic);
 				String^ mensaje = "Presione 'Generar Gráfico' para ver los datos";
 				SizeF textSize = g->MeasureString(mensaje, font);
 
@@ -154,12 +186,10 @@ namespace GUIApp {
 			try {
 				DibujarGraficoBarras_Usuarios(g, pictureBox1->Width, pictureBox1->Height);
 			}
-			catch (Exception^ ex) {
-				// Manejar errores de dibujo
-				Brush^ errorBrush = gcnew SolidBrush(Color::Red);
-				System::Drawing::Font^ errorFont = gcnew System::Drawing::Font("Arial", 10, FontStyle::Bold);
-				g->DrawString("Error al dibujar el gráfico: " + ex->Message,
-					errorFont, errorBrush, 10, 10);
+			catch (Exception^) {
+				Brush^ errorBrush = gcnew SolidBrush(Color::FromArgb(248, 113, 113));
+				System::Drawing::Font^ errorFont = gcnew System::Drawing::Font("Segoe UI", 9, FontStyle::Bold);
+				g->DrawString("Error al dibujar el gráfico", errorFont, errorBrush, 10, 10);
 
 				delete errorBrush;
 				delete errorFont;
@@ -167,7 +197,16 @@ namespace GUIApp {
 		}
 
 		private: void DibujarGraficoBarras_Usuarios(Graphics^ g, int width, int height) {
-			// Configuración del gráfico
+			// Paleta
+			Color chartBg = Color::FromArgb(15, 23, 42);
+			Color gridColor = Color::FromArgb(55, 65, 81);
+			Color axisColor = Color::FromArgb(148, 163, 184);
+			Color labelColor = Color::FromArgb(226, 232, 240);
+			Color titleColor = Color::FromArgb(248, 250, 252);
+			Color totalColor = Color::FromArgb(52, 211, 153);
+			Color userBarCol = Color::FromArgb(59, 130, 246);  
+			Color robotBarCol = Color::FromArgb(172, 138, 230);
+
 			int margenIzquierdo = 80;
 			int margenDerecho = 40;
 			int margenSuperior = 60;
@@ -176,73 +215,51 @@ namespace GUIApp {
 			int areaGraficoWidth = width - margenIzquierdo - margenDerecho;
 			int areaGraficoHeight = height - margenSuperior - margenInferior;
 
-			// Calcular valores máximos para la escala
-
 			int cant_robots = listaRobots->Count;
 			int cant_usuarios = listaUsuarios->Count;
-			int maxcantidad = cant_robots;
-			if (cant_robots < cant_usuarios) maxcantidad = cant_usuarios;
+			int maxcantidad = Math::Max(cant_robots, cant_usuarios);
 			int cant_total = cant_robots + cant_usuarios;
 
-
-			// Asegurar que maxcant sea al menos 1 para evitar división por cero
 			if (maxcantidad == 0) maxcantidad = 1;
 
-			// Dibujar título
-			Brush^ tituloBrush = gcnew SolidBrush(Color::DarkBlue);
-			System::Drawing::Font^ tituloFont = gcnew System::Drawing::Font("Arial", 14, FontStyle::Bold);
+			// Título
+			Brush^ tituloBrush = gcnew SolidBrush(titleColor);
+			System::Drawing::Font^ tituloFont = gcnew System::Drawing::Font("Segoe UI", 14, FontStyle::Bold);
 			String^ titulo = "Cantidad de Usuarios y Robots Registrados";
 			SizeF tituloSize = g->MeasureString(titulo, tituloFont);
 			g->DrawString(titulo, tituloFont, tituloBrush, (width - tituloSize.Width) / 2, 10);
-
 			delete tituloBrush;
 			delete tituloFont;
 
-			// Dibujar ejes
-			Pen^ ejePen = gcnew Pen(Color::Black, 2);
-			g->DrawLine(ejePen, margenIzquierdo, margenSuperior, margenIzquierdo, margenSuperior + areaGraficoHeight); // Eje Y
+			// Ejes
+			Pen^ ejePen = gcnew Pen(axisColor, 2);
+			g->DrawLine(ejePen, margenIzquierdo, margenSuperior,
+				margenIzquierdo, margenSuperior + areaGraficoHeight);
 			g->DrawLine(ejePen, margenIzquierdo, margenSuperior + areaGraficoHeight,
-				margenIzquierdo + areaGraficoWidth, margenSuperior + areaGraficoHeight); // Eje X
+				margenIzquierdo + areaGraficoWidth, margenSuperior + areaGraficoHeight);
 
-			// Configuración de barras
 			int numBarras = 2;
-			int anchoBarra = areaGraficoWidth / (numBarras + 2); // Espacio entre barras
+			int anchoBarra = areaGraficoWidth / (numBarras + 2);
 			int espacioEntreBarras = anchoBarra / 3;
 			int anchoBarraReal = anchoBarra - espacioEntreBarras;
 
-			// Colores para las barras
-			array<Color>^ colores = {
-				Color::Blue, Color::Red, Color::Green, Color::Orange,
-				Color::Purple, Color::Brown, Color::Teal, Color::Magenta,
-				Color::DarkGreen, Color::DarkRed, Color::DarkBlue, Color::Goldenrod
-			};
-
-			// Dibujar barras
 			for (int i = 0; i < numBarras; i++) {
-				int cantidad;
-				//definimos la cantidad
-				if (i == 0) cantidad = listaUsuarios->Count;
-				if (i == 1) cantidad = listaRobots->Count;
+				int cantidad = (i == 0) ? cant_usuarios : cant_robots;
 
-				// Calcular posición y tamaño de la barra
 				int x = margenIzquierdo + (i * anchoBarra) + espacioEntreBarras;
 				int alturaBarra = (int)((cantidad / (double)maxcantidad) * areaGraficoHeight);
 				int y = margenSuperior + areaGraficoHeight - alturaBarra;
 
-				// Seleccionar color (ciclar si hay más máquinas que colores)
-				Color colorBarra = colores[i % colores->Length];
+				Color colorBarra = (i == 0) ? userBarCol : robotBarCol;
 				Brush^ barraBrush = gcnew SolidBrush(colorBarra);
-
-				// Dibujar barra
 				g->FillRectangle(barraBrush, x, y, anchoBarraReal, alturaBarra);
 
-				// Borde de la barra
-				Pen^ bordePen = gcnew Pen(Color::Black, 1);
+				Pen^ bordePen = gcnew Pen(Color::FromArgb(15, 23, 42), 1);
 				g->DrawRectangle(bordePen, x, y, anchoBarraReal, alturaBarra);
 
-				// Etiqueta con la cantidad (dentro de la barra si cabe, sino arriba)
+				// Cantidad
 				Brush^ textoBrush = gcnew SolidBrush(Color::White);
-				System::Drawing::Font^ textoFont = gcnew System::Drawing::Font("Arial", 8, FontStyle::Bold);
+				System::Drawing::Font^ textoFont = gcnew System::Drawing::Font("Segoe UI", 9, FontStyle::Bold);
 				String^ etiquetaCantidad = cantidad.ToString();
 				SizeF textoSize = g->MeasureString(etiquetaCantidad, textoFont);
 
@@ -250,45 +267,26 @@ namespace GUIApp {
 				float textoY;
 
 				if (alturaBarra > textoSize.Height + 4) {
-					// Texto dentro de la barra
 					textoY = y + (alturaBarra - textoSize.Height) / 2;
 				}
 				else {
-					// Texto arriba de la barra
 					textoY = y - textoSize.Height - 2;
 					delete textoBrush;
-					textoBrush = gcnew SolidBrush(Color::Black);
+					textoBrush = gcnew SolidBrush(labelColor);
 				}
 
 				g->DrawString(etiquetaCantidad, textoFont, textoBrush, textoX, textoY);
 
-				// Etiqueta del nombre de la máquina (eje X)
-				Brush^ nombreBrush = gcnew SolidBrush(Color::Black);
-				System::Drawing::Font^ nombreFont = gcnew System::Drawing::Font("Arial", 8);
-				String^ nombre;
-				if (i == 0) nombre = "Usuario";
-				if (i == 1) nombre = "Robot";
-
-				if (nombre->Length > 12) {
-					nombre = nombre->Substring(0, 10) + "...";
-				}
+				// Nombre eje X
+				Brush^ nombreBrush = gcnew SolidBrush(labelColor);
+				System::Drawing::Font^ nombreFont = gcnew System::Drawing::Font("Segoe UI", 9);
+				String^ nombre = (i == 0) ? "Usuario" : "Robot";
 
 				SizeF nombreSize = g->MeasureString(nombre, nombreFont);
 				float nombreX = x + (anchoBarraReal - nombreSize.Width) / 2;
 				float nombreY = margenSuperior + areaGraficoHeight + 5;
+				g->DrawString(nombre, nombreFont, nombreBrush, nombreX, nombreY);
 
-				// Rotar texto si hay muchas máquinas
-				if (numBarras > 8) {
-					g->TranslateTransform(nombreX + nombreSize.Width / 2, nombreY);
-					g->RotateTransform(-45);
-					g->DrawString(nombre, nombreFont, nombreBrush, -nombreSize.Width / 2, 0);
-					g->ResetTransform();
-				}
-				else {
-					g->DrawString(nombre, nombreFont, nombreBrush, nombreX, nombreY);
-				}
-
-				// Liberar recursos
 				delete barraBrush;
 				delete bordePen;
 				delete textoBrush;
@@ -297,28 +295,28 @@ namespace GUIApp {
 				delete nombreFont;
 			}
 
-			// Dibujar escala del eje Y
-			Brush^ escalaBrush = gcnew SolidBrush(Color::Black);
-			System::Drawing::Font^ escalaFont = gcnew System::Drawing::Font("Arial", 8);
-			Pen^ lineaEscalaPen = gcnew Pen(Color::Gray, 1);
+			// Escala Y
+			Brush^ escalaBrush = gcnew SolidBrush(axisColor);
+			System::Drawing::Font^ escalaFont = gcnew System::Drawing::Font("Segoe UI", 8);
+			Pen^ lineaEscalaPen = gcnew Pen(gridColor, 1);
 
 			int numLineasEscala = 10;
 			for (int i = 0; i <= numLineasEscala; i++) {
 				double valor = (i / (double)numLineasEscala) * maxcantidad;
-				int y = margenSuperior + areaGraficoHeight - (int)((i / (double)numLineasEscala) * areaGraficoHeight);
+				int y = margenSuperior + areaGraficoHeight -
+					(int)((i / (double)numLineasEscala) * areaGraficoHeight);
 
-				// Línea de guía
-				g->DrawLine(lineaEscalaPen, margenIzquierdo, y, margenIzquierdo + areaGraficoWidth, y);
+				g->DrawLine(lineaEscalaPen, margenIzquierdo, y,
+					margenIzquierdo + areaGraficoWidth, y);
 
-				// Etiqueta del valor
 				String^ etiquetaValor = valor.ToString("F0");
 				SizeF etiquetaSize = g->MeasureString(etiquetaValor, escalaFont);
 				g->DrawString(etiquetaValor, escalaFont, escalaBrush,
 					margenIzquierdo - etiquetaSize.Width - 5, y - etiquetaSize.Height / 2);
 			}
 
-			// Etiqueta del eje Y
-			System::Drawing::Font^ ejeYFont = gcnew System::Drawing::Font("Arial", 10, FontStyle::Bold);
+			// Eje Y
+			System::Drawing::Font^ ejeYFont = gcnew System::Drawing::Font("Segoe UI", 10, FontStyle::Bold);
 			String^ etiquetaEjeY = "Registros";
 			SizeF ejeYSize = g->MeasureString(etiquetaEjeY, ejeYFont);
 			g->TranslateTransform(20, margenSuperior + areaGraficoHeight / 2);
@@ -326,21 +324,20 @@ namespace GUIApp {
 			g->DrawString(etiquetaEjeY, ejeYFont, escalaBrush, -ejeYSize.Height / 2, 0);
 			g->ResetTransform();
 
-			// Etiqueta del eje X
-			System::Drawing::Font^ ejeXFont = gcnew System::Drawing::Font("Arial", 10, FontStyle::Bold);
+			// Eje X
+			System::Drawing::Font^ ejeXFont = gcnew System::Drawing::Font("Segoe UI", 10, FontStyle::Bold);
 			String^ etiquetaEjeX = "Registrados";
 			SizeF ejeXSize = g->MeasureString(etiquetaEjeX, ejeXFont);
 			g->DrawString(etiquetaEjeX, ejeXFont, escalaBrush,
 				margenIzquierdo + (areaGraficoWidth - ejeXSize.Width) / 2,
 				margenSuperior + areaGraficoHeight + 30);
 
-			// Leyenda de total
-			Brush^ totalBrush = gcnew SolidBrush(Color::DarkGreen);
-			System::Drawing::Font^ totalFont = gcnew System::Drawing::Font("Arial", 10, FontStyle::Bold);
+			// Total
+			Brush^ totalBrush = gcnew SolidBrush(totalColor);
+			System::Drawing::Font^ totalFont = gcnew System::Drawing::Font("Segoe UI", 10, FontStyle::Bold);
 			String^ totalTexto = String::Format("Total de registros: {0}", cant_total);
 			g->DrawString(totalTexto, totalFont, totalBrush, margenIzquierdo, 35);
 
-			// Liberar recursos finales
 			delete ejePen;
 			delete escalaBrush;
 			delete escalaFont;
@@ -350,6 +347,7 @@ namespace GUIApp {
 			delete totalBrush;
 			delete totalFont;
 		}
+
 		private: void CargarDatos() {
 			try {
 				// Obtener todas las máquinas

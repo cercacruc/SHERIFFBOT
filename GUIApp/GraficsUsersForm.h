@@ -39,6 +39,8 @@ namespace GUIApp {
 			else {
 				alertas = gcnew array<int>{0, 0, 0};
 			}
+
+			
 		}
 
 	protected:

@@ -1,209 +1,265 @@
 #pragma once
-//#include "GraficsUsersForm.h"
+#include "UIStyles.h"
 
 namespace GUIApp {
 
-	using namespace System;
-	using namespace System::ComponentModel;
-	using namespace System::Collections;
-	using namespace System::Windows::Forms;
-	using namespace System::Data;
-	using namespace System::Drawing;
+    using namespace System;
+    using namespace System::ComponentModel;
+    using namespace System::Collections;
+    using namespace System::Windows::Forms;
+    using namespace System::Data;
+    using namespace System::Drawing;
 
-	using namespace BotModel;
-	using namespace BotService;
+    using namespace BotModel;
+    using namespace BotService;
 
-	/// <summary>
-	/// Resumen de AccountForm
-	/// </summary>
-	public ref class AccountForm : public System::Windows::Forms::Form
-	{
-	public:
-		DatosUsuario^ Usuario;
+    /// <summary>
+    /// Resumen de AccountForm
+    /// </summary>
+    public ref class AccountForm : public System::Windows::Forms::Form
+    {
+    public:
+        DatosUsuario^ Usuario;
 
-		AccountForm(DatosUsuario^ usuario)
-		{
-			InitializeComponent();
-			//
-			//TODO: agregar código de constructor aquí
-			//
-			Usuario = usuario;
-		}
+        AccountForm(DatosUsuario^ usuario)
+        {
+            InitializeComponent();
+            this->DoubleBuffered = true;
+            Usuario = usuario;
+            StyleControls();
+        }
 
-	protected:
-		/// <summary>
-		/// Limpiar los recursos que se estén usando.
-		/// </summary>
-		~AccountForm()
-		{
-			if (components)
-			{
-				delete components;
-			}
-		}
-	private: System::Windows::Forms::Button^ btnReturnPassword;
-	protected:
+    protected:
+        ~AccountForm()
+        {
+            if (components)
+            {
+                delete components;
+            }
+        }
 
+    private:
+        // Controles
+        System::Windows::Forms::Button^ btnReturnPassword;
+        System::Windows::Forms::Label^ labelTitle;
+        System::Windows::Forms::Label^ labelUser;
+        System::Windows::Forms::Label^ labelID;
+        System::Windows::Forms::Label^ labelCargo;
 
+        System::Windows::Forms::TextBox^ textUsuario;
+        System::Windows::Forms::TextBox^ textID;
+        System::Windows::Forms::TextBox^ textCargo;
 
-	private: System::Windows::Forms::Label^ label1;
+        System::Windows::Forms::PictureBox^ pictureBox1;
+        System::Windows::Forms::Panel^ mainCard;
 
-	private: System::Windows::Forms::TextBox^ textUsuario;
-	private: System::Windows::Forms::TextBox^ textID;
-	private: System::Windows::Forms::TextBox^ textCargo;
-	private: System::Windows::Forms::PictureBox^ pictureBox1;
-	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::Label^ label3;
-
-
-
-
-
-
-	private:
-		/// <summary>
-		/// Variable del diseñador necesaria.
-		/// </summary>
-		System::ComponentModel::Container^ components;
+        System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Método necesario para admitir el Diseñador. No se puede modificar
-		/// el contenido de este método con el editor de código.
-		/// </summary>
-		void InitializeComponent(void)
-		{
-			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(AccountForm::typeid));
-			this->btnReturnPassword = (gcnew System::Windows::Forms::Button());
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->textUsuario = (gcnew System::Windows::Forms::TextBox());
-			this->textID = (gcnew System::Windows::Forms::TextBox());
-			this->textCargo = (gcnew System::Windows::Forms::TextBox());
-			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->label3 = (gcnew System::Windows::Forms::Label());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
-			this->SuspendLayout();
-			// 
-			// btnReturnPassword
-			// 
-			this->btnReturnPassword->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
-			this->btnReturnPassword->Location = System::Drawing::Point(37, 425);
-			this->btnReturnPassword->Name = L"btnReturnPassword";
-			this->btnReturnPassword->Size = System::Drawing::Size(193, 47);
-			this->btnReturnPassword->TabIndex = 30;
-			this->btnReturnPassword->Text = L"Volver";
-			this->btnReturnPassword->UseVisualStyleBackColor = true;
-			this->btnReturnPassword->Click += gcnew System::EventHandler(this, &AccountForm::btnReturnPassword_Click);
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16));
-			this->label1->Location = System::Drawing::Point(82, 178);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(108, 31);
-			this->label1->TabIndex = 26;
-			this->label1->Text = L"Usuario";
-			// 
-			// textUsuario
-			// 
-			this->textUsuario->Location = System::Drawing::Point(53, 212);
-			this->textUsuario->Name = L"textUsuario";
-			this->textUsuario->Size = System::Drawing::Size(167, 22);
-			this->textUsuario->TabIndex = 32;
-			this->textUsuario->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			// 
-			// textID
-			// 
-			this->textID->Location = System::Drawing::Point(53, 281);
-			this->textID->Name = L"textID";
-			this->textID->Size = System::Drawing::Size(167, 22);
-			this->textID->TabIndex = 33;
-			this->textID->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			// 
-			// textCargo
-			// 
-			this->textCargo->Location = System::Drawing::Point(53, 355);
-			this->textCargo->Name = L"textCargo";
-			this->textCargo->Size = System::Drawing::Size(167, 22);
-			this->textCargo->TabIndex = 34;
-			this->textCargo->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			// 
-			// pictureBox1
-			// 
-			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(79, 51);
-			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(111, 114);
-			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
-			this->pictureBox1->TabIndex = 35;
-			this->pictureBox1->TabStop = false;
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16));
-			this->label2->Location = System::Drawing::Point(118, 247);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(42, 31);
-			this->label2->TabIndex = 36;
-			this->label2->Text = L"ID";
-			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16));
-			this->label3->Location = System::Drawing::Point(92, 321);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(88, 31);
-			this->label3->TabIndex = 37;
-			this->label3->Text = L"Cargo";
-			// 
-			// AccountForm
-			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
-			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(275, 518);
-			this->Controls->Add(this->label3);
-			this->Controls->Add(this->label2);
-			this->Controls->Add(this->pictureBox1);
-			this->Controls->Add(this->textCargo);
-			this->Controls->Add(this->textID);
-			this->Controls->Add(this->textUsuario);
-			this->Controls->Add(this->btnReturnPassword);
-			this->Controls->Add(this->label1);
-			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
-			this->Name = L"AccountForm";
-			this->Text = L"AccountForm";
-			this->Load += gcnew System::EventHandler(this, &AccountForm::AccountForm_Load);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
-			this->ResumeLayout(false);
-			this->PerformLayout();
+        void InitializeComponent(void)
+        {
+            System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(AccountForm::typeid));
+            this->btnReturnPassword = (gcnew System::Windows::Forms::Button());
+            this->labelTitle = (gcnew System::Windows::Forms::Label());
+            this->labelUser = (gcnew System::Windows::Forms::Label());
+            this->labelID = (gcnew System::Windows::Forms::Label());
+            this->labelCargo = (gcnew System::Windows::Forms::Label());
+            this->textUsuario = (gcnew System::Windows::Forms::TextBox());
+            this->textID = (gcnew System::Windows::Forms::TextBox());
+            this->textCargo = (gcnew System::Windows::Forms::TextBox());
+            this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+            this->mainCard = (gcnew System::Windows::Forms::Panel());
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+            this->mainCard->SuspendLayout();
+            this->SuspendLayout();
+            // 
+            // btnReturnPassword
+            // 
+            this->btnReturnPassword->Location = System::Drawing::Point(350, 260);
+            this->btnReturnPassword->Name = L"btnReturnPassword";
+            this->btnReturnPassword->Size = System::Drawing::Size(120, 36);
+            this->btnReturnPassword->TabIndex = 8;
+            this->btnReturnPassword->Text = L"Volver";
+            this->btnReturnPassword->UseVisualStyleBackColor = true;
+            this->btnReturnPassword->Click += gcnew System::EventHandler(this, &AccountForm::btnReturnPassword_Click);
+            // 
+            // labelTitle
+            // 
+            this->labelTitle->AutoSize = true;
+            this->labelTitle->Font = (gcnew System::Drawing::Font(L"Segoe UI", 14, System::Drawing::FontStyle::Bold));
+            this->labelTitle->Location = System::Drawing::Point(40, 20);
+            this->labelTitle->Name = L"labelTitle";
+            this->labelTitle->Size = System::Drawing::Size(215, 32);
+            this->labelTitle->TabIndex = 1;
+            this->labelTitle->Text = L"Mi cuenta / perfil";
+            // 
+            // labelUser
+            // 
+            this->labelUser->AutoSize = true;
+            this->labelUser->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9));
+            this->labelUser->Location = System::Drawing::Point(210, 70);
+            this->labelUser->Name = L"labelUser";
+            this->labelUser->Size = System::Drawing::Size(59, 20);
+            this->labelUser->TabIndex = 2;
+            this->labelUser->Text = L"Usuario";
+            // 
+            // labelID
+            // 
+            this->labelID->AutoSize = true;
+            this->labelID->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9));
+            this->labelID->Location = System::Drawing::Point(210, 130);
+            this->labelID->Name = L"labelID";
+            this->labelID->Size = System::Drawing::Size(24, 20);
+            this->labelID->TabIndex = 3;
+            this->labelID->Text = L"ID";
+            // 
+            // labelCargo
+            // 
+            this->labelCargo->AutoSize = true;
+            this->labelCargo->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9));
+            this->labelCargo->Location = System::Drawing::Point(210, 190);
+            this->labelCargo->Name = L"labelCargo";
+            this->labelCargo->Size = System::Drawing::Size(49, 20);
+            this->labelCargo->TabIndex = 4;
+            this->labelCargo->Text = L"Cargo";
+            // 
+            // textUsuario
+            // 
+            this->textUsuario->Location = System::Drawing::Point(210, 95);
+            this->textUsuario->Name = L"textUsuario";
+            this->textUsuario->Size = System::Drawing::Size(260, 22);
+            this->textUsuario->TabIndex = 5;
+            // 
+            // textID
+            // 
+            this->textID->Location = System::Drawing::Point(210, 155);
+            this->textID->Name = L"textID";
+            this->textID->Size = System::Drawing::Size(260, 22);
+            this->textID->TabIndex = 6;
+            // 
+            // textCargo
+            // 
+            this->textCargo->Location = System::Drawing::Point(210, 215);
+            this->textCargo->Name = L"textCargo";
+            this->textCargo->Size = System::Drawing::Size(260, 22);
+            this->textCargo->TabIndex = 7;
+            // 
+            // pictureBox1
+            // 
+            this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
+            this->pictureBox1->Location = System::Drawing::Point(46, 90);
+            this->pictureBox1->Name = L"pictureBox1";
+            this->pictureBox1->Size = System::Drawing::Size(120, 120);
+            this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
+            this->pictureBox1->TabIndex = 0;
+            this->pictureBox1->TabStop = false;
+            // 
+            // mainCard
+            // 
+            this->mainCard->BackColor = System::Drawing::Color::Transparent;
+            this->mainCard->Controls->Add(this->labelTitle);
+            this->mainCard->Controls->Add(this->pictureBox1);
+            this->mainCard->Controls->Add(this->labelUser);
+            this->mainCard->Controls->Add(this->labelID);
+            this->mainCard->Controls->Add(this->labelCargo);
+            this->mainCard->Controls->Add(this->textUsuario);
+            this->mainCard->Controls->Add(this->textID);
+            this->mainCard->Controls->Add(this->textCargo);
+            this->mainCard->Controls->Add(this->btnReturnPassword);
+            this->mainCard->Location = System::Drawing::Point(20, 20);
+            this->mainCard->Name = L"mainCard";
+            this->mainCard->Size = System::Drawing::Size(540, 320);
+            this->mainCard->TabIndex = 0;
+            this->mainCard->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &AccountForm::mainCard_Paint);
+            // 
+            // AccountForm
+            // 
+            this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+            this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+            this->ClientSize = System::Drawing::Size(580, 360);
+            this->Controls->Add(this->mainCard);
+            this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+            this->Name = L"AccountForm";
+            this->Text = L"Mi cuenta";
+            this->Load += gcnew System::EventHandler(this, &AccountForm::AccountForm_Load);
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+            this->mainCard->ResumeLayout(false);
+            this->mainCard->PerformLayout();
+            this->ResumeLayout(false);
 
-		}
+        }
 #pragma endregion
-	private: System::Void AccountForm_Load(System::Object^ sender, System::EventArgs^ e) {
-		CargarDatosUsuario(Usuario->Nombre);
-		textUsuario->Enabled = false;
-		textID->Enabled = false;
-		textCargo->Enabled = false;
-	}
-	private: void CargarDatosUsuario(String^ username) {
-		DatosUsuario^ encontrado = Service::buscarUsuarioNombre(username);
-		textUsuario->Text = username;
-		textID->Text = Convert::ToString(encontrado->ID);
-		textCargo->Text = encontrado->Cargo;
-	}
-	private: System::Void btnReturnPassword_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->Close();
-	}
 
-	private: System::Void btnEstadistica_Click(System::Object^ sender, System::EventArgs^ e) {
-		/*GraficsUsersForm^ form = gcnew GraficsUsersForm(Usuario);
-		this->Hide();
-		form->ShowDialog();
-		this->Close();*/
-	}
-};
+        // ---------- Estilo visual ----------
+    private:
+        void StyleControls()
+        {
+            // Form
+            this->BackColor = Color::FromArgb(5, 8, 22);
+            this->ForeColor = Color::FromArgb(226, 232, 240);
+            this->StartPosition = FormStartPosition::CenterScreen;
+            this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+            this->MaximizeBox = false;
+            this->MinimizeBox = false;
+
+            // Labels
+            this->labelTitle->ForeColor = Color::White;
+            this->labelUser->ForeColor = Color::FromArgb(200, 210, 230);
+            this->labelID->ForeColor = Color::FromArgb(200, 210, 230);
+            this->labelCargo->ForeColor = Color::FromArgb(200, 210, 230);
+
+            // TextBoxes (solo lectura, estilo dark)
+            Color back = Color::FromArgb(10, 16, 32);
+            Color fore = Color::FromArgb(226, 232, 240);
+
+            array<TextBox^>^ boxes = gcnew array<TextBox^> {
+                this->textUsuario, this->textID, this->textCargo
+            };
+
+            for each (TextBox ^ tb in boxes)
+            {
+                tb->BackColor = back;
+                tb->ForeColor = fore;
+                tb->BorderStyle = BorderStyle::FixedSingle;
+                tb->ReadOnly = true;
+            }
+
+            // Botón Volver (secundario con borde celeste)
+            this->btnReturnPassword->FlatStyle = FlatStyle::Flat;
+            this->btnReturnPassword->FlatAppearance->BorderSize = 0;
+            this->btnReturnPassword->BackColor = Color::FromArgb(20, 27, 47);
+            this->btnReturnPassword->ForeColor = Color::FromArgb(0, 140, 255);
+            this->btnReturnPassword->Font =
+                gcnew System::Drawing::Font(L"Segoe UI", 9, FontStyle::Regular);
+
+            GUIApp::UIHelpers::SetRoundedRegionAuto(this->btnReturnPassword);
+            this->btnReturnPassword->Paint += gcnew PaintEventHandler(
+                &GUIApp::UIHelpers::OutlineButton_Paint);
+        }
+
+        // Card redondeada
+        System::Void mainCard_Paint(System::Object^ sender,
+            System::Windows::Forms::PaintEventArgs^ e)
+        {
+            GUIApp::UIHelpers::RoundedPanel_Paint(sender, e);
+        }
+
+        // ---------- Lógica ----------
+    private: System::Void AccountForm_Load(System::Object^ sender, System::EventArgs^ e) {
+        CargarDatosUsuario(Usuario->Nombre);
+    }
+
+    private: void CargarDatosUsuario(String^ username) {
+        DatosUsuario^ encontrado = Service::buscarUsuarioNombre(username);
+        if (encontrado != nullptr) {
+            textUsuario->Text = encontrado->Nombre;
+            textID->Text = encontrado->ID.ToString();
+            textCargo->Text = encontrado->Cargo;
+        }
+    }
+
+    private: System::Void btnReturnPassword_Click(System::Object^ sender, System::EventArgs^ e) {
+        this->Close();
+    }
+    };
 }

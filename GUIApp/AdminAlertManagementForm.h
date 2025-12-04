@@ -1,4 +1,5 @@
 #pragma once
+#include "UIStyles.h"   // DarkTabControl + UIHelpers
 
 namespace GUIApp {
 
@@ -14,165 +15,117 @@ namespace GUIApp {
 	using namespace BotService;
 	using namespace System::Threading;
 
-	/// <summary>
-	/// Resumen de AdminAlertManagementForm
-	/// </summary>
 	public ref class AdminAlertManagementForm : public System::Windows::Forms::Form
 	{
 	public:
 		AdminAlertManagementForm(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: agregar código de constructor aquí
-			//
+
+			// ---- upgrade visual ----
+			UpgradeTabControlToDark();
+			ApplyDarkTheme();
+			StyleButtonsAndGrids();
+			StyleTextBoxes();
+			StyleComboBoxDTI();
+
+
+			// timers y lógica
 		}
 
 	protected:
-		/// <summary>
-		/// Limpiar los recursos que se estén usando.
-		/// </summary>
 		~AdminAlertManagementForm()
 		{
 			if (components)
-			{
 				delete components;
-			}
 			StopTimer();
 		}
-	private: System::Windows::Forms::TabControl^ tabControl1;
-	protected:
-	private: System::Windows::Forms::TabPage^ tabPage2;
-
-
-
-	private: System::Windows::Forms::Label^ label8;
-
-
-
-	private: System::Windows::Forms::Label^ label10;
-	private: System::Windows::Forms::TextBox^ txtObjetoPerdido;
-
-	private: System::Windows::Forms::Label^ label11;
-	private: System::Windows::Forms::TextBox^ txtIDObjPerdido;
-
-	private: System::Windows::Forms::Label^ label12;
-	private: System::Windows::Forms::Button^ btnSolucionObj;
-	private: System::Windows::Forms::DataGridView^ dgvOjbPerdido;
-
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceAlertDMO;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceNameMO;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceDateMO;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceTimeMO;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceStatusMO;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUsuarioMO;
-
-	private: System::Windows::Forms::TabPage^ tabPage3;
-
-	private: System::Windows::Forms::TabPage^ tabPage1;
-
-	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::TextBox^ txtIDAltercado;
-
-	private: System::Windows::Forms::Label^ label5;
-	private: System::Windows::Forms::DataGridView^ dgvAltercado;
-
-
-
-
-
-
-
-	private: System::Windows::Forms::Label^ label13;
-
-	private: System::Windows::Forms::Label^ label14;
-	private: System::Windows::Forms::TextBox^ txtIDDTI;
-
-	private: System::Windows::Forms::Label^ label15;
-	private: System::Windows::Forms::DataGridView^ dgvDTI;
-
-
-
-
-
-
-
-
-	private: System::Windows::Forms::PictureBox^ pbPhotoObj;
-
-	private: System::Windows::Forms::DateTimePicker^ dtpObjetoPerdido;
-
-
-	private: System::Windows::Forms::Label^ label16;
-	private: System::Windows::Forms::GroupBox^ groupBox1;
-	private: System::Windows::Forms::RadioButton^ rbtnSolucionObNo;
-
-	private: System::Windows::Forms::RadioButton^ rbtnSolucionObjYes;
-
-	private: System::Windows::Forms::Label^ label9;
-	private: System::Windows::Forms::TextBox^ txtDescriptionObj;
-
-	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::Label^ label17;
-	private: System::Windows::Forms::TextBox^ txtDescriptionAltercado;
-	private: System::Windows::Forms::PictureBox^ pbPhotoAltercado;
-	private: System::Windows::Forms::DateTimePicker^ dtpAltercado;
-
-
-
-	private: System::Windows::Forms::Button^ btnSolucionAltercado;
-
-	private: System::Windows::Forms::GroupBox^ groupBox2;
-	private: System::Windows::Forms::RadioButton^ rbtnSolucionAltercadoNo;
-
-	private: System::Windows::Forms::RadioButton^ rbtnSolucionAltercadoYes;
-
-	private: System::Windows::Forms::Label^ label1;
-
-	private: System::Windows::Forms::Label^ label6;
-	private: System::Windows::Forms::TextBox^ txtDescriptionDTI;
-
-	private: System::Windows::Forms::Button^ btnSolucionDTI;
-
-	private: System::Windows::Forms::GroupBox^ groupBox3;
-	private: System::Windows::Forms::RadioButton^ rbtnSolucionDTINo;
-
-	private: System::Windows::Forms::RadioButton^ rbtnSolucionDTIYes;
-
-	private: System::Windows::Forms::Label^ label4;
-	private: System::Windows::Forms::DateTimePicker^ dtpDTI;
-
-	private: System::Windows::Forms::ComboBox^ cmbTipoAlertaDTI;
-	private: System::Windows::Forms::Button^ btnEliminarObjPerd;
-	private: System::Windows::Forms::Button^ btnEliminarAltercado;
-	private: System::Windows::Forms::Button^ btnEliminarDTI;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignado;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn1;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn3;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn4;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn5;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUsuarioALT;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignadoALT;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn6;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn7;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn8;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn9;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn10;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUsuarioDTI;
-private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignadoDTI;
-
 
 	private:
-		/// <summary>
-		/// Variable del diseñador necesaria.
-		/// </summary>
+		// IMPORTANTE: lo dejamos como TabControl (base) para que el diseñador no se queje
+		System::Windows::Forms::TabControl^ tabControl1;
+		System::Windows::Forms::TabPage^ tabPage2;
+		System::Windows::Forms::TabPage^ tabPage3;
+		System::Windows::Forms::TabPage^ tabPage1;
+
+		System::Windows::Forms::Label^ label8;
+		System::Windows::Forms::Label^ label10;
+		System::Windows::Forms::TextBox^ txtObjetoPerdido;
+		System::Windows::Forms::Label^ label11;
+		System::Windows::Forms::TextBox^ txtIDObjPerdido;
+		System::Windows::Forms::Label^ label12;
+		System::Windows::Forms::Button^ btnSolucionObj;
+		System::Windows::Forms::DataGridView^ dgvOjbPerdido;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceAlertDMO;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceNameMO;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceDateMO;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceTimeMO;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceStatusMO;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUsuarioMO;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignado;
+
+		System::Windows::Forms::Label^ label3;
+		System::Windows::Forms::TextBox^ txtIDAltercado;
+		System::Windows::Forms::Label^ label5;
+		System::Windows::Forms::DataGridView^ dgvAltercado;
+
+		System::Windows::Forms::Label^ label13;
+		System::Windows::Forms::Label^ label14;
+		System::Windows::Forms::TextBox^ txtIDDTI;
+		System::Windows::Forms::Label^ label15;
+		System::Windows::Forms::DataGridView^ dgvDTI;
+
+		System::Windows::Forms::PictureBox^ pbPhotoObj;
+		System::Windows::Forms::DateTimePicker^ dtpObjetoPerdido;
+		System::Windows::Forms::Label^ label16;
+		System::Windows::Forms::GroupBox^ groupBox1;
+		System::Windows::Forms::RadioButton^ rbtnSolucionObNo;
+		System::Windows::Forms::RadioButton^ rbtnSolucionObjYes;
+		System::Windows::Forms::Label^ label9;
+		System::Windows::Forms::TextBox^ txtDescriptionObj;
+
+		System::Windows::Forms::Label^ label2;
+		System::Windows::Forms::Label^ label17;
+		System::Windows::Forms::TextBox^ txtDescriptionAltercado;
+		System::Windows::Forms::PictureBox^ pbPhotoAltercado;
+		System::Windows::Forms::DateTimePicker^ dtpAltercado;
+		System::Windows::Forms::Button^ btnSolucionAltercado;
+		System::Windows::Forms::GroupBox^ groupBox2;
+		System::Windows::Forms::RadioButton^ rbtnSolucionAltercadoNo;
+		System::Windows::Forms::RadioButton^ rbtnSolucionAltercadoYes;
+		System::Windows::Forms::Label^ label1;
+
+		System::Windows::Forms::Label^ label6;
+		System::Windows::Forms::TextBox^ txtDescriptionDTI;
+		System::Windows::Forms::Button^ btnSolucionDTI;
+		System::Windows::Forms::GroupBox^ groupBox3;
+		System::Windows::Forms::RadioButton^ rbtnSolucionDTINo;
+		System::Windows::Forms::RadioButton^ rbtnSolucionDTIYes;
+		System::Windows::Forms::Label^ label4;
+		System::Windows::Forms::DateTimePicker^ dtpDTI;
+		System::Windows::Forms::ComboBox^ cmbTipoAlertaDTI;
+		System::Windows::Forms::Button^ btnEliminarObjPerd;
+		System::Windows::Forms::Button^ btnEliminarAltercado;
+		System::Windows::Forms::Button^ btnEliminarDTI;
+
+		System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn1;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn3;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn4;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn5;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUsuarioALT;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignadoALT;
+
+		System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn6;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn7;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn8;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn9;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ dataGridViewTextBoxColumn10;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceUsuarioDTI;
+		System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignadoDTI;
+
 		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Método necesario para admitir el Diseñador. No se puede modificar
-		/// el contenido de este método con el editor de código.
-		/// </summary>
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(AdminAlertManagementForm::typeid));
@@ -328,6 +281,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			this->groupBox1->Size = System::Drawing::Size(133, 46);
 			this->groupBox1->TabIndex = 38;
 			this->groupBox1->TabStop = false;
+			this->groupBox1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &AdminAlertManagementForm::GroupBox_Paint);
 			// 
 			// rbtnSolucionObNo
 			// 
@@ -373,8 +327,10 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			// 
 			// dtpObjetoPerdido
 			// 
+			this->dtpObjetoPerdido->CalendarForeColor = System::Drawing::SystemColors::ActiveCaptionText;
 			this->dtpObjetoPerdido->Location = System::Drawing::Point(152, 101);
 			this->dtpObjetoPerdido->Name = L"dtpObjetoPerdido";
+			this->dtpObjetoPerdido->ShowUpDown = true;
 			this->dtpObjetoPerdido->Size = System::Drawing::Size(213, 22);
 			this->dtpObjetoPerdido->TabIndex = 35;
 			// 
@@ -386,6 +342,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			this->pbPhotoObj->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pbPhotoObj->TabIndex = 34;
 			this->pbPhotoObj->TabStop = false;
+			this->pbPhotoObj->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &AdminAlertManagementForm::PictureBoxBorder_Paint);
 			// 
 			// label8
 			// 
@@ -572,6 +529,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			this->groupBox2->Size = System::Drawing::Size(133, 46);
 			this->groupBox2->TabIndex = 56;
 			this->groupBox2->TabStop = false;
+			this->groupBox2->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &AdminAlertManagementForm::GroupBox_Paint);
 			// 
 			// rbtnSolucionAltercadoNo
 			// 
@@ -640,8 +598,10 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			this->pbPhotoAltercado->Location = System::Drawing::Point(690, 51);
 			this->pbPhotoAltercado->Name = L"pbPhotoAltercado";
 			this->pbPhotoAltercado->Size = System::Drawing::Size(211, 177);
+			this->pbPhotoAltercado->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pbPhotoAltercado->TabIndex = 51;
 			this->pbPhotoAltercado->TabStop = false;
+			this->pbPhotoAltercado->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &AdminAlertManagementForm::PictureBoxBorder_Paint);
 			// 
 			// dtpAltercado
 			// 
@@ -696,7 +656,6 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			// 
 			// dataGridViewTextBoxColumn1
 			// 
-			this->dataGridViewTextBoxColumn1->DataPropertyName = L"ResourceAlertIDALT";
 			this->dataGridViewTextBoxColumn1->HeaderText = L"ID Alerta";
 			this->dataGridViewTextBoxColumn1->MinimumWidth = 6;
 			this->dataGridViewTextBoxColumn1->Name = L"dataGridViewTextBoxColumn1";
@@ -704,7 +663,6 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			// 
 			// dataGridViewTextBoxColumn3
 			// 
-			this->dataGridViewTextBoxColumn3->DataPropertyName = L"ResourceDateALT";
 			this->dataGridViewTextBoxColumn3->HeaderText = L"Fecha";
 			this->dataGridViewTextBoxColumn3->MinimumWidth = 6;
 			this->dataGridViewTextBoxColumn3->Name = L"dataGridViewTextBoxColumn3";
@@ -712,7 +670,6 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			// 
 			// dataGridViewTextBoxColumn4
 			// 
-			this->dataGridViewTextBoxColumn4->DataPropertyName = L"ResourceTimeALT";
 			this->dataGridViewTextBoxColumn4->HeaderText = L"Hora";
 			this->dataGridViewTextBoxColumn4->MinimumWidth = 6;
 			this->dataGridViewTextBoxColumn4->Name = L"dataGridViewTextBoxColumn4";
@@ -720,7 +677,6 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			// 
 			// dataGridViewTextBoxColumn5
 			// 
-			this->dataGridViewTextBoxColumn5->DataPropertyName = L"ResourceStatusALT";
 			this->dataGridViewTextBoxColumn5->HeaderText = L"Estado";
 			this->dataGridViewTextBoxColumn5->MinimumWidth = 6;
 			this->dataGridViewTextBoxColumn5->Name = L"dataGridViewTextBoxColumn5";
@@ -813,6 +769,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			this->groupBox3->Size = System::Drawing::Size(133, 46);
 			this->groupBox3->TabIndex = 59;
 			this->groupBox3->TabStop = false;
+			this->groupBox3->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &AdminAlertManagementForm::GroupBox_Paint);
 			// 
 			// rbtnSolucionDTINo
 			// 
@@ -923,7 +880,6 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			// 
 			// dataGridViewTextBoxColumn6
 			// 
-			this->dataGridViewTextBoxColumn6->DataPropertyName = L"ResourceAlertIDDTI";
 			this->dataGridViewTextBoxColumn6->HeaderText = L"ID Alerta";
 			this->dataGridViewTextBoxColumn6->MinimumWidth = 6;
 			this->dataGridViewTextBoxColumn6->Name = L"dataGridViewTextBoxColumn6";
@@ -931,7 +887,6 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			// 
 			// dataGridViewTextBoxColumn7
 			// 
-			this->dataGridViewTextBoxColumn7->DataPropertyName = L"ResourceAlertTypeDTI";
 			this->dataGridViewTextBoxColumn7->HeaderText = L"Tipo de alerta";
 			this->dataGridViewTextBoxColumn7->MinimumWidth = 6;
 			this->dataGridViewTextBoxColumn7->Name = L"dataGridViewTextBoxColumn7";
@@ -939,7 +894,6 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			// 
 			// dataGridViewTextBoxColumn8
 			// 
-			this->dataGridViewTextBoxColumn8->DataPropertyName = L"ResourceDateDTI";
 			this->dataGridViewTextBoxColumn8->HeaderText = L"Fecha";
 			this->dataGridViewTextBoxColumn8->MinimumWidth = 6;
 			this->dataGridViewTextBoxColumn8->Name = L"dataGridViewTextBoxColumn8";
@@ -947,7 +901,6 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			// 
 			// dataGridViewTextBoxColumn9
 			// 
-			this->dataGridViewTextBoxColumn9->DataPropertyName = L"ResourceTimeDTI";
 			this->dataGridViewTextBoxColumn9->HeaderText = L"Hora";
 			this->dataGridViewTextBoxColumn9->MinimumWidth = 6;
 			this->dataGridViewTextBoxColumn9->Name = L"dataGridViewTextBoxColumn9";
@@ -955,7 +908,6 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			// 
 			// dataGridViewTextBoxColumn10
 			// 
-			this->dataGridViewTextBoxColumn10->DataPropertyName = L"ResourceStatusDTI";
 			this->dataGridViewTextBoxColumn10->HeaderText = L"Estado";
 			this->dataGridViewTextBoxColumn10->MinimumWidth = 6;
 			this->dataGridViewTextBoxColumn10->Name = L"dataGridViewTextBoxColumn10";
@@ -983,7 +935,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 			this->Controls->Add(this->tabControl1);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"AdminAlertManagementForm";
-			this->Text = L"AdminAlertManagementForm";
+			this->Text = L"Gestión de Incidencias";
 			this->Load += gcnew System::EventHandler(this, &AdminAlertManagementForm::AdminAlertManagementForm_Load);
 			this->tabControl1->ResumeLayout(false);
 			this->tabPage2->ResumeLayout(false);
@@ -1007,6 +959,210 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 
 		}
 #pragma endregion
+
+		// ================= ESTILO =================
+
+		void UpgradeTabControlToDark()
+		{
+			if (this->tabControl1 == nullptr) return;
+
+			TabControl^ original = this->tabControl1;
+			GUIApp::DarkTabControl^ dark = gcnew GUIApp::DarkTabControl();
+
+			dark->Location = original->Location;
+			dark->Size = original->Size;
+			dark->Anchor = original->Anchor;
+			dark->Name = original->Name;
+
+			while (original->TabPages->Count > 0)
+			{
+				TabPage^ p = original->TabPages[0];
+				original->TabPages->RemoveAt(0);
+				dark->TabPages->Add(p);
+			}
+
+			this->Controls->Remove(original);
+
+			// Opción 1: dejar que el GC lo limpie más adelante (seguro y simple)
+			// (no hagas nada aquí)
+
+			// Opción 2: liberar explícitamente el control viejo:
+			// delete original;   // esto llama internamente a Dispose
+
+			this->tabControl1 = dark;
+			this->Controls->Add(this->tabControl1);
+		}
+
+		void ApplyDarkTheme()
+		{
+			Color back = Color::FromArgb(20, 27, 47);
+			Color fore = Color::FromArgb(224, 231, 255);
+
+			this->BackColor = back;
+			this->tabControl1->BackColor = back;
+			this->tabControl1->ForeColor = fore;
+
+			for each (TabPage ^ page in this->tabControl1->TabPages)
+			{
+				page->BackColor = back;
+				page->ForeColor = fore;
+			}
+
+			array<Label^>^ labels = gcnew array<Label^>{
+				label1, label2, label3, label4, label5,
+					label6, label8, label9, label10, label11,
+					label12, label13, label14, label15, label16, label17
+			};
+
+			for each (Label ^ lb in labels)
+			{
+				if (lb != nullptr)
+					lb->ForeColor = fore;
+			}
+		}
+
+		void StyleButtonsAndGrids()
+		{
+			// Botones "acción principal"
+			array<Button^>^ primary = gcnew array<Button^>{
+				btnSolucionObj, btnSolucionAltercado, btnSolucionDTI
+			};
+
+			for each (Button ^ b in primary)
+			{
+				b->FlatStyle = FlatStyle::Flat;
+				b->FlatAppearance->BorderSize = 0;
+				b->BackColor = Color::FromArgb(0, 140, 255);
+				b->ForeColor = Color::White;
+				b->Font = gcnew System::Drawing::Font("Segoe UI", 9, FontStyle::Bold);
+				UIHelpers::SetRoundedRegion(b, 18);
+			}
+
+			// Botones secundarios
+			array<Button^>^ secondary = gcnew array<Button^>{
+				btnEliminarObjPerd, btnEliminarAltercado, btnEliminarDTI
+			};
+
+			for each (Button ^ b in secondary)
+			{
+				b->FlatStyle = FlatStyle::Flat;
+				b->FlatAppearance->BorderSize = 0;
+				b->BackColor = Color::FromArgb(20, 27, 47);
+				b->ForeColor = Color::FromArgb(224, 231, 255);
+				b->Font = gcnew System::Drawing::Font("Segoe UI", 9, FontStyle::Regular);
+				b->Paint += gcnew PaintEventHandler(&UIHelpers::OutlineButton_Paint);
+				UIHelpers::SetRoundedRegion(b, 18);
+			}
+
+			StyleGrid(dgvOjbPerdido);
+			StyleGrid(dgvAltercado);
+			StyleGrid(dgvDTI);
+		}
+
+		void StyleGrid(DataGridView^ grid)
+		{
+			if (grid == nullptr) return;
+
+			grid->BackgroundColor = Color::FromArgb(10, 16, 32);
+			grid->EnableHeadersVisualStyles = false;
+			grid->GridColor = Color::FromArgb(30, 41, 59);
+			grid->BorderStyle = BorderStyle::None;
+
+			grid->AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode::Fill;
+
+			grid->ColumnHeadersDefaultCellStyle->BackColor =
+				Color::FromArgb(37, 99, 235);
+			grid->ColumnHeadersDefaultCellStyle->ForeColor =
+				Color::FromArgb(241, 245, 249);
+			grid->ColumnHeadersDefaultCellStyle->Font =
+				gcnew System::Drawing::Font("Segoe UI", 9, FontStyle::Bold);
+			grid->ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle::Single;
+
+			grid->DefaultCellStyle->BackColor =
+				Color::FromArgb(20, 27, 47);
+			grid->DefaultCellStyle->ForeColor =
+				Color::FromArgb(226, 232, 240);
+			grid->DefaultCellStyle->SelectionBackColor =
+				Color::FromArgb(37, 99, 235);
+			grid->DefaultCellStyle->SelectionForeColor = Color::White;
+
+			grid->RowHeadersVisible = false;
+		}
+
+		void StyleTextBoxes()
+		{
+			Color back = Color::FromArgb(10, 16, 32);
+			Color fore = Color::FromArgb(226, 232, 240);
+
+			array<TextBox^>^ boxes = gcnew array<TextBox^> {
+				txtObjetoPerdido, txtIDObjPerdido, txtDescriptionObj,
+					txtIDAltercado, txtDescriptionAltercado,
+					txtIDDTI, txtDescriptionDTI
+			};
+
+			for each (TextBox ^ tb in boxes)
+			{
+				tb->BackColor = back;
+				tb->ForeColor = fore;
+				tb->BorderStyle = BorderStyle::FixedSingle;
+			}
+		}
+
+		void StyleComboBoxDTI()
+		{
+			cmbTipoAlertaDTI->FlatStyle = FlatStyle::Flat;
+			cmbTipoAlertaDTI->DropDownStyle = ComboBoxStyle::DropDownList;
+			cmbTipoAlertaDTI->BackColor = Color::FromArgb(15, 23, 42);
+			cmbTipoAlertaDTI->ForeColor = Color::FromArgb(226, 232, 240);
+			cmbTipoAlertaDTI->DrawMode = DrawMode::OwnerDrawFixed;
+			cmbTipoAlertaDTI->DrawItem += gcnew DrawItemEventHandler(this, &AdminAlertManagementForm::cmbTipoAlertaDTI_DrawItem);
+		}
+
+		void cmbTipoAlertaDTI_DrawItem(System::Object^ sender, DrawItemEventArgs^ e)
+		{
+			if (e->Index < 0) return;
+
+			ComboBox^ cb = safe_cast<ComboBox^>(sender);
+
+			bool selected = (e->State & DrawItemState::Selected) == DrawItemState::Selected;
+			Color back = selected ? Color::FromArgb(37, 99, 235) : Color::FromArgb(15, 23, 42);
+			Color fore = Color::FromArgb(226, 232, 240);
+
+			e->Graphics->FillRectangle(gcnew SolidBrush(back), e->Bounds);
+
+			String^ text = cb->Items[e->Index]->ToString();
+			e->Graphics->DrawString(text,
+				cb->Font,
+				gcnew SolidBrush(fore),
+				RectangleF((float)e->Bounds.X, (float)e->Bounds.Y,
+					(float)e->Bounds.Width, (float)e->Bounds.Height));
+
+			e->DrawFocusRectangle();
+		}
+
+		// Borde celeste para PictureBox (foto objeto / altercado)
+		void PictureBoxBorder_Paint(System::Object^ sender, PaintEventArgs^ e)
+		{
+			PictureBox^ pb = safe_cast<PictureBox^>(sender);
+			e->Graphics->SmoothingMode =
+				System::Drawing::Drawing2D::SmoothingMode::AntiAlias;
+			Rectangle rect = pb->ClientRectangle;
+			rect.Inflate(-1, -1);
+			Pen^ pen = gcnew Pen(Color::FromArgb(56, 189, 248), 2.0f);
+			e->Graphics->DrawRectangle(pen, rect);
+		}
+
+		// GroupBox sin marco blanco
+		void GroupBox_Paint(System::Object^ sender, PaintEventArgs^ e)
+		{
+			Color back = Color::FromArgb(20, 27, 47);
+			e->Graphics->Clear(back);
+		}
+
+
+
+		// ================= LÓGICA ORIGINAL =================
+
 	private: void CargarTablaObjetoPerdido() {
 		List<ObjPerdido^>^ objeto = Service::ShowObjetosPerdidos();
 		if (objeto != nullptr) {
@@ -1303,7 +1459,7 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 	private: System::Void btnSolucionObj_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (String::IsNullOrEmpty(txtIDObjPerdido->Text)) {
 			MessageBox::Show("Por favor seleccione una alerta", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-			return; 
+			return;
 		}
 		try {
 			int id = Convert::ToInt32(txtIDObjPerdido->Text);
@@ -1373,135 +1529,135 @@ private: System::Windows::Forms::DataGridViewTextBoxColumn^ ResourceRobotAsignad
 		int elapsedTime;
 		Object^ lockObject;
 
-		
+
 		delegate void UpdateDataDelegate();
-		private: void InitializateTimer() {
-			lockObject = gcnew Object();
-			timerRunning = false;
-			currentInterval = 0;
+	private: void InitializateTimer() {
+		lockObject = gcnew Object();
+		timerRunning = false;
+		currentInterval = 0;
+		elapsedTime = 0;
+	}
+	private: void StartTimer() {
+		StopTimer();
+
+		Monitor::Enter(lockObject);
+		try {
+			timerRunning = true;
+
+			currentInterval = 10 * 1000;
 			elapsedTime = 0;
 		}
-		private: void StartTimer() {
-			StopTimer();
-
-			Monitor::Enter(lockObject);
-			try {
-				timerRunning = true;
-
-				currentInterval = 10 * 1000;
-				elapsedTime = 0;
-			}
-			finally {
-				Monitor::Exit(lockObject);
-			}
-
-			timer = gcnew Thread(gcnew ThreadStart(this, &AdminAlertManagementForm::TimerMethod));
-			timer->IsBackground = true;
-			timer->Start();
+		finally {
+			Monitor::Exit(lockObject);
 		}
-		private: void StopTimer() {
-			Monitor::Enter(lockObject);
-			try {
-				timerRunning = false;
-			}
-			finally {
-				Monitor::Exit(lockObject);
-			}
-			if (timer != nullptr && timer->IsAlive) {
-				if (!timer->Join(500)) {
-					try {
-						timer->Abort();
-					}
-					catch (ThreadAbortException^) {
-						Thread::ResetAbort();
-					}
-					timer = nullptr;
+
+		timer = gcnew Thread(gcnew ThreadStart(this, &AdminAlertManagementForm::TimerMethod));
+		timer->IsBackground = true;
+		timer->Start();
+	}
+	private: void StopTimer() {
+		Monitor::Enter(lockObject);
+		try {
+			timerRunning = false;
+		}
+		finally {
+			Monitor::Exit(lockObject);
+		}
+		if (timer != nullptr && timer->IsAlive) {
+			if (!timer->Join(500)) {
+				try {
+					timer->Abort();
 				}
+				catch (ThreadAbortException^) {
+					Thread::ResetAbort();
+				}
+				timer = nullptr;
 			}
 		}
-		private: void TimerMethod() {
-			int updateInterval = 100;
+	}
+	private: void TimerMethod() {
+		int updateInterval = 100;
 
-			try {
-				while (true)
-				{
-					Monitor::Enter(lockObject);
-					bool shouldStop = !timerRunning;
-					bool timerCompleted = (elapsedTime >= currentInterval);
-					Monitor::Exit(lockObject);
+		try {
+			while (true)
+			{
+				Monitor::Enter(lockObject);
+				bool shouldStop = !timerRunning;
+				bool timerCompleted = (elapsedTime >= currentInterval);
+				Monitor::Exit(lockObject);
 
-					if (shouldStop) break;
-					if (timerCompleted) break;
+				if (shouldStop) break;
+				if (timerCompleted) break;
 
-					Thread::Sleep(updateInterval);
+				Thread::Sleep(updateInterval);
 
-					Monitor::Enter(lockObject);
-					try {
-						if (timerRunning) {
-							elapsedTime += updateInterval;
-							int remainingTime = currentInterval - elapsedTime;
-						}
-					}
-					finally {
-						Monitor::Exit(lockObject);
-					}
-				}
-
-				bool shouldRefresh = false;
 				Monitor::Enter(lockObject);
 				try {
-					shouldRefresh = timerRunning && (elapsedTime >= currentInterval);
+					if (timerRunning) {
+						elapsedTime += updateInterval;
+						int remainingTime = currentInterval - elapsedTime;
+					}
 				}
 				finally {
 					Monitor::Exit(lockObject);
 				}
-				if (shouldRefresh) {
-					RefreshData();
-				}
-			}
-			catch (ThreadAbortException^) {
-				Thread::ResetAbort();
-			}
-			catch (Exception^ ex) {
-				System::Diagnostics::Debug::WriteLine("Error en Timer: " + ex->Message);
-			}
-		}
-		private: void RefreshData() {
-			if (this->IsDisposed || !this->IsHandleCreated) {
-				return;
 			}
 
-			if (this->InvokeRequired) {
-				try {
-					this->BeginInvoke(gcnew UpdateDataDelegate(this, &AdminAlertManagementForm::RefreshData));
-				}
-				catch (ObjectDisposedException^) {
-					return;
-				}
-				catch (InvalidOperationException^) {
-					return;
-				}
-				return;
-			}
-
-			if (this->IsDisposed) return;
-
-			CargarTablaAltercado();
-			CargarTablaDTIReport();
-			CargarTablaObjetoPerdido();
-
-			bool shouldRestart = false;
+			bool shouldRefresh = false;
 			Monitor::Enter(lockObject);
 			try {
-				shouldRestart = timerRunning && !this->IsDisposed;
+				shouldRefresh = timerRunning && (elapsedTime >= currentInterval);
 			}
 			finally {
 				Monitor::Exit(lockObject);
 			}
-
-			if (shouldRestart) {
-				StartTimer();
+			if (shouldRefresh) {
+				RefreshData();
 			}
 		}
+		catch (ThreadAbortException^) {
+			Thread::ResetAbort();
+		}
+		catch (Exception^ ex) {
+			System::Diagnostics::Debug::WriteLine("Error en Timer: " + ex->Message);
+		}
+	}
+	private: void RefreshData() {
+		if (this->IsDisposed || !this->IsHandleCreated) {
+			return;
+		}
+
+		if (this->InvokeRequired) {
+			try {
+				this->BeginInvoke(gcnew UpdateDataDelegate(this, &AdminAlertManagementForm::RefreshData));
+			}
+			catch (ObjectDisposedException^) {
+				return;
+			}
+			catch (InvalidOperationException^) {
+				return;
+			}
+			return;
+		}
+
+		if (this->IsDisposed) return;
+
+		CargarTablaAltercado();
+		CargarTablaDTIReport();
+		CargarTablaObjetoPerdido();
+
+		bool shouldRestart = false;
+		Monitor::Enter(lockObject);
+		try {
+			shouldRestart = timerRunning && !this->IsDisposed;
+		}
+		finally {
+			Monitor::Exit(lockObject);
+		}
+
+		if (shouldRestart) {
+			StartTimer();
+		}
+	}
 	};
 }

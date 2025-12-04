@@ -1,4 +1,6 @@
 #pragma once
+#include "UIStyles.h"
+
 
 namespace GUIApp {
 
@@ -23,6 +25,8 @@ namespace GUIApp {
 		DelimitarZonasTrabajoAdmin(void)
 		{
 			InitializeComponent();
+			ApplyDarkTheme();
+			StyleControls();
 			//
 			//TODO: agregar código de constructor aquí
 			//
@@ -326,6 +330,115 @@ namespace GUIApp {
 
 		}
 		#pragma endregion
+
+		private:
+			void ApplyDarkTheme()
+			{
+				this->BackColor = Color::FromArgb(20, 27, 47);
+				this->ForeColor = Color::FromArgb(226, 232, 240);
+				this->StartPosition = FormStartPosition::CenterScreen;
+				this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+				this->MaximizeBox = false;
+				this->MinimizeBox = false;
+			}
+
+			void StyleControls()
+			{
+				// Labels
+				array<Label^>^ labels = gcnew array<Label^> {
+					this->label1, this->label2, this->label3,
+						this->label4, this->label5, this->label6
+				};
+
+				for each (Label ^ lbl in labels)
+				{
+					lbl->ForeColor = Color::FromArgb(224, 231, 255);
+					lbl->Font = gcnew Drawing::Font("Segoe UI", 9, FontStyle::Regular);
+				}
+				// Un toque más fuerte al "ID"
+				this->label1->Font = gcnew Drawing::Font("Segoe UI", 9, FontStyle::Bold);
+
+				// TextBoxes
+				StyleTextBoxes();
+
+				// Botón AGREGAR como PRIMARIO
+				this->btnAddZona->FlatStyle = FlatStyle::Flat;
+				this->btnAddZona->FlatAppearance->BorderSize = 0;
+				this->btnAddZona->BackColor = Color::FromArgb(0, 140, 255);
+				this->btnAddZona->ForeColor = Color::White;
+				this->btnAddZona->Font = gcnew Drawing::Font("Segoe UI", 9, FontStyle::Bold);
+				UIHelpers::SetRoundedRegion(this->btnAddZona, 18);
+
+				// Botones MODIFICAR / ELIMINAR como SECUNDARIOS con borde celeste
+				array<Button^>^ secondaryButtons = gcnew array<Button^> {
+					this->btnModificarZona, this->btnEliminarZona
+				};
+
+				for each (Button ^ b in secondaryButtons)
+				{
+					b->FlatStyle = FlatStyle::Flat;
+					b->FlatAppearance->BorderSize = 0;
+					b->BackColor = Color::FromArgb(20, 27, 47);
+					b->ForeColor = Color::FromArgb(224, 231, 255);
+					b->Font = gcnew Drawing::Font("Segoe UI", 9, FontStyle::Regular);
+					b->Paint += gcnew PaintEventHandler(&UIHelpers::OutlineButton_Paint);
+					UIHelpers::SetRoundedRegion(b, 18);
+				}
+
+				// DataGridView
+				StyleGrid(this->dgvZona);
+			}
+
+			void StyleTextBoxes()
+			{
+				Color back = Color::FromArgb(10, 16, 32);
+				Color fore = Color::FromArgb(226, 232, 240);
+
+				array<TextBox^>^ boxes = gcnew array<TextBox^> {
+					this->idZona,
+						this->textX1, this->textX2,
+						this->textY1, this->textY2,
+						this->textZona
+				};
+
+				for each (TextBox ^ tb in boxes)
+				{
+					tb->BackColor = back;
+					tb->ForeColor = fore;
+					tb->BorderStyle = BorderStyle::FixedSingle;
+				}
+			}
+
+			void StyleGrid(DataGridView^ grid)
+			{
+				grid->AutoSizeColumnsMode =
+					DataGridViewAutoSizeColumnsMode::Fill;
+				grid->AutoSizeRowsMode =
+					DataGridViewAutoSizeRowsMode::AllCells;
+
+				grid->BackgroundColor = Color::FromArgb(10, 16, 32);
+				grid->EnableHeadersVisualStyles = false;
+				grid->GridColor = Color::FromArgb(30, 41, 59);
+				grid->BorderStyle = BorderStyle::None;
+
+				// Encabezados
+				grid->ColumnHeadersDefaultCellStyle->BackColor =
+					Color::FromArgb(37, 99, 235);
+				grid->ColumnHeadersDefaultCellStyle->ForeColor =
+					Color::FromArgb(241, 245, 249);
+				grid->ColumnHeadersDefaultCellStyle->Font =
+					gcnew Drawing::Font("Segoe UI", 9, FontStyle::Bold);
+				grid->ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle::Single;
+
+				// Celdas
+				grid->DefaultCellStyle->BackColor = Color::FromArgb(20, 27, 47);
+				grid->DefaultCellStyle->ForeColor = Color::FromArgb(226, 232, 240);
+				grid->DefaultCellStyle->SelectionBackColor =
+					Color::FromArgb(37, 99, 235);
+				grid->DefaultCellStyle->SelectionForeColor = Color::White;
+
+				grid->RowHeadersVisible = false;
+			}
 
 		private: System::Void btnAddZona_Click(System::Object^ sender, System::EventArgs^ e) {
 			try {
