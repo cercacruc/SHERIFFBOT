@@ -273,7 +273,7 @@ namespace GUIApp {
 				static_cast<System::Byte>(0)));
 			this->btnReconectar->Location = System::Drawing::Point(12, 649);
 			this->btnReconectar->Name = L"btnReconectar";
-			this->btnReconectar->Size = System::Drawing::Size(140, 39);
+			this->btnReconectar->Size = System::Drawing::Size(166, 39);
 			this->btnReconectar->TabIndex = 38;
 			this->btnReconectar->Text = L"RECONECTAR";
 			this->btnReconectar->UseVisualStyleBackColor = true;
@@ -323,6 +323,10 @@ namespace GUIApp {
 			if (!Service::ConectarArduino()) {
 				MessageBox::Show("No se pudo conectar con Arduino", "Advertencia", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 			}
+			// Conectar con el MQTT del vehiculo
+			if (!Vehiculo::Connect()) {
+				MessageBox::Show("No se pudo conectar con el sherifbot", "Advertencia", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			}
 
 			try {
 				if (!this->InicializarCamara()) {
@@ -335,7 +339,7 @@ namespace GUIApp {
 				this->Close();
 			}
 
-			Vehiculo::Connect();
+			//Vehiculo::Connect();
 		}
 		private: void Bitmap_Disposed(System::Object^ sender, System::EventArgs^ e) {
 		
@@ -358,7 +362,7 @@ namespace GUIApp {
 
 				Vehiculo::Stop();
 
-				MessageBox::Show("Avanzo. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
+				//MessageBox::Show("Avanzo. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
 			}
 				
 		}
@@ -371,7 +375,7 @@ namespace GUIApp {
 
 				Vehiculo::Stop();
 
-				MessageBox::Show("Avanzo. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
+				//MessageBox::Show("Avanzo. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
 			}
 		}
 		private: System::Void btnAtras_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
@@ -392,7 +396,7 @@ namespace GUIApp {
 
 				Vehiculo::Stop();
 
-				MessageBox::Show("Retrocedio. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
+				//MessageBox::Show("Retrocedio. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
 			}
 				
 		}
@@ -405,7 +409,7 @@ namespace GUIApp {
 
 				Vehiculo::Stop();
 
-				MessageBox::Show("Retrocedio. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
+				//MessageBox::Show("Retrocedio. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
 			}
 		}
 		private: System::Void btnRight_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
@@ -426,7 +430,7 @@ namespace GUIApp {
 
 				Vehiculo::Stop();
 
-				MessageBox::Show("Avanzo hacia la derecha. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
+				//MessageBox::Show("Avanzo hacia la derecha. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
 			}
 		}
 		private: System::Void btnRight_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
@@ -438,7 +442,7 @@ namespace GUIApp {
 
 				Vehiculo::Stop();
 
-				MessageBox::Show("Avanzo hacia la derecha. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
+				//MessageBox::Show("Avanzo hacia la derecha. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
 			}
 		}
 		private: System::Void btnLeft_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
@@ -456,7 +460,7 @@ namespace GUIApp {
 				String^ mensaje = "izquierda";
 				MoverRobot(mensaje, robotOrientacion);
 				Vehiculo::Stop();
-				MessageBox::Show("Avanzo hacia la izquierda. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
+				//MessageBox::Show("Avanzo hacia la izquierda. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
 			}
 		}
 		private: System::Void btnLeft_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
@@ -466,7 +470,7 @@ namespace GUIApp {
 				String^ mensaje = "izquierda";
 				MoverRobot(mensaje, robotOrientacion);
 				Vehiculo::Stop();
-				MessageBox::Show("Avanzo hacia la izquierda. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
+				//MessageBox::Show("Avanzo hacia la izquierda. Nueva posición: (" + Convert::ToString(robotEncontrado->PosicionRobot->x) + ", " + Convert::ToString(robotEncontrado->PosicionRobot->y) + ")", "Exito", MessageBoxButtons::OK);
 			}
 		}
 		private: System::Void giroDerecha_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
@@ -492,7 +496,7 @@ namespace GUIApp {
 
 				Vehiculo::Stop();
 
-				MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
+				//MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
 			}
 		}
 		private: System::Void giroDerecha_MouseLeave(System::Object^ sender, System::EventArgs^ e) {
@@ -510,7 +514,7 @@ namespace GUIApp {
 
 				Vehiculo::Stop();
 
-				MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
+				//MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
 			}
 		}
 		private: System::Void giroIzquierda_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
@@ -535,7 +539,7 @@ namespace GUIApp {
 
 				Vehiculo::Stop();
 
-				MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
+				//MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
 
 			}
 		}
@@ -553,7 +557,7 @@ namespace GUIApp {
 
 				Vehiculo::Stop();
 
-				MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
+				//MessageBox::Show(mensaje, "Exito", MessageBoxButtons::OK);
 			}
 		}
 		private: System::Boolean InicializarCamara() {
