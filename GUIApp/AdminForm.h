@@ -90,12 +90,11 @@ namespace GUIApp {
             // 
             // button1
             // 
-            this->button1->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-                static_cast<System::Byte>(0)));
+            this->button1->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9));
             this->button1->Location = System::Drawing::Point(263, 260);
             this->button1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
             this->button1->Name = L"button1";
-            this->button1->Size = System::Drawing::Size(150, 48);
+            this->button1->Size = System::Drawing::Size(150, 50);
             this->button1->TabIndex = 20;
             this->button1->Text = L"Registro de Incidencias";
             this->button1->UseVisualStyleBackColor = true;
@@ -103,10 +102,11 @@ namespace GUIApp {
             // 
             // btnRobots
             // 
+            this->btnRobots->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9));
             this->btnRobots->Location = System::Drawing::Point(48, 260);
             this->btnRobots->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
             this->btnRobots->Name = L"btnRobots";
-            this->btnRobots->Size = System::Drawing::Size(150, 48);
+            this->btnRobots->Size = System::Drawing::Size(150, 50);
             this->btnRobots->TabIndex = 18;
             this->btnRobots->Text = L"Gestión de Usuarios/Robots";
             this->btnRobots->UseVisualStyleBackColor = true;
@@ -114,11 +114,10 @@ namespace GUIApp {
             // 
             // btnZonasT
             // 
-            this->btnZonasT->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-                static_cast<System::Byte>(0)));
+            this->btnZonasT->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9));
             this->btnZonasT->Location = System::Drawing::Point(263, 495);
             this->btnZonasT->Name = L"btnZonasT";
-            this->btnZonasT->Size = System::Drawing::Size(150, 48);
+            this->btnZonasT->Size = System::Drawing::Size(150, 50);
             this->btnZonasT->TabIndex = 21;
             this->btnZonasT->Text = L"Delimitar Zonas de Trabajo";
             this->btnZonasT->UseVisualStyleBackColor = true;
@@ -126,12 +125,11 @@ namespace GUIApp {
             // 
             // btnEstadistica
             // 
-            this->btnEstadistica->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-                static_cast<System::Byte>(0)));
+            this->btnEstadistica->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9));
             this->btnEstadistica->Location = System::Drawing::Point(48, 495);
             this->btnEstadistica->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
             this->btnEstadistica->Name = L"btnEstadistica";
-            this->btnEstadistica->Size = System::Drawing::Size(150, 48);
+            this->btnEstadistica->Size = System::Drawing::Size(150, 50);
             this->btnEstadistica->TabIndex = 24;
             this->btnEstadistica->Text = L"Estadísticas";
             this->btnEstadistica->UseVisualStyleBackColor = true;
@@ -195,8 +193,7 @@ namespace GUIApp {
             // 
             // btnCerrarSesion
             // 
-            this->btnCerrarSesion->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-                static_cast<System::Byte>(0)));
+            this->btnCerrarSesion->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9));
             this->btnCerrarSesion->Location = System::Drawing::Point(263, 24);
             this->btnCerrarSesion->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
             this->btnCerrarSesion->Name = L"btnCerrarSesion";
@@ -286,29 +283,22 @@ namespace GUIApp {
     private:
         void StyleButtons()
         {
-            // Botones principales (debajo de cada icono)
-            array<Button^>^ mainButtons = gcnew array<Button^> {
+            // Botones principales (acciones del panel)
+            array<Button^>^ primary = gcnew array<Button^> {
                 this->btnRobots, this->button1, this->btnZonasT, this->btnEstadistica
             };
 
-            for each (Button ^ b in mainButtons)
+            for each (Button ^ b in primary)
             {
                 b->FlatStyle = FlatStyle::Flat;
                 b->FlatAppearance->BorderSize = 0;
-                b->BackColor = System::Drawing::Color::FromArgb(20, 27, 47);        // fondo oscuro
-                b->ForeColor = System::Drawing::Color::FromArgb(224, 231, 255);     // texto claro
-                b->Font = gcnew System::Drawing::Font("Segoe UI", 9,
-                    System::Drawing::FontStyle::Regular);
-
-                // esquinas redondeadas
+                b->BackColor = System::Drawing::Color::FromArgb(0, 140, 255); // azul primario
+                b->ForeColor = System::Drawing::Color::White;
+                b->Font = gcnew System::Drawing::Font("Segoe UI", 9, System::Drawing::FontStyle::Bold);
                 GUIApp::UIHelpers::SetRoundedRegion(b, 18);
-
-                // borde celeste (diseño secundario)
-                b->Paint += gcnew System::Windows::Forms::PaintEventHandler(
-                    &GUIApp::UIHelpers::OutlineButton_Paint);
             }
 
-            // Botón Cerrar sesión (lo dejamos también como outline)
+            // Botón Cerrar sesión como secundario (outline)
             this->btnCerrarSesion->FlatStyle = FlatStyle::Flat;
             this->btnCerrarSesion->FlatAppearance->BorderSize = 0;
             this->btnCerrarSesion->BackColor = System::Drawing::Color::FromArgb(20, 27, 47);
@@ -319,6 +309,7 @@ namespace GUIApp {
             this->btnCerrarSesion->Paint += gcnew System::Windows::Forms::PaintEventHandler(
                 &GUIApp::UIHelpers::OutlineButton_Paint);
         }
+
         // Tarjeta redondeada
         System::Void mainCard_Paint(System::Object^ sender,
             System::Windows::Forms::PaintEventArgs^ e)

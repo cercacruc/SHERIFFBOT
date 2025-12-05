@@ -147,7 +147,7 @@ namespace GUIApp {
             // pictureBox1
             // 
             this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-            this->pictureBox1->Location = System::Drawing::Point(46, 90);
+            this->pictureBox1->Location = System::Drawing::Point(46, 104);
             this->pictureBox1->Name = L"pictureBox1";
             this->pictureBox1->Size = System::Drawing::Size(120, 120);
             this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;

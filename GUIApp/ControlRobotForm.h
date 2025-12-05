@@ -80,8 +80,7 @@ namespace GUIApp {
 
 		   void InitializeComponent(void)
 		   {
-			   System::ComponentModel::ComponentResourceManager^ resources =
-				   (gcnew System::ComponentModel::ComponentResourceManager(ControlRobotForm::typeid));
+			   System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(ControlRobotForm::typeid));
 			   this->pbCamara = (gcnew System::Windows::Forms::PictureBox());
 			   this->txtRobot = (gcnew System::Windows::Forms::TextBox());
 			   this->giroIzquierda = (gcnew System::Windows::Forms::PictureBox());
@@ -95,9 +94,8 @@ namespace GUIApp {
 			   this->btnSalir = (gcnew System::Windows::Forms::Button());
 			   this->btnVerMapa = (gcnew System::Windows::Forms::Button());
 			   this->btnReconectar = (gcnew System::Windows::Forms::Button());
-			   this->lblEstadoRobot = (gcnew System::Windows::Forms::Label());     // <<<
-			   this->txtEstadoRobot = (gcnew System::Windows::Forms::TextBox());   // <<<
-
+			   this->lblEstadoRobot = (gcnew System::Windows::Forms::Label());
+			   this->txtEstadoRobot = (gcnew System::Windows::Forms::TextBox());
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbCamara))->BeginInit();
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroIzquierda))->BeginInit();
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroDerecha))->BeginInit();
@@ -119,7 +117,6 @@ namespace GUIApp {
 			   // txtRobot
 			   // 
 			   this->txtRobot->Location = System::Drawing::Point(197, 24);
-			   this->txtRobot->Multiline = false;
 			   this->txtRobot->Name = L"txtRobot";
 			   this->txtRobot->Size = System::Drawing::Size(138, 22);
 			   this->txtRobot->TabIndex = 34;
@@ -127,105 +124,81 @@ namespace GUIApp {
 			   // 
 			   // giroIzquierda
 			   // 
-			   this->giroIzquierda->Image =
-				   (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"giroIzquierda.Image")));
-			   this->giroIzquierda->Location = System::Drawing::Point(128, 521);
+			   this->giroIzquierda->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"giroIzquierda.Image")));
+			   this->giroIzquierda->Location = System::Drawing::Point(152, 537);
 			   this->giroIzquierda->Name = L"giroIzquierda";
-			   this->giroIzquierda->Size = System::Drawing::Size(127, 122);
-			   this->giroIzquierda->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			   this->giroIzquierda->Size = System::Drawing::Size(88, 96);
+			   this->giroIzquierda->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			   this->giroIzquierda->TabIndex = 33;
 			   this->giroIzquierda->TabStop = false;
-			   this->giroIzquierda->MouseDown +=
-				   gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::giroIzquierda_MouseDown);
-			   this->giroIzquierda->MouseLeave +=
-				   gcnew System::EventHandler(this, &ControlRobotForm::giroIzquierda_MouseLeave);
-			   this->giroIzquierda->MouseUp +=
-				   gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::giroIzquierda_MouseUp);
+			   this->giroIzquierda->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::giroIzquierda_MouseDown);
+			   this->giroIzquierda->MouseLeave += gcnew System::EventHandler(this, &ControlRobotForm::giroIzquierda_MouseLeave);
+			   this->giroIzquierda->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::giroIzquierda_MouseUp);
 			   // 
 			   // giroDerecha
 			   // 
-			   this->giroDerecha->Image =
-				   (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"giroDerecha.Image")));
-			   this->giroDerecha->Location = System::Drawing::Point(486, 521);
+			   this->giroDerecha->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"giroDerecha.Image")));
+			   this->giroDerecha->Location = System::Drawing::Point(499, 537);
 			   this->giroDerecha->Name = L"giroDerecha";
-			   this->giroDerecha->Size = System::Drawing::Size(127, 122);
-			   this->giroDerecha->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			   this->giroDerecha->Size = System::Drawing::Size(90, 96);
+			   this->giroDerecha->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			   this->giroDerecha->TabIndex = 32;
 			   this->giroDerecha->TabStop = false;
-			   this->giroDerecha->MouseDown +=
-				   gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::giroDerecha_MouseDown);
-			   this->giroDerecha->MouseLeave +=
-				   gcnew System::EventHandler(this, &ControlRobotForm::giroDerecha_MouseLeave);
-			   this->giroDerecha->MouseUp +=
-				   gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::giroDerecha_MouseUp);
+			   this->giroDerecha->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::giroDerecha_MouseDown);
+			   this->giroDerecha->MouseLeave += gcnew System::EventHandler(this, &ControlRobotForm::giroDerecha_MouseLeave);
+			   this->giroDerecha->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::giroDerecha_MouseUp);
 			   // 
 			   // btnAtras
 			   // 
-			   this->btnAtras->Image =
-				   (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnAtras.Image")));
+			   this->btnAtras->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnAtras.Image")));
 			   this->btnAtras->Location = System::Drawing::Point(334, 623);
 			   this->btnAtras->Name = L"btnAtras";
 			   this->btnAtras->Size = System::Drawing::Size(74, 65);
-			   this->btnAtras->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			   this->btnAtras->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			   this->btnAtras->TabIndex = 31;
 			   this->btnAtras->TabStop = false;
-			   this->btnAtras->MouseDown +=
-				   gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnAtras_MouseDown);
-			   this->btnAtras->MouseLeave +=
-				   gcnew System::EventHandler(this, &ControlRobotForm::btnAtras_MouseLeave);
-			   this->btnAtras->MouseUp +=
-				   gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnAtras_MouseUp);
+			   this->btnAtras->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnAtras_MouseDown);
+			   this->btnAtras->MouseLeave += gcnew System::EventHandler(this, &ControlRobotForm::btnAtras_MouseLeave);
+			   this->btnAtras->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnAtras_MouseUp);
 			   // 
 			   // btnAdelante
 			   // 
-			   this->btnAdelante->Image =
-				   (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnAdelante.Image")));
+			   this->btnAdelante->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnAdelante.Image")));
 			   this->btnAdelante->Location = System::Drawing::Point(334, 481);
 			   this->btnAdelante->Name = L"btnAdelante";
 			   this->btnAdelante->Size = System::Drawing::Size(74, 65);
-			   this->btnAdelante->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			   this->btnAdelante->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			   this->btnAdelante->TabIndex = 30;
 			   this->btnAdelante->TabStop = false;
-			   this->btnAdelante->MouseDown +=
-				   gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnAdelante_MouseDown);
-			   this->btnAdelante->MouseLeave +=
-				   gcnew System::EventHandler(this, &ControlRobotForm::btnAdelante_MouseLeave);
-			   this->btnAdelante->MouseUp +=
-				   gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnAdelante_MouseUp);
+			   this->btnAdelante->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnAdelante_MouseDown);
+			   this->btnAdelante->MouseLeave += gcnew System::EventHandler(this, &ControlRobotForm::btnAdelante_MouseLeave);
+			   this->btnAdelante->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnAdelante_MouseUp);
 			   // 
 			   // btnRight
 			   // 
-			   this->btnRight->Image =
-				   (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnRight.Image")));
+			   this->btnRight->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnRight.Image")));
 			   this->btnRight->Location = System::Drawing::Point(406, 552);
 			   this->btnRight->Name = L"btnRight";
 			   this->btnRight->Size = System::Drawing::Size(74, 65);
-			   this->btnRight->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			   this->btnRight->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			   this->btnRight->TabIndex = 29;
 			   this->btnRight->TabStop = false;
-			   this->btnRight->MouseDown +=
-				   gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnRight_MouseDown);
-			   this->btnRight->MouseLeave +=
-				   gcnew System::EventHandler(this, &ControlRobotForm::btnRight_MouseLeave);
-			   this->btnRight->MouseUp +=
-				   gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnRight_MouseUp);
+			   this->btnRight->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnRight_MouseDown);
+			   this->btnRight->MouseLeave += gcnew System::EventHandler(this, &ControlRobotForm::btnRight_MouseLeave);
+			   this->btnRight->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnRight_MouseUp);
 			   // 
 			   // btnLeft
 			   // 
-			   this->btnLeft->Image =
-				   (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnLeft.Image")));
+			   this->btnLeft->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"btnLeft.Image")));
 			   this->btnLeft->Location = System::Drawing::Point(261, 552);
 			   this->btnLeft->Name = L"btnLeft";
 			   this->btnLeft->Size = System::Drawing::Size(74, 65);
-			   this->btnLeft->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
+			   this->btnLeft->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			   this->btnLeft->TabIndex = 28;
 			   this->btnLeft->TabStop = false;
-			   this->btnLeft->MouseDown +=
-				   gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnLeft_MouseDown);
-			   this->btnLeft->MouseLeave +=
-				   gcnew System::EventHandler(this, &ControlRobotForm::btnLeft_MouseLeave);
-			   this->btnLeft->MouseUp +=
-				   gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnLeft_MouseUp);
+			   this->btnLeft->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnLeft_MouseDown);
+			   this->btnLeft->MouseLeave += gcnew System::EventHandler(this, &ControlRobotForm::btnLeft_MouseLeave);
+			   this->btnLeft->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &ControlRobotForm::btnLeft_MouseUp);
 			   // 
 			   // label3
 			   // 
@@ -277,32 +250,30 @@ namespace GUIApp {
 			   this->btnReconectar->UseVisualStyleBackColor = true;
 			   this->btnReconectar->Click += gcnew System::EventHandler(this, &ControlRobotForm::btnReconectar_Click);
 			   // 
-			   // lblEstadoRobot  <<<
+			   // lblEstadoRobot
 			   // 
 			   this->lblEstadoRobot->AutoSize = true;
 			   this->lblEstadoRobot->Location = System::Drawing::Point(435, 74);
 			   this->lblEstadoRobot->Name = L"lblEstadoRobot";
-			   this->lblEstadoRobot->Size = System::Drawing::Size(107, 16);
+			   this->lblEstadoRobot->Size = System::Drawing::Size(109, 16);
 			   this->lblEstadoRobot->TabIndex = 39;
 			   this->lblEstadoRobot->Text = L"Estado del robot:";
 			   // 
-			   // txtEstadoRobot  <<<
+			   // txtEstadoRobot
 			   // 
 			   this->txtEstadoRobot->Location = System::Drawing::Point(435, 93);
 			   this->txtEstadoRobot->Name = L"txtEstadoRobot";
 			   this->txtEstadoRobot->ReadOnly = true;
 			   this->txtEstadoRobot->Size = System::Drawing::Size(294, 22);
 			   this->txtEstadoRobot->TabIndex = 40;
-			   this->txtEstadoRobot->TextAlign = System::Windows::Forms::HorizontalAlignment::Left;
-
 			   // 
 			   // ControlRobotForm
 			   // 
 			   this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			   this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			   this->ClientSize = System::Drawing::Size(741, 697);
-			   this->Controls->Add(this->txtEstadoRobot);   // <<<
-			   this->Controls->Add(this->lblEstadoRobot);    // <<<
+			   this->Controls->Add(this->txtEstadoRobot);
+			   this->Controls->Add(this->lblEstadoRobot);
 			   this->Controls->Add(this->btnReconectar);
 			   this->Controls->Add(this->btnVerMapa);
 			   this->Controls->Add(this->btnSalir);
@@ -316,14 +287,11 @@ namespace GUIApp {
 			   this->Controls->Add(this->btnLeft);
 			   this->Controls->Add(this->label3);
 			   this->Controls->Add(this->label1);
-			   this->Icon =
-				   (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			   this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			   this->Name = L"ControlRobotForm";
 			   this->Text = L"Control del robot";
-			   this->FormClosing +=
-				   gcnew System::Windows::Forms::FormClosingEventHandler(this, &ControlRobotForm::ControlRobotForm_FormClosing);
-			   this->Load +=
-				   gcnew System::EventHandler(this, &ControlRobotForm::ControlRobotForm_Load);
+			   this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &ControlRobotForm::ControlRobotForm_FormClosing);
+			   this->Load += gcnew System::EventHandler(this, &ControlRobotForm::ControlRobotForm_Load);
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pbCamara))->EndInit();
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroIzquierda))->EndInit();
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->giroDerecha))->EndInit();
@@ -333,6 +301,7 @@ namespace GUIApp {
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->btnLeft))->EndInit();
 			   this->ResumeLayout(false);
 			   this->PerformLayout();
+
 		   }
 #pragma endregion
 
@@ -440,7 +409,7 @@ namespace GUIApp {
 			MessageBox::Show("No se pudo conectar con MQTT", "Advertencia",
 				MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		}
-
+		
 		try {
 			if (!this->InicializarCamara()) {
 				MessageBox::Show("No se pudo acceder a la cámara");
@@ -451,6 +420,7 @@ namespace GUIApp {
 			MessageBox::Show("Error inicializando cámara: " + ex->Message);
 			this->Close();
 		}
+		
 	}
 
 		   // <<< NUEVO: actualiza el estado en el textbox interno
