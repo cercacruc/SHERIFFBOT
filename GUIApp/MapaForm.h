@@ -1,4 +1,5 @@
 #pragma once
+#include "UIStyles.h"   // para usar UIHelpers
 
 namespace GUIApp {
 
@@ -11,7 +12,6 @@ namespace GUIApp {
 	using namespace BotModel;
 	using namespace BotService;
 
-
 	/// <summary>
 	/// Resumen de MapaForm
 	/// </summary>
@@ -19,13 +19,14 @@ namespace GUIApp {
 	{
 	public:
 		Robot^ robotEncontrado;
+
 		MapaForm(Robot^ robot)
 		{
 			InitializeComponent();
-			//
-			//TODO: agregar código de constructor aquí
-			//
 			robotEncontrado = robot;
+
+			ApplyDarkTheme();
+			StylePrimaryButton();
 		}
 
 	protected:
@@ -39,11 +40,9 @@ namespace GUIApp {
 				delete components;
 			}
 		}
+
 	private: System::Windows::Forms::Button^ btnSalir;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
-	protected:
-
-	protected:
 
 	private:
 		/// <summary>
@@ -52,10 +51,6 @@ namespace GUIApp {
 		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Método necesario para admitir el Diseñador. No se puede modificar
-		/// el contenido de este método con el editor de código.
-		/// </summary>
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MapaForm::typeid));
@@ -66,7 +61,8 @@ namespace GUIApp {
 			// 
 			// btnSalir
 			// 
-			this->btnSalir->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnSalir->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12,
+				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->btnSalir->Location = System::Drawing::Point(668, 12);
 			this->btnSalir->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
@@ -99,19 +95,56 @@ namespace GUIApp {
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->Name = L"MapaForm";
-			this->Text = L"MapaForm";
+			this->Text = L"Mapa del Robot";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
+
+		// ====== ESTILO ======
+
+	private:
+		void ApplyDarkTheme()
+		{
+			// Fondo del form
+			this->BackColor = Color::FromArgb(20, 27, 47);
+			this->ForeColor = Color::FromArgb(226, 232, 240);
+			this->StartPosition = FormStartPosition::CenterScreen;
+
+			// Opcional: bloquear maximizar para que se vea más "dialog"
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+			this->MaximizeBox = false;
+			this->MinimizeBox = true;
+
+			// Fondo del mapa
+			this->pictureBox1->BackColor = Color::FromArgb(10, 16, 32);
+			this->pictureBox1->BorderStyle = BorderStyle::FixedSingle;
+		}
+
+		void StylePrimaryButton()
+		{
+			this->btnSalir->FlatStyle = FlatStyle::Flat;
+			this->btnSalir->FlatAppearance->BorderSize = 0;
+			this->btnSalir->BackColor = Color::FromArgb(0, 140, 255);
+			this->btnSalir->ForeColor = Color::White;
+			this->btnSalir->Font = gcnew System::Drawing::Font("Segoe UI", 9, FontStyle::Bold);
+
+			// Usa el helper de UI para bordes redondeados
+			UIHelpers::SetRoundedRegionAuto(this->btnSalir);
+		}
+
+		// ====== LÓGICA ======
+
 	private: System::Void btnSalir_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
+
 	private: System::Void pictureBox1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
-		pictureBox1->Invalidate();
+		//pictureBox1->Invalidate();  
 		Graphics^ g = e->Graphics;
 		SolidBrush^ brush = gcnew SolidBrush(Color::Red);
+
 		double pos_x = robotEncontrado->PosicionRobot->x;
 		double pos_y = robotEncontrado->PosicionRobot->y;
 		double x_max = 935;
@@ -120,11 +153,16 @@ namespace GUIApp {
 		double y_min = 0;
 		int width = pictureBox1->Width;
 		int heigth = pictureBox1->Height;
+
 		double X_conversion = (pos_x - x_min) / (x_max - x_min);
 		double Y_conversion = (pos_y - y_min) / (y_max - y_min);
+
 		int x_pixel = (int)(X_conversion * width);
 		int y_pixel = (int)((1 - Y_conversion) * heigth);
+
 		g->FillEllipse(brush, x_pixel - 5, y_pixel - 5, 10, 10);
+
+		delete brush;
 	}
-};
+	};
 }

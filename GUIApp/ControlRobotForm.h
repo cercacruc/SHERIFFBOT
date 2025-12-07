@@ -405,10 +405,10 @@ namespace GUIApp {
 		}
 
 		// Conectar con MQTT al carga
-		if (!Vehiculo::Connect()) {
+		/*if (!Vehiculo::Connect()) {
 			MessageBox::Show("No se pudo conectar con MQTT", "Advertencia",
 				MessageBoxButtons::OK, MessageBoxIcon::Warning);
-		}
+		}*/
 		
 		try {
 			if (!this->InicializarCamara()) {

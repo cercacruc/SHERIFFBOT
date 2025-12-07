@@ -1,6 +1,7 @@
 #pragma once
 #include "ControlRobotForm.h"
 #include "AsignarAlertaRobotForm.h"
+#include "UIStyles.h"   // Para UIHelpers: botones redondeados, etc.
 
 namespace GUIApp {
 
@@ -24,9 +25,10 @@ namespace GUIApp {
 		RobotsSheriffForm(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: agregar código de constructor aquí
-			//
+
+			// ---- upgrade visual ----
+			ApplyDarkTheme();
+			StyleButtonsAndInputs();
 		}
 
 	protected:
@@ -40,33 +42,26 @@ namespace GUIApp {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::ComboBox^ cmbRobots;
-	private: System::Windows::Forms::PictureBox^ pbPhoto;
-	protected:
-
-
-	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::TextBox^ txtCaracteristicas;
-	private: System::Windows::Forms::Button^ btnRobots;
-
-	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::ComboBox^ cmbLugares;
-	private: System::Windows::Forms::Button^ btnControlRobot;
-	private: System::Windows::Forms::Button^ btnSalir;
-
 
 	private:
+		System::Windows::Forms::Label^ label1;
+		System::Windows::Forms::ComboBox^ cmbRobots;
+		System::Windows::Forms::PictureBox^ pbPhoto;
+		System::Windows::Forms::Label^ label2;
+		System::Windows::Forms::TextBox^ txtCaracteristicas;
+		System::Windows::Forms::Button^ btnRobots;
+		System::Windows::Forms::Label^ label3;
+		System::Windows::Forms::ComboBox^ cmbLugares;
+		System::Windows::Forms::Button^ btnControlRobot;
+		System::Windows::Forms::Button^ btnSalir;
+
 		/// <summary>
 		/// Variable del diseñador necesaria.
 		/// </summary>
 		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Método necesario para admitir el Diseñador. No se puede modificar
-		/// el contenido de este método con el editor de código.
-		/// </summary>
+		
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(RobotsSheriffForm::typeid));
@@ -86,7 +81,8 @@ namespace GUIApp {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12,
+				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label1->Location = System::Drawing::Point(12, 9);
 			this->label1->Name = L"label1";
@@ -111,11 +107,14 @@ namespace GUIApp {
 			this->pbPhoto->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pbPhoto->TabIndex = 2;
 			this->pbPhoto->TabStop = false;
+			// borde celeste
+			this->pbPhoto->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &RobotsSheriffForm::PictureBoxBorder_Paint);
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12,
+				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label2->Location = System::Drawing::Point(211, 48);
 			this->label2->Name = L"label2";
@@ -133,7 +132,8 @@ namespace GUIApp {
 			// 
 			// btnRobots
 			// 
-			this->btnRobots->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnRobots->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12,
+				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->btnRobots->Location = System::Drawing::Point(278, 206);
 			this->btnRobots->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
@@ -147,7 +147,8 @@ namespace GUIApp {
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12,
+				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label3->Location = System::Drawing::Point(12, 216);
 			this->label3->Name = L"label3";
@@ -166,7 +167,8 @@ namespace GUIApp {
 			// 
 			// btnControlRobot
 			// 
-			this->btnControlRobot->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnControlRobot->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12,
+				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->btnControlRobot->Location = System::Drawing::Point(43, 262);
 			this->btnControlRobot->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
@@ -179,7 +181,8 @@ namespace GUIApp {
 			// 
 			// btnSalir
 			// 
-			this->btnSalir->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btnSalir->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei UI", 12,
+				System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->btnSalir->Location = System::Drawing::Point(216, 262);
 			this->btnSalir->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
@@ -214,230 +217,357 @@ namespace GUIApp {
 			this->PerformLayout();
 
 		}
-		#pragma endregion
-		private: void CargarListaRobots() {
-			/*
-			List<Robot^>^ robots = Service::GetRobots();
-			cmbRobots->Visible = true;
-			cmbRobots->Enabled = true;
-			cmbRobots->Items->Clear();
+#pragma endregion
 
-			for each(Robot ^ robot in robots) {
-				String^ nombreConEstado = robot->Nombre;
-				if (!robot->Disponibilidad) {
-					nombreConEstado += " (Ocupado en " + robot->Zona + ")";
+		// =============== ESTILO (Dark Theme) ===============
+
+		void ApplyDarkTheme()
+		{
+			Color back = Color::FromArgb(20, 27, 47);
+			Color fore = Color::FromArgb(224, 231, 255);
+
+			this->BackColor = back;
+
+			array<Label^>^ labels = gcnew array<Label^>{
+				label1, label2, label3
+			};
+
+			for each (Label ^ lb in labels)
+			{
+				if (lb != nullptr)
+				{
+					lb->ForeColor = fore;
+					lb->BackColor = Color::Transparent;
 				}
-				cmbRobots->Items->Add(nombreConEstado);
 			}
 
-			// Si hay robots seleccionados, mantener la selección actual
-			if (cmbRobots->Items->Count > 0 && cmbRobots->SelectedIndex == -1) {
-				cmbRobots->SelectedIndex = -1;
-			}
-			*/
-			List<Robot^>^ robots = Service::GetRobots();
-			cmbRobots->Visible = true;
-			cmbRobots->Enabled = true;
-			cmbRobots->Items->Clear();
-
-			for each (Robot ^ robot in robots) {
-				String^ nombreConEstado = robot->Nombre;
-
-				// CORREGIR: Solo mostrar "Ocupado" si NO está disponible Y NO está en BASE
-				if (!robot->Disponibilidad && robot->Zona->ToUpper() != "BASE") {
-					nombreConEstado += " (Ocupado en " + robot->Zona + ")";
-				}
-				// Si está en BASE, aunque no esté disponible, no mostrar como ocupado
-				else if (!robot->Disponibilidad && robot->Zona->ToUpper() == "BASE") {
-					nombreConEstado += " (En BASE)";
-				}
-				// Si está disponible
-				else if (robot->Disponibilidad) {
-					nombreConEstado += " (Disponible)";
-				}
-
-				cmbRobots->Items->Add(nombreConEstado);
-			}
-
-			if (cmbRobots->Items->Count > 0 && cmbRobots->SelectedIndex == -1) {
-				cmbRobots->SelectedIndex = -1;
-			}
+			if (pbPhoto != nullptr)
+				pbPhoto->BackColor = Color::FromArgb(10, 16, 32);
 		}
-		private: System::Void RobotsSheriffForm_Load(System::Object^ sender, System::EventArgs^ e) {
-			CargarListaRobots();
-			CargarListaLugares();
-			txtCaracteristicas->Enabled = false;
+
+		void StyleComboBox(ComboBox^ cb)
+		{
+			if (cb == nullptr) return;
+
+			cb->FlatStyle = FlatStyle::Flat;
+			cb->DropDownStyle = ComboBoxStyle::DropDownList;
+			cb->BackColor = Color::FromArgb(15, 23, 42);
+			cb->ForeColor = Color::FromArgb(226, 232, 240);
+			cb->DrawMode = DrawMode::OwnerDrawFixed;
+			cb->DrawItem += gcnew DrawItemEventHandler(this, &RobotsSheriffForm::ComboBox_DrawItem);
 		}
-		private: System::Void cmbRobots_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
-			if (cmbRobots->SelectedIndex == -1) return;
 
-			String^ robotLista = cmbRobots->Text;
+		void StyleButtonsAndInputs()
+		{
+			// Botones principales (acción): Enviar / Controlar
+			array<Button^>^ primary = gcnew array<Button^> {
+				btnRobots, btnControlRobot
+			};
 
-			// Extraer solo el nombre del robot (sin el estado entre paréntesis)
-			String^ nombreRobot = robotLista;
-			int indexParentesis = robotLista->IndexOf('(');
-			if (indexParentesis > 0) {
-				nombreRobot = robotLista->Substring(0, indexParentesis)->Trim();
+			for each (Button ^ b in primary)
+			{
+				if (b == nullptr) continue;
+				b->FlatStyle = FlatStyle::Flat;
+				b->FlatAppearance->BorderSize = 0;
+				b->BackColor = Color::FromArgb(0, 140, 255);
+				b->ForeColor = Color::White;
+				b->Font = gcnew System::Drawing::Font("Segoe UI", 9, FontStyle::Bold);
+				UIHelpers::SetRoundedRegion(b, 18);
 			}
 
-			Robot^ robotSeleccionado = Service::buscarRobotNombre(nombreRobot);
-			if (robotSeleccionado != nullptr) {
-				ActualizarCaracteristicasRobot(robotSeleccionado);
-				ActualizarFotoRobot(robotSeleccionado);
+			// Botón secundario: Salir
+			array<Button^>^ secondary = gcnew array<Button^> {
+				btnSalir
+			};
 
-				// Actualizar el estado del botón de enviar según la disponibilidad
-				btnRobots->Enabled = robotSeleccionado->Disponibilidad ||
-					(cmbLugares->Text->ToUpper() == "BASE" && !robotSeleccionado->Disponibilidad);
+			for each (Button ^ b in secondary)
+			{
+				if (b == nullptr) continue;
+				b->FlatStyle = FlatStyle::Flat;
+				b->FlatAppearance->BorderSize = 0;
+				b->BackColor = Color::FromArgb(20, 27, 47);
+				b->ForeColor = Color::FromArgb(224, 231, 255);
+				b->Font = gcnew System::Drawing::Font("Segoe UI", 9, FontStyle::Regular);
+				b->Paint += gcnew PaintEventHandler(&UIHelpers::OutlineButton_Paint);
+				UIHelpers::SetRoundedRegion(b, 18);
 			}
+
+			// TextBox dark
+			Color backBox = Color::FromArgb(10, 16, 32);
+			Color foreBox = Color::FromArgb(226, 232, 240);
+
+			if (txtCaracteristicas != nullptr)
+			{
+				txtCaracteristicas->BackColor = backBox;
+				txtCaracteristicas->ForeColor = foreBox;
+				txtCaracteristicas->BorderStyle = BorderStyle::FixedSingle;
+			}
+
+			// Combos dark
+			StyleComboBox(cmbRobots);
+			StyleComboBox(cmbLugares);
 		}
-		private: System::Void cmbLugares_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
-			if (cmbRobots->SelectedIndex == -1) return;
 
-			String^ robotLista = cmbRobots->Text;
-			String^ nombreRobot = robotLista;
-			int indexParentesis = robotLista->IndexOf('(');
-			if (indexParentesis > 0) {
-				nombreRobot = robotLista->Substring(0, indexParentesis)->Trim();
-			}
+		// Draw de los combos (dark)
+		void ComboBox_DrawItem(System::Object^ sender, DrawItemEventArgs^ e)
+		{
+			if (e->Index < 0) return;
 
-			Robot^ robotSeleccionado = Service::buscarRobotNombre(nombreRobot);
-			if (robotSeleccionado != nullptr) {
-				// Habilitar el botón solo si:
-				// - El robot está disponible Y el destino no es BASE
-				// - O el robot NO está disponible Y el destino es BASE
-				btnRobots->Enabled = (robotSeleccionado->Disponibilidad && cmbLugares->Text->ToUpper() != "BASE") ||
-					(!robotSeleccionado->Disponibilidad && cmbLugares->Text->ToUpper() == "BASE");
-			}
+			ComboBox^ cb = safe_cast<ComboBox^>(sender);
+			bool selected = (e->State & DrawItemState::Selected) == DrawItemState::Selected;
+
+			Color back = selected ? Color::FromArgb(37, 99, 235) : Color::FromArgb(15, 23, 42);
+			Color fore = Color::FromArgb(226, 232, 240);
+
+			e->Graphics->FillRectangle(gcnew SolidBrush(back), e->Bounds);
+
+			String^ text = cb->Items[e->Index]->ToString();
+			e->Graphics->DrawString(
+				text,
+				cb->Font,
+				gcnew SolidBrush(fore),
+				RectangleF(
+					(float)e->Bounds.X,
+					(float)e->Bounds.Y,
+					(float)e->Bounds.Width,
+					(float)e->Bounds.Height
+				)
+			);
+
+			e->DrawFocusRectangle();
 		}
-		private: void ActualizarCaracteristicasRobot(Robot^ robot) {
-			txtCaracteristicas->Text = robot->Caracteristicas;
+
+		// Borde celeste para PictureBox (igual que en otros forms)
+		void PictureBoxBorder_Paint(System::Object^ sender, PaintEventArgs^ e)
+		{
+			PictureBox^ pb = safe_cast<PictureBox^>(sender);
+			e->Graphics->SmoothingMode =
+				System::Drawing::Drawing2D::SmoothingMode::AntiAlias;
+
+			Rectangle rect = pb->ClientRectangle;
+			rect.Inflate(-1, -1);   // margen interno
+
+			Pen^ pen = gcnew Pen(Color::FromArgb(56, 189, 248), 2.0f);
+			e->Graphics->DrawRectangle(pen, rect);
+			delete pen;
 		}
-		private: void ActualizarFotoRobot(Robot^ robot) {
-			if (robot->Photo != nullptr) {
-				System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(robot->Photo);
-				pbPhoto->Image = Image::FromStream(ms);
+
+		// =============== LÓGICA ORIGINAL ===============
+
+	private: void CargarListaRobots() {
+		List<Robot^>^ robots = Service::GetRobots();
+		cmbRobots->Visible = true;
+		cmbRobots->Enabled = true;
+		cmbRobots->Items->Clear();
+
+		for each (Robot ^ robot in robots) {
+			String^ nombreConEstado = robot->Nombre;
+
+			// Solo mostrar "Ocupado" si NO está disponible Y NO está en BASE
+			if (!robot->Disponibilidad && robot->Zona->ToUpper() != "BASE") {
+				nombreConEstado += " (Ocupado en " + robot->Zona + ")";
 			}
-			else {
-				pbPhoto->Image = nullptr;
-				pbPhoto->Invalidate();
+			// Si está en BASE, aunque no esté disponible, no mostrar como ocupado
+			else if (!robot->Disponibilidad && robot->Zona->ToUpper() == "BASE") {
+				nombreConEstado += " (En BASE)";
 			}
+			// Si está disponible
+			else if (robot->Disponibilidad) {
+				nombreConEstado += " (Disponible)";
+			}
+
+			cmbRobots->Items->Add(nombreConEstado);
 		}
-		private: System::Void btnRobots_Click(System::Object^ sender, System::EventArgs^ e) {
-			String^ lugarDestino = cmbLugares->Text;
-			String^ robotElegido = cmbRobots->Text;
 
-			// Validar selecciones
-			if (String::IsNullOrEmpty(robotElegido)) {
-				MessageBox::Show("Por favor seleccione un robot", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				return;
-			}
+		if (cmbRobots->Items->Count > 0 && cmbRobots->SelectedIndex == -1) {
+			cmbRobots->SelectedIndex = -1;
+		}
+	}
 
-			if (String::IsNullOrEmpty(lugarDestino)) {
-				MessageBox::Show("Por favor seleccione un lugar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				return;
-			}
+	private: System::Void RobotsSheriffForm_Load(System::Object^ sender, System::EventArgs^ e) {
+		CargarListaRobots();
+		CargarListaLugares();
+		txtCaracteristicas->Enabled = false;
+	}
 
-			String^ nombreRobot = robotElegido;
-			int indexParentesis = robotElegido->IndexOf('(');
-			if (indexParentesis > 0) {
-				nombreRobot = robotElegido->Substring(0, indexParentesis)->Trim();
-			}
+	private: System::Void cmbRobots_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (cmbRobots->SelectedIndex == -1) return;
 
-			Robot^ robot = Service::buscarRobotNombre(nombreRobot);
+		String^ robotLista = cmbRobots->Text;
 
-			if (robot == nullptr) {
-				MessageBox::Show("Robot no encontrado", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				return;
-			}
+		// Extraer solo el nombre del robot (sin el estado entre paréntesis)
+		String^ nombreRobot = robotLista;
+		int indexParentesis = robotLista->IndexOf('(');
+		if (indexParentesis > 0) {
+			nombreRobot = robotLista->Substring(0, indexParentesis)->Trim();
+		}
 
-			// Si el destino es BASE
-			if (lugarDestino->ToUpper() == "BASE") {
+		Robot^ robotSeleccionado = Service::buscarRobotNombre(nombreRobot);
+		if (robotSeleccionado != nullptr) {
+			ActualizarCaracteristicasRobot(robotSeleccionado);
+			ActualizarFotoRobot(robotSeleccionado);
+
+			// Actualizar el estado del botón de enviar según la disponibilidad
+			btnRobots->Enabled = robotSeleccionado->Disponibilidad ||
+				(cmbLugares->Text->ToUpper() == "BASE" && !robotSeleccionado->Disponibilidad);
+		}
+	}
+
+	private: System::Void cmbLugares_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (cmbRobots->SelectedIndex == -1) return;
+
+		String^ robotLista = cmbRobots->Text;
+		String^ nombreRobot = robotLista;
+		int indexParentesis = robotLista->IndexOf('(');
+		if (indexParentesis > 0) {
+			nombreRobot = robotLista->Substring(0, indexParentesis)->Trim();
+		}
+
+		Robot^ robotSeleccionado = Service::buscarRobotNombre(nombreRobot);
+		if (robotSeleccionado != nullptr) {
+			// Habilitar el botón solo si:
+			// - El robot está disponible Y el destino no es BASE
+			// - O el robot NO está disponible Y el destino es BASE
+			btnRobots->Enabled =
+				(robotSeleccionado->Disponibilidad && cmbLugares->Text->ToUpper() != "BASE") ||
+				(!robotSeleccionado->Disponibilidad && cmbLugares->Text->ToUpper() == "BASE");
+		}
+	}
+
+	private: void ActualizarCaracteristicasRobot(Robot^ robot) {
+		txtCaracteristicas->Text = robot->Caracteristicas;
+	}
+
+	private: void ActualizarFotoRobot(Robot^ robot) {
+		if (robot->Photo != nullptr) {
+			System::IO::MemoryStream^ ms = gcnew System::IO::MemoryStream(robot->Photo);
+			pbPhoto->Image = Image::FromStream(ms);
+		}
+		else {
+			pbPhoto->Image = nullptr;
+			pbPhoto->Invalidate();
+		}
+	}
+
+	private: System::Void btnRobots_Click(System::Object^ sender, System::EventArgs^ e) {
+		String^ lugarDestino = cmbLugares->Text;
+		String^ robotElegido = cmbRobots->Text;
+
+		// Validar selecciones
+		if (String::IsNullOrEmpty(robotElegido)) {
+			MessageBox::Show("Por favor seleccione un robot", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
+		if (String::IsNullOrEmpty(lugarDestino)) {
+			MessageBox::Show("Por favor seleccione un lugar", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
+		String^ nombreRobot = robotElegido;
+		int indexParentesis = robotElegido->IndexOf('(');
+		if (indexParentesis > 0) {
+			nombreRobot = robotElegido->Substring(0, indexParentesis)->Trim();
+		}
+
+		Robot^ robot = Service::buscarRobotNombre(nombreRobot);
+
+		if (robot == nullptr) {
+			MessageBox::Show("Robot no encontrado", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
+		// Si el destino es BASE
+		if (lugarDestino->ToUpper() == "BASE") {
+			robot->Zona = lugarDestino;
+			robot->Disponibilidad = true; // Siempre disponible en BASE
+			robot->AlertaAsignadaID = 0;  // Limpiar alerta asignada si existe
+			robot->TipoMision = "";       // Limpiar misión
+
+			Service::modificarRobotID(robot);
+
+			String^ mensaje = String::Format("{0} ha regresado a la BASE y está disponible", robot->Nombre);
+			MessageBox::Show(mensaje, "Éxito", MessageBoxButtons::OK);
+		}
+		// Si el destino NO es BASE
+		else {
+			// Verificar si el robot está disponible
+			if (robot->Disponibilidad) {
 				robot->Zona = lugarDestino;
-				robot->Disponibilidad = true; // Siempre disponible en BASE
-				robot->AlertaAsignadaID = 0;  // Limpiar alerta asignada si existe
-				robot->TipoMision = "";       // Limpiar misión
-
+				robot->Disponibilidad = false; // Ocupado en misión
 				Service::modificarRobotID(robot);
 
-				String^ mensaje = String::Format("{0} ha regresado a la BASE y está disponible", robot->Nombre);
+				String^ mensaje = String::Format("Se ha enviado a {0} a {1}", robot->Nombre, lugarDestino);
 				MessageBox::Show(mensaje, "Éxito", MessageBoxButtons::OK);
 			}
-			// Si el destino NO es BASE
 			else {
-				// Verificar si el robot está disponible
-				if (robot->Disponibilidad) {
-					robot->Zona = lugarDestino;
-					robot->Disponibilidad = false; // Ocupado en misión
-					Service::modificarRobotID(robot);
-
-					String^ mensaje = String::Format("Se ha enviado a {0} a {1}", robot->Nombre, lugarDestino);
-					MessageBox::Show(mensaje, "Éxito", MessageBoxButtons::OK);
-				}
-				else {
-					// Si el robot no está disponible
-					MessageBox::Show("El robot no está disponible. Solo puede ser enviado a BASE para liberarlo.",
-						"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-					return;
-				}
-			}
-
-			// Actualizar la interfaz
-			ActualizarCaracteristicasRobot(robot);
-			cmbRobots->SelectedIndex = -1;
-			cmbLugares->SelectedIndex = -1;
-			CargarListaRobots(); // Recargar lista con estados actualizados
-
-		}
-		private: void CargarListaLugares() {
-			List<ZonaTrabajo^>^ listaLugares = Service::GetZonas();
-			cmbLugares->Visible = true;
-			cmbLugares->Enabled = true;
-			cmbLugares->Items->Clear();
-
-			for each (ZonaTrabajo ^ zona in listaLugares) {
-				cmbLugares->Items->Add(zona->zona);
-			}
-		}
-		private: System::Void btnControlRobot_Click(System::Object^ sender, System::EventArgs^ e) {
-			if (cmbRobots->SelectedIndex == -1) {
-				MessageBox::Show("Por favor seleccione un robot primero", "Error",
-					MessageBoxButtons::OK, MessageBoxIcon::Error);
+				// Si el robot no está disponible
+				MessageBox::Show(
+					"El robot no está disponible. Solo puede ser enviado a BASE para liberarlo.",
+					"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 				return;
 			}
-
-			String^ robotLista = cmbRobots->Text;
-			String^ nombreRobot = robotLista;
-
-			// Extraer solo el nombre del robot (sin el estado entre paréntesis)
-			int indexParentesis = robotLista->IndexOf('(');
-			if (indexParentesis > 0) {
-				nombreRobot = robotLista->Substring(0, indexParentesis)->Trim();
-			}
-
-			Robot^ robotEncontrado = Service::buscarRobotNombre(nombreRobot);
-
-			if (robotEncontrado != nullptr) {
-				ControlRobotForm^ controlRobot = gcnew ControlRobotForm(robotEncontrado);
-				this->Hide();
-				controlRobot->ShowDialog();
-				this->Show();
-
-				// ACTUALIZAR: Recargar la lista después de controlar el robot
-				CargarListaRobots();
-
-				// Limpiar selecciones
-				cmbRobots->SelectedIndex = -1;
-				cmbLugares->SelectedIndex = -1;
-				pbPhoto->Image = nullptr;
-				txtCaracteristicas->Clear();
-			}
-			else {
-				MessageBox::Show("Robot no encontrado", "Error",
-					MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}
 		}
-		private: System::Void btnSalir_Click(System::Object^ sender, System::EventArgs^ e) {
-			this->Close();
+
+		// Actualizar la interfaz
+		ActualizarCaracteristicasRobot(robot);
+		cmbRobots->SelectedIndex = -1;
+		cmbLugares->SelectedIndex = -1;
+		CargarListaRobots(); // Recargar lista con estados actualizados
+	}
+
+	private: void CargarListaLugares() {
+		List<ZonaTrabajo^>^ listaLugares = Service::GetZonas();
+		cmbLugares->Visible = true;
+		cmbLugares->Enabled = true;
+		cmbLugares->Items->Clear();
+
+		for each (ZonaTrabajo ^ zona in listaLugares) {
+			cmbLugares->Items->Add(zona->zona);
 		}
+	}
+
+	private: System::Void btnControlRobot_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (cmbRobots->SelectedIndex == -1) {
+			MessageBox::Show("Por favor seleccione un robot primero", "Error",
+				MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
+		String^ robotLista = cmbRobots->Text;
+		String^ nombreRobot = robotLista;
+
+		// Extraer solo el nombre del robot (sin el estado entre paréntesis)
+		int indexParentesis = robotLista->IndexOf('(');
+		if (indexParentesis > 0) {
+			nombreRobot = robotLista->Substring(0, indexParentesis)->Trim();
+		}
+
+		Robot^ robotEncontrado = Service::buscarRobotNombre(nombreRobot);
+
+		if (robotEncontrado != nullptr) {
+			ControlRobotForm^ controlRobot = gcnew ControlRobotForm(robotEncontrado);
+			this->Hide();
+			controlRobot->ShowDialog();
+			this->Show();
+
+			// Recargar la lista después de controlar el robot
+			CargarListaRobots();
+
+			// Limpiar selecciones
+			cmbRobots->SelectedIndex = -1;
+			cmbLugares->SelectedIndex = -1;
+			pbPhoto->Image = nullptr;
+			txtCaracteristicas->Clear();
+		}
+		else {
+			MessageBox::Show("Robot no encontrado", "Error",
+				MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+	}
+
+	private: System::Void btnSalir_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->Close();
+	}
 	};
 }

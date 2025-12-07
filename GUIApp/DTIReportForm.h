@@ -1,4 +1,5 @@
 #pragma once
+#include "UIStyles.h"   // UIHelpers::SetRoundedRegion, OutlineButton_Paint
 
 namespace GUIApp {
 
@@ -20,13 +21,18 @@ namespace GUIApp {
 	{
 	public:
 		DatosUsuario^ Usuario;
+
 		DTIReportForm(DatosUsuario^ usuario)
 		{
 			InitializeComponent();
-			//
-			//TODO: agregar código de constructor aquí
-			//
 			Usuario = usuario;
+
+			// ===== UPGRADE VISUAL =====
+			ApplyDarkTheme();
+			StyleButtons();
+			StyleTextBoxes();
+			StyleComboTipoAlerta();
+			StyleDateTimePicker();
 		}
 
 	protected:
@@ -41,23 +47,13 @@ namespace GUIApp {
 			}
 		}
 	private: System::Windows::Forms::ComboBox^ cbTipoAlerta;
-	protected:
-
-	protected:
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Button^ btnLlamar;
-
-
-
-
-
 	private: System::Windows::Forms::TextBox^ txtDescription;
-
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::TextBox^ txtLugar;
 	private: System::Windows::Forms::DateTimePicker^ dtpFecha;
-
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::Button^ btnVolver;
 
@@ -207,6 +203,133 @@ namespace GUIApp {
 
 		}
 #pragma endregion
+
+		// =============== ESTILO ===============
+
+		void ApplyDarkTheme()
+		{
+			Color back = Color::FromArgb(20, 27, 47);
+			Color fore = Color::FromArgb(224, 231, 255);
+
+			this->BackColor = back;
+			this->ForeColor = fore;
+
+			array<Label^>^ labels = gcnew array<Label^>{
+				label1, label2, label3, label4
+			};
+
+			for each(Label ^ lb in labels)
+			{
+				if (lb != nullptr)
+					lb->ForeColor = fore;
+			}
+		}
+
+		void StyleButtons()
+		{
+			// Botón principal (acción fuerte)
+			array<Button^>^ primary = gcnew array<Button^>{
+				btnLlamar
+			};
+
+			for each(Button ^ b in primary)
+			{
+				if (b == nullptr) continue;
+				b->FlatStyle = FlatStyle::Flat;
+				b->FlatAppearance->BorderSize = 0;
+				b->BackColor = Color::FromArgb(0, 140, 255);
+				b->ForeColor = Color::White;
+				b->Font = gcnew System::Drawing::Font("Segoe UI", 9, FontStyle::Bold);
+				UIHelpers::SetRoundedRegion(b, 18);
+			}
+
+			// Botón secundario (outline)
+			array<Button^>^ secondary = gcnew array<Button^>{
+				btnVolver
+			};
+
+			for each(Button ^ b in secondary)
+			{
+				if (b == nullptr) continue;
+				b->FlatStyle = FlatStyle::Flat;
+				b->FlatAppearance->BorderSize = 0;
+				b->BackColor = Color::FromArgb(20, 27, 47);
+				b->ForeColor = Color::FromArgb(224, 231, 255);
+				b->Font = gcnew System::Drawing::Font("Segoe UI", 9, FontStyle::Regular);
+				b->Paint += gcnew PaintEventHandler(&UIHelpers::OutlineButton_Paint);
+				UIHelpers::SetRoundedRegion(b, 18);
+			}
+		}
+
+		void StyleTextBoxes()
+		{
+			Color back = Color::FromArgb(10, 16, 32);
+			Color fore = Color::FromArgb(226, 232, 240);
+
+			array<TextBox^>^ boxes = gcnew array<TextBox^>{
+				txtDescription, txtLugar
+			};
+
+			for each(TextBox ^ tb in boxes)
+			{
+				if (tb == nullptr) continue;
+				tb->BackColor = back;
+				tb->ForeColor = fore;
+				tb->BorderStyle = BorderStyle::FixedSingle;
+			}
+		}
+
+		void StyleComboTipoAlerta()
+		{
+			if (cbTipoAlerta == nullptr) return;
+
+			cbTipoAlerta->FlatStyle = FlatStyle::Flat;
+			cbTipoAlerta->DropDownStyle = ComboBoxStyle::DropDownList;
+			cbTipoAlerta->BackColor = Color::FromArgb(15, 23, 42);
+			cbTipoAlerta->ForeColor = Color::FromArgb(226, 232, 240);
+			cbTipoAlerta->DrawMode = DrawMode::OwnerDrawFixed;
+			cbTipoAlerta->DrawItem += gcnew DrawItemEventHandler(this, &DTIReportForm::cbTipoAlerta_DrawItem);
+		}
+
+		void StyleDateTimePicker()
+		{
+			if (dtpFecha == nullptr) return;
+
+			// No se puede oscurecer totalmente el control, pero sí el calendario
+			dtpFecha->CalendarMonthBackground = Color::FromArgb(15, 23, 42);
+			dtpFecha->CalendarForeColor = Color::FromArgb(226, 232, 240);
+		}
+
+		void cbTipoAlerta_DrawItem(System::Object^ sender, DrawItemEventArgs^ e)
+		{
+			if (e->Index < 0) return;
+
+			ComboBox^ cb = safe_cast<ComboBox^>(sender);
+
+			bool selected = (e->State & DrawItemState::Selected) == DrawItemState::Selected;
+			Color back = selected ? Color::FromArgb(37, 99, 235) : Color::FromArgb(15, 23, 42);
+			Color fore = Color::FromArgb(226, 232, 240);
+
+			e->Graphics->FillRectangle(gcnew SolidBrush(back), e->Bounds);
+
+			String^ text = cb->Items[e->Index]->ToString();
+			e->Graphics->DrawString(
+				text,
+				cb->Font,
+				gcnew SolidBrush(fore),
+				RectangleF(
+					(float)e->Bounds.X,
+					(float)e->Bounds.Y,
+					(float)e->Bounds.Width,
+					(float)e->Bounds.Height
+				)
+			);
+
+			e->DrawFocusRectangle();
+		}
+
+		// =============== LÓGICA ORIGINAL ===============
+
 	private: System::Void btnVolver_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Close();
 	}
@@ -218,7 +341,7 @@ namespace GUIApp {
 
 		reporte->Lugar = txtLugar->Text;
 
-		//vincula con usuario
+		// vincula con usuario
 		reporte->UsuarioID = Usuario->ID;
 		reporte->UsuarioNombre = Usuario->Nombre;
 
@@ -236,7 +359,6 @@ namespace GUIApp {
 	private: void ClearFields() {
 		txtDescription->Text = "";
 		txtLugar->Text = "";
-
 		cbTipoAlerta->SelectedIndex = -1;
 	}
 	};
