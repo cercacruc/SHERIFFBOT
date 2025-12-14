@@ -1,5 +1,5 @@
-﻿--USE DBSheriffbot;
---GO
+﻿USE SheriffbotDB;
+GO
 
 -- Eliminar tablas si existen
 IF OBJECT_ID('Puntos', 'U') IS NOT NULL DROP TABLE Puntos;
