@@ -740,6 +740,14 @@ int BotPersistance::Persistance::modificarUsuarioID(DatosUsuario^ usuario) {
     }
     return 0;
     */
+    if (usuario->cant_alertas == nullptr) {
+        usuario->cant_alertas = gcnew array<int>(3);
+        usuario->cant_alertas[0] = 0;
+        usuario->cant_alertas[1] = 0;
+        usuario->cant_alertas[2] = 0;
+    }
+
+
     array<SqlParameter^>^ params = {
         gcnew SqlParameter("@ID", usuario->ID),
         gcnew SqlParameter("@Nombre", usuario->Nombre),
@@ -2053,7 +2061,7 @@ void BotPersistance::Persistance::abrirConexion()
         //objConexion->ConnectionString = "Server=200.16.7.140;DataBase=a20230319;User id=a20230319;Password=w2RzV77V";
 
         //Conexión con AWS
-        objConexion->ConnectionString = "Server=idb1inf53.cpquwiptrqup.us-east-1.rds.amazonaws.com;DataBase=DBSheriffbot;User id=Sherifflogin;Password=Sheriffbot";
+        objConexion->ConnectionString = "Server=idb1inf53.c5gygwkugnnn.us-east-1.rds.amazonaws.com;DataBase=SheriffbotDB;User id=sherifflogin;Password=Sheriffbot";
 
 
         objConexion->Open();
