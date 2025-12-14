@@ -34,6 +34,7 @@ namespace GUIApp {
             this->DoubleBuffered = true;
             Usuario = usuario;
             StyleButtons();
+
         }
 
     protected:
