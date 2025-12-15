@@ -1301,8 +1301,9 @@ int BotPersistance::Persistance::modificarZona(ZonaTrabajo^ zona)
                 gcnew SqlParameter("@Y_min", zona->y_min),
                 gcnew SqlParameter("@Y_max", zona->y_max)
         };
+        int resultado = executeStoredProcedure("usp_UpdateZona", params);
 
-        return executeStoredProcedure("usp_UpdateZona", params);
+        return resultado;
     }
     catch (Exception^ ex)
     {

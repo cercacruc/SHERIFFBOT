@@ -484,7 +484,7 @@ namespace GUIApp {
 
 				zonaT->ID = Convert::ToInt32(idZona->Text);
 				zonaT->x_min = Convert::ToDouble(textX1->Text);
-				zonaT->x_max = Convert::ToDouble(textX2->Text);//ver luego su función que de eso
+				zonaT->x_max = Convert::ToDouble(textX2->Text);
 
 				zonaT->y_min = Convert::ToDouble(textY1->Text);
 				zonaT->y_max = Convert::ToDouble(textY2->Text);
@@ -492,7 +492,8 @@ namespace GUIApp {
 				zonaT->zona = textZona->Text;
 
 				int zonModificar = Service::modificarZona(zonaT);
-				if (zonModificar != 0) {
+
+				if (zonModificar == 0) {
 					ShowZonas();
 					ClearFieldsZona();
 					MessageBox::Show("Zona modificada exitosamente", "Exito", MessageBoxButtons::OK);
