@@ -23,6 +23,16 @@ namespace GUIApp {
 		MapaForm(Robot^ robot)
 		{
 			InitializeComponent();
+
+			this->DoubleBuffered = true;
+
+			this->BackColor = System::Drawing::Color::FromArgb(5, 8, 22);
+			this->ForeColor = System::Drawing::Color::White;
+			this->StartPosition = FormStartPosition::CenterScreen;
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
+
 			robotEncontrado = robot;
 
 			ApplyDarkTheme();
