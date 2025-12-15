@@ -511,6 +511,12 @@ BEGIN
 END
 GO
 
+-- Verificar el procedimiento almacenado actual
+IF OBJECT_ID('usp_UpdateZona', 'P') IS NOT NULL 
+    DROP PROCEDURE usp_UpdateZona;
+GO
+
+-- Crear procedimiento corregido
 CREATE PROCEDURE usp_UpdateZona
     @ID INT,
     @Nombre NVARCHAR(100),
@@ -520,16 +526,36 @@ CREATE PROCEDURE usp_UpdateZona
     @Y_max FLOAT
 AS
 BEGIN
-    UPDATE ZonasTrabajo 
-    SET Nombre_zona = @Nombre,
-        X_min = @X_min,
-        X_max = @X_max,
-        Y_min = @Y_min,
-        Y_max = @Y_max
-    WHERE ID_Zona = @ID;
-    
-    RETURN @@ROWCOUNT;
+    BEGIN TRY
+        -- Verificar si la zona existe
+        IF NOT EXISTS (SELECT 1 FROM ZonasTrabajo WHERE ID_Zona = @ID)
+        BEGIN
+            RETURN 0; -- No encontrado
+        END
+        
+        -- Actualizar la zona
+        UPDATE ZonasTrabajo 
+        SET Nombre_zona = @Nombre,
+            X_min = @X_min,
+            X_max = @X_max,
+            Y_min = @Y_min,
+            Y_max = @Y_max
+        WHERE ID_Zona = @ID;
+        
+        -- Retornar 1 si se actualizó correctamente
+        IF @@ROWCOUNT > 0
+            RETURN 1;
+        ELSE
+            RETURN 0;
+    END TRY
+    BEGIN CATCH
+        -- Registrar el error y retornar 0
+        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+        RAISERROR('Error actualizando zona: %s', 16, 1, @ErrorMessage);
+        RETURN -1;
+    END CATCH
 END
+GO
 GO
 
 CREATE PROCEDURE usp_DeleteZona
