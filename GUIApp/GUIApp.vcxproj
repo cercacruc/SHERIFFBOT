@@ -213,6 +213,7 @@
     <ClInclude Include="GraficsUsersForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="GraphMap.h" />
     <ClInclude Include="InformationRequestForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>

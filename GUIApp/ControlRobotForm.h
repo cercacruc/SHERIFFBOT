@@ -253,7 +253,7 @@ namespace GUIApp {
 			   // lblEstadoRobot
 			   // 
 			   this->lblEstadoRobot->AutoSize = true;
-			   this->lblEstadoRobot->Location = System::Drawing::Point(435, 74);
+			   this->lblEstadoRobot->Location = System::Drawing::Point(258, 81);
 			   this->lblEstadoRobot->Name = L"lblEstadoRobot";
 			   this->lblEstadoRobot->Size = System::Drawing::Size(109, 16);
 			   this->lblEstadoRobot->TabIndex = 39;
@@ -261,11 +261,12 @@ namespace GUIApp {
 			   // 
 			   // txtEstadoRobot
 			   // 
-			   this->txtEstadoRobot->Location = System::Drawing::Point(435, 93);
+			   this->txtEstadoRobot->Location = System::Drawing::Point(373, 78);
 			   this->txtEstadoRobot->Name = L"txtEstadoRobot";
 			   this->txtEstadoRobot->ReadOnly = true;
-			   this->txtEstadoRobot->Size = System::Drawing::Size(294, 22);
+			   this->txtEstadoRobot->Size = System::Drawing::Size(356, 22);
 			   this->txtEstadoRobot->TabIndex = 40;
+			   this->txtEstadoRobot->TextChanged += gcnew System::EventHandler(this, &ControlRobotForm::txtEstadoRobot_TextChanged);
 			   // 
 			   // ControlRobotForm
 			   // 
@@ -850,6 +851,8 @@ namespace GUIApp {
 			MessageBox::Show("No se pudo reconectar", "Error");
 		}
 	}
-	};
+	private: System::Void txtEstadoRobot_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
+};
 
 }

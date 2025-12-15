@@ -213,7 +213,7 @@ namespace GUIApp {
 			// 
 			// btnAddZona
 			// 
-			this->btnAddZona->Location = System::Drawing::Point(356, 39);
+			this->btnAddZona->Location = System::Drawing::Point(529, 39);
 			this->btnAddZona->Name = L"btnAddZona";
 			this->btnAddZona->Size = System::Drawing::Size(149, 55);
 			this->btnAddZona->TabIndex = 12;
@@ -223,7 +223,7 @@ namespace GUIApp {
 			// 
 			// btnModificarZona
 			// 
-			this->btnModificarZona->Location = System::Drawing::Point(356, 115);
+			this->btnModificarZona->Location = System::Drawing::Point(529, 115);
 			this->btnModificarZona->Name = L"btnModificarZona";
 			this->btnModificarZona->Size = System::Drawing::Size(149, 59);
 			this->btnModificarZona->TabIndex = 13;
@@ -233,7 +233,7 @@ namespace GUIApp {
 			// 
 			// btnEliminarZona
 			// 
-			this->btnEliminarZona->Location = System::Drawing::Point(356, 196);
+			this->btnEliminarZona->Location = System::Drawing::Point(529, 196);
 			this->btnEliminarZona->Name = L"btnEliminarZona";
 			this->btnEliminarZona->Size = System::Drawing::Size(149, 62);
 			this->btnEliminarZona->TabIndex = 14;
@@ -253,7 +253,7 @@ namespace GUIApp {
 			this->dgvZona->RowHeadersVisible = false;
 			this->dgvZona->RowHeadersWidth = 51;
 			this->dgvZona->RowTemplate->Height = 24;
-			this->dgvZona->Size = System::Drawing::Size(493, 246);
+			this->dgvZona->Size = System::Drawing::Size(810, 324);
 			this->dgvZona->TabIndex = 15;
 			this->dgvZona->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &DelimitarZonasTrabajoAdmin::dgvZona_CellContentClick);
 			// 
@@ -303,7 +303,7 @@ namespace GUIApp {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(564, 564);
+			this->ClientSize = System::Drawing::Size(854, 628);
 			this->Controls->Add(this->dgvZona);
 			this->Controls->Add(this->btnEliminarZona);
 			this->Controls->Add(this->btnModificarZona);
